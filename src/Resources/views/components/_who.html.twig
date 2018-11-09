@@ -1,0 +1,15 @@
+{# title, description, content #}
+<div class="hero-half">
+    <span data-img="img/photos/7.jpg" class=w-100>#</span>
+    <div class="hero-half-text">
+        <div class="container">
+                <h2>{{ title }}</h2>
+                {% if description is defined %}<span class="h3 inline">{{ description }}</span>{% if endif %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="mt-20 mb-40">
+        {{ content|raw }}
+    </div>
+</div>

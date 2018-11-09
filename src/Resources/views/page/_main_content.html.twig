@@ -1,0 +1,23 @@
+{% set ok = false %}
+{% if page.mainContent is not empty %}
+    {% set ok = true %}
+{% else if page.issetOnlyOneProduct is defined and page.issetOnlyOneProduct %}
+    {% set ok = true %}
+{% endif %}
+
+{% if ok === true %}
+<section class="section-gap" id="content">
+    <div class="container">
+        {% include(template_from_string(page.mainContent)) %}
+
+        {% if page.issetProduct is defined and page.issetProduct == true %}
+        <p class="col-12 text-center price" class="h3">{% if page.issetProducts %}A partir de {% endif %}{{ page.smallerPrice }} €</p>
+        <p class="col-12 text-center">
+            <a href="{% if page.issetOnlyOneProduct == true %}{{ path('piedweb_reservation', {'id' : page.products.0.id}) }}{% else %}#reserve{% endif %}" class="{% if page.issetProducts %}primary-btn{% else %}genric-btn primary circle letter-spacing{% endif %}">
+                {{ 'header.reserve'|trans }} <span class="fa fa-arrow-right"></span>
+            </a>
+        </p>
+        {% endif %}
+    </div>
+</section>
+{% endif %}

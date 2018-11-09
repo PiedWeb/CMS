@@ -1,0 +1,18 @@
+{% if page.issetImage %}
+    <section id="gallery">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="tns mimg">
+                    {% for image in page.images %}
+                        {% set img = img_dir.url ~ '/' ~ image.image %}
+                        <div>
+                            <a href="{{ img|imgResponsive }}">
+                               <span data-img="{{ img|imagine_filter('height_300') }}">{{ image.image }}</span>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}

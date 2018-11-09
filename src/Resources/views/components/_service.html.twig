@@ -1,0 +1,31 @@
+{# title, description, items { color, title, description } #}
+<section class="section-gap" id="service">
+    <div class="container">
+
+         <div class="text-center mb-5">
+            <h2 class="mb-10">{{ title }}</h2>
+            {% if description is defined %}<p>{{ description }}</p>{% endif %}
+        </div>
+
+        <div class="row">
+            {% for service in items %}
+            <div class="col-lg-4">
+                <div class="card shadow border-0 mb-4">
+                    <div class="card-body py-5">
+                        <div class="d-flex align-items-start">
+                            <div class="icon-rounded{% if color is defined %} icon-{{ color }}{% endif %}">
+                                <i class="fa fa-smile-o"></i>
+                            </div>
+                            <div class="icon-text pl-4">
+                                <h5 class="font-weight-bold">{{ title }}</h5>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-center">{{ description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>

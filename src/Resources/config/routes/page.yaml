@@ -1,0 +1,11 @@
+piedweb_cms_home:
+    path:     /
+    controller: PiedWeb\CMSBundle\Controller\PageController::home
+    methods:    [GET, HEAD]
+
+piedweb_cms_page:
+    path:     /{slug}
+    controller: PiedWeb\CMSBundle\Controller\PageController::show
+    methods:    [GET, HEAD]
+    requirements:
+        page: "[a-zA-Z1-9\-_]+"

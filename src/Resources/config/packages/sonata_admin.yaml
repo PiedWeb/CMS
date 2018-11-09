@@ -1,0 +1,34 @@
+sonata_admin:
+    title: 'Admin'
+    title_logo: build/images/logo_title.png #A VOIR
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+        groups:
+            app.admin.group.product:
+                label: Pages et Sorties
+                label_catalogue: Pages et Sorties
+                items:
+                    - admin.page
+                    - admin.faq
+                    - admin.image
+                    - admin.product
+
+            app.admin.group.reservation:
+                label: Réservations
+                label_catalogue: Réservations
+                items:
+                    - admin.order
+                    - admin.orderItem
+                    - admin.basketItem
+
+            app.admin.group.user:
+                label: Utilisateurs
+                label_catalogue: Utilisateurs
+                items:
+                    - admin.user
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]

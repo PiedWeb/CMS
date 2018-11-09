@@ -1,0 +1,63 @@
+liip_imagine:
+    filter_sets:
+        thumb:
+            quality: 80
+            jpeg_quality:          80
+            png_compression_level: 8
+            filters:
+                thumbnail: { size : [306, 306], mode : outbound }
+
+        height_300:
+            quality: 90
+            jpeg_quality:          90
+            png_compression_level: 9
+            filters:
+                relative_resize:
+                    heighten: 300
+
+
+        default_xs: #576px
+            quality: 80
+            jpeg_quality:          80
+            png_compression_level: 8
+            filters:
+                relative_resize:
+                    widen: 576
+                auto_rotate: ~
+                strip: ~
+        default_sm: #768px
+            quality: 80
+            jpeg_quality:          80
+            png_compression_level: 8
+            filters:
+                relative_resize:
+                    widen: 768
+                auto_rotate: ~
+                strip: ~
+        default_md: #992px
+            quality: 80
+            jpeg_quality:          80
+            png_compression_level: 8
+            filters:
+                relative_resize:
+                    widen: 992
+                auto_rotate: ~
+                strip: ~
+        default_lg: #1200px
+            quality: 80
+            jpeg_quality:          80
+            png_compression_level: 8
+            filters:
+                relative_resize:
+                    widen: 1200
+                auto_rotate: ~
+                strip: ~
+        default_xl: #1200px+
+            quality: 80
+            jpeg_quality:          80
+            png_compression_level: 8
+            filters:
+                relative_resize:
+                    widen: 1400
+                auto_rotate: ~
+                strip: ~

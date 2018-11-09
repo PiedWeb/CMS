@@ -1,0 +1,15 @@
+{
+  "name": "piedweb/cms-bundle",
+  "license": "MIT",
+  "browserslist": "> 1%",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "piedweb-devoluix-theme": "^0.0",
+    "@symfony/webpack-encore": "^0.21.0",
+    "bootstrap.native-loader": "^1.0.7",
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0",
+    "uglifyjs-webpack-plugin": "^2.0.1"
+  }
+}

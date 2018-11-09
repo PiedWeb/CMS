@@ -1,0 +1,79 @@
+<section class="section-gap ajax-form" id="contact">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-8">
+                <span class="h2 d-block mb-30">Contact</span>
+
+                {{ form_start(contact) }}
+                <div class="row contact-form contact-form text-right">
+
+                {% if contact.name is defined %}
+                <div class="col-lg-6 form-group">
+                {{ form_row(contact.name, {
+                    label_attr: {class: 'sr-only'},
+                    attr: {
+                        'placeholder': 'Nom',
+                        onfocus: "this.placeholder = ''",
+                        onblur: "this.placeholder = 'Nom'",
+                        class: "common-input mb-20 form-control",
+                        required: "text"
+                    }
+                }) }}
+                </div>
+                {% endif %}
+
+                {% if contact.fr0m is defined %}
+                <div class="col-lg-6 form-group">
+                {{ form_row(contact.fr0m, {
+                    label_attr: {class: 'sr-only'},
+                    attr: {
+                        'placeholder': 'Email',
+                        onfocus: "this.placeholder = ''",
+                        onblur: "this.placeholder = 'Email'",
+                        class: "common-input mb-20 form-control",
+                        required: "text",
+                        pattenr: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$",
+                        type: "email"
+                    }
+                }) }}
+                </div>
+                {% endif %}
+
+
+                <div class="col-lg-12 form-group">
+                {{ form_row(contact.message, {
+                label_attr: {class: 'sr-only'},
+                attr: {
+                    'placeholder': 'Message',
+                    onfocus: "this.placeholder = ''",
+                    onblur: "this.placeholder = 'Message'",
+                    class: "common-textarea mt-10 form-control"
+                }
+                }) }}
+                </div>
+
+                <div class="col-lg-12 form-group">
+                    <button class="btn btn-primary letter-spacing mt-20">Envoyer</button>
+                </div>
+
+                <div class="alert-msg col-12"></div>
+
+                </div>
+                {{ form_end(contact) }}
+            </div>
+            <div class="col-lg-4 text-right">
+
+                <div class="mb-30">
+                    <span class="h2">Coordonnées</span>
+                </div>
+                <small>Email</small>
+                <div id="contact-email" class="mb-20">{{ str_rot13(contact_email) }}</div>
+                <small>Adresse</small>
+                <p>Le Coin<br>38 112 Autrans-Méaudre en Vercors</p>
+            </div>
+        </div>
+
+    </div>
+</section>

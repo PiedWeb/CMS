@@ -1,0 +1,10 @@
+
+installation:
+    new:
+        title:  "Installation"
+        text:   "Installation : rendez-vous sur l'admin et créez une page répondant au slug de <code>homepage</code>."
+
+contact:
+    send:
+        prefix_subject: "[PiedWebContact] De "
+        success: "Message envoyé avec succès'

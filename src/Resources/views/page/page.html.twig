@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ page.title|striptags }}{% endblock %}
+
+{% block body %}
+
+    {% include '@PiedWebCMSBundle/page/_menu.html.twig' %}
+
+    {% block content %}
+        {% include '@PiedWebCMSBundle/page/_page.html.twig' %}
+    {% endblock %}
+
+    {% if page.slug is defined and page.slug == 'homepage' %}
+        {% include '@PiedWebCMSBundle/page/_extra_footer.html.twig' %}
+    {% endif %}
+
+{% endblock %}

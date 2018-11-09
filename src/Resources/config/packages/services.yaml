@@ -1,0 +1,81 @@
+services:
+
+
+
+# --------
+# Admin
+# --------
+
+    piedweb.admin.page:
+        class: PiedWeb\CMSBundle\Admin\PageAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\Page, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Pages }
+        public: true
+
+    piedweb.admin.faq:
+        class: PiedWeb\CMSBundle\Admin\FaqAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\Faq, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Faq }
+        public: true
+
+    piedweb.admin.image:
+        class: PiedWeb\CMSBundle\Admin\ImageAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\Image, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Images }
+
+    piedweb.admin.product:
+        class: PiedWeb\CMSBundle\Admin\ProductAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\Product, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Sorties }
+        public: true
+
+    piedweb.admin.order:
+        class: PiedWeb\CMSBundle\Admin\OrderAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\Order, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Achats }
+        public: true
+    piedweb.admin.orderItem:
+        class: PiedWeb\CMSBundle\Admin\OrderItemAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\OrderItem, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Sorties Réservées }
+        public: true
+    piedweb.admin.basketItem:
+        class: PiedWeb\CMSBundle\Admin\BasketItemAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\BasketItem, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Panier }
+        public: true
+
+    piedweb.admin.user:
+        class: PiedWeb\CMSBundle\Admin\UserAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Utilisateurs }
+        public: true
+
+# --------
+# TWIG extension
+# --------
+
+    piedweb.app.twig.extension.loader:
+        class:        Twig_Extension_StringLoader
+        tags:
+             - { name: 'twig.extension' }
+
+    dpolac.twig_lambda.extension:
+        class: DPolac\TwigLambda\LambdaExtension
+        tags: [ { name: twig.extension } ]
+
+    piedweb.twig.extension.php_function:
+        class: Umpirsky\Twig\Extension\PhpFunctionExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+        calls:
+            - [allowFunction, ["str_rot13"]]

@@ -1,0 +1,25 @@
+{% if page.issetFaq %}
+    <section class="faq-block section-gap" id="faq">
+        <div class="container">
+             <div class="text-center mb-5">
+                <h2 class="mb-10">{{ 'faq.title'|trans }}</h2>
+                <p>{{ 'faq.subtitle'|trans }}</p>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="faq-content">
+                    {% for faq in page.faq %}
+                        <div class="single-faq">
+                            <h3>{{ faq.question }}</h3>
+                            <p>{{ faq.answer }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if page.issetProduct == true %}
+             <div class="row faq-content">
+                <a href="{{ path('home') }}#contact" class="genric-btn primary circle letter-spacing">{{ 'faq.ask'|trans }}</a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+{% endif %}

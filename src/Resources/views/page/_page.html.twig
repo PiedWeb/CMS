@@ -1,0 +1,30 @@
+{% include '@PiedWebCMSBundle/page/_header.html.twig' %}
+
+{% include '@PiedWebCMSBundle/page/_main_content.html.twig' %}
+
+{% include '@PiedWebCMSBundle/page/_gallery.html.twig' %}
+
+{% include '@PiedWebCMSBundle/page/_reservation.html.twig' %}
+
+{% include '@PiedWebCMSBundle/page/_faq.html.twig' %}
+
+{% if page.relatedPages is defined and page.relatedPages is not empty %}
+{% set pages = page.relatedPages %}
+<section class="section-light section-gap" id="project">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="mb-10">{{ 'relatedPages.title'|trans }}</h2>
+            <p>{{ 'relatedPages.description'|trans }}</p>
+        </div>
+        <div class="row">
+        {% include '@PiedWebCMSBundle/page/_pages_list.html.twig' %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<div id="footer">
+    {% if page.slug is defined and page.slug == 'homepage' %}
+        <div id="contact"></div>
+    {% endif %}
+</div>
