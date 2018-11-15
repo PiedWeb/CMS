@@ -13,7 +13,7 @@ Build on top on [Symfony 4.1](https://github.com/symfony/symfony), [VichUploader
 If you are interested in, demo is coming soon, stay watching.
 
 * [Installation](#installation)
-    * [Packagist](https://packagist.org/packages/piedweb/render-html-attributes)
+    * [Packagist](https://packagist.org/packages/piedweb/cms-bundle)
 * [CookBook](#cookbook)
 * [Todo](#todo)
 * [Contributors](#contributors)
@@ -133,6 +133,9 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 ### Next Next
 
 - Change translatable (gedmo) to make something more scalable and easy to use with repo (knp ?, other?)
+
+- Create interface for entity Traits
+
 - More pluggable :
 - FAQ in a separate Bundle
 - Media in a separate Bundle (?)
