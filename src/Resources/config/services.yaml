@@ -1,0 +1,125 @@
+services:
+
+
+# --------
+# Me
+# --------
+
+    PiedWeb\CMSBundle\PiedWebCMSBundle: ~
+
+    PiedWeb\CMSBundle\:
+        autowire: true
+        resource: '../../../src/*'
+        exclude: '../../../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    PiedWeb\CMSBundle\Controller\:
+        autowire: true
+        resource: '../../../src/Controller'
+        tags: ['controller.service_arguments']
+
+    PiedWeb\CMSBundle\Repository\:
+        resource: '../../../src/Repository'
+        autowire: true
+        tags: ['doctrine.repository_service']
+
+    PiedWeb\CMSBundle\EventListener\MediaListener:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+            $em: '@doctrine.orm.entity_manager'
+        tags:
+            - { name: kernel.event_listener, event: vich_uploader.pre_upload }
+            - { name: kernel.event_listener, event: vich_uploader.post_upload }
+            #- { name: doctrine.orm.entity_listener, entity: PiedWeb\CMSBundle\Entity\Image, event: prePersist }
+
+    piedweb.feed.dumper:
+        class: PiedWeb\CMSBundle\Service\FeedDumpService
+        arguments: [ "@doctrine.orm.entity_manager", "@twig", "%app.dir%"]
+
+    # Required for sonata Translation
+    stof_doctrine_extensions.listener.translatable:
+        class: Gedmo\Translatable\TranslatableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ '@annotation_reader' ] ]
+            - [ setDefaultLocale, [ '%locale%' ] ]
+            - [ setTranslationFallback, [ true ]]
+
+    Gedmo\Translatable\TranslatableListener:
+        class: Gedmo\Translatable\TranslatableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ '@annotation_reader' ] ]
+            - [ setDefaultLocale, [ '%locale%' ] ]
+            - [ setTranslationFallback, [ true ]]
+            #- [ setTranslatableLocale, [ "@=service('request_stack').getCurrentRequest().getLocale()" ]]
+
+# --------
+# Admin
+# --------
+
+    piedweb.admin.page:
+        class: PiedWeb\CMSBundle\Admin\PageAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\Page, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Pages }
+        calls:
+            - [ setFeedDumper, [ '@piedweb.feed.dumper' ] ]
+            - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
+            - [ setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
+            - [ setTemplate, [outer_list_rows_mosaic, '@@PiedWebCMS/admin/media_mosaic_body.html.twig']]
+        public: true
+
+    piedweb.admin.faq:
+        class: PiedWeb\CMSBundle\Admin\FaqAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\Faq, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Faq }
+        public: true
+
+    piedweb.admin.media:
+        class: PiedWeb\CMSBundle\Admin\MediaAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\Media, ~]
+        calls:
+            - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
+            - [ setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
+            - [ setTemplate, [outer_list_rows_mosaic, '@@PiedWebCMS/admin/media_mosaic_body.html.twig']]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Media }
+
+    piedweb.admin.user:
+        class: PiedWeb\CMSBundle\Admin\UserAdmin
+        arguments: [~, PiedWeb\CMSBundle\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Utilisateurs }
+        public: true
+
+# --------
+# TWIG extension
+# --------
+
+    piedweb.app.twig.extension.loader:
+        class:        Twig_Extension_StringLoader
+        tags:
+             - { name: 'twig.extension' }
+
+    dpolac.twig_lambda.extension:
+        class: DPolac\TwigLambda\LambdaExtension
+        tags: [ { name: twig.extension } ]
+
+    piedweb.twig.extension.php_function:
+        class: Umpirsky\Twig\Extension\PhpFunctionExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+        calls:
+            - [allowFunction, ["str_rot13"]]
+
+    piedweb.twig.extension.render_attributes:
+        class: PiedWeb\RenderAttributes\TwigExtension
+        public: false
+        tags:
+            - { name: twig.extension }

@@ -1,58 +1,18 @@
-<section class="hero-banner">
-    <div class="relative" id="cover-banner"
-        {% if page.mainImage is defined and is not null %}
-            data-bg="{{ img_dir.url ~ '/' ~ page.mainImage.image }}"
-            data-darken="center"
-        {% endif %}>
-        <div class="container">
-            <div class="row fullscreen justify-content-center align-items-center">
-                <div class="col-md-10 col-12">
-                    <div class="banner-content text-center">
+{% extends '@PiedWebCMS/component/_header.html.twig' %}
 
-                        {% block subTitle %}
-                            {% if page.subtitle is defined and is not null %}
-                                <span class="subtitle">{{ page.subTitle|raw  }}</span>
-                            {% endif %}
-                        {% endblock %}
+{% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
+{% set subtitle = page.subtitle is defined ? page.subTitle : null %}
+{% set description = page.excrept is defined ? page.excrept : null %}
+{% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
 
-                        {% if page.h1 is defined and is not null %}
-                            {% set h1 = page.h1 %}
-                        {% else %}
-                            {% set h1 = page.title %}
-                        {% endif %}
-
-                        {% set h1l = h1|length %}
-                        <h1 class="{% if h1l > 20 %} long-h1{% endif %}">
-                            {{ h1|raw }}
-                        </h1>
-                        {% block excrept %}
-                            {% if page.excrept is defined and is not null %}
-                            <p>{{ page.excrept|raw }}</p>
-                            {% endif %}
-                        {% endblock %}
-                        {% block header_button %}
-                            {% if page.issetProduct is defined and page.issetProduct %}
-                                {% if page.issetFaq is defined and page.issetFaq %}
-                                    <a href="#faq" class="btn btn-header-light">{{ 'header.questions'|trans }}</a>
-                                {% endif %}
-                                <a href="{% if page.issetOnlyOneProduct == true %}#content{% else %}#reserve{% endif %}" class="btn btn-header">{{ 'header.reserve'|trans }}</a>
-                                {% if page.issetImage is defined and page.issetImage %}
-                                    <a href="#gallery" class="btn btn-header-light">{{ 'header.photos'|trans }}</a>
-                                {% endif %}
-                            {% endif %}
-                        {% endblock %}
-                    </div>
-
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        {% include ('@PiedWebCMSBundle/flash_message.html.twig') %}
-                    </div>
-                </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{% block header_button %}
+    {% if page.issetProduct is defined and page.issetProduct %}
+        {% if page.issetFaq is defined and page.issetFaq %}
+            <a href="#faq" class="btn btn-header-light">{{ 'header.questions'|trans }}</a>
+        {% endif %}
+        <a href="{% if page.issetOnlyOneProduct == true %}#content{% else %}#reserve{% endif %}" class="btn btn-header">{{ 'header.reserve'|trans }}</a>
+        {% if page.issetImage is defined and page.issetImage %}
+            <a href="#gallery" class="btn btn-header-light">{{ 'header.photos'|trans }}</a>
+        {% endif %}
+    {% endif %}
+{% endblock %}

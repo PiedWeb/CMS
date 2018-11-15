@@ -1,21 +1,19 @@
 
 {% if contact is not null %}
-    {% include '@PiedWebCMSBundle/page/_contact.html.twig' %}
+    {% include '@PiedWebCMS/page/_contact.html.twig' %}
 {% endif %}
 
+{#
 <footer class="footer-block section-gap">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-sm-6 footer-text">
                 <span class="d-block h6">Blog</span>
-                {% render '@MyBundle:Page:showList' with {page: page,  render: '@PiedWebCMSBundle/page/_list.html.twig'} %}
-
-                <ul>
-                    <li><a href=#>...</a></li>
-                </ul>
+                {# Pas terrible pour les perf #}{#
+                {{ render(controller('\\PiedWeb\\CMSBundle\\Controller\\PageController::showList', { render: '@PiedWebCMS/page/_list.html.twig'})) }}
             </div>
             <div class="col-lg-4 col-sm-6 footer-text">
-                <h6>Ê{{ 'footer.keepInTouch.title'|trans }}</h6>
+                <h6>{{ 'footer.keepInTouch.title'|trans }}</h6>
 
                 <p>{{ 'footer.keepInTouch.social'|trans }}</p>
                 <div class="footer-social d-flex align-items-center mb-30">
@@ -55,3 +53,4 @@
         </div>
     </div>
 </footer>
+#}

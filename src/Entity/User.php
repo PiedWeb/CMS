@@ -11,7 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="fos_user")
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("email",
  *     message="user.email.already_used"
@@ -19,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User extends BaseUser
 {
-    use UserTrait;
+    use UserTrait, UserExtendedTrait;
 
     /**
      * @ORM\Id
@@ -27,6 +27,4 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-
 }

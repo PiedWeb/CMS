@@ -1,13 +1,5 @@
-Installation
+PiedWeb CMS Bundle
 ============
 
-Applications that use Symfony Flex
-----------------------------------
-
-Open a command console, enter your project directory and execute:
-
-.. code-block:: bash
-
-    $ composer require piedweb/cms-bundle
-
-
+Not yet docmented.
+Look at the code and enjoy (or dislike).

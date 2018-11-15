@@ -2,31 +2,41 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use PiedWeb\CMSBundle\Entity\Image;
+use PiedWeb\CMSBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-trait PageTrait
+trait PageImageTrait
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\Image")
+     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\Media")
      */
     private $mainImage;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\Image")
+     * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\Media")
      */
     private $images;
 
-    public function getMainImage(): ?Image
+    public function __construct_image()
+    {
+        $this->images = new ArrayCollection();
+    }
+
+    public function getMainImage(): ?Media
     {
         return $this->mainImage;
     }
 
-    public function setMainImage(?Image $mainImage): self
+    public function setMainImage(?Media $mainImage): self
     {
+        // TODO: Déplacer en Assert pour éviter une erreur dégueu ?!
+        if ($mainImage->getWidth() === null) {
+            throw new \Exception('mainImage must be an Image. Media imported is not an image');
+        }
+
         $this->mainImage = $mainImage;
 
         return $this;
@@ -49,16 +59,19 @@ trait PageTrait
         return false;
     }
 
-    public function addImage(Image $image): self
+    public function addImage(Media $image): self
     {
         if (!$this->images->contains($image)) {
+            if ($image->getWidth() === null) {
+                throw new \Exception('Media `'.$image->getMedia().'` isn\'t an image.');
+            }
             $this->images[] = $image;
         }
 
         return $this;
     }
 
-    public function removeImage(Image $image): self
+    public function removeImage(Media $image): self
     {
         if ($this->images->contains($image)) {
             $this->images->removeElement($image);

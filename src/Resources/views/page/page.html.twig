@@ -1,17 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends '@PiedWebCMS/base.html.twig' %}
 
 {% block title %}{{ page.title|striptags }}{% endblock %}
 
 {% block body %}
 
-    {% include '@PiedWebCMSBundle/page/_menu.html.twig' %}
-
-    {% block content %}
-        {% include '@PiedWebCMSBundle/page/_page.html.twig' %}
+    {% block navbar %}
+        {% include '@PiedWebCMS/component/_menu.html.twig' with {'logo':{'anchor':logo_alt}} only %}
     {% endblock %}
 
-    {% if page.slug is defined and page.slug == 'homepage' %}
-        {% include '@PiedWebCMSBundle/page/_extra_footer.html.twig' %}
-    {% endif %}
+    {% block content %}
+        {% include '@PiedWebCMS/page/_page.html.twig' %}
+    {% endblock %}
+
+
+    {% block extra_footer %}
+        {% if page.slug is defined and page.slug == 'homepage' or page.slug is null %}
+            {% include '@PiedWebCMS/page/_extra_footer.html.twig' %}
+        {% endif %}
+    {% endblock %}
 
 {% endblock %}

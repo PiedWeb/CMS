@@ -6,27 +6,26 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Gedmo\Translatable\Translatable;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 trait PageTrait
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=150)
      */
     private $slug;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $title;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="text", nullable=true)
      */
     private $mainContent;
@@ -41,6 +40,12 @@ trait PageTrait
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Version
+     */
+    protected $version;
+
     public function __toString()
     {
         return trim($this->slug.' ');
@@ -48,13 +53,8 @@ trait PageTrait
 
     public function __construct_page()
     {
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->updatedAt = $this->updatedAt !== null ? $this->updatedAt : new \DateTimeImmutable();
         $this->createdAt = $this->createdAt !== null ? $this->createdAt : new \DateTimeImmutable();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getSlug(): ?string
@@ -71,10 +71,17 @@ trait PageTrait
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    public function setSlug($slug): self
     {
-        $slg = new Slugify();
-        $this->slug = $slg->slugify($slug);
+        // work around for disabled input in sonata admin
+        if ($slug === null) {
+            if ($this->slug === null) {
+                throw new \ErrorException('slug cant be null');
+            }
+        } else {
+            $slg = new Slugify();
+            $this->slug = $slg->slugify($slug);
+        }
 
         return $this;
     }

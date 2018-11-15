@@ -1,16 +1,27 @@
-import:
-    resource: @PiedWebCMSBundle/Resources/config/routes/page.yaml
+liip:
+    resource: '@PiedWebCMSBundle/Resources/config/routes/liip_imagine.yaml'
 
-import:
-    resource: @PiedWebCMSBundle/Resources/config/routes/contact.yaml
+contact:
+    resource: '@PiedWebCMSBundle/Resources/config/routes/contact.yaml'
 
-import:
-    resource: @PiedWebCMSBundle/Resources/config/routes/footer.yaml
+footer:
+    resource: '@PiedWebCMSBundle/Resources/config/routes/footer.yaml'
 
+user:
+    resource: '@PiedWebCMSBundle/Resources/config/routes/user.yaml'
 
+admin:
+    resource: '@PiedWebCMSBundle/Resources/config/routes/admin.yaml'
 
-import:
-    resource: @PiedWebCMSBundle/Resources/config/routes/fos_user.yaml
+page:
+    resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'
+    prefix: /{_locale}
+    requirements:
+        _locale: '%app.locales%'
+    defaults:
+        _locale: '%locale%'
+    trailing_slash_on_root: true # it's ever the default value
 
-import:
-    resource: @PiedWebCMSBundle/Resources/config/routes/sonata_admin.yaml
+#_errors:
+#    resource: '@TwigBundle/Resources/config/routing/errors.xml'
+#    prefix:   /_error

@@ -1,0 +1,14 @@
+/.env
+/public/bundles/
+/var/
+/vendor/
+.phpunit
+/phpunit.xml
+/.web-server-pid
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+/public
+/src/cache/
+/config/parameters.yaml

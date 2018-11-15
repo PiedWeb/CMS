@@ -1,0 +1,16 @@
+{% extends '@PiedWebCMS/base.html.twig' %}
+
+{% block title %}{{ 'error.title'|trans }}{% endblock %}
+
+{% block body %}
+
+    {% include '@PiedWebCMS/component/_header.html.twig' with {
+            title: 'error.title'|trans,
+            subtitle: 'error.serverSay'|trans ~ ' <em>' ~ status_code ~ '</em> <em>' ~ status_text ~ '</em>',
+            description: 'error.description'|trans
+    } only %}
+
+    {% block content %}
+    {% endblock %}
+
+{% endblock %}

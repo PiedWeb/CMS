@@ -2,43 +2,44 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use PiedWeb\CMSBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Translatable\Translatable;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
+use Sonata\TranslationBundle\Model\Gedmo\AbstractPersonalTranslatable;
 
 /**
  * Page extended: // I may cut this in multiple traits
  * - meta no-index
  * - Rich Content (subtitle, excrept, parentPage, h1, name [to do short link] )
- * - Images (mainImage, images)
  * - RelatedPages
  * - author (link)
+ * - template
  */
-trait PageTrait
+trait PageExtendedTrait
 {
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $subTitle;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $excrept;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\Image")
+     * @Gedmo\Translatable
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $mainImage;
+    private $metaRobots;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $metaIndex;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\Page")
+     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\Page", inversedBy="childrenPages")
      */
     private $parentPage;
 
@@ -48,16 +49,13 @@ trait PageTrait
     private $childrenPages;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\Image")
-     */
-    private $images;
-
-    /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $h1;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $name;
@@ -72,14 +70,13 @@ trait PageTrait
      */
     private $relatedPages;
 
-    public function __toString()
-    {
-        return trim($this->name.' ');
-    }
+    /**
+     * @ORM\Column(type="string", length=250, nullable=true)
+     */
+    private $template;
 
     public function __construct_extended()
     {
-        $this->images = new ArrayCollection();
         $this->relatedPages = new ArrayCollection();
     }
 
@@ -107,26 +104,14 @@ trait PageTrait
         return $this;
     }
 
-    public function getMainImage(): ?Image
+    public function getMetaRobots(): ?bool
     {
-        return $this->mainImage;
+        return $this->metaRobots;
     }
 
-    public function setMainImage(?Image $mainImage): self
+    public function setMetaRobots(?bool $metaRobots): self
     {
-        $this->mainImage = $mainImage;
-
-        return $this;
-    }
-
-    public function getMetaIndex(): ?bool
-    {
-        return $this->metaIndex;
-    }
-
-    public function setMetaIndex(bool $metaIndex): self
-    {
-        $this->metaIndex = $metaIndex;
+        $this->metaRobots = $metaRobots;
 
         return $this;
     }
@@ -143,44 +128,9 @@ trait PageTrait
         return $this;
     }
 
-    public function getChildrenPage():
+    public function getChildrenPage()
     {
         return $this->childrenPages;
-    }
-
-    /**
-     * @return Collection|Image[]
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function issetImage()
-    {
-        if ($this->images->count() > 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function addImage(Image $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): self
-    {
-        if ($this->images->contains($image)) {
-            $this->images->removeElement($image);
-        }
-
-        return $this;
     }
 
     public function getH1(): ?string
@@ -241,6 +191,18 @@ trait PageTrait
         if ($this->relatedPages->contains($relatedPage)) {
             $this->relatedPages->removeElement($relatedPage);
         }
+
+        return $this;
+    }
+
+    public function getTemplate(): ?string
+    {
+        return $this->template;
+    }
+
+    public function setTemplate(?string $template): self
+    {
+        $this->template = $template;
 
         return $this;
     }

@@ -1,0 +1,62 @@
+{#
+    title
+    subtitle
+    description
+    image
+#}
+<section class="hero-banner">
+    <div class="relative" id="cover-banner"
+        {% if image is defined and image is not null %}
+            data-bg="{{ image| imagine_filter('default') }}"
+            data-darken="center"
+        {% endif %}>
+        <div class="container">
+            <div class="row fullscreen justify-content-center align-items-center">
+                <div class="col-md-10 col-12">
+                    <div class="banner-content text-center">
+
+                        {% block subTitle %}
+                            {% if subtitle is defined and subtitle is not null %}
+                                <span class="subtitle">{{ subtitle|raw  }}</span>
+                            {% endif %}
+                        {% endblock %}
+
+                        {% if title is defined and title is not null %}
+                            {% set titlel = title|length %}
+                            <h1 class="{% if titlel > 20 %} long-h1{% endif %}">
+                                {{ title|raw }}
+                            </h1>
+                        {% endif %}
+
+                        {% block excrept %}
+                            {% if description is defined and description is not null %}
+                            <p>{{ description|raw }}</p>
+                            {% endif %}
+                        {% endblock %}
+
+                        {% block header_button %}
+                            {% if page.issetProduct is defined and page.issetProduct %}
+                                {% if page.issetFaq is defined and page.issetFaq %}
+                                    <a href="#faq" class="btn btn-header-light">{{ 'header.questions'|trans }}</a>
+                                {% endif %}
+                                <a href="{% if page.issetOnlyOneProduct == true %}#content{% else %}#reserve{% endif %}" class="btn btn-header">{{ 'header.reserve'|trans }}</a>
+                                {% if page.issetImage is defined and page.issetImage %}
+                                    <a href="#gallery" class="btn btn-header-light">{{ 'header.photos'|trans }}</a>
+                                {% endif %}
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+
+                {# To remove ? #}
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% include ('@PiedWebCMS/flash_message.html.twig') %}
+                    </div>
+                </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

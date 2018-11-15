@@ -1,0 +1,93 @@
+
+#---
+# Can be remove
+#---
+installation:
+    new:
+        title:  "Installation"
+        text:   "Installation : rendez-vous sur l''admin et créez une page répondant au slug de <code>homepage</code>."
+
+#---
+# Views Component
+#---
+contact:
+    send:
+        prefix_subject: "[PiedWebContact] De "
+        success: 'Message envoyé avec succès'
+    title:  Keep In Touch
+    label: Contact
+    subtitle: Nous répondons habituellement en moins de trois heures.
+    email: Email
+    adress: Adresse
+
+faq:
+    title: Foire Aux Questions
+    subtitle: Qui peuvent également vous intéresser.
+    ask: Poser un autre question ?
+
+
+video:
+    play: 'Lecture'
+
+#---
+# Entity
+#---
+
+
+#---
+# Admin
+#---
+admin:
+    action: Action
+    details: Details
+    edition: Edition # not good
+    page:
+        title:
+            label: Titre
+            help: ''
+        slug:
+            label: Identifiant Url
+            help: 'Exemple : <code>mon-titre-de-page</code> donnera une page accessible via <code>https://exemple.tld/mon-titre-de-page</code>.'
+        subTitle:
+            label: Sous-titre
+        excrept:
+            label: Courte Description
+        h1:
+            label: Titre Imprimé
+            help: Le <code>Titre Imprimé</code> sera visible sur vos pages tandis que le <code>Titre</code> de votre document s'affichera dans la barre du navigateur et sur les moteurs de recherches.
+        name:
+            label: Nom court permettant d'identifier la page
+        faq:
+            label: Questions Associées
+        relatedPage:
+            label: Pages Associées
+        images:
+            label: Images
+        metaRobots:
+            label: Moteur de recherches
+            choice:
+                notIndex: Interdire l'indexation
+        author:
+            label: Auteur
+        parentPage:
+            label: Page Parente
+        createdAt:
+            label: Publié le
+        updatedAt:
+            label: Mise à jour le
+        template:
+            label: Moteur de thème (facultatif)
+        mainContent:
+            label: Corps de la page
+            help: Vous pouvez utilisez des balises HTML ainsi que les fonctionnalités de Twig.
+        mainImage:
+            label: Image d'en-tête
+
+#---
+# Errors Page(s)
+#---
+
+error:
+    title: Oops! Une erreur...
+    serverSay: Le serveur indique
+    description: Un écrou semble s'être dévisser.<br>Merci de nous informer sur votre environnement lorsque cette erreur c'est produite.<br><br><a href="/" class="btn btn-secondary">Retour</a>

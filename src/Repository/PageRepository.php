@@ -5,6 +5,7 @@ namespace PiedWeb\CMSBundle\Repository;
 use PiedWeb\CMSBundle\Entity\Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\Query;
 
 /**
  * @method Page|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +19,34 @@ class PageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Page::class);
     }
+
+    public function getQueryToFindPublished($p)
+    {
+        return $this->createQueryBuilder($p)
+            ->andWhere($p.'.createdAt <=  :nwo')
+            ->setParameter('nwo', new \DateTime())
+            ->orderBy($p.'.createdAt', 'DESC')
+        ;
+    }
+
+     public function findOneBySlug($slug, $language = null) {
+
+        $q = $this->createQueryBuilder('p')
+            ->andWhere('p.slug = :val')
+            ->setParameter('val', $slug)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
+            ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
+        ;
+        if ($language !== null)
+            $q->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $language);
+
+        //var_dump($q->getSql()); exit;
+        $result = $q->getResult();
+
+        return (isset($result[0]) ? $result[0] : null);
+     }
 
 
 //    /**

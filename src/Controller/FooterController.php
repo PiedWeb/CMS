@@ -4,20 +4,23 @@ namespace PiedWeb\CMSBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
-class FooterController extends AbstractController
+class FooterController extends ContactController
 {
-
-    public function show(Request $request) :Response
+    public function footer(Request $request) :Response
     {
-        if ($request->get('contact') == 1) {
-            $contact = $this->forward('PiedWeb\CMSBundle\ContactController::getContactForm');
+        $json = $request->getContent();
+        if (!empty($json)) {
+            $json = json_decode($json, true); // 2nd param to get as array
+        }
 
-            $this->getContactForm()->createView();
+        if (isset($json['contact']) && $json['contact'] == 1) {
+            $contact = $this->getContactForm()->createView();
         } else {
             $contact = null;
         }
 
-        return $this->render('page/_footer.html.twig', ['contact' => $contact]);
+        return $this->render('@PiedWebCMS/page/_footer.html.twig', ['contact' => $contact]);
     }
 }

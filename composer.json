@@ -8,7 +8,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.1.3",
-        "symfony/framework-bundle": "^7.1","cocur/slugify": "^3.1",
+        "cocur/slugify": "^3.1",
         "dpolac/twig-lambda": "^1.0",
         "friendsofsymfony/user-bundle": "^2.1",
         "knplabs/doctrine-behaviors": "^1.5",
@@ -16,13 +16,35 @@
         "sensio/framework-extra-bundle": "^5.2",
         "sonata-project/admin-bundle": "3.39",
         "sonata-project/doctrine-orm-admin-bundle": "^3.6",
-        "sonata-project/media-bundle": "^3.16",
-        "stof/doctrine-extensions-bundle": "^1.3",
         "symfony/orm-pack": "^1.0",
         "symfony/swiftmailer-bundle": "^3.2",
         "symfony/webpack-encore-pack": "^1.0",
         "umpirsky/twig-php-function": "^0.2.0",
-        "vich/uploader-bundle": "^1.8"
+        "vich/uploader-bundle": "^1.8",
+        "piedweb/render-html-attributes": "^1.0",
+        "sonata-project/translation-bundle": "^2.3",
+        "gedmo/doctrine-extensions": "^2.4",
+        "symfony/asset": "^4.1",
+        "symfony/console": "^4.1",
+        "symfony/expression-language": "^4.1",
+        "symfony/form": "^4.1",
+        "symfony/framework-bundle": "^4.1",
+        "symfony/monolog-bundle": "^3.1",
+        "symfony/process": "^4.1",
+        "symfony/security-bundle": "^4.1",
+        "symfony/security-csrf": "^4.1",
+        "symfony/serializer-pack": "*",
+        "symfony/translation":"^4.1",
+        "symfony/twig-bundle":"^4.1",
+        "symfony/validator":"^4.1",
+        "symfony/web-link":"^4.1",
+        "symfony/yaml":"^4.1"
+    },
+    "require-dev": {
+        "symfony/test-pack": "dev-master",
+        "symfony/web-server-bundle": "dev-master",
+        "symfony/framework-bundle": "^4.1",
+        "symfony/yaml": "^4.1"
     },
     "config": {
         "sort-packages": false
@@ -39,12 +61,12 @@
         "yarn",
         "yarn encore dev",
         "yarn encore production"
-    ]
+    ],
     "authors": [
         {
             "name": "Robin D.",
-            "email": "contact@robin-d.fr"
+            "email": "contact@robin-d.fr",
             "homepage": "https://www.robin-d.fr/"
         }
-    ],
+    ]
 }

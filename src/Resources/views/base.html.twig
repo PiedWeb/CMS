@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="A VOIR">
+<html lang="{#{ locale }#}">
     <head>
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="shortcut icon" href="/favicon.ico">
         <meta name="theme-color" content="#1fa67a"/>
-        <meta charset="UTF-8">
-
         <title>{% block title %}Pied Web{% endblock %}</title>
-
+        {% if page.metaRobots is defined and page.metaRobots is not null %}
+            <meta name="robots" content="{{ page.metaRobots }}">
+        {% endif %}
         <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
     </head>
     <body>

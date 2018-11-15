@@ -1,11 +1,8 @@
-piedweb_cms_home:
-    path:     /
-    controller: PiedWeb\CMSBundle\Controller\PageController::home
-    methods:    [GET, HEAD]
-
 piedweb_cms_page:
     path:     /{slug}
+    defaults:
+        slug: 'homepage'
     controller: PiedWeb\CMSBundle\Controller\PageController::show
     methods:    [GET, HEAD]
     requirements:
-        page: "[a-zA-Z1-9\-_]+"
+        slug: '([a-zA-Z1-9\-_]+)?'

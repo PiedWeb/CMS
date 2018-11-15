@@ -3,16 +3,19 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Repository\PageRepository;
+use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 
 /**
- * @ORM\Entity(repositoryClass="PiedWeb\CMSBundle\Repository\PageRepository")
+ * @ORM\Entity(repositoryClass=PageRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
-class Page
+class Page implements TranslatableInterface
 {
-    use PageTrait, use PageExtendedTrait, use PageImageTrait, PageFaqTrait;
+    use IdTrait, PageTrait, PageExtendedTrait, PageImageTrait, PageFaqTrait, TranslatableTrait;
 
-    private function __construct() {
+    public function __construct()
+    {
         $this->__construct_page();
         $this->__construct_extended();
         $this->__construct_image();

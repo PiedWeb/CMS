@@ -1,11 +1,11 @@
 {% set ok = false %}
 {% if page.mainContent is not empty %}
     {% set ok = true %}
-{% else if page.issetOnlyOneProduct is defined and page.issetOnlyOneProduct %}
+{% elseif page.issetOnlyOneProduct is defined and page.issetOnlyOneProduct %}
     {% set ok = true %}
 {% endif %}
 
-{% if ok === true %}
+{% if ok %}
 <section class="section-gap" id="content">
     <div class="container">
         {% include(template_from_string(page.mainContent)) %}

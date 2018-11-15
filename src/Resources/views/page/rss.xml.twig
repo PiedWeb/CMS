@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0">
+    <channel>
+        <title>{{ logo_alt }}</title>
+        <link>{{ url('piedweb_cms_page') }}</link>
+
+        {% for page in pages %}
+            <item>
+                <title>
+                    {% if page.h1 is defined and page.h1 is not null %}
+                        {{ page.h1 }}
+                    {% else %}
+                        {{ page.title }}
+                    {% endif %}
+                </title>
+                <link>{{ url('piedweb_cms_page', (page.slug == 'homepage' ? {} : {slug: page.getRealSlug})) }}</link>
+                <pubDate>{{ page.createdAt|date("D, d M Y H:i:s T") }}</pubDate>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>
