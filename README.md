@@ -115,20 +115,23 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 - un lien javascript pour les pages avec metaRobots 'no-index' (extension twig pour générer les liens!)
 
 - Edition d'une Page (à Réfléchir !)
+```
 --- Minimum: intégrer ACE pour mainContent (https://ace.c9.io/ (https://github.com/heygrady/ace-mode-twig))
 --- Inspiration: https://github.com/codecasts/codecasts
 --- Charger la liste des template disponible && Permettre l'édition (la création) de views/component directement online
 --- Une gestion du mainContent via un drag'n Drop de component
 --- quitter l'admin traditionnel pour un ediit on the page et intégrer un éditeur enrichi ?
 --- la gestion de componenent directement dans l'admin
-
+```
 - une interface d'upload d'images plus efficaces (drag'n drop, multiple, url, import...)
 
 - gérer un breadcrumb (function twig ou juste component) #Easy
 
 - CACHE :
+```
 -- Be able to generate like a static website
 -- Manage antother cache solution
+```
 
 ### Next Next
 
@@ -137,9 +140,12 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 - Create interface for entity Traits
 
 - More pluggable :
+```
 - FAQ in a separate Bundle
 - Media in a separate Bundle (?)
 - Contact in a separate Bunde (?)
+```
+
 - free default theme
 
 ## Contributors
