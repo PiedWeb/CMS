@@ -7,7 +7,7 @@
         <div class="container">
 
             {% if logo is defined %}
-                <a class="navbar-brand" href="{% if logo.href is defined %}{{ logo.href }}{% else %}{{ path('piedweb_cms_page') }}{% endif %}">
+                <a class="navbar-brand" href="{% if logo.href is defined %}{{ logo.href }}{% else %}{{ path('piedweb_cms_homepage')|pwi }}{% endif %}">
                     {% if logo.alt is defined %}{{ logo.alt }}{% endif %}
                 </a>
             {% endif %}

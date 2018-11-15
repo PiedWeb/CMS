@@ -57,6 +57,11 @@ services:
             - [ setTranslationFallback, [ true ]]
             #- [ setTranslatableLocale, [ "@=service('request_stack').getCurrentRequest().getLocale()" ]]
 
+    PiedWeb\CMSBundle\Twig\AppExtension:
+        tags: ['twig.extension']
+        arguments: [ "@request_stack", '%locale%']
+
+
 # --------
 # Admin
 # --------

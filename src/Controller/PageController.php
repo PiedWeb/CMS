@@ -11,6 +11,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use PiedWeb\CMSBundle\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use \Gedmo\Translatable\TranslatableListener;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends AbstractController
 {
@@ -18,7 +19,8 @@ class PageController extends AbstractController
 
     public function show(string $slug = 'homepage', Request $request, TranslatorInterface $translator)
     {
-        $page = $this->getDoctrine()->getRepository(Page::class)->findOneBySlug($slug == '' ? 'homepage' : $slug, $request->getLocale());
+        $slug = $slug == '' ? 'homepage' : $slug;
+        $page = $this->getDoctrine()->getRepository(Page::class)->findOneBySlug($slug, $request->getLocale());
 
         // Check if page exist
         if ($page === null && $slug == 'homepage') {
@@ -27,12 +29,12 @@ class PageController extends AbstractController
                  ->setExcrept($translator->trans('installation.new.text'));
             return $this->render('@PiedWebCMS/page/page.html.twig', ['page' => $page]);
         } elseif ($page === null) {
-            throw $this->createNotFoundException($translator->trans('page.not_found'));
+            throw $this->createNotFoundException();
         }
 
         // Check if page is public
         if($page->getCreatedAt() > new \DateTimeImmutable() && !$this->isGranted('ROLE_ADMIN')) {
-            throw new NotFoundHttpException('Sorry not existing!');
+            throw $this->createNotFoundException();
         }
 
         $redirect = $this->checkIfUriIsCanonical($request, $page);
@@ -58,24 +60,23 @@ class PageController extends AbstractController
 
         $defaultLocale = $this->container->getParameter('locale');
 
-        $expected = $page->getSlug()=='homepage' ?
-            // rtrim to keep homepage on mydomain.tld more than mydomain.tld/default-locale/
-            // rtrim($this->get('router')->generate('piedweb_cms_page'), $defaultLocale.'/')
-            $this->get('router')->generate('piedweb_cms_page') :
+        $expected = $page->getSlug()=='homepage' && $defaultLocale == $request->getLocale() ?
+            // preg_replace to keep homepage on mydomain.tld more than mydomain.tld/default-locale/
+            //preg_replace('/'.$defaultLocale.'$/', '', $this->get('router')->generate('piedweb_cms_page')) :
+            $this->get('router')->generate('piedweb_cms_homepage') :
             $this->get('router')->generate('piedweb_cms_page', ['slug'=>$page->getRealSlug()])
         ;
 
         /**
         echo '<pre>';
-        var_dump($this->get('router')->generate('piedweb_cms_page'));
-        var_dump(rtrim($this->get('router')->generate('piedweb_cms_page'), $defaultLocale.'/'));
+        var_dump($this->get('router')->generate('piedweb_cms_homepage'));
+        var_dump(rtrim($this->get('router')->generate('piedweb_cms_homepage'), $defaultLocale.'/'));
         var_dump($defaultLocale);
         var_dump($expected);
         var_dump($real);
         var_dump($real != $expected);
         echo '</pre>';
         **/
-
         //return false;
         if ($real != $expected) {
             return [$request->getBasePath().$expected, 301];
@@ -85,6 +86,9 @@ class PageController extends AbstractController
         return false;
     }
 
+    /*
+     * todo: paginate
+     */
     public function showList(?Page $page, $render = '@PiedWebCMS/page/_list.html.twig', $limit = 100)
     {
         $qb = $this->getDoctrine()->getRepository(Page::class)->getQueryToFindPublished('p');

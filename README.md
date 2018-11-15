@@ -103,7 +103,6 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 
 ### For soon
 - Handle the error on non requestion running for `stof_doctrine_extensions.listener.translatable` `setTranslatableLocale` in config/services.yaml
-- Try to understand this behavior https://github.com/symfony/symfony/pull/26284#issuecomment-438929513
 - Créer une recette (recipe flex) pour enlever du skeleton config/routes & co et les ajouter via flex (et essayer Skeleton)
 - test, test, test (ahah !)
 - search for all "todo" in the code
@@ -126,13 +125,21 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 --- la gestion de componenent directement dans l'admin
 ```
 - une interface d'upload d'images plus efficaces (drag'n drop, multiple, url, import...)
+- identifier la couleur d'une image et l'enregistrer dans Media pour faire un placeholder cohérent
 
 - gérer un breadcrumb (function twig ou juste component) #Easy
 
 - CACHE :
 ```
 -- Be able to generate like a static website
--- Manage antother cache solution
+   domain.tld on static/
+   admin.domain.tld on public (so website stille avalaible, add httpsswd)
+   method: new function in PageController, listAllPages, store in ../static, copy assets (yarn, php assets)
+   update: cron? (berk) || update queue after each modification => Bundle
+   deploy another place (see sculpin => https://sculpin.io/getstarted/#deploy-sculpin)
+   todo: remove contact form & ajax footer from default install
+
+-- Manage antother cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://github.com/WyriHaximus/HtmlCompress
 ```
 
 ### Next Next
@@ -143,6 +150,7 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 
 - More pluggable :
 ```
+- Move twig in a separate Bundle
 - FAQ in a separate Bundle
 - Media in a separate Bundle (?)
 - Contact in a separate Bunde (?)

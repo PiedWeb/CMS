@@ -13,6 +13,11 @@ user:
 admin:
     resource: '@PiedWebCMSBundle/Resources/config/routes/admin.yaml'
 
+piedweb_cms_homepage:
+    path:     /
+    controller: PiedWeb\CMSBundle\Controller\PageController::show
+    methods:    [GET, HEAD]
+
 page:
     resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'
     prefix: /{_locale}
