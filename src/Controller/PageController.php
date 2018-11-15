@@ -20,12 +20,19 @@ class PageController extends AbstractController
     {
         $page = $this->getDoctrine()->getRepository(Page::class)->findOneBySlug($slug == '' ? 'homepage' : $slug, $request->getLocale());
 
+        // Check if page exist
         if ($page === null && $slug == 'homepage') {
             $page = new Page();
             $page->setTitle($translator->trans('installation.new.title'))
                  ->setExcrept($translator->trans('installation.new.text'));
+            return $this->render('@PiedWebCMS/page/page.html.twig', ['page' => $page]);
         } elseif ($page === null) {
             throw $this->createNotFoundException($translator->trans('page.not_found'));
+        }
+
+        // Check if page is public
+        if($page->getCreatedAt() > new \DateTimeImmutable() && !$this->isGranted('ROLE_ADMIN')) {
+            throw new NotFoundHttpException('Sorry not existing!');
         }
 
         $redirect = $this->checkIfUriIsCanonical($request, $page);

@@ -1,18 +1,35 @@
 <!DOCTYPE html>
-<html lang="{#{ locale }#}">
+<html lang="{{ app.request.getLocale() }}">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="shortcut icon" href="/favicon.ico">
-        <meta name="theme-color" content="#1fa67a"/>
-        <title>{% block title %}Pied Web{% endblock %}</title>
-        {% if page.metaRobots is defined and page.metaRobots is not null %}
-            <meta name="robots" content="{{ page.metaRobots }}">
-        {% endif %}
-        <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
+        {% block head %}
+            <meta charset="UTF-8">
+
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+            <link rel="shortcut icon" href="/favicon.ico">
+
+            {% if app_color is defined and app_color is not null %}
+                <meta name="theme-color" content="{{ app_color }}"/>
+            {% endif %}
+
+            <title>{{ app.request.getLocale() }} {% block title %}Pied Web{% endblock %}</title>
+
+            {% if page.metaRobots is defined and page.metaRobots is not null %}
+                <meta name="robots" content="{{ page.metaRobots }}">
+            {% endif %}
+
+            {% block css %}
+                <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
+            {% endblock %}
+        {% endblock %}
     </head>
     <body>
+
         {% block body %}{% endblock %}
-        <script src="{{ asset('assets/app.js') }}"></script>
+
+        {% block script %}
+            <script src="{{ asset('assets/app.js') }}"></script>
+        {% endblock %}
+
     </body>
 </html>

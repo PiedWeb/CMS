@@ -184,7 +184,8 @@ class PageAdmin extends AbstractAdmin
         ]);
         }
         $formMapper->add('createdAt', DateTimePickerType::class, [
-            'date_format' => 'd MMMM y H:mm',
+            //'date_format' => 'd MMMM y H:mm',
+            'format' => DateTimeType::HTML5_FORMAT,
             'dp_side_by_side'       => true,
             'dp_use_current'        => true,
             'dp_use_seconds'        => false,
@@ -195,7 +196,8 @@ class PageAdmin extends AbstractAdmin
              'label'                 => 'admin.page.createdAt.label',
         ]);
         $formMapper->add('updatedAt', DateTimePickerType::class, [
-            'date_format' => 'd MMMM y H:mm',
+            //'date_format' => 'd MMMM y H:mm',
+            'format' => DateTimeType::HTML5_FORMAT,
             'dp_side_by_side'       => true,
             'dp_use_current'        => true,
             'dp_use_seconds'        => false,

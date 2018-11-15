@@ -108,6 +108,8 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 - test, test, test (ahah !)
 - search for all "todo" in the code
 - "Afficher" dans PageAdmin ne fonctionne pas sur les pages i18n (renvoie vers la page default_locale)
+- la suppression d'une page qui était parente d'une autre, va créer des erreurs (et l'impossibilité d'éditer la page fille)
+- idem image ?
 
 ### Next
 - admin homepage sexiest (__or redirect to AdminPage__ cf https://github.com/sonata-project/SonataAdminBundle/issues/5297)
