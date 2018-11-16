@@ -108,13 +108,8 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 (half in french)
 
 ### For soon
-- Handle the error on non requestion running for `stof_doctrine_extensions.listener.translatable` `setTranslatableLocale` in config/services.yaml
 - Créer une recette (recipe flex) pour enlever du skeleton config/routes & co et les ajouter via flex (et essayer Skeleton)
 - test, test, test (ahah !)
-- search for all "todo" in the code
-- "Afficher" dans PageAdmin ne fonctionne pas sur les pages i18n (renvoie vers la page default_locale)
-- la suppression d'une page qui était parente d'une autre, va créer des erreurs (et l'impossibilité d'éditer la page fille)
-- idem image ?
 
 ### Next
 - admin homepage sexiest (__or redirect to AdminPage__ cf https://github.com/sonata-project/SonataAdminBundle/issues/5297)
@@ -163,6 +158,10 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 ```
 
 - free default theme
+
+- search for all "todo" in the code
+
+- "Afficher" dans PageAdmin ne fonctionne pas sur les pages i18n (renvoie vers la page default_locale)
 
 ## Contributors
 

@@ -33,6 +33,10 @@ services:
             - { name: kernel.event_listener, event: vich_uploader.post_upload }
             #- { name: doctrine.orm.entity_listener, entity: PiedWeb\CMSBundle\Entity\Image, event: prePersist }
 
+    PiedWeb\CMSBundle\EventListener\PageListener:
+        tags:
+            - { name: doctrine.orm.entity_listener, entity: PiedWeb\CMSBundle\Entity\Page, event: preRemove }
+
     piedweb.feed.dumper:
         class: PiedWeb\CMSBundle\Service\FeedDumpService
         arguments: [ "@doctrine.orm.entity_manager", "@twig", "%app.dir%"]

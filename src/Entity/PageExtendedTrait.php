@@ -125,7 +125,7 @@ trait PageExtendedTrait
         return $this;
     }
 
-    public function getChildrenPage()
+    public function getChildrenPages()
     {
         return $this->childrenPages;
     }
