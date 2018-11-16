@@ -70,6 +70,12 @@ php bin/console server:run
 ... customize everything by [overriding any part of the bundle](https://symfony.com/doc/current/bundles/override.html)
 (You will need to read a bit of code because it's not yet full documented)
 
+## Extension
+
+List of Bundles wich extend this one:
+
+* [Contact](https://github.com/PiedWeb/ContactBundle)
+* ...
 
 
 ## Cookbook
@@ -126,6 +132,7 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 ```
 - une interface d'upload d'images plus efficaces (drag'n drop, multiple, url, import...)
 - identifier la couleur d'une image et l'enregistrer dans Media pour faire un placeholder cohérent
+- l'upload d'une image via une page ne s'ajoute pas automatiquement (sonata)
 
 - gérer un breadcrumb (function twig ou juste component) #Easy
 
@@ -153,7 +160,6 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 - Move twig in a separate Bundle
 - FAQ in a separate Bundle
 - Media in a separate Bundle (?)
-- Contact in a separate Bunde (?)
 ```
 
 - free default theme
@@ -166,6 +172,11 @@ If you use it, or just copy a piece of it, I will be glad to know it (contact@ro
 * [Robin](https://www.robin-d.fr/) / [Pied Web](https://piedweb.com)
 * ...
 
+Check coding standard before to commit :
+```
+php-cs-fixer fix src --rules=@Symfony --verbose
+php-cs-fixer fix src --rules='{"array_syntax": {"syntax": "short"}}' --verbose
+```
 
 ## License
 

@@ -50,6 +50,15 @@ class PageController extends AbstractController
         return $this->render($template, ['page' => $page]);
     }
 
+    /**
+     * To load the footer with Fetch.
+     * To remove : replace by block and load ~(block).html.twig with authorized block in parameters ?
+     */
+    public function footer(Request $request): Response
+    {
+        return $this->render('@PiedWebCMS/page/_footer.html.twig');
+    }
+
     protected function checkIfUriIsCanonical($request, $page)
     {
         $real = $request->getRequestUri();

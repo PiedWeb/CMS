@@ -6,3 +6,7 @@ piedweb_cms_page:
     requirements:
         slug: '[a-zA-Z1-9\-_]*'
 
+piedweb_cms_footer:
+    path:     /~footer
+    controller: PiedWeb\CMSBundle\Controller\PageController::footer
+    methods:    [POST]

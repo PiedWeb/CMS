@@ -58,7 +58,7 @@ class MediaListener
         if ($same && (null == $media->getId() || $media->getId() != $same->getId())) {
             $media->setName($media->getName().' ('.$this->iterate.')');
             ++$this->iterate;
-            $this->iterateName($media);
+            $this->checkIfNameEverExistInDatabase($media);
         }
 
         return $media;

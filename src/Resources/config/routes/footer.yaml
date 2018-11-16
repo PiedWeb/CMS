@@ -1,4 +1,5 @@
 piedweb_cms_footer:
     path:     /~footer
-    controller: PiedWeb\CMSBundle\Controller\FooterController::footer
+    controller: PiedWeb\CMSBundle\Controller\PageController::footer
     methods:    [POST]
+

@@ -1,9 +1,6 @@
 liip:
     resource: '@PiedWebCMSBundle/Resources/config/routes/liip_imagine.yaml'
 
-contact:
-    resource: '@PiedWebCMSBundle/Resources/config/routes/contact.yaml'
-
 footer:
     resource: '@PiedWebCMSBundle/Resources/config/routes/footer.yaml'
 

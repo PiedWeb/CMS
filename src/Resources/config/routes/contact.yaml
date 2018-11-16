@@ -1,4 +1,0 @@
-piedweb_cms_contact:
-    path:     /~contact
-    controller: PiedWeb\CMSBundle\Controller\ContactController::show
-    methods:    [GET, POST]
