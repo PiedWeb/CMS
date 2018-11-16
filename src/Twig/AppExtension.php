@@ -32,9 +32,9 @@ class AppExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('jslink', array(AppExtension::class, 'renderJavascriptLink')),
-        );
+        return [
+            new TwigFunction('jslink', [AppExtension::class, 'renderJavascriptLink']),
+        ];
     }
 
     public function checkPath($path)
@@ -49,6 +49,6 @@ class AppExtension extends AbstractExtension
 
     public static function renderJavascriptLink($anchor, $path, $attr = [])
     {
-        return '<span'.self::mergeAndMapAttributes($attr, ['data-href'=>$path]).'>'.$anchor.'</span>';
+        return '<span'.self::mergeAndMapAttributes($attr, ['data-href' => $path]).'>'.$anchor.'</span>';
     }
 }

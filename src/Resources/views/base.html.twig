@@ -12,7 +12,7 @@
                 <meta name="theme-color" content="{{ app_color }}"/>
             {% endif %}
 
-            <title>{{ app.request.getLocale() }} {% block title %}Pied Web{% endblock %}</title>
+            <title>{% block title %}Pied Web{% endblock %}</title>
 
             {% if page.metaRobots is defined and page.metaRobots is not null %}
                 <meta name="robots" content="{{ page.metaRobots }}">
