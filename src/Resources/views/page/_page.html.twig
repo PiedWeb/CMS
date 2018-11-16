@@ -17,11 +17,6 @@
 {% endblock %}
 
 
-{% block faq %}
-    {% include '@PiedWebCMS/page/_faq.html.twig' %}
-{% endblock %}
-
-
 {% block relatedContent %}
     {% if page.relatedPages is defined and page.relatedPages is not empty %}
         {% set pages = page.relatedPages %}

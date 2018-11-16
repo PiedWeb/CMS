@@ -82,13 +82,6 @@ services:
             - [ setTemplate, [outer_list_rows_mosaic, '@@PiedWebCMS/admin/media_mosaic_body.html.twig']]
         public: true
 
-    piedweb.admin.faq:
-        class: PiedWeb\CMSBundle\Admin\FaqAdmin
-        arguments: [~, PiedWeb\CMSBundle\Entity\Faq, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: Faq }
-        public: true
-
     piedweb.admin.media:
         class: PiedWeb\CMSBundle\Admin\MediaAdmin
         arguments: [~, PiedWeb\CMSBundle\Entity\Media, ~]

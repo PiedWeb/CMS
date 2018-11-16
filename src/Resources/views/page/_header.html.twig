@@ -16,3 +16,11 @@
         {% endif %}
     {% endif %}
 {% endblock %}
+
+{% block fash_massage %}
+<div class="row">
+    <div class="col-sm-12">
+        {% include ('@PiedWebCMS/component/flash_message.html.twig') %}
+    </div>
+</div>
+{% endblock %}

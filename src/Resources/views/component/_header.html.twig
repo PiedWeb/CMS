@@ -3,6 +3,11 @@
     subtitle
     description
     image
+    button
+        attr
+            href
+            ...
+        label
 #}
 <section class="hero-banner">
     <div class="relative" id="cover-banner"
@@ -35,24 +40,14 @@
                         {% endblock %}
 
                         {% block header_button %}
-                            {% if page.issetProduct is defined and page.issetProduct %}
-                                {% if page.issetFaq is defined and page.issetFaq %}
-                                    <a href="#faq" class="btn btn-header-light">{{ 'header.questions'|trans }}</a>
-                                {% endif %}
-                                <a href="{% if page.issetOnlyOneProduct == true %}#content{% else %}#reserve{% endif %}" class="btn btn-header">{{ 'header.reserve'|trans }}</a>
-                                {% if page.issetImage is defined and page.issetImage %}
-                                    <a href="#gallery" class="btn btn-header-light">{{ 'header.photos'|trans }}</a>
-                                {% endif %}
+                            {% if button is defined and button %}
+                                    <a{{ mergeAttr({'class': 'btn btn-header-light'}, button.attr) }}>{{ button.label }}</a>
                             {% endif %}
                         {% endblock %}
                     </div>
 
-                {# To remove ? #}
-                <div class="row">
-                    <div class="col-sm-12">
-                        {% include ('@PiedWebCMS/component/flash_message.html.twig') %}
-                    </div>
-                </div>
+                {% block fash_massage %}
+                {% endblock %}
 
 
                 </div>

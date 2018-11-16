@@ -10,22 +10,6 @@ installation:
 #---
 # Views Component
 #---
-contact:
-    send:
-        prefix_subject: "[PiedWebContact] De "
-        success: 'Message envoyé avec succès'
-    title:  Keep In Touch
-    label: Contact
-    subtitle: Nous répondons habituellement en moins de trois heures.
-    email: Email
-    adress: Adresse
-
-faq:
-    title: Foire Aux Questions
-    subtitle: Qui peuvent également vous intéresser.
-    ask: Poser un autre question ?
-
-
 video:
     play: 'Lecture'
 

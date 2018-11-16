@@ -5,9 +5,6 @@ namespace PiedWeb\CMSBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/**
- * @ORM\Entity(repositoryClass="PiedWeb\CMSBundle\Repository\FaqRepository")
- */
 trait TranslatableTrait
 {
     use \Sonata\TranslationBundle\Traits\Gedmo\TranslatableTrait;

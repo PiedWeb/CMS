@@ -146,6 +146,8 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 
 ### Next Next
 
+- Command line tool to generate Overriding entity (example: `create-entity Page -traits=@PiedWebCMS\Entity\PageExtented,@PiedWebFaq\Entity\PageFaq`)
+
 - Change translatable (gedmo) to make something more scalable and easy to use with repo (knp ?, other?)
 
 - Create interface for entity Traits
@@ -153,7 +155,6 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 - More pluggable :
 ```
 - Move twig in a separate Bundle
-- FAQ in a separate Bundle
 - Media in a separate Bundle (?)
 ```
 

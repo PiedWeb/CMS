@@ -12,13 +12,12 @@ use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
  */
 class Page implements TranslatableInterface
 {
-    use IdTrait, PageTrait, PageExtendedTrait, PageImageTrait, PageFaqTrait, TranslatableTrait;
+    use IdTrait, PageTrait, PageExtendedTrait, PageImageTrait, TranslatableTrait;
 
     public function __construct()
     {
         $this->__construct_page();
         $this->__construct_extended();
         $this->__construct_image();
-        $this->__construct_faq();
     }
 }
