@@ -5,10 +5,7 @@ namespace PiedWeb\CMSBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Translatable\Translatable;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
-use Sonata\TranslationBundle\Model\Gedmo\AbstractPersonalTranslatable;
 
 /**
  * Page extended: // I may cut this in multiple traits
@@ -16,7 +13,7 @@ use Sonata\TranslationBundle\Model\Gedmo\AbstractPersonalTranslatable;
  * - Rich Content (subtitle, excrept, parentPage, h1, name [to do short link] )
  * - RelatedPages
  * - author (link)
- * - template
+ * - template.
  */
 trait PageExtendedTrait
 {

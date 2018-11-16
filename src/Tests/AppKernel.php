@@ -2,7 +2,6 @@
 
 namespace PiedWeb\CMSBundle\Tests;
 
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -13,7 +12,6 @@ class AppKernel extends Kernel
 {
     use MicroKernelTrait;
 
-
     public function __construct()
     {
         parent::__construct('test', true);
@@ -21,13 +19,13 @@ class AppKernel extends Kernel
 
     public function registerBundles()
     {
-        return array(
+        return [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \PiedWeb\CMSBundle\PiedWebCMSBundle(),
             new \Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
-            new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle()
-        );
+            new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+        ];
     }
 
     public function getCacheDir()

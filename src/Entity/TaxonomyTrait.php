@@ -2,7 +2,6 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use PiedWeb\CMSBundle\Entity\Page;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,7 +24,7 @@ trait TaxonomyTrait
     private $parentAttribute;
 
     /**
-     *  ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\Page", mappedBy="attributes")
+     *  ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\Page", mappedBy="attributes").
      */
     //private $pages;
 
@@ -101,7 +100,7 @@ trait TaxonomyTrait
         return $this;
     }
 
-    /**
+    /*
      * @return Collection|Page[]
      *
     public function getPages(): Collection

@@ -2,14 +2,12 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use PiedWeb\CMSBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 trait PageImageTrait
 {
-
     /**
      * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\Media")
      */
@@ -33,7 +31,7 @@ trait PageImageTrait
     public function setMainImage(?Media $mainImage): self
     {
         // TODO: Déplacer en Assert pour éviter une erreur dégueu ?!
-        if ($mainImage->getWidth() === null) {
+        if (null === $mainImage->getWidth()) {
             throw new \Exception('mainImage must be an Image. Media imported is not an image');
         }
 
@@ -62,7 +60,7 @@ trait PageImageTrait
     public function addImage(Media $image): self
     {
         if (!$this->images->contains($image)) {
-            if ($image->getWidth() === null) {
+            if (null === $image->getWidth()) {
                 throw new \Exception('Media `'.$image->getMedia().'` isn\'t an image.');
             }
             $this->images[] = $image;

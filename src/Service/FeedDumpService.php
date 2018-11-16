@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityManager;
 use PiedWeb\CMSBundle\Entity\Page;
 
 /**
- * Inspired by https://github.com/eko/FeedBundle
+ * Inspired by https://github.com/eko/FeedBundle.
  */
 class FeedDumpService
 {
@@ -40,7 +40,6 @@ class FeedDumpService
      */
     private $webDir;
 
-
     public function __construct(EntityManager $em, $twig, $webDir)
     {
         $this->em = $em;
@@ -58,7 +57,6 @@ class FeedDumpService
         if (!method_exists($this->filesystem, 'dumpFile')) {
             throw new \RuntimeException('Method dumpFile() is not available on your Filesystem component version, you should upgrade it.');
         }
-
 
         $dump = $this->render();
         $filepath = $this->webDir.'/feed.xml';

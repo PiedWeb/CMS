@@ -2,17 +2,11 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Gedmo\Sluggable\Util\Urlizer;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Cocur\Slugify\Slugify;
-use Gedmo\Translatable\Translatable;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 trait MediaTrait
@@ -36,7 +30,6 @@ trait MediaTrait
      * @ORM\Column(type="integer", nullable=true)
      */
     private $height;
-
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -74,6 +67,7 @@ trait MediaTrait
     {
         if (!$this->slug) {
             $slugify = new Slugify();
+
             return $this->slug = $slugify->slugify($this->getName()); //Urlizer::urlize($this->getName());
         }
 
@@ -147,6 +141,7 @@ trait MediaTrait
 
         return $this;
     }
+
     public function getSize()
     {
         return $this->size;

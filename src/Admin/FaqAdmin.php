@@ -1,4 +1,5 @@
 <?php
+
 namespace PiedWeb\CMSBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -14,7 +15,7 @@ class FaqAdmin extends AbstractAdmin
     {
         $formMapper->add('category', TextType::class);
         $formMapper->add('question', TextType::class);
-        $formMapper->add('answer', TextareaType::class, ['attr' =>['style' => 'min-height: 200px;']]);
+        $formMapper->add('answer', TextareaType::class, ['attr' => ['style' => 'min-height: 200px;']]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -36,11 +37,11 @@ class FaqAdmin extends AbstractAdmin
         $listMapper->add('answer', null, [
             'editable' => true,
         ]);
-        $listMapper ->add('_action', null, [
+        $listMapper->add('_action', null, [
                 'actions' => [
                 'edit' => [],
                 'delete' => [],
-            ]
+            ],
         ]);
     }
 }

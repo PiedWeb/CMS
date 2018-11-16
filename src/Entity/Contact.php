@@ -48,8 +48,10 @@ class Contact
     protected $message;
 
     /**
-     * Set name
+     * Set name.
+     *
      * @param string|null
+     *
      * @return ContactForm
      */
     public function setName($name)
@@ -60,7 +62,8 @@ class Contact
     }
 
     /**
-     * Get name
+     * Get name.
+     *
      * @return string|null
      */
     public function getName()
@@ -69,8 +72,10 @@ class Contact
     }
 
     /**
-     * Set fr0m
+     * Set fr0m.
+     *
      * @param string|null
+     *
      * @return ContactForm
      */
     public function setFr0m($fr0m)
@@ -81,7 +86,8 @@ class Contact
     }
 
     /**
-     * Get fr0m
+     * Get fr0m.
+     *
      * @return string|null
      */
     public function getFr0m()
@@ -90,8 +96,10 @@ class Contact
     }
 
     /**
-     * Set message
+     * Set message.
+     *
      * @param string|null
+     *
      * @return ContactForm
      */
     public function setMessage($message)
@@ -102,7 +110,8 @@ class Contact
     }
 
     /**
-     * Get message
+     * Get message.
+     *
      * @return string|null
      */
     public function getMessage()

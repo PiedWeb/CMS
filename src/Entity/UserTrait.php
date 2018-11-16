@@ -4,7 +4,6 @@ namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 trait UserTrait
 {
@@ -14,7 +13,7 @@ trait UserTrait
     private $createdAt;
 
     /**
-     * Loaded from BaseUser
+     * Loaded from BaseUser.
      *
      * @Assert\Email(
      *     message = "user.email.invalid"
@@ -24,7 +23,7 @@ trait UserTrait
     protected $email;
 
     /**
-     * Loaded From BaseUser
+     * Loaded From BaseUser.
      *
      * @Assert\Length(
      *     min=7,
@@ -35,18 +34,16 @@ trait UserTrait
     protected $plainPassword;
 
     /**
-    *
-    * @ORM\PrePersist
-    */
+     * @ORM\PrePersist
+     */
     public function overrideUsernameWithEmail()
     {
         $this->username = $this->email;
     }
 
     /**
-    *
-    * @ORM\PrePersist
-    */
+     * @ORM\PrePersist
+     */
     public function updatedTimestamps(): self
     {
         $this->setCreatedAt(new \DateTime('now'));

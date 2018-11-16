@@ -2,10 +2,8 @@
 
 namespace PiedWeb\CMSBundle\Tests\Controller;
 
-use PiedWeb\CMSBundle\Entity\Page;
 use PiedWeb\CMSBundle\Tests\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 class PageControllerTest extends WebTestCase
@@ -17,7 +15,6 @@ class PageControllerTest extends WebTestCase
         //$container = self::$container;
 
         $kernel = new AppKernel();
-
 
         $client = new Client($kernel);
         $client->request('GET', '/');

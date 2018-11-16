@@ -4,8 +4,6 @@ namespace PiedWeb\CMSBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use PiedWeb\CMSBundle\Serializer\FormErrorSerializer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use PiedWeb\CMSBundle\Entity\Contact;
@@ -56,13 +54,16 @@ class ContactController extends AbstractController
                 $this->sendMessage($form->getData());
 
                 $form = $form->createView();
+
                 return $this->render('@PiedWebCMS/component/_alert.html.twig', ['message' => $this->translator->trans('contact.send.success'), 'context' => 'success']);
             } else {
                 $form = $form->createView();
+
                 return $this->render('@PiedWebCMS/page/_form_contact.html.twig', ['contact' => $form]);
             }
         } else {
             $form = $form->createView();
+
             return $this->render('@PiedWebCMS/page/_contact.html.twig', ['contact' => $form]);
         }
     }
@@ -74,7 +75,7 @@ class ContactController extends AbstractController
                 ->setFrom($this->container->getParameter('app.email.sender'))
                 ->setReplyTo($contact->getFr0m())
                 ->setTo($this->container->getParameter('app_contact_email'))
-                ->setBody($this->renderView('@PiedWebCMS/contact/sendmail.html.twig', ['message'=> $contact->getMessage()]), 'text/html');
+                ->setBody($this->renderView('@PiedWebCMS/contact/sendmail.html.twig', ['message' => $contact->getMessage()]), 'text/html');
         $this->get('mailer')->send($message);
 
         return;

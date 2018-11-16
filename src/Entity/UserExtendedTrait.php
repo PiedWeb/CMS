@@ -2,9 +2,6 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use PiedWeb\CMSBundle\Entity\Page;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 trait UserExtendedTrait
@@ -74,7 +71,6 @@ trait UserExtendedTrait
      * )
      */
     private $phone;
-
 
     public function getFirstname(): ?string
     {

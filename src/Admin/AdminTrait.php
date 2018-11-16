@@ -1,4 +1,5 @@
 <?php
+
 namespace PiedWeb\CMSBundle\Admin;
 
 trait AdminTrait
@@ -7,7 +8,7 @@ trait AdminTrait
      * Must be a cookie to check before to do that
      * If you click one time to list, stay in liste mode.
      * Yes it's in the session
-     * TODO
+     * TODO.
      * */
     protected function setMosaicDefaultListMode(): self
     {

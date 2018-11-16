@@ -29,8 +29,8 @@ class PageRepository extends ServiceEntityRepository
         ;
     }
 
-     public function findOneBySlug($slug, $language = null) {
-
+    public function findOneBySlug($slug, $language = null)
+    {
         $q = $this->createQueryBuilder('p')
             ->andWhere('p.slug = :val')
             ->setParameter('val', $slug)
@@ -39,15 +39,15 @@ class PageRepository extends ServiceEntityRepository
             ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
             ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
         ;
-        if ($language !== null)
+        if (null !== $language) {
             $q->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $language);
+        }
 
         //var_dump($q->getSql()); exit;
         $result = $q->getResult();
 
-        return (isset($result[0]) ? $result[0] : null);
-     }
-
+        return isset($result[0]) ? $result[0] : null;
+    }
 
 //    /**
 //     * @return Page[] Returns an array of Page objects

@@ -2,16 +2,12 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
-use Gedmo\Translatable\Translatable;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 trait PageTrait
 {
-
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=150)
@@ -53,8 +49,8 @@ trait PageTrait
 
     public function __construct_page()
     {
-        $this->updatedAt = $this->updatedAt !== null ? $this->updatedAt : new \DateTimeImmutable();
-        $this->createdAt = $this->createdAt !== null ? $this->createdAt : new \DateTimeImmutable();
+        $this->updatedAt = null !== $this->updatedAt ? $this->updatedAt : new \DateTimeImmutable();
+        $this->createdAt = null !== $this->createdAt ? $this->createdAt : new \DateTimeImmutable();
     }
 
     public function getSlug(): ?string
@@ -64,7 +60,7 @@ trait PageTrait
 
     public function getRealSlug(): ?string
     {
-        if ($this->slug == 'homepage') {
+        if ('homepage' == $this->slug) {
             $this->slug = '';
         }
 
@@ -74,8 +70,8 @@ trait PageTrait
     public function setSlug($slug): self
     {
         // work around for disabled input in sonata admin
-        if ($slug === null) {
-            if ($this->slug === null) {
+        if (null === $slug) {
+            if (null === $this->slug) {
                 throw new \ErrorException('slug cant be null');
             }
         } else {

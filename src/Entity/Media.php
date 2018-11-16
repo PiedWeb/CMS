@@ -17,10 +17,9 @@ class Media implements TranslatableInterface
 {
     use IdTrait, MediaTrait, TimestampableEntity, TranslatableTrait;
 
-
     public function __construct()
     {
-        $this->updatedAt = $this->updatedAt !== null ? $this->updatedAt : new \DateTimeImmutable();
-        $this->createdAt = $this->createdAt !== null ? $this->createdAt : new \DateTimeImmutable();
+        $this->updatedAt = null !== $this->updatedAt ? $this->updatedAt : new \DateTimeImmutable();
+        $this->createdAt = null !== $this->createdAt ? $this->createdAt : new \DateTimeImmutable();
     }
 }

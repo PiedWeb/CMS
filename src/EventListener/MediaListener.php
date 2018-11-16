@@ -1,9 +1,7 @@
 <?php
+
 namespace PiedWeb\CMSBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use PiedWeb\CMSBundle\Entity\Media;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 use Vich\UploaderBundle\Event\Event;
 use Doctrine\ORM\EntityManager;
 
@@ -20,7 +18,7 @@ class MediaListener
     }
 
     /**
-     * Check if name exist
+     * Check if name exist.
      */
     public function onVichUploaderPreUpload(Event $event)
     {
@@ -34,22 +32,22 @@ class MediaListener
     /**
      * Todo: log i
      * If file location is changing
-     * Create a redirection to the new Image
+     * Create a redirection to the new Image.
      */
     private function checkIfFileLocationIsChanging($media)
     {
-        if ($media->getName() !== null && 1 == 'todo') {
+        if (null !== $media->getName() && 1 == 'todo') {
             // TODO
         }
     }
 
     /**
      * Si l'utilisateur ne propose pas de nom pour l'image,
-     * on récupère celui d'origine duquel on enlève son extension
+     * on récupère celui d'origine duquel on enlève son extension.
      */
     private function checkIfThereIsAName($media)
     {
-        if ($media->getName() === null || empty($media->getName())) {
+        if (null === $media->getName() || empty($media->getName())) {
             $media->setName(preg_replace('/\\.[^.\\s]{3,4}$/', '', $media->getMediaFile()->getClientOriginalName()));
         }
     }
@@ -57,9 +55,9 @@ class MediaListener
     private function checkIfNameEverExistInDatabase($media)
     {
         $same = $this->em->getRepository('PiedWebCMS:Media')->findOneBy(['name' => $media->getName()]);
-        if ($same && ($media->getId() == null || $media->getId() != $same->getId())) {
+        if ($same && (null == $media->getId() || $media->getId() != $same->getId())) {
             $media->setName($media->getName().' ('.$this->iterate.')');
-            $this->iterate++;
+            ++$this->iterate;
             $this->iterateName($media);
         }
 
@@ -67,7 +65,7 @@ class MediaListener
     }
 
     /**
-     * Update RelativeDir
+     * Update RelativeDir.
      */
     public function onVichUploaderPostUpload(Event $event)
     {

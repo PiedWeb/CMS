@@ -1,24 +1,15 @@
 <?php
+
 namespace PiedWeb\CMSBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-
-use FOS\UserBundle\Model\UserManagerInterface;
-
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
-use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
-use Sonata\UserBundle\Form\Type\SecurityRolesType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\LocaleType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\FormTypeInterface;
 
 class UserAdmin extends AbstractAdmin
 {
@@ -47,7 +38,7 @@ class UserAdmin extends AbstractAdmin
                         'required' => (!$this->getSubject() || null === $this->getSubject()->getId()),
                     ])
                 ->end()
-                /**/
+
                 ->with('Profile')
                     ->add('dateOfBirth', DatePickerType::class, [
                         'years' => range(1900, $now->format('Y')),
@@ -79,7 +70,7 @@ class UserAdmin extends AbstractAdmin
                     ->add('roles', ImmutableArrayType::class, [
                         'keys' => [
                             ['0', TextType::class, ['required' => false]],
-                        ]
+                        ],
                     ])
                 ->end()
 

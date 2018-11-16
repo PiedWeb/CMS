@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\Config\FileLocator;
 use PiedWeb\CMSBundle\DependencyInjection\PiedWebCMSExtension;
 
 class PiedWebCMSBundle extends Bundle
@@ -13,6 +12,7 @@ class PiedWebCMSBundle extends Bundle
         if (null === $this->extension) {
             $this->extension = new PiedWebCMSExtension();
         }
+
         return $this->extension;
     }
 }
