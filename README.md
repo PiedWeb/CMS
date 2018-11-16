@@ -103,6 +103,10 @@ Your redirection will be at the normal page route with the slug set `domain.com/
 ### i18n (internationalization)
 It's by default activate (thanks Gedmo). To configure languages, edit `config/parameters.yaml` and `config/packages/sonata_admin.yaml`
 
+### Add js link
+```
+{{ jslink('Pied Web', path('piedweb_cms_homepage'))|raw }}
+```
 
 ## TODO
 (half in french)
@@ -113,8 +117,6 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 
 ### Next
 - admin homepage sexiest (__or redirect to AdminPage__ cf https://github.com/sonata-project/SonataAdminBundle/issues/5297)
-
-- un lien javascript pour les pages avec metaRobots 'no-index' (extension twig pour générer les liens!)
 
 - Edition d'une Page (à Réfléchir !)
 ```

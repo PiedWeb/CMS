@@ -5,9 +5,13 @@ namespace PiedWeb\CMSBundle\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Symfony\Component\HttpFoundation\RequestStack;
+use PiedWeb\RenderAttributes\AttributesTrait;
+use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension
 {
+    use AttributesTrait;
+
     protected $request;
     protected $router;
 
@@ -26,6 +30,13 @@ class AppExtension extends AbstractExtension
         ];
     }
 
+    public function getFunctions()
+    {
+        return array(
+            new TwigFunction('jslink', array(AppExtension::class, 'renderJavascriptLink')),
+        );
+    }
+
     public function checkPath($path)
     {
         if (null !== $this->defaultLocale // maybe it's not an i18n
@@ -34,5 +45,10 @@ class AppExtension extends AbstractExtension
         }
 
         return $path;
+    }
+
+    public static function renderJavascriptLink($anchor, $path, $attr = [])
+    {
+        return '<span'.self::mergeAndMapAttributes($attr, ['data-href'=>$path]).'>'.$anchor.'</span>';
     }
 }
