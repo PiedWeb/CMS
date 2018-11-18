@@ -24,6 +24,7 @@
         "piedweb/render-html-attributes": "^1.0",
         "sonata-project/translation-bundle": "^2.3",
         "gedmo/doctrine-extensions": "^2.4",
+        "knplabs/knp-markdown-bundle": "^1.7",
         "symfony/asset": "^4.1",
         "symfony/console": "^4.1",
         "symfony/expression-language": "^4.1",

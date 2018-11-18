@@ -46,7 +46,6 @@ class PageController extends AbstractController
         }
 
         $template = method_exists(Page::class, 'getTemplate') && null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
-        // transfer '@PiedWebCMS/page/page.html.twig' to config file :)
 
         return $this->render($template, ['page' => $page]);
     }

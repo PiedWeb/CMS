@@ -86,6 +86,10 @@ class PageAdmin extends AbstractAdmin
             'label' => ' ',
             'help' => 'admin.page.mainContent.help',
         ]);
+        $formMapper->add('mainContentIsMarkdown', null, [
+            'required' => false,
+            'label' => 'markdown',
+        ]);
         $formMapper->end();
 
         $formMapper->with('admin.details', ['class' => 'col-md-9 order-1']);

@@ -117,6 +117,7 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 
 ### Next
 - admin homepage sexiest (__or redirect to AdminPage__ cf https://github.com/sonata-project/SonataAdminBundle/issues/5297)
+-- sonata admin : https://github.com/sonata-project/SonataAdminBundle/issues/5297
 
 - Edition d'une Page (à Réfléchir !)
 ```
@@ -133,17 +134,11 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 
 - gérer un breadcrumb (function twig ou juste component) #Easy
 
+-  remove ajax footer from default install
+
 - CACHE :
 ```
--- Be able to generate like a static website
-   domain.tld on static/
-   admin.domain.tld on public (so website stille avalaible, add httpsswd)
-   method: new function in PageController, listAllPages, store in ../static, copy assets (yarn, php assets)
-   update: cron? (berk) || update queue after each modification => Bundle
-   deploy another place (see sculpin => https://sculpin.io/getstarted/#deploy-sculpin)
-   todo: remove contact form & ajax footer from default install
-
--- Manage antother cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://github.com/WyriHaximus/HtmlCompress
+cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://github.com/WyriHaximus/HtmlCompress
 ```
 
 ### Next Next

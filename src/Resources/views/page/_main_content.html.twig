@@ -8,7 +8,9 @@
 {% if ok %}
 <section class="section-gap" id="content">
     <div class="container">
-        {% include(template_from_string(page.mainContent)) %}
+
+        {% set mainContent = page.mainContentIsMarkdown ? page.mainContent|markdown : page.mainContent  %}
+        {% include(template_from_string(mainContent)) %}
 
         {% if page.issetProduct is defined and page.issetProduct == true %}
         <p class="col-12 text-center price" class="h3">{% if page.issetProducts %}A partir de {% endif %}{{ page.smallerPrice }} €</p>
