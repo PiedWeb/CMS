@@ -132,8 +132,6 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 - identifier la couleur d'une image et l'enregistrer dans Media pour faire un placeholder cohérent
 - l'upload d'une image via une page ne s'ajoute pas automatiquement (sonata)
 
-- gérer un breadcrumb (function twig ou juste component) #Easy
-
 -  remove ajax footer from default install
 
 - CACHE :

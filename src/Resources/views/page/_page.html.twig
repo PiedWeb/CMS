@@ -34,6 +34,9 @@
     {% endif %}
 {% endblock %}
 
+{% block breadcrumb %}
+    {% include '@PiedWebCMS/page/_breadcrumb.html.twig' %}
+{% endblock %}
 
 {% block footer %}
     {# Load Footer via fetch (ajax) #}

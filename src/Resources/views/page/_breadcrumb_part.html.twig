@@ -1,0 +1,8 @@
+{% if page.parentPage is not null %}
+        {% include '@PiedWebCMS/page/_breadcrumb_part.html.twig' with {page: page.parentPage} only %}
+{% endif %}
+<li class="breadcrumb-item">
+    <a href="{{ (page.slug == 'homepage' ? path('piedweb_cms_homepage')|pwi : path('piedweb_cms_page', {slug: page.slug})) }}">
+        {{ (page.name is not null ? page.name : page.title) }}
+    </a>
+</li>
