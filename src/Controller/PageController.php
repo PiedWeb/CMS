@@ -8,12 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatorInterface;
 use PiedWeb\CMSBundle\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PageController extends AbstractController
 {
     protected $translator;
 
-    public function show(string $slug = 'homepage', Request $request, TranslatorInterface $translator)
+    public function show(string $slug = 'homepage', Request $request, TranslatorInterface $translator, ParameterBagInterface $params)
     {
         $slug = '' == $slug ? 'homepage' : $slug;
         $page = $this->getDoctrine()->getRepository(Page::class)->findOneBySlug($slug, $request->getLocale());
@@ -24,7 +25,7 @@ class PageController extends AbstractController
             $page->setTitle($translator->trans('installation.new.title'))
                  ->setExcrept($translator->trans('installation.new.text'));
 
-            return $this->render('@PiedWebCMS/page/page.html.twig', ['page' => $page]);
+            return $this->render($params->get('app.default_page_template'), ['page' => $page]);
         } elseif (null === $page) {
             throw $this->createNotFoundException();
         }
@@ -44,7 +45,7 @@ class PageController extends AbstractController
             return $this->redirect($redirect[0], $redirect[1]);
         }
 
-        $template = method_exists(Page::class, 'getTemplate') && null !== $page->getTemplate() ? $page->getTemplate() : '@PiedWebCMS/page/page.html.twig';
+        $template = method_exists(Page::class, 'getTemplate') && null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
         // transfer '@PiedWebCMS/page/page.html.twig' to config file :)
 
         return $this->render($template, ['page' => $page]);
@@ -54,9 +55,9 @@ class PageController extends AbstractController
      * To load the footer with Fetch.
      * To remove : replace by block and load ~(block).html.twig with authorized block in parameters ?
      */
-    public function footer(Request $request): Response
+    public function footer(Request $request, ParameterBagInterface $params): Response
     {
-        return $this->render('@PiedWebCMS/page/_footer.html.twig');
+        return $this->render($params->get('app.default_footer_template'));
     }
 
     protected function checkIfUriIsCanonical($request, $page)
@@ -72,17 +73,6 @@ class PageController extends AbstractController
             $this->get('router')->generate('piedweb_cms_page', ['slug' => $page->getRealSlug()])
         ;
 
-        /**
-        echo '<pre>';
-        var_dump($this->get('router')->generate('piedweb_cms_homepage'));
-        var_dump(rtrim($this->get('router')->generate('piedweb_cms_homepage'), $defaultLocale.'/'));
-        var_dump($defaultLocale);
-        var_dump($expected);
-        var_dump($real);
-        var_dump($real != $expected);
-        echo '</pre>';
-         **/
-        //return false;
         if ($real != $expected) {
             return [$request->getBasePath().$expected, 301];
             // may log ?
