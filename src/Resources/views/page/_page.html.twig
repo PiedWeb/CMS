@@ -39,7 +39,6 @@
 {% endblock %}
 
 {% block footer %}
-    {# Load Footer via fetch (ajax) #}
-    <div data-sky="{{ path('piedweb_cms_footer') }}"></div>
+    {% include '@PiedWebCMS/page/_footer.html.twig' %}
 {% endblock %}
 

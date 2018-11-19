@@ -27,7 +27,7 @@ services:
     PiedWeb\CMSBundle\EventListener\MediaListener:
         arguments:
             $projectDir: '%kernel.project_dir%'
-            $em: '@doctrine.orm.entity_manager'
+            $em: '@doctrine'
         tags:
             - { name: kernel.event_listener, event: vich_uploader.pre_upload }
             - { name: kernel.event_listener, event: vich_uploader.post_upload }
@@ -39,7 +39,7 @@ services:
 
     piedweb.feed.dumper:
         class: PiedWeb\CMSBundle\Service\FeedDumpService
-        arguments: [ "@doctrine.orm.entity_manager", "@twig", "%app.dir%"]
+        arguments: [ "@doctrine", "@twig", "%app.dir%"]
 
     # Required for sonata Translation
     stof_doctrine_extensions.listener.translatable:

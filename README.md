@@ -75,6 +75,8 @@ php bin/console server:run
 List of Bundles wich extend this one:
 
 * [Contact](https://github.com/PiedWeb/ContactBundle)
+* [Static](https://github.com/PiedWeb/StaticBundle)
+* [Faq](https://github.com/PiedWeb/FaqBundle)
 * ...
 
 
@@ -135,8 +137,6 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 - identifier la couleur d'une image et l'enregistrer dans Media pour faire un placeholder cohérent
 - l'upload d'une image via une page ne s'ajoute pas automatiquement (sonata)
 
--  remove ajax footer from default install
-
 - CACHE :
 ```
 cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://github.com/WyriHaximus/HtmlCompress
@@ -145,22 +145,12 @@ cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://g
 ### Next Next
 
 - Command line tool to generate Overriding entity (example: `create-entity Page -traits=@PiedWebCMS\Entity\PageExtented,@PiedWebFaq\Entity\PageFaq`)
-
 - Change translatable (gedmo) to make something more scalable and easy to use with repo (knp ?, other?)
-
 - Create interface for entity Traits
-
-- More pluggable :
-```
-- Move twig in a separate Bundle
-- Media in a separate Bundle (?)
-```
-
 - free default theme
-
 - search for all "todo" in the code
-
 - "Afficher" dans PageAdmin ne fonctionne pas sur les pages i18n (renvoie vers la page default_locale)
+- Extension: load block via ajax (like contact)
 
 ## Contributors
 

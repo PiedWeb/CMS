@@ -4,7 +4,6 @@ namespace PiedWeb\CMSBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatorInterface;
 use PiedWeb\CMSBundle\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -50,15 +49,6 @@ class PageController extends AbstractController
         return $this->render($template, ['page' => $page]);
     }
 
-    /**
-     * To load the footer with Fetch.
-     * To remove : replace by block and load ~(block).html.twig with authorized block in parameters ?
-     */
-    public function footer(Request $request, ParameterBagInterface $params): Response
-    {
-        return $this->render($params->get('app.default_footer_template'));
-    }
-
     protected function checkIfUriIsCanonical($request, $page)
     {
         $real = $request->getRequestUri();
@@ -66,8 +56,6 @@ class PageController extends AbstractController
         $defaultLocale = $this->container->getParameter('locale');
 
         $expected = 'homepage' == $page->getSlug() && $defaultLocale == $request->getLocale() ?
-            // preg_replace to keep homepage on mydomain.tld more than mydomain.tld/default-locale/
-            //preg_replace('/'.$defaultLocale.'$/', '', $this->get('router')->generate('piedweb_cms_page')) :
             $this->get('router')->generate('piedweb_cms_homepage') :
             $this->get('router')->generate('piedweb_cms_page', ['slug' => $page->getRealSlug()])
         ;
@@ -118,12 +106,4 @@ class PageController extends AbstractController
 
         return false;
     }
-
-    /*
-     * Route("/ajax/page/{slug}", name="ajax_page", requirements={"page"="[a-zA-Z1-9\-_]+"}, methods={"POST"})
-     *
-    public function ajaxShow(Page $page): Response
-    {
-        return $this->render('page/_page.html.twig', ['page' => $page]);
-    }*/
 }

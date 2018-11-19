@@ -1,9 +1,6 @@
 liip:
     resource: '@PiedWebCMSBundle/Resources/config/routes/liip_imagine.yaml'
 
-footer:
-    resource: '@PiedWebCMSBundle/Resources/config/routes/footer.yaml'
-
 user:
     resource: '@PiedWebCMSBundle/Resources/config/routes/user.yaml'
 
@@ -27,8 +24,3 @@ page:
 #_errors:
 #    resource: '@TwigBundle/Resources/config/routing/errors.xml'
 #    prefix:   /_error
-
-piedweb_cms_generate:
-    path:     /~static
-    controller: PiedWeb\CMSBundle\Controller\PageController::generateStatic
-    methods:    [GET]

@@ -17,6 +17,7 @@ class PageControllerTest extends WebTestCase
         $kernel = new AppKernel();
 
         $client = new Client($kernel);
+
         $client->request('GET', '/');
         //var_dump($client->getResponse()->getContent());
         $this->assertSame(200, $client->getResponse()->getStatusCode());
