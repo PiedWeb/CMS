@@ -12,10 +12,12 @@ trait AdminTrait
      * */
     protected function setMosaicDefaultListMode(): self
     {
-        if ($mode = $this->request->query->get('_list_mode')) {
-            $this->setListMode($mode);
-        } else {
-            $this->setListMode('mosaic');
+        if ($this->request !== null) {
+            if ($mode = $this->request->query->get('_list_mode')) {
+                $this->setListMode($mode);
+            } else {
+                $this->setListMode('mosaic');
+            }
         }
 
         return $this;
