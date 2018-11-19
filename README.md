@@ -114,6 +114,8 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 ### For soon
 - Créer une recette (recipe flex) pour enlever du skeleton config/routes & co et les ajouter via flex (et essayer Skeleton)
 - test, test, test (ahah !)
+- StaticBundle not work when you change the route (i18n for eg
+- Add an Admin instance to manage `template`
 
 ### Next
 - admin homepage sexiest (__or redirect to AdminPage__ cf https://github.com/sonata-project/SonataAdminBundle/issues/5297)
@@ -121,6 +123,7 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 
 - Edition d'une Page (à Réfléchir !)
 ```
+--- markdown editor https://simplemde.com/
 --- Minimum: intégrer ACE pour mainContent (https://ace.c9.io/ (https://github.com/heygrady/ace-mode-twig))
 --- Inspiration: https://github.com/codecasts/codecasts
 --- Charger la liste des template disponible && Permettre l'édition (la création) de views/component directement online

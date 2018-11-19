@@ -1,3 +1,10 @@
+piedweb_cms_admin_dashboard:
+    path:     /admin/dashboard
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /admin/piedweb/cms/page/list
+        permanent: true
+
 admin_area:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
     prefix: /admin
