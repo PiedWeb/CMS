@@ -37,6 +37,11 @@ trait MediaTrait
     private $width;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $mainColor;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $media;
@@ -180,5 +185,17 @@ trait MediaTrait
     public function getHeight()
     {
         return $this->height;
+    }
+
+    public function getMainColor(): ?string
+    {
+        return $this->mainColor;
+    }
+
+    public function setMainColor(?string $mainColor): self
+    {
+        $this->mainColor = $mainColor;
+
+        return $this;
     }
 }

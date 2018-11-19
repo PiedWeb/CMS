@@ -114,18 +114,10 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 (half in french)
 
 ### For soon
-- Créer une recette (recipe flex) pour enlever du skeleton config/routes & co et les ajouter via flex (et essayer Skeleton)
 - test, test, test (ahah !)
 - StaticBundle not work when you change the route with a prefix (i18n for eg)
 
 ### Next
-- Edition d'une Page (à Réfléchir !)
-```
---- Charger la liste des template disponible && Permettre l'édition (la création) de views/component directement online
---- la gestion de componenent directement dans l'admin
-```
-- une interface d'upload d'images plus efficaces (drag'n drop, multiple, url, import...)
-- identifier la couleur d'une image et l'enregistrer dans Media pour faire un placeholder cohérent
 - l'upload d'une image via une page ne s'ajoute pas automatiquement (sonata)
 
 - CACHE :
@@ -141,6 +133,8 @@ cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://g
 - free default theme
 - search for all "todo" in the code
 - Extension: load block via ajax (like contact)
+- Extension : harger la liste des template disponible && Permettre l'édition (la création) de views/component directement online
+
 
 ## Contributors
 

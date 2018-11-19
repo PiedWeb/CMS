@@ -4,6 +4,9 @@ namespace PiedWeb\CMSBundle\EventListener;
 
 use Vich\UploaderBundle\Event\Event;
 use Doctrine\ORM\EntityManager;
+use League\ColorExtractor\Color;
+use League\ColorExtractor\ColorExtractor;
+use League\ColorExtractor\Palette;
 
 class MediaListener
 {
@@ -76,5 +79,13 @@ class MediaListener
         $relativeDir = substr_replace($absoluteDir, '', 0, strlen($this->projectDir) + 1);
 
         $object->setRelativeDir($relativeDir);
+
+        if (false !== strpos($object->getMimeType(), 'image/')) {
+            $img = $mapping->getUploadDestination().'/'.$mapping->getUploadDir($object).'/'.$object->getMedia();
+            $palette = Palette::fromFilename($img, Color::fromHexToInt('#FFFFFF'));
+            $extractor = new ColorExtractor($palette);
+            $colors = $extractor->extract();
+            $object->setMainColor(Color::fromIntToHex($colors[0]));
+        }
     }
 }

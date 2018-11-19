@@ -61,6 +61,7 @@ class MediaAdmin extends AbstractAdmin
         $listMapper->add('name');
         $listMapper->add('media');
         $listMapper->add('createdAt');
+        $listMapper->add('mainColor');
         $listMapper->add('_action', null, [
                 'actions' => [
                 'edit' => [],
