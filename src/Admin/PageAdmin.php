@@ -42,6 +42,12 @@ class PageAdmin extends AbstractAdmin
         $this->feedDumper = $feedDumper;
     }
 
+    public function configure()
+    {
+        $this->setTemplate('edit', '@PiedWebCMS/admin/edit.html.twig');
+        $this->setTemplate('show', '@PiedWebCMS/admin/show_page.html.twig');
+    }
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         if ($this->getSubject() && $this->getSubject()->getSlug()) {
@@ -81,7 +87,11 @@ class PageAdmin extends AbstractAdmin
 
         $formMapper->with('admin.page.mainContent.label');
         $formMapper->add('mainContent', TextareaType::class, [
-            'attr' => ['style' => 'min-height: 600px;font-size:125%;'],
+            'attr' => [
+                'style' => 'min-height: 600px;font-size:125%;',
+                'data-editor' => 'markdown',
+                'data-gutter' => 0,
+            ],
             'required' => false,
             'label' => ' ',
             'help' => 'admin.page.mainContent.help',

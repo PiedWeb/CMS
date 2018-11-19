@@ -116,18 +116,12 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 ### For soon
 - Créer une recette (recipe flex) pour enlever du skeleton config/routes & co et les ajouter via flex (et essayer Skeleton)
 - test, test, test (ahah !)
-- StaticBundle not work when you change the route (i18n for eg
-- Add an Admin instance to manage `template` (?)
+- StaticBundle not work when you change the route with a prefix (i18n for eg)
 
 ### Next
 - Edition d'une Page (à Réfléchir !)
 ```
---- markdown editor https://simplemde.com/
---- Minimum: intégrer ACE pour mainContent (https://ace.c9.io/ (https://github.com/heygrady/ace-mode-twig))
---- Inspiration: https://github.com/codecasts/codecasts
 --- Charger la liste des template disponible && Permettre l'édition (la création) de views/component directement online
---- Une gestion du mainContent via un drag'n Drop de component
---- quitter l'admin traditionnel pour un ediit on the page et intégrer un éditeur enrichi ?
 --- la gestion de componenent directement dans l'admin
 ```
 - une interface d'upload d'images plus efficaces (drag'n drop, multiple, url, import...)
