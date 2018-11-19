@@ -33,7 +33,7 @@ file that was distributed with this source code.
 {% block show %}
     {% if object.realSlug is defined %}
         <script>
-            window.location.replace('{{ path('piedweb_cms_page', {'slug': object.realSlug}) }}');
+            window.location.replace('{{ path('piedweb_cms_page', {'_locale': object.locale, 'slug': object.realSlug}) }}');
         </script>
     {% endif %}
 {% endblock %}

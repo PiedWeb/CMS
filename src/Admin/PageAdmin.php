@@ -225,7 +225,7 @@ class PageAdmin extends AbstractAdmin
         $datagridMapper->add('updatedAt');
         $datagridMapper->add('mainContent');
         $datagridMapper->add('metaRobots', null, [
-            'choices' => ['admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',],
+            'choices' => ['admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow'],
         ]);
         $datagridMapper->add('author');
     }

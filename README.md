@@ -146,7 +146,6 @@ cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://g
 - Create interface for entity Traits
 - free default theme
 - search for all "todo" in the code
-- "Afficher" dans PageAdmin ne fonctionne pas sur les pages i18n (renvoie vers la page default_locale)
 - Extension: load block via ajax (like contact)
 
 ## Contributors
