@@ -98,6 +98,7 @@ class PageAdmin extends AbstractAdmin
             $formMapper->add('name', TextType::class, [
                 'label' => 'admin.page.name.label',
                 'required' => false,
+            'help' => 'admin.page.name.help',
             ]);
         }
 
