@@ -50,7 +50,7 @@ admin:
         metaRobots:
             label: Moteur de recherches
             choice:
-                notIndex: Interdire l'indexation
+                noIndex: Interdire l'indexation
         author:
             label: Auteur
         parentPage:

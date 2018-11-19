@@ -117,12 +117,9 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 - Créer une recette (recipe flex) pour enlever du skeleton config/routes & co et les ajouter via flex (et essayer Skeleton)
 - test, test, test (ahah !)
 - StaticBundle not work when you change the route (i18n for eg
-- Add an Admin instance to manage `template`
+- Add an Admin instance to manage `template` (?)
 
 ### Next
-- admin homepage sexiest (__or redirect to AdminPage__ cf https://github.com/sonata-project/SonataAdminBundle/issues/5297)
--- sonata admin : https://github.com/sonata-project/SonataAdminBundle/issues/5297
-
 - Edition d'une Page (à Réfléchir !)
 ```
 --- markdown editor https://simplemde.com/

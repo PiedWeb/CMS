@@ -170,7 +170,6 @@ class PageAdmin extends AbstractAdmin
             $formMapper->add('metaRobots', ChoiceType::class, [
             'choices' => [
                 'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
-                'Interdire l\'indexation dans les moteurs de recherches' => 'no-index, no-follow',
             ],
              'label' => 'admin.page.metaRobots.label',
             'required' => false,
@@ -226,7 +225,7 @@ class PageAdmin extends AbstractAdmin
         $datagridMapper->add('updatedAt');
         $datagridMapper->add('mainContent');
         $datagridMapper->add('metaRobots', null, [
-            'choices' => ['Interdire l\'indexation dans les moteurs de recherches' => 'no-index, no-follow'],
+            'choices' => ['admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',],
         ]);
         $datagridMapper->add('author');
     }
