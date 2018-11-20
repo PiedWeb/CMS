@@ -1,4 +1,4 @@
-{% extends '@PiedWebCMS/component/_header.html.twig' %}
+{% extends '@PiedWebCMS/component/_hero-banner.html.twig' %}
 
 {% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
 {% set subtitle = page.subtitle is defined ? page.subTitle : null %}
@@ -6,15 +6,6 @@
 {% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
 
 {% block header_button %}
-    {% if page.issetProduct is defined and page.issetProduct %}
-        {% if page.issetFaq is defined and page.issetFaq %}
-            <a href="#faq" class="btn btn-header-light">{{ 'header.questions'|trans }}</a>
-        {% endif %}
-        <a href="{% if page.issetOnlyOneProduct == true %}#content{% else %}#reserve{% endif %}" class="btn btn-header">{{ 'header.reserve'|trans }}</a>
-        {% if page.issetImage is defined and page.issetImage %}
-            <a href="#gallery" class="btn btn-header-light">{{ 'header.photos'|trans }}</a>
-        {% endif %}
-    {% endif %}
 {% endblock %}
 
 {% block fash_massage %}
@@ -24,3 +15,5 @@
     </div>
 </div>
 {% endblock %}
+
+

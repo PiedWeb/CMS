@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5231ec38b1c0974decb635483bc1488",
+    "content-hash": "556482f8e73d3ed53dd392cbea26879f",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3000,6 +3000,53 @@
                 "controllers"
             ],
             "time": "2018-10-26T14:09:02+00:00"
+        },
+        {
+            "name": "slowprog/composer-copy-file",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slowprog/CopyFile.git",
+                "reference": "400c2b7c9f9f8ed8195217ae143ffbf3fec84c31"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slowprog/CopyFile/zipball/400c2b7c9f9f8ed8195217ae143ffbf3fec84c31",
+                "reference": "400c2b7c9f9f8ed8195217ae143ffbf3fec84c31",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "mikey179/vfsstream": "~1",
+                "phpunit/phpunit": "~5.0",
+                "symfony/filesystem": "~2.7",
+                "symfony/finder": "~2.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SlowProg\\CopyFile\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Tyshev",
+                    "email": "slowprog@gmail.com"
+                }
+            ],
+            "description": "Composer script copying your files after install",
+            "homepage": "https://github.com/SlowProg/composer-copy-file",
+            "keywords": [
+                "copy file"
+            ],
+            "time": "2017-12-07T13:18:47+00:00"
         },
         {
             "name": "sonata-project/admin-bundle",
@@ -7702,6 +7749,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "slowprog/composer-copy-file": 20,
         "symfony/test-pack": 20,
         "symfony/web-server-bundle": 20
     },

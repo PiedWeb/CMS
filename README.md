@@ -28,9 +28,13 @@ composer create-project piedweb/skeleton ./my-project
 # Delete useless just created files in config/routes
 
 # ---
-# Install like a bundle
+# ---
+# OR
+# ---
+# Install like a bundle (NEVER TESTED)
 composer require piedweb/cms-bundle
 # Then udpate your config file (by copying the from this bundle)
+# ---
 # ---
 
 # Check .env is configure (Database)
@@ -130,7 +134,6 @@ cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://g
 - Command line tool to generate Overriding entity (example: `create-entity Page -traits=@PiedWebCMS\Entity\PageExtented,@PiedWebFaq\Entity\PageFaq`)
 - Change translatable (gedmo) to make something more scalable and easy to use with repo (knp ?, other?)
 - Create interface for entity Traits
-- free default theme
 - search for all "todo" in the code
 - Extension: load block via ajax (like contact)
 - Extension : harger la liste des template disponible && Permettre l'édition (la création) de views/component directement online

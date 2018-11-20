@@ -11,23 +11,16 @@
     {% include '@PiedWebCMS/page/_gallery.html.twig' %}
 {% endblock %}
 
-
-{% block reservation %}
-    {% include '@PiedWebCMS/page/_reservation.html.twig' %}
-{% endblock %}
-
-
 {% block relatedContent %}
     {% if page.relatedPages is defined and page.relatedPages is not empty %}
         {% set pages = page.relatedPages %}
         <section class="section-light section-gap" id="project">
             <div class="container">
-                <div class="text-center mb-5">
-                    <h2 class="mb-10">{{ 'relatedPages.title'|trans }}</h2>
-                    <p>{{ 'relatedPages.description'|trans }}</p>
+                <div class="mb-2">
+                    <h4 class="mb-10">{{ 'relatedPages.title'|trans }}</h4>
                 </div>
                 <div class="row">
-                {% include '@PiedWebCMS/page/_pages_list.html.twig' %}
+                {% include '@PiedWebCMS/page/_list.html.twig' with {pages: pages} only %}
                 </div>
             </div>
         </section>

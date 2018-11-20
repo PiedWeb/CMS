@@ -1,13 +1,19 @@
+{# component for piedweb-devoluix-theme #}
 {% if pages is not empty %}
     {% for page in pages %}
         <div class="col-lg-4 col-md-6">
             <div class="mcard clickable">
+
+                {% block header %}
                 {% if page.mainImage is defined and page.mainImage is not null %}
                 <div class="card-header card-header-img">
                     <span class="card-img-top img-fluid rounded" data-img="{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) |imagine_filter('thumb') }}">{{ page.title }}</span>
                     <div class="shadow-color" data-bg="{{ (img_dir.url ~ '/' ~ page.mainImage.image) |imagine_filter('thumb') }}"></div>
                 </div>
                 {% endif %}
+                {% endblock %}
+
+                {% block body %}
                 <div class="card-body">
                      {% if page.excreptProduct is defined and page.excreptProduct is not null %}
                         <div class="card-text text-muted"><small>{{ page.excreptProduct }}</small></div>
@@ -22,6 +28,8 @@
                         </a>
                     </h3>
                 </div>
+                {% endblock %}
+
             </div>
         </div>
     {% endfor %}

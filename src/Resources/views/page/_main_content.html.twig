@@ -1,25 +1,18 @@
-{% set ok = false %}
-{% if page.mainContent is not empty %}
-    {% set ok = true %}
-{% elseif page.issetOnlyOneProduct is defined and page.issetOnlyOneProduct %}
-    {% set ok = true %}
-{% endif %}
+{% block content %}
+    {% if page.mainContent is not empty %}
+        {% set ok = true %}
+    {% endif %}
 
-{% if ok %}
-<section class="section-gap" id="content">
-    <div class="container">
+    {% if ok is defined and ok %}
+        <section class="section-gap" id="content">
+            <div class="container">
 
-        {% set mainContent = page.mainContentIsMarkdown ? page.mainContent|markdown : page.mainContent  %}
-        {% include(template_from_string(mainContent)) %}
+                {% set mainContent = page.mainContentIsMarkdown ? page.mainContent|markdown : page.mainContent  %}
+                {% include(template_from_string(mainContent)) %}
 
-        {% if page.issetProduct is defined and page.issetProduct == true %}
-        <p class="col-12 text-center price" class="h3">{% if page.issetProducts %}A partir de {% endif %}{{ page.smallerPrice }} €</p>
-        <p class="col-12 text-center">
-            <a href="{% if page.issetOnlyOneProduct == true %}{{ path('piedweb_reservation', {'id' : page.products.0.id}) }}{% else %}#reserve{% endif %}" class="{% if page.issetProducts %}primary-btn{% else %}genric-btn primary circle letter-spacing{% endif %}">
-                {{ 'header.reserve'|trans }} <span class="fa fa-arrow-right"></span>
-            </a>
-        </p>
-        {% endif %}
-    </div>
-</section>
-{% endif %}
+                {% block after_content %}
+                {% endblock %}
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

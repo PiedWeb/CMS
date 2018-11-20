@@ -1,4 +1,5 @@
 {#
+    size: halfscreen
     title
     subtitle
     description
@@ -10,13 +11,13 @@
         label
 #}
 <section class="hero-banner">
-    <div class="relative" id="cover-banner"
+    <div class="relative cover-banner"
         {% if image is defined and image is not null %}
             data-bg="{{ image| imagine_filter('default') }}"
             data-darken="center"
         {% endif %}>
         <div class="container">
-            <div class="row fullscreen justify-content-center align-items-center">
+            <div class="row {{ size is defined ? size : 'halfscreen' }} justify-content-center align-items-center">
                 <div class="col-md-10 col-12">
                     <div class="banner-content text-center">
 
