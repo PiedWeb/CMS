@@ -1,5 +1,7 @@
 <?php
 
+// todo: supprimer ! (données qui reviendront via ReservationBundle)
+
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

@@ -13,7 +13,7 @@ namespace PiedWeb\CMSBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\ORM\EntityManager;
-use PiedWeb\CMSBundle\Entity\Page;
+use Twig_Environment;
 
 /**
  * Inspired by https://github.com/eko/FeedBundle.
@@ -26,12 +26,12 @@ class FeedDumpService
     private $em;
 
     /**
-     * @var Filesystem
+     * @var \Symfony\Component\Filesystem\Filesystem
      */
     private $filesystem;
 
     /**
-     * @var \Twig_environement
+     * @var \Twig_Environment
      */
     private $twig;
 
@@ -40,12 +40,18 @@ class FeedDumpService
      */
     private $webDir;
 
-    public function __construct(EntityManager $em, $twig, $webDir)
+    /**
+     * @var string
+     */
+    private $page_class;
+
+    public function __construct(EntityManager $em, Twig_Environment $twig, string $webDir, string $page_class)
     {
         $this->em = $em;
         $this->filesystem = new Filesystem();
         $this->twig = $twig;
         $this->webDir = $webDir;
+        $this->page_class = $page_class;
     }
 
     /**
@@ -66,7 +72,7 @@ class FeedDumpService
 
     protected function render()
     {
-        $qb = $this->em->getRepository(Page::class)->getQueryToFindPublished('p');
+        $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
         $pages = $qb->getQuery()->getResult();
 
         return $this->twig->render('@PiedWebCMS/page/rss.xml.twig', ['pages' => $pages]);

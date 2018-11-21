@@ -2,7 +2,7 @@
 
 namespace PiedWeb\CMSBundle\Repository;
 
-use PiedWeb\CMSBundle\Entity\Page;
+use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\Query;
@@ -15,9 +15,9 @@ use Doctrine\ORM\Query;
  */
 class PageRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, string $entity)
     {
-        parent::__construct($registry, Page::class);
+        parent::__construct($registry, $entity);
     }
 
     public function getQueryToFindPublished($p)

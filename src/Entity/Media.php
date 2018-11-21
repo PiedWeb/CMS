@@ -13,7 +13,7 @@ use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
  * @Vich\Uploadable
  * UniqueEntity({"name"}, message="Ce nom existe déjà.")
  */
-class Media implements TranslatableInterface
+class Media implements TranslatableInterface, MediaInterface
 {
     use IdTrait, MediaTrait, TimestampableEntity, TranslatableTrait;
 

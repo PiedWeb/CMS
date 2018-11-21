@@ -10,15 +10,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="fos_user")
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("email",
  *     message="user.email.already_used"
  * )
  */
-class User extends BaseUser
+class User extends BaseUser implements UserInterface
 {
-    use UserTrait, UserExtendedTrait;
+    use UserTrait; //, UserExtendedTrait;
 
     /**
      * @ORM\Id

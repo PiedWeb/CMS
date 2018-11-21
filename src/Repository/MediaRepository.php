@@ -14,9 +14,9 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class MediaRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, $entity)
     {
-        parent::__construct($registry, Media::class);
+        parent::__construct($registry, $entity);
     }
 
 //    /**

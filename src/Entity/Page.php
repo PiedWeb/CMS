@@ -10,7 +10,7 @@ use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
  * @ORM\Entity(repositoryClass=PageRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
-class Page implements TranslatableInterface
+class Page implements TranslatableInterface, PageInterface
 {
     use IdTrait, PageTrait, PageExtendedTrait, PageImageTrait, TranslatableTrait;
 

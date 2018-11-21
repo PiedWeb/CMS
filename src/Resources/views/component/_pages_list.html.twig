@@ -8,7 +8,7 @@
                 {% if page.mainImage is defined and page.mainImage is not null %}
                 <div class="card-header card-header-img">
                     <span class="card-img-top img-fluid rounded" data-img="{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) |imagine_filter('thumb') }}">{{ page.title }}</span>
-                    <div class="shadow-color" data-bg="{{ (img_dir.url ~ '/' ~ page.mainImage.image) |imagine_filter('thumb') }}"></div>
+                    <div class="shadow-color" data-bg="{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) |imagine_filter('thumb') }}"></div>
                 </div>
                 {% endif %}
                 {% endblock %}

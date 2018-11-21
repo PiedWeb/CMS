@@ -15,15 +15,10 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Sonata\CoreBundle\Model\Metadata;
-use PiedWeb\CMSBundle\Entity\Page;
-use PiedWeb\CMSBundle\Entity\Faq;
-use PiedWeb\CMSBundle\Entity\User;
-use PiedWeb\CMSBundle\Entity\Media;
+//use PiedWeb\CMSBundle\Entity\User;
+//use PiedWeb\CMSBundle\Entity\Media;
 use PiedWeb\CMSBundle\Service\FeedDumpService;
 
-/*
- * To Do
- */
 class PageAdmin extends AbstractAdmin
 {
     use AdminTrait;
@@ -60,7 +55,7 @@ class PageAdmin extends AbstractAdmin
             'label' => 'admin.page.title.label',
             'help' => 'admin.page.title.help',
         ]);
-        if (method_exists(Page::class, 'getH1')) { // To do on each element to permit to use admin without Page...Trait.
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getH1')) { // To do on each element to permit to use admin without all page Trait.
             $formMapper->add('h1', TextType::class, [
                 'required' => false,
                 'attr' => ['class' => 'input-lg'],
@@ -76,10 +71,10 @@ class PageAdmin extends AbstractAdmin
             ],
         ]);
 
-        if (method_exists(Page::class, 'getMainImage')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getMainImage')) {
             $formMapper->add('mainImage', ModelType::class, [
             'required' => false,
-            'class' => Media::class,
+            'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_media'),
             'label' => 'admin.page.mainImage.label',
         ]);
         }
@@ -104,7 +99,7 @@ class PageAdmin extends AbstractAdmin
 
         $formMapper->with('admin.details', ['class' => 'col-md-9 order-1']);
 
-        if (method_exists(Page::class, 'getname')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getname')) {
             $formMapper->add('name', TextType::class, [
                 'label' => 'admin.page.name.label',
                 'required' => false,
@@ -112,26 +107,26 @@ class PageAdmin extends AbstractAdmin
             ]);
         }
 
-        if (method_exists(Page::class, 'getparentPage')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getparentPage')) {
             $formMapper->add('parentPage', EntityType::class, [
-            'class' => Page::class,
+            'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'),
             'label' => 'admin.page.parentPage.label',
             'required' => false,
         ]);
         }
 
-        if (method_exists(Page::class, 'getsubTitle')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getsubTitle')) {
             $formMapper->add('subTitle', TextType::class, ['label' => 'admin.page.subTitle.label', 'required' => false]);
         }
 
-        if (method_exists(Page::class, 'getexcrept')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getexcrept')) {
             $formMapper->add('excrept', TextareaType::class, [
             'required' => false,
             'label' => 'admin.page.excrept.label',
         ]);
         }
 
-        if (method_exists(Page::class, 'getfaq')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getfaq')) {
             $formMapper->add('faq', ModelAutocompleteType::class, [
             'required' => false,
              'multiple' => true,
@@ -145,11 +140,11 @@ class PageAdmin extends AbstractAdmin
          ]);
         }
 
-        if (method_exists(Page::class, 'getrelatedPages')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getrelatedPages')) {
             $formMapper->add('relatedPages', ModelAutocompleteType::class, [
             'required' => false,
              'multiple' => true,
-             'class' => Page::class,
+             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'),
              'property' => 'title',   // or any field in your media entity
              'label' => 'admin.page.relatedPage.label',
              'btn_add' => false,
@@ -159,11 +154,11 @@ class PageAdmin extends AbstractAdmin
          ]);
         }
 
-        if (method_exists(Page::class, 'getimages')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getimages')) {
             $formMapper->add('images', ModelAutocompleteType::class, [
             'required' => false,
              'multiple' => true,
-             'class' => Media::class,
+             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_media'),
              'property' => 'media',
              'label' => 'admin.page.images.label',
              'btn_add' => true,
@@ -177,7 +172,7 @@ class PageAdmin extends AbstractAdmin
 
         $formMapper->with('admin.edition', ['class' => 'col-md-3 order-2']);
 
-        if (method_exists(Page::class, 'getmetaRobots')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getmetaRobots')) {
             $formMapper->add('metaRobots', ChoiceType::class, [
             'choices' => [
                 'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
@@ -211,15 +206,15 @@ class PageAdmin extends AbstractAdmin
              'label' => 'admin.page.updatedAt.label',
         ]);
 
-        if (method_exists(Page::class, 'getauthor')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
             $formMapper->add('author', EntityType::class, [
              'label' => 'admin.page.author.label',
-             'class' => User::class, 'label' => 'Auteur',
+             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'label' => 'Auteur',
              'required' => false,
         ]);
         }
 
-        if (method_exists(Page::class, 'gettemplate')) {
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'gettemplate')) {
             $formMapper->add('template', null, [
              'label' => 'admin.page.template.label',
              'required' => false,

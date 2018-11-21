@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 
 /**
  * Page extended: // I may cut this in multiple traits
@@ -36,12 +37,12 @@ trait PageExtendedTrait
     private $metaRobots;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\Page", inversedBy="childrenPages")
+     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", inversedBy="childrenPages")
      */
     private $parentPage;
 
     /**
-     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\Page", mappedBy="parentPage")
+     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", mappedBy="parentPage")
      */
     private $childrenPages;
 
@@ -58,12 +59,12 @@ trait PageExtendedTrait
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\UserInterface")
      */
     private $author;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\Page")
+     * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface")
      */
     private $relatedPages;
 

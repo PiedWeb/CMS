@@ -5,16 +5,17 @@ namespace PiedWeb\CMSBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Entity\MediaInterface as Media;
 
 trait PageImageTrait
 {
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\Media")
+     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface")
      */
     private $mainImage;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\Media")
+     * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface")
      */
     private $images;
 

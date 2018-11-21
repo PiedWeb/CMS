@@ -1,0 +1,16 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        media_media:
+            #uri_prefix:
+            upload_destination: '%app.media_dir_absolute%'
+            namer:
+                service: Vich\UploaderBundle\Naming\PropertyNamer
+                options: { property: 'slug'}
+            #directory_namer:
+            #    service: vich_uploader.namer.directory_namer_subdir
+            #    options: {date_time_format: 'ymd'}
+            directory_namer:
+                service: vich_uploader.directory_namer_subdir
+                options: {chars_per_dir: 1, dirs: 2}

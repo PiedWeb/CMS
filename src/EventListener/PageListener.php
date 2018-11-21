@@ -2,7 +2,7 @@
 
 namespace PiedWeb\CMSBundle\EventListener;
 
-use PiedWeb\CMSBundle\Entity\Page;
+use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 
 class PageListener
 {

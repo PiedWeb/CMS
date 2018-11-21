@@ -14,6 +14,7 @@ If you are interested in, demo is coming soon, stay watching.
 
 * [Installation](#installation)
     * [Packagist](https://packagist.org/packages/piedweb/cms-bundle)
+* [Extension](#extension)
 * [CookBook](#cookbook)
 * [Todo](#todo)
 * [Contributors](#contributors)
@@ -22,57 +23,14 @@ If you are interested in, demo is coming soon, stay watching.
 ## Installation
 
 ```
-# Fresh install
-composer create-project piedweb/skeleton ./my-project
-# Accept all recipes
-# Delete useless just created files in config/routes
+# Supposing composer is installed globally
+curl https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms >> install-cms && ./install-cms ./my-folder
+# Valid 'a' to install all recipes !
 
-# ---
-# ---
-# OR
-# ---
-# Install like a bundle (NEVER TESTED)
-composer require piedweb/cms-bundle
-# Then udpate your config file (by copying the from this bundle)
-# ---
-# ---
-
-# Check .env is configure (Database)
-# to use it immediatly set DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
-
-# Instal front end assets
-yarn
-yarn encore dev
+# Else, look at :
+https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms
+# Each step is describe.
 ```
-
-## Usage
-
-### You can use it as is
-
-```bash
-# Create Database:
-php bin/console doctrine:schema:create
-
-# Add an admin user :
-php bin/console fos:user:create admin@example.tld admin@example.tld p@ssword
-php bin/console fos:user:promote admin@example.tld ROLE_SUPER_ADMIN
-
-# Edit config/services.yaml and remove the two first lines (parameters:\n   locale: 'en')
-# It's erasing the next importing parameters. TODO: remove this step
-
-# Install Sonata Front-End Assets
-php bin/console assets:install
-
-# Launch Server and Play
-php bin/console server:run
-
-# optional: change default app parameters `config/parameters.yml`
-```
-
-### Or you can...
-
-... customize everything by [overriding any part of the bundle](https://symfony.com/doc/current/bundles/override.html)
-(You will need to read a bit of code because it's not yet full documented)
 
 ## Extension
 
@@ -88,8 +46,9 @@ List of Bundles wich extend this one:
 
 ### Override Entity without writing more than 3 lines of code
 When you install a new project, entity are installed full featured.
-To remove default feature or add new one, you just need to override `Entity/Page.php`, `Entity/Faq.php`, `Entity/Media.php` or `Entity/User.php`.
-Copy the file in your `src/Entity` and edit what you want.
+To remove default feature or add new one, you just need to override or extends `Entity/Page.php`, `Entity/Media.php` or `Entity/User.php`.
+In your app, create a new file (copying ?!) in your `src/Entity`.
+Then, edit `config/packages/piedweb_cms.yaml` to correctly set your new entity.
 
 ### Edit the navbar
 - Override default navbar by creating `page.html.twig` in your project at `src/Resources/PiedWebCMSBundle/views`
@@ -107,7 +66,7 @@ Your redirection will be at the normal page route with the slug set `domain.com/
 
 
 ### i18n (internationalization)
-It's by default activate (thanks Gedmo). To configure languages, edit `config/parameters.yaml` and `config/packages/sonata_admin.yaml`
+It's by default activate (thanks Gedmo). To configure languages, edit `config/packages/piedweb_cms.yaml` and `config/packages/sonata_admin.yaml`
 
 ### Add js link
 ```
@@ -124,19 +83,18 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 ### Next
 - l'upload d'une image via une page ne s'ajoute pas automatiquement (sonata)
 
-- CACHE :
+- Think about implement cache :
 ```
 cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://github.com/WyriHaximus/HtmlCompress
 ```
 
 ### Next Next
 
-- Command line tool to generate Overriding entity (example: `create-entity Page -traits=@PiedWebCMS\Entity\PageExtented,@PiedWebFaq\Entity\PageFaq`)
+- Command line tool to generate Overriding entity (example: `piedweb:create-entity Page -traits=@PiedWebCMS\Entity\PageExtented,@PiedWebFaq\Entity\PageFaq`)
 - Change translatable (gedmo) to make something more scalable and easy to use with repo (knp ?, other?)
-- Create interface for entity Traits
 - search for all "todo" in the code
 - Extension: load block via ajax (like contact)
-- Extension : harger la liste des template disponible && Permettre l'édition (la création) de views/component directement online
+- Extension : charger la liste des template disponible && Permettre l'édition (la création) de views/component directement online
 
 
 ## Contributors
@@ -156,5 +114,3 @@ php-cs-fixer fix src --rules='{"array_syntax": {"syntax": "short"}}' --verbose
 ## License
 
 MIT (see the LICENSE file for details)
-
-/!\ If you use it as it with assets file, it's depending on [piedweb-devoluix-theme](https://github.com/PiedWeb/piedweb-devoluix-theme) wich is not MIT. (see  [todo](#todo) : I plan to release it with a totaly free default theme)

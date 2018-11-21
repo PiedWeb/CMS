@@ -1,0 +1,13 @@
+piedweb_cms:
+    media_dir_absolute:   '%kernel.project_dir%/media'
+    locale:               '%locale%'
+    locales:              fr|en
+    dir:                  '%kernel.project_dir%/public'
+    name:                 'Pied Web CMS'
+    color:                '#1fa67a'
+    default_page_template: '@PiedWebCMS/page/page.html.twig'
+    entity_page:          PiedWeb\CMSBundle\Entity\Page
+    entity_media:         PiedWeb\CMSBundle\Entity\Media
+    entity_user:          PiedWeb\CMSBundle\Entity\User
+    email_sender:         me@tld.com
+    email_sender_name:    'Pied Web CMS'

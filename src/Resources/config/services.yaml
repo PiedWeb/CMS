@@ -19,9 +19,17 @@ services:
         resource: '../../../src/Controller'
         tags: ['controller.service_arguments']
 
-    PiedWeb\CMSBundle\Repository\:
-        resource: '../../../src/Repository'
-        autowire: true
+    PiedWeb\CMSBundle\Repository\PageRepository:
+        arguments:
+            - '@Symfony\Bridge\Doctrine\RegistryInterface'
+            - '%app.entity_page%'
+        tags: ['doctrine.repository_service']
+
+    # effortless code for now :
+    PiedWeb\CMSBundle\Repository\MediaRepository:
+        arguments:
+            - '@Symfony\Bridge\Doctrine\RegistryInterface'
+            - '%app.entity_media%'
         tags: ['doctrine.repository_service']
 
     PiedWeb\CMSBundle\EventListener\MediaListener:
@@ -39,7 +47,7 @@ services:
 
     piedweb.feed.dumper:
         class: PiedWeb\CMSBundle\Service\FeedDumpService
-        arguments: [ "@doctrine.orm.entity_manager", "@twig", "%app.dir%"]
+        arguments: [ "@doctrine.orm.entity_manager", "@twig", "%app.dir%", '%app.entity_page%']
 
     # Required for sonata Translation
     stof_doctrine_extensions.listener.translatable:

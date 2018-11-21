@@ -1,0 +1,34 @@
+parameters:
+    env(DATABASE_URL): 'sqlite:///%kernel.project_dir%/var/app.db'
+
+doctrine:
+    dbal:
+        # configure these for your database server
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+
+        url: '%env(resolve:DATABASE_URL)%'
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            PiedWebCMSBundle:
+                type: annotation
+                dir: 'Entity'
+                alias: PiedWebCMS
+            FOSUserBundle: ~
+            gedmo_translatable:
+                    type: annotation
+                    prefix: Gedmo\Translatable\Entity
+                    dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                    alias: GedmoTranslatable # (optional) it will default to the name set for the mapping
+                    is_bundle: false
+        resolve_target_entities:
+            PiedWeb\CMSBundle\Entity\PageInterface: '%app.entity_page%'
+            PiedWeb\CMSBundle\Entity\MediaInterface: '%app.entity_media%'
+            PiedWeb\CMSBundle\Entity\UserInterface: '%app.entity_user%'

@@ -5,7 +5,7 @@ namespace PiedWeb\CMSBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
-use PiedWeb\CMSBundle\Entity\Page;
+use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PageController extends AbstractController
@@ -15,11 +15,11 @@ class PageController extends AbstractController
     public function show(string $slug = 'homepage', Request $request, TranslatorInterface $translator, ParameterBagInterface $params)
     {
         $slug = '' == $slug ? 'homepage' : $slug;
-        $page = $this->getDoctrine()->getRepository(Page::class)->findOneBySlug($slug, $request->getLocale());
+        $page = $this->getDoctrine()->getRepository($this->container->getParameter('app.entity_page'))->findOneBySlug($slug, $request->getLocale());
 
         // Check if page exist
         if (null === $page && 'homepage' == $slug) {
-            $page = new Page();
+            $page = new \PiedWeb\CMSBundle\Entity\Page();
             $page->setTitle($translator->trans('installation.new.title'))
                  ->setExcrept($translator->trans('installation.new.text'));
 
@@ -43,7 +43,7 @@ class PageController extends AbstractController
             return $this->redirect($redirect[0], $redirect[1]);
         }
 
-        $template = method_exists(Page::class, 'getTemplate') && null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
+        $template = method_exists($this->container->getParameter('app.entity_page'), 'getTemplate') && null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
 
         return $this->render($template, ['page' => $page]);
     }
@@ -72,7 +72,7 @@ class PageController extends AbstractController
      */
     public function showList(?Page $page, $render = '@PiedWebCMS/page/_list.html.twig', $limit = 100)
     {
-        $qb = $this->getDoctrine()->getRepository(Page::class)->getQueryToFindPublished('p');
+        $qb = $this->getDoctrine()->getRepository($this->container->getParameter('app.entity_page'))->getQueryToFindPublished('p');
         if (null !== $page) {
             $qb->andWhere('p.parentPage = :id');
             $qb->setParameter('id', $page->getId());
