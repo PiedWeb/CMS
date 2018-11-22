@@ -80,7 +80,7 @@ services:
 
     piedweb.admin.page:
         class: PiedWeb\CMSBundle\Admin\PageAdmin
-        arguments: [~, PiedWeb\CMSBundle\Entity\Page, ~]
+        arguments: [~, '%app.entity_page%', ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Pages }
         calls:
@@ -92,7 +92,7 @@ services:
 
     piedweb.admin.media:
         class: PiedWeb\CMSBundle\Admin\MediaAdmin
-        arguments: [~, PiedWeb\CMSBundle\Entity\Media, ~]
+        arguments: [~, '%app.entity_media%', ~]
         calls:
             - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
             - [ setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
@@ -102,7 +102,7 @@ services:
 
     piedweb.admin.user:
         class: PiedWeb\CMSBundle\Admin\UserAdmin
-        arguments: [~, PiedWeb\CMSBundle\Entity\User, ~]
+        arguments: [~, '%app.entity_user%', ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Utilisateurs }
         public: true

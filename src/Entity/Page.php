@@ -7,6 +7,7 @@ use PiedWeb\CMSBundle\Repository\PageRepository;
 use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 
 /**
+ * @ORM\MappedSuperclass
  * @ORM\Entity(repositoryClass=PageRepository::class)
  * @ORM\HasLifecycleCallbacks
  */

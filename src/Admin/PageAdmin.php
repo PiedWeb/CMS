@@ -140,6 +140,7 @@ class PageAdmin extends AbstractAdmin
          ]);
         }
 
+        //var_dump($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page')); exit;
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getrelatedPages')) {
             $formMapper->add('relatedPages', ModelAutocompleteType::class, [
             'required' => false,
@@ -148,7 +149,7 @@ class PageAdmin extends AbstractAdmin
              'property' => 'title',   // or any field in your media entity
              'label' => 'admin.page.relatedPage.label',
              'btn_add' => false,
-             'to_string_callback' => function ($entity, $property) {
+             'to_string_callback' => function ($entity) { //, $property) {
                  return $entity->getTitle();
              },
          ]);

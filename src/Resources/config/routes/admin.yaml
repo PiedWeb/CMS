@@ -1,9 +1,8 @@
 piedweb_cms_admin_dashboard:
     path:     /admin/dashboard
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    controller: Sonata\AdminBundle\Controller\CRUDController::listAction
     defaults:
-        path: /admin/piedweb/cms/page/list
-        permanent: true
+        _sonata_admin: piedweb.admin.page
 
 admin_area:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
