@@ -1,13 +1,14 @@
 liip_imagine:
+    cache: piedweb_relativeimgcache
 
     loaders:
         default:
             filesystem:
                 data_root: '%kernel.project_dir%'
-    resolvers:
-       default:
-          web_path:
-            cache_prefix: "media"
+    #resolvers:
+       #default:
+          #web_path:
+            #cache_prefix: "media"
     #resolvers:
         #default:
             #flysystem:

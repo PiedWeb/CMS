@@ -68,6 +68,19 @@ admin:
         mainImage:
             label: Image d'en-tête
 
+
+    user: # move to piedwebCMS
+        firstname:
+            label: Prénom
+        lastname:
+            label: Nom
+        phone:
+            label: Téléphone
+        email:
+            label: Adresse mail
+        dateOfBirth:
+            label: Date de naissance
+
 #---
 # Errors Page(s)
 #---

@@ -15,6 +15,12 @@ class MediaAdmin extends AbstractAdmin
 {
     use AdminTrait;
 
+    protected $datagridValues = [
+        '_page' => 1,
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'updatedAt',
+    ];
+
     private $liipImage;
 
     public function setLiipImage($liipImage)
@@ -38,11 +44,7 @@ class MediaAdmin extends AbstractAdmin
             $thumb = $this->liipImage->getBrowserPath($fullPath, 'small_thumb');
             $fileFieldOptions['help'] = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
             $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'small_thumb').'">';
-            $fileFieldOptions['help'] .= '</a><div style=display:none>';
-            foreach (['thumb', 'height_300', 'xs', 'sm', 'md', 'lg', 'xl', 'default'] as $format) { // TODO, récupérer la liste en auto/parameters
-                $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, $format).'">';
-            }
-            $fileFieldOptions['help'] .= '</div>';
+            $fileFieldOptions['help'] .= '</a>';
         }
         $formMapper->add('mediaFile', FileType::class, $fileFieldOptions); // ['data_class'=>null]
     }

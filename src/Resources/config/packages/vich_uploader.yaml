@@ -6,7 +6,7 @@ vich_uploader:
             #uri_prefix:
             upload_destination: '%app.media_dir_absolute%'
             namer:
-                service: Vich\UploaderBundle\Naming\PropertyNamer
+                service: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer #Vich\UploaderBundle\Naming\PropertyNamer
                 options: { property: 'slug'}
             #directory_namer:
             #    service: vich_uploader.namer.directory_namer_subdir

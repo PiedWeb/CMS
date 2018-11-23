@@ -23,6 +23,12 @@ class PageAdmin extends AbstractAdmin
 {
     use AdminTrait;
 
+    protected $datagridValues = [
+        '_page' => 1,
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'updatedAt',
+    ];
+
     protected $feedDumper;
 
     private $liipImage;

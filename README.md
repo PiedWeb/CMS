@@ -79,6 +79,8 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 ### For soon
 - test, test, test (ahah !)
 - StaticBundle not work when you change the route with a prefix (i18n for eg)
+- traduire media et user admin et admin label (services.yaml && sonata_admin)
+- améliorer filter admin (comme ProductAdmin, copier, coller la liste)
 
 ### Next
 - l'upload d'une image via une page ne s'ajoute pas automatiquement (sonata)

@@ -49,7 +49,7 @@ export function formToSky(userOptions = {}) {
        }
     });
 
-    sendFormToSky = function(form) {
+    var sendFormToSky = function(form) {
         var $submitButton = getSubmitButton(form);
         if ($submitButton !== null) {
             var initialButton = getSubmitButton(form).outerHTML;
@@ -72,7 +72,7 @@ export function formToSky(userOptions = {}) {
         xmlhttp.send(toSend);
     }
 
-    renderError = function(error) {
+    var renderError = function(error) {
         var msg = '';
         for (var key in error) {
            if (error.hasOwnProperty(key)) {
@@ -87,7 +87,7 @@ export function formToSky(userOptions = {}) {
         return msg;
     }
 
-    getSubmitButton = function(form) {
+    var getSubmitButton = function(form) {
         if (form.srcElement.querySelector('[type=submit]') !== null) {
             return form.srcElement.querySelector('[type=submit]');
         }

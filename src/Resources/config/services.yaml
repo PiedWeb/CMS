@@ -36,6 +36,9 @@ services:
         arguments:
             $projectDir: '%kernel.project_dir%'
             $em: '@doctrine.orm.entity_manager'
+            $cacheManager: '@liip_imagine.cache.manager'
+            $dataManager: '@liip_imagine.data.manager'
+            $filterManager: '@liip_imagine.filter.manager'
         tags:
             - { name: kernel.event_listener, event: vich_uploader.pre_upload }
             - { name: kernel.event_listener, event: vich_uploader.post_upload }
@@ -138,3 +141,24 @@ services:
         class: Twig_Extensions_Extension_Intl
         tags:
             - { name: twig.extension }
+
+# --------
+# Extending other bundles
+# --------
+
+    imagine.cache.resolver.piedweb:
+        class: PiedWeb\CMSBundle\Service\ImagineWebCacheResolver
+        arguments:
+            - "@filesystem"
+            - "@router.request_context"
+            - "%app.dir%"
+        tags:
+            - { name: "liip_imagine.cache.resolver", resolver: piedweb_relativeimgcache }
+
+    vich_uploader.pied_web.namer_property:
+        class: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer
+        public: true
+
+    PiedWeb\CMSBundle\Service\VichUploadPropertyNamer:
+        alias: vich_uploader.pied_web.namer_property
+        public: true

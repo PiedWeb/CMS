@@ -7,17 +7,26 @@ use Doctrine\ORM\EntityManager;
 use League\ColorExtractor\Color;
 use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Palette;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Liip\ImagineBundle\Imagine\Data\DataManager;
+use Liip\ImagineBundle\Imagine\Filter\FilterManager;
 
 class MediaListener
 {
     private $projectDir;
     private $iterate = 1;
     private $em;
+    private $cacheManager;
+    private $dataManager;
+    private $filterManager;
 
-    public function __construct(string $projectDir, EntityManager $em)
+    public function __construct(string $projectDir, EntityManager $em, CacheManager $cacheManager, DataManager $dataManager, FilterManager $filterManager)
     {
         $this->projectDir = $projectDir;
         $this->em = $em;
+        $this->cacheManager = $cacheManager;
+        $this->dataManager = $dataManager;
+        $this->filterManager = $filterManager;
     }
 
     /**
@@ -86,6 +95,40 @@ class MediaListener
             $extractor = new ColorExtractor($palette);
             $colors = $extractor->extract();
             $object->setMainColor(Color::fromIntToHex($colors[0]));
+
+            $this->generateCache('/'.$relativeDir.'/'.$object->getMedia());
+        }
+    }
+
+    protected function generateCache($path)
+    {
+        foreach (['small_thumb', 'thumb', 'height_300', 'xs', 'sm', 'md', 'lg', 'xl', 'default'] as $filter) { //todo: get it from parameters ?!
+            $this->storeImageInCache($path, $filter).'">';
+        }
+    }
+
+    protected function storeImageInCache($path, $filter)
+    {
+        try {
+            if (!$this->cacheManager->isStored($path, $filter)) {
+                try {
+                    $binary = $this->dataManager->find($filter, $path);
+                } catch (NotLoadableException $e) {
+                    if ($defaultImageUrl = $this->dataManager->getDefaultImageUrl($filter)) {
+                        return $defaultImageUrl;
+                    }
+
+                    throw new NotFoundHttpException('Source image could not be found', $e);
+                }
+
+                $this->cacheManager->store(
+                    $this->filterManager->applyFilter($binary, $filter),
+                    $path,
+                    $filter
+                );
+            }
+        } catch (RuntimeException $e) {
+            throw new \RuntimeException(sprintf('Unable to create image for path "%s" and filter "%s". Message was "%s"', $path, $filter, $e->getMessage()), 0, $e);
         }
     }
 }
