@@ -24,7 +24,7 @@ If you are interested in, demo is coming soon, stay watching.
 
 ```
 # Supposing composer is installed globally
-curl https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms >> install-cms && ./install-cms ./my-folder
+curl https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms >> install-cms && chmod +x install-cms && ./install-cms ./my-folder
 # Valid 'a' to install all recipes !
 
 # Else, look at :
@@ -80,10 +80,10 @@ It's by default activate (thanks Gedmo). To configure languages, edit `config/pa
 - test, test, test (ahah !)
 - StaticBundle not work when you change the route with a prefix (i18n for eg)
 - traduire media et user admin et admin label (services.yaml && sonata_admin)
-- améliorer filter admin (comme ProductAdmin, copier, coller la liste)
+
+- faciliter le doublie fichier JS/CSS avec un webpack préparé comme
 
 ### Next
-- l'upload d'une image via une page ne s'ajoute pas automatiquement (sonata)
 
 - Think about implement cache :
 ```

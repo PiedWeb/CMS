@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Sonata\CoreBundle\Model\Metadata;
@@ -49,6 +48,15 @@ class PageAdmin extends AbstractAdmin
         $this->setTemplate('show', '@PiedWebCMS/admin/show_page.html.twig');
     }
 
+    /**
+    public function getFormTheme()
+    {
+
+        return array_merge(
+            parent::getFormTheme(),
+            array('@PiedWebCMS/admin/edit-media.html.twig')
+        );
+    }**/
     protected function configureFormFields(FormMapper $formMapper)
     {
         if ($this->getSubject() && $this->getSubject()->getSlug()) {
@@ -78,10 +86,11 @@ class PageAdmin extends AbstractAdmin
         ]);
 
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getMainImage')) {
-            $formMapper->add('mainImage', ModelType::class, [
+            $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
             'required' => false,
             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_media'),
             'label' => 'admin.page.mainImage.label',
+            'btn_edit' => false,
         ]);
         }
         $formMapper->end();
@@ -103,7 +112,7 @@ class PageAdmin extends AbstractAdmin
         ]);
         $formMapper->end();
 
-        $formMapper->with('admin.details', ['class' => 'col-md-9 order-1']);
+        $formMapper->with('admin.details', ['class' => 'col-md-6 order-1']);
 
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getname')) {
             $formMapper->add('name', TextType::class, [
@@ -160,24 +169,34 @@ class PageAdmin extends AbstractAdmin
              },
          ]);
         }
-
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getimages')) {
-            $formMapper->add('images', ModelAutocompleteType::class, [
-            'required' => false,
-             'multiple' => true,
-             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_media'),
-             'property' => 'media',
-             'label' => 'admin.page.images.label',
-             'btn_add' => true,
-             'to_string_callback' => function ($entity, $property) {
-                 return $entity->getName();
-             //'<img src="'.$this->getConfigurationPool()->getContainer()->getParameter('img_dir').'/'.$entity->getImage().'" style="max-width:200px; max-height: 200px;">';
-             },
-         ]);
-        }
         $formMapper->end();
 
-        $formMapper->with('admin.edition', ['class' => 'col-md-3 order-2']);
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getimages')) {
+            $formMapper->with('admin.page.images.label', ['class' => 'col-md-3']);
+            $formMapper->add('pageHasMedias', \Sonata\CoreBundle\Form\Type\CollectionType::class, [
+                    'by_reference' => false,
+                    'required' => false,
+                    'label' => ' ',
+                    'type_options' => [
+                        'delete' => true,
+                    ],
+                ],
+                [
+                    'allow_add' => false,
+                    'allow_delete' => true,
+                    'btn_add' => false,
+                    'btn_catalogue' => false,
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                    'sortable' => 'position',
+                    //'link_parameters' => ['context' => $context],
+                    'admin_code' => 'piedweb.admin.pagehasmedia',
+                ]
+            );
+            $formMapper->end();
+        }
+
+        $formMapper->with('admin.edition', ['class' => 'col-md-3']);
 
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getmetaRobots')) {
             $formMapper->add('metaRobots', ChoiceType::class, [
@@ -231,16 +250,53 @@ class PageAdmin extends AbstractAdmin
         $formMapper->end();
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $formMapper)
     {
-        $datagridMapper->add('title');
-        $datagridMapper->add('createdAt');
-        $datagridMapper->add('updatedAt');
-        $datagridMapper->add('mainContent');
-        $datagridMapper->add('metaRobots', null, [
-            'choices' => ['admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow'],
+        $formMapper->add('title', null, ['label' => 'admin.page.title.label']);
+
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getH1')) {
+            $formMapper->add('h1', null, ['label' => 'admin.page.h1.label']);
+        }
+
+        $formMapper->add('slug', null, ['label' => 'admin.page.slug.label']);
+
+        $formMapper->add('mainContent', null, ['label' => 'admin.page.mainContent.label']);
+
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getname')) {
+            $formMapper->add('name', null, ['label' => 'admin.page.mainContent.label']);
+        }
+
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getparentPage')) {
+            $formMapper->add('parentPage', null, ['label' => 'admin.page.parentPage.label']);
+        }
+
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getsubTitle')) {
+            $formMapper->add('subTitle', null, ['label' => 'admin.page.subTitle.label']);
+        }
+
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getmetaRobots')) {
+            $formMapper->add('metaRobots', null, [
+            'choices' => [
+                'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
+            ],
+             'label' => 'admin.page.metaRobots.label',
         ]);
-        $datagridMapper->add('author');
+        }
+        $formMapper->add('createdAt', null, [
+             'label' => 'admin.page.createdAt.label',
+        ]);
+        $formMapper->add('updatedAt', null, [
+             'label' => 'admin.page.updatedAt.label',
+        ]);
+
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
+            $formMapper->add('author', null, [
+             'label' => 'admin.page.author.label',
+             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'),
+             'label' => 'Auteur',
+             'required' => false,
+            ]);
+        }
     }
 
     protected function configureListFields(ListMapper $listMapper)

@@ -15,13 +15,42 @@ trait PageImageTrait
     private $mainImage;
 
     /**
-     * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface")
+     * @var ArrayCollection
      */
     private $images;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMedia", mappedBy="page",cascade={"all"}, orphanRemoval=true)
+     * @ORM\OrderBy({"position":"ASC"})
+     */
+    private $pageHasMedias;
+
     public function __construct_image()
     {
-        $this->images = new ArrayCollection();
+    }
+
+    public function setPageHasMedias($pageHasMedias)
+    {
+        $this->pageHasMedias = new ArrayCollection();
+        foreach ($pageHasMedias as $pageHasMedia) {
+            $this->addPageHasMedia($pageHasMedia);
+        }
+    }
+
+    public function getPageHasMedias()
+    {
+        return $this->pageHasMedias;
+    }
+
+    public function addPageHasMedia(PageHasMedia $pageHasMedia)
+    {
+        $pageHasMedia->setPage($this);
+        $this->pageHasMedias[] = $pageHasMedia;
+    }
+
+    public function removePageHasMedia(PageHasMedia $pageHasMedia)
+    {
+        $this->pageHasMedias->removeElement($pageHasMedia);
     }
 
     public function getMainImage(): ?Media
@@ -46,36 +75,22 @@ trait PageImageTrait
      */
     public function getImages(): Collection
     {
+        if (!$this->images) {
+            $this->images = new ArrayCollection();
+            foreach ($this->pageHasMedias as $p) {
+                $this->images[] = $p->getMedia();
+            }
+        }
+
         return $this->images;
     }
 
     public function issetImage()
     {
-        if ($this->images->count() > 0) {
+        if ($this->getImages()->count() > 0) {
             return true;
         }
 
         return false;
-    }
-
-    public function addImage(Media $image): self
-    {
-        if (!$this->images->contains($image)) {
-            if (null === $image->getWidth()) {
-                throw new \Exception('Media `'.$image->getMedia().'` isn\'t an image.');
-            }
-            $this->images[] = $image;
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Media $image): self
-    {
-        if ($this->images->contains($image)) {
-            $this->images->removeElement($image);
-        }
-
-        return $this;
     }
 }

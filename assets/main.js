@@ -14,13 +14,10 @@ import baguetteBox from "baguettebox.js";
 var bsn = require("bootstrap.native/dist/bootstrap-native-v4");
 
 import {
-  convertImgLinkToResponsiveImgLink,
-  responsiveImage
-} from "~/node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/js/helpers-pwcms.js";
-
-import {
   getBlockFromSky,
-  formToSky
+  formToSky,
+  responsiveImage,
+  convertImgLinkToResponsiveImgLink
 } from "~/vendor/piedweb/cms-bundle/src/Resources/assets/helpers.js";
 
 import {
@@ -56,6 +53,7 @@ function onDomLoaded() {
   backgroundLazyLoad();
   applySmoothScroll();
   formToSky();
+  convertImgLinkToResponsiveImgLink();
 }
 
 document.addEventListener("DOMContentLoaded", function() {

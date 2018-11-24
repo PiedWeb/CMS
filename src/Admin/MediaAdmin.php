@@ -37,6 +37,7 @@ class MediaAdmin extends AbstractAdmin
         $formMapper->add('name', TextType::class, [
             'required' => false,
             'help' => '<small>Choisissez un à plusieurs mots décrivant votre fichier. N\'hésitez pas à utiliser un `patern` pour mieux vous y retrouver (ex: #Attribute - Description)</small>',
+            'attr' => ['ismedia' => 1],
         ]); // ['data_class'=>null]
 
         if ($media && $media->getMedia() && false !== strpos($media->getMimeType(), 'image/')) {
@@ -45,6 +46,8 @@ class MediaAdmin extends AbstractAdmin
             $fileFieldOptions['help'] = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
             $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'small_thumb').'">';
             $fileFieldOptions['help'] .= '</a>';
+            $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
+            $fileFieldOptions['attr'] = ['ismedia' => 1];
         }
         $formMapper->add('mediaFile', FileType::class, $fileFieldOptions); // ['data_class'=>null]
     }

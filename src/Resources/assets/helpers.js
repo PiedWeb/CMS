@@ -1,3 +1,11 @@
+/**
+ * List of available function:
+ * - formToSky              ajaxify-form
+ * - getBlockFromSky        Fetch (ajax) function permitting to get block via a POST request
+ * - responsiveImage        Transform image's path (src) produce with Liip to responsive path
+ * - convertImgLinkToResponsiveImgLink      Transform link to image produce with Liip to responsive Link
+*/
+
 
 /**
  * Fetch (ajax) function permitting to get block via a POST request
@@ -98,3 +106,49 @@ export function formToSky(userOptions = {}) {
     }
 }
 
+/**
+ * Transform image's path (src) produce with Liip to responsive path
+ *
+ * @param {string} src
+ */
+export function responsiveImage(src) {
+  var screenWidth = document.clientWidth;
+  if (screenWidth <= 576) {
+    src = src.replace("/default/", "/xs/");
+  } else if (screenWidth <= 768) {
+    bg_src = src.replace("/default/", "/sm/");
+  } else if (screenWidth <= 992) {
+    bg_src = src.replace("/default/", "/md/");
+  } else if (screenWidth <= 1200) {
+    src = src.replace("/default/", "/lg/");
+  } else {
+    // 1200+
+    src = src.replace("/default/", "/xl/");
+  }
+
+  return src;
+}
+
+
+/**
+ * Transform link to image produce with Liip to responsive Link
+ *
+ * @param {string} attribute
+ *
+ * @example
+ * <a href="/monImage/uneimage.png" data-rimg>
+ * <a href="monimageopti.png">
+ */
+export function convertImgLinkToResponsiveImgLink(attribute = "data-rimg") {
+  var test = [];
+  if (typeof test.push === "function") {
+    // to avoid gooogle bot execute
+    [].forEach.call(document.querySelectorAll("[" + attribute + "]"), function(
+      element
+    ) {
+      element.removeAttribute(attribute);
+      var href = element.getAttribute(href);
+      element.setAttribute('href', responsiveImage(href));
+    });
+  }
+}

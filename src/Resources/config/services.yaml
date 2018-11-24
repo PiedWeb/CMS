@@ -103,6 +103,14 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: Media }
 
+    piedweb.admin.pagehasmedia:
+        class: PiedWeb\CMSBundle\Admin\PageHasMedia
+        arguments: [~, PiedWeb\CMSBundle\Entity\PageHasMedia, ~]
+        calls:
+            - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
+        tags:
+            - { name: sonata.admin, manager_type: orm }
+
     piedweb.admin.user:
         class: PiedWeb\CMSBundle\Admin\UserAdmin
         arguments: [~, '%app.entity_user%', ~]

@@ -16,7 +16,8 @@ class VichUploadPropertyNamer extends \Vich\UploaderBundle\Naming\PropertyNamer 
      */
     private function getExtension(UploadedFile $file): ?string
     {
-        var_dump('hello'); exit;
+        var_dump('hello');
+        exit;
         $originalName = $file->getClientOriginalName();
 
         if ($extension = pathinfo($originalName, PATHINFO_EXTENSION)) {
