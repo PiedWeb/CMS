@@ -85,7 +85,7 @@ services:
         class: PiedWeb\CMSBundle\Admin\PageAdmin
         arguments: [~, '%app.entity_page%', ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Pages }
+            - { name: sonata.admin, manager_type: orm, label: admin.label.page }
         calls:
             - [ setFeedDumper, [ '@piedweb.feed.dumper' ] ]
             - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
@@ -101,7 +101,7 @@ services:
             - [ setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
             - [ setTemplate, [outer_list_rows_mosaic, '@@PiedWebCMS/admin/media_mosaic_body.html.twig']]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Media }
+            - { name: sonata.admin, manager_type: orm, label: admin.label.media }
 
     piedweb.admin.pagehasmedia:
         class: PiedWeb\CMSBundle\Admin\PageHasMedia
@@ -115,7 +115,7 @@ services:
         class: PiedWeb\CMSBundle\Admin\UserAdmin
         arguments: [~, '%app.entity_user%', ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Utilisateurs }
+            - { name: sonata.admin, manager_type: orm, label: admin.label.list }
         public: true
 
 # --------

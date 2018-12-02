@@ -13,7 +13,7 @@ class PageHasMedia
     use IdTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface")
+     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface", inversedBy="pageHasMedias")
      */
     protected $media;
 

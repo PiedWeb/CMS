@@ -78,7 +78,9 @@ trait PageImageTrait
         if (!$this->images) {
             $this->images = new ArrayCollection();
             foreach ($this->pageHasMedias as $p) {
-                $this->images[] = $p->getMedia();
+                if ($p->getMedia() !== null) {
+                    $this->images[] = $p->getMedia();
+                }
             }
         }
 

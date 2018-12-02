@@ -10,6 +10,8 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Sonata\UserBundle\Form\Type\SecurityRolesType;
 
 class UserAdmin extends AbstractAdmin
 {
@@ -21,48 +23,68 @@ class UserAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper): void
     {
-        // define group zoning
-        $formMapper
-            ->tab('User')
-                ->with('Profile', ['class' => 'col-md-6'])->end()
-                ->with('General', ['class' => 'col-md-6'])->end()
-            ->end()
-            ->tab('Security')
-                ->with('Status', ['class' => 'col-md-4'])->end()
-                ->with('Roles', ['class' => 'col-md-12'])->end()
-            ->end()
-        ;
 
         $now = new \DateTime();
 
         $formMapper
-            ->tab('User')
-                ->with('General')
+            ->with('admin.user.label.id', ['class' => 'col-md-4'])
                     //->add('username')
-                    ->add('email')
+                    ->add('email', null, [
+                        'label' => 'admin.user.email.label',
+                    ])
                     ->add('plainPassword', TextType::class, [
                         'required' => (!$this->getSubject() || null === $this->getSubject()->getId()),
+                        'label' => 'admin.user.password.label',
                     ])
-                ->end()
-
-                ->with('Profile')
-                    ->add('dateOfBirth', DatePickerType::class, [
-                        'years' => range(1900, $now->format('Y')),
-                        'dp_min_date' => '1-1-1900',
-                        'dp_max_date' => $now->format('c'),
-                        'required' => false,
-                    ])
-                    ->add('firstname', TextType::class, ['required' => false])
-                    ->add('lastname', TextType::class, ['required' => false])
-                    ->add('city', TextType::class, ['required' => false])
-                    //->add('country', TextType::class, ['required' => false])
-                    ->add('phone', TextType::class, ['required' => false])
-                ->end()
             ->end()
-            ->tab('Security')
-                ->with('Status')
-                    ->add('enabled', null, ['required' => false])
-                ->end()
+        ;
+
+        $formMapper
+            ->with('admin.user.label.profile', ['class' => 'col-md-4'])
+        ;
+
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'getDateOfBirth')) {
+            $formMapper->add('dateOfBirth', DatePickerType::class, [
+                'years' => range(1900, $now->format('Y')),
+                'dp_min_date' => '1-1-1900',
+                'dp_max_date' => $now->format('c'),
+                'required' => false,
+                'label' => 'admin.user.dateOfBirth.label',
+            ]);
+        }
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'getfirstname')) {
+            $formMapper->add('firstname', TextType::class, [
+                'required' => false,
+                'label' => 'admin.user.firstname.label',
+            ]);
+        }
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'getlastname')) {
+            $formMapper->add('lastname', TextType::class, [
+                'required' => false,
+                'label' => 'admin.user.lastname.label',
+            ]);
+        }
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'getcity')) {
+            $formMapper->add('city', TextType::class, [
+                'required' => false,
+                'label' => 'admin.user.city.label',
+            ]);
+        }
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'getphone')) {
+              $formMapper->add('phone', TextType::class, [
+                'required' => false,
+                'label' => 'admin.user.phone.label',
+            ]);
+        }
+
+        $formMapper->end()
+
+            ->with('admin.user.label.security', ['class' => 'col-md-4'])
+                ->add('enabled', null, [
+                    'required' => false,
+                    'label' => 'admin.user.enabled.label',
+                ])
+
                 /*
                 ->with('Groups')
                     ->add('groups', ModelType::class, [
@@ -72,13 +94,21 @@ class UserAdmin extends AbstractAdmin
                     ])
                 ->end()
                 */
-                ->with('Roles')
-                    ->add('roles', ImmutableArrayType::class, [
-                        'keys' => [
-                            ['0', TextType::class, ['required' => false]],
-                        ],
-                    ])
-                ->end()
+
+                ->add('roles', ImmutableArrayType::class, [
+                    'label' => false,
+                    'keys' => [
+                        ['0', ChoiceType::class, [
+                            'required' => false,
+                            'label' => 'admin.user.role.label',
+                            'choices' => [
+                                'admin.user.role.admin' => 'ROLE_SUPER_ADMIN',
+                                'admin.user.role.user' => 'ROLE_USER',
+                            ],
+                        ]],
+                    ],
+                ])
+
 
             ->end()
         ;
@@ -95,12 +125,36 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('email')
-            ->add('firstname', null, ['editable' => true])
-            ->add('lastname', null, ['editable' => true])
-            ->add('roles') // TODO : sexiest
-            ->add('enabled', null, ['editable' => true])
-            ->add('createdAt')
+            ->add('email', null, [
+                'label' => 'admin.user.email.label',
+            ]);
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'getfirstname')) {
+            $listMapper->add('firstname', TextType::class, [
+                'editable' => true,
+                'label' => 'admin.user.firstname.label',
+            ]);
+        }
+        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'getlastname')) {
+            $listMapper->add('lastname', TextType::class, [
+                'editable' => true,
+                'label' => 'admin.user.lastname.label',
+            ]);
+        }
+
+        /**todo
+        $listMapper->add('roles[0]', null, [
+                'label' => 'admin.user.role.label',
+            ]);
+        /**/
+        $listMapper
+            ->add('enabled', null, [
+                'editable' => true,
+                'label' => 'admin.user.enabled.label',
+            ])
+            ->add('createdAt', null, [
+                'editable' => true,
+                'label' => 'admin.user.createdAt.label',
+            ])
             ->add('_action', null, [
                 'actions' => [
                     'edit' => [],

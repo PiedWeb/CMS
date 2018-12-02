@@ -63,6 +63,11 @@ trait MediaTrait
 
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMedia", mappedBy="media",cascade={"all"}, orphanRemoval=true)
+     */
+    private $pageHasMedias;
+
     public function __toString()
     {
         return $this->name.' ';
@@ -197,5 +202,30 @@ trait MediaTrait
         $this->mainColor = $mainColor;
 
         return $this;
+    }
+
+
+    public function setPageHasMedias($pageHasMedias)
+    {
+        $this->pageHasMedias = new ArrayCollection();
+        foreach ($pageHasMedias as $pageHasMedia) {
+            $this->addPageHasMedia($pageHasMedia);
+        }
+    }
+
+    public function getPageHasMedias()
+    {
+        return $this->pageHasMedias;
+    }
+
+    public function addPageHasMedia(PageHasMedia $pageHasMedia)
+    {
+        $pageHasMedia->setPage($this);
+        $this->pageHasMedias[] = $pageHasMedia;
+    }
+
+    public function removePageHasMedia(PageHasMedia $pageHasMedia)
+    {
+        $this->pageHasMedias->removeElement($pageHasMedia);
     }
 }

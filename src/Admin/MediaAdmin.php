@@ -30,43 +30,59 @@ class MediaAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $fileFieldOptions = ['required' => false, 'data_class' => null];
         $media = $this->getSubject();
+
 
         //$type = $media && $media->getName() === null ? TextType::class : HiddenType::class;
         $formMapper->add('name', TextType::class, [
             'required' => false,
-            'help' => '<small>Choisissez un à plusieurs mots décrivant votre fichier. N\'hésitez pas à utiliser un `patern` pour mieux vous y retrouver (ex: #Attribute - Description)</small>',
+            'help' => 'admin.media.name.help',
+            'label' => 'admin.media.name.label',
             'attr' => ['ismedia' => 1],
         ]); // ['data_class'=>null]
 
+        $fileFieldOptions = ['required' => false, 'data_class' => null];
         if ($media && $media->getMedia() && false !== strpos($media->getMimeType(), 'image/')) {
             $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
             $thumb = $this->liipImage->getBrowserPath($fullPath, 'small_thumb');
             $fileFieldOptions['help'] = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
-            $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'small_thumb').'">';
+            $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'thumb').'">';
             $fileFieldOptions['help'] .= '</a>';
+            $fileFieldOptions['help'] .= '<br><br>Chemin:<br><code>'.$this->liipImage->getBrowserPath($fullPath, 'default').'</code>';
+            $fileFieldOptions['help'] .= '<br><br>HTML:<br><code>&lt;span data-img="'.$this->liipImage->getBrowserPath($fullPath, 'default').'"&gt;'.$media->getName().'&lt;/span&gt;'.'</code>';
             $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
             $fileFieldOptions['attr'] = ['ismedia' => 1];
+            $fileFieldOptions['label'] = 'admin.media.mediaFile.label';
         }
         $formMapper->add('mediaFile', FileType::class, $fileFieldOptions); // ['data_class'=>null]
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('createdAt');
-        $datagridMapper->add('name');
-        $datagridMapper->add('media');
+        /**
+         * todo: implémente datepicker for orm_date in sonata
+        $datagridMapper->add('createdAt', null, [
+            'label' => 'admin.media.createdAt.label',
+        ]);
+        */
+        $datagridMapper->add('name', null, [
+            'label' => 'admin.media.name.label',
+        ]);
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $this->setMosaicDefaultListMode();
 
-        $listMapper->add('name');
-        $listMapper->add('media');
-        $listMapper->add('createdAt');
-        $listMapper->add('mainColor');
+        $listMapper->add('name', null, [
+            'label' => 'admin.media.name.label',
+        ]);
+        $listMapper->add('createdAt', null, [
+            'label' => 'admin.media.createdAt.label',
+        ]);
+        $listMapper->add('mainColor', null, [
+            'label' => 'admin.media.mainColor.label',
+        ]);
         $listMapper->add('_action', null, [
                 'actions' => [
                 'edit' => [],

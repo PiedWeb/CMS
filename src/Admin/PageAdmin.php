@@ -282,12 +282,15 @@ class PageAdmin extends AbstractAdmin
              'label' => 'admin.page.metaRobots.label',
         ]);
         }
-        $formMapper->add('createdAt', null, [
+        /**
+         * todo: implémente datepicker for orm_date in sonata
+        $formMapper->add('createdAt', 'doctrine_orm_date', [
              'label' => 'admin.page.createdAt.label',
         ]);
         $formMapper->add('updatedAt', null, [
              'label' => 'admin.page.updatedAt.label',
         ]);
+        */
 
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
             $formMapper->add('author', null, [

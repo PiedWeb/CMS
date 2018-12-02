@@ -22,6 +22,14 @@ video:
 # Admin
 #---
 admin:
+
+    label:
+        page: Page
+        media: Media
+        content: Contenu
+        list: Liste
+        user: Utilisateur
+
     action: Action
     details: Details
     edition: Edition # not good
@@ -69,9 +77,22 @@ admin:
             label: Image d'en-tête
 
 
-    user: # move to piedwebCMS
+    user:
+        label:
+            profile: Profil
+            security: Securité
+            id: Identifiants
+        enabled:
+            label: Compte activé
+        role:
+            label: Role
+            admin: Administrateur
+            user: Utilisateur
         firstname:
             label: Prénom
+        password:
+            label: Mot de passe
+
         lastname:
             label: Nom
         phone:
@@ -80,6 +101,19 @@ admin:
             label: Adresse mail
         dateOfBirth:
             label: Date de naissance
+        createdAt:
+            label: Date d'inscription
+
+    media:
+        name:
+            label: Nom
+            help: "<small>Choisissez un à plusieurs mots décrivant votre fichier. N'hésitez pas à utiliser des mots clefs pour retrouver facilement votre image (ex: Massif des Ecrins - Glacier de la Meije)</small>"
+        mediaFile:
+            label: Fichier
+        mainColor:
+            label: Couleur Principale
+        createdAt:
+            label: Date d'upload
 
 #---
 # Errors Page(s)

@@ -6,15 +6,15 @@ sonata_admin:
             #- { type: sonata.admin.block.admin_list, position: left }
         groups:
             app.admin.group.page:
-                label: Pages
-                label_catalogue: Pages
+                label: admin.label.content
+                label_catalogue: admin.label.content
                 items:
                     - piedweb.admin.page
                     - piedweb.admin.media
 
             app.admin.group.user:
-                label: Utilisateurs
-                label_catalogue: Utilisateurs
+                label: admin.label.user
+                label_catalogue: admin.label.user
                 items:
                     - piedweb.admin.user
     options:
