@@ -46,7 +46,7 @@ services:
 
     PiedWeb\CMSBundle\EventListener\PageListener:
         tags:
-            - { name: doctrine.orm.entity_listener, entity: PiedWeb\CMSBundle\Entity\Page, event: preRemove }
+            - { name: doctrine.orm.entity_listener, entity: '%app.entity_page%', event: preRemove }
 
     piedweb.feed.dumper:
         class: PiedWeb\CMSBundle\Service\FeedDumpService

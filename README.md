@@ -1,5 +1,5 @@
-<p align="center"><a href="https://piedweb.com">
-<img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="theme devoluix bootstrap 4" />
+<p align="center"><a href="https://piedweb.com" rel="dofollow">
+<img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="Agence Communication Vercors" />
 </a></p>
 
 # CMS for Developper
@@ -36,8 +36,9 @@ https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms
 
 List of Bundles wich extend this one:
 
-* [Contact](https://github.com/PiedWeb/ContactBundle)
+* [Reservation](https://github.com/PiedWeb/ReservationBundle)
 * [Static](https://github.com/PiedWeb/StaticBundle)
+* [Contact](https://github.com/PiedWeb/ContactBundle)
 * [Faq](https://github.com/PiedWeb/FaqBundle)
 * ...
 

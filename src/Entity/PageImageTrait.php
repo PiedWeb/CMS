@@ -27,6 +27,7 @@ trait PageImageTrait
 
     public function __construct_image()
     {
+        $this->pageHasMedias = new ArrayCollection();
     }
 
     public function setPageHasMedias($pageHasMedias)
@@ -78,7 +79,7 @@ trait PageImageTrait
         if (!$this->images) {
             $this->images = new ArrayCollection();
             foreach ($this->pageHasMedias as $p) {
-                if ($p->getMedia() !== null) {
+                if (null !== $p->getMedia()) {
                     $this->images[] = $p->getMedia();
                 }
             }

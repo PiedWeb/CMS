@@ -32,7 +32,6 @@ class MediaAdmin extends AbstractAdmin
     {
         $media = $this->getSubject();
 
-
         //$type = $media && $media->getName() === null ? TextType::class : HiddenType::class;
         $formMapper->add('name', TextType::class, [
             'required' => false,
@@ -59,7 +58,7 @@ class MediaAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        /**
+        /*
          * todo: implémente datepicker for orm_date in sonata
         $datagridMapper->add('createdAt', null, [
             'label' => 'admin.media.createdAt.label',

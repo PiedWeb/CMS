@@ -18,13 +18,7 @@ class PageController extends AbstractController
         $page = $this->getDoctrine()->getRepository($this->container->getParameter('app.entity_page'))->findOneBySlug($slug, $request->getLocale());
 
         // Check if page exist
-        if (null === $page && 'homepage' == $slug) {
-            $page = new \PiedWeb\CMSBundle\Entity\Page();
-            $page->setTitle($translator->trans('installation.new.title'))
-                 ->setExcrept($translator->trans('installation.new.text'));
-
-            return $this->render($params->get('app.default_page_template'), ['page' => $page]);
-        } elseif (null === $page) {
+        if (null === $page) {
             throw $this->createNotFoundException();
         }
 

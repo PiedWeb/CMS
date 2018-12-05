@@ -11,7 +11,6 @@ use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Sonata\UserBundle\Form\Type\SecurityRolesType;
 
 class UserAdmin extends AbstractAdmin
 {
@@ -23,7 +22,6 @@ class UserAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper): void
     {
-
         $now = new \DateTime();
 
         $formMapper
@@ -71,7 +69,7 @@ class UserAdmin extends AbstractAdmin
             ]);
         }
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'getphone')) {
-              $formMapper->add('phone', TextType::class, [
+            $formMapper->add('phone', TextType::class, [
                 'required' => false,
                 'label' => 'admin.user.phone.label',
             ]);
@@ -108,7 +106,6 @@ class UserAdmin extends AbstractAdmin
                         ]],
                     ],
                 ])
-
 
             ->end()
         ;

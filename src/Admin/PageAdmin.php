@@ -282,7 +282,7 @@ class PageAdmin extends AbstractAdmin
              'label' => 'admin.page.metaRobots.label',
         ]);
         }
-        /**
+        /*
          * todo: implémente datepicker for orm_date in sonata
         $formMapper->add('createdAt', 'doctrine_orm_date', [
              'label' => 'admin.page.createdAt.label',

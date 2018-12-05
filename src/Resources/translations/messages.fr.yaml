@@ -1,18 +1,11 @@
-
-#---
-# Can be remove
-#---
-installation:
-    new:
-        title:  "Installation"
-        text:   "Installation : rendez-vous sur l''admin et créez une page répondant au slug de <code>homepage</code>."
-
 #---
 # Views Component
 #---
 video:
     play: 'Lecture'
 
+relatedPages:
+    title: "Ca peut également vous intéresser :"
 #---
 # Entity
 #---

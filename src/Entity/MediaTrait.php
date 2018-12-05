@@ -204,7 +204,6 @@ trait MediaTrait
         return $this;
     }
 
-
     public function setPageHasMedias($pageHasMedias)
     {
         $this->pageHasMedias = new ArrayCollection();
