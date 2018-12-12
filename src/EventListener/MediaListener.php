@@ -66,7 +66,7 @@ class MediaListener
 
     private function checkIfNameEverExistInDatabase($media)
     {
-        $same = $this->em->getRepository('PiedWebCMS:Media')->findOneBy(['name' => $media->getName()]);
+        $same = $this->em->getRepository(get_class($media))->findOneBy(['name' => $media->getName()]);
         if ($same && (null == $media->getId() || $media->getId() != $same->getId())) {
             $media->setName($media->getName().' ('.$this->iterate.')');
             ++$this->iterate;

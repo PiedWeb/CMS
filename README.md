@@ -97,7 +97,7 @@ cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://g
 - search for all "todo" in the code
 - Extension: load block via ajax (like contact)
 - Extension : charger la liste des template disponible && Permettre l'édition (la création) de views/component directement online
-
+- Transform image reOrganizer in list (to permit showing then horizontally)
 
 ## Contributors
 

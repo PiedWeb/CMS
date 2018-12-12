@@ -150,6 +150,13 @@ services:
         tags:
             - { name: twig.extension }
 
+
+    piedweb_cms.mailer:
+        class: PiedWeb\CMSBundle\Mailer\Mailer
+        arguments: ['@mailer', '@router', '@templating', '%app.email_sender%', '%app.email_sender_name%']
+
+    PiedWeb\CMSBundle\Mailer\Mailer:
+        alias: piedweb_cms.mailer
 # --------
 # Extending other bundles
 # --------

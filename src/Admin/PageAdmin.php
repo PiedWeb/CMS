@@ -64,7 +64,7 @@ class PageAdmin extends AbstractAdmin
             $this->feedDumper->dump();
         }
 
-        $formMapper->with('admin.page.title.label');
+        $formMapper->with('admin.page.title.label', ['class'=>'col-md-9']);
         $formMapper->add('title', TextType::class, [
             'label' => 'admin.page.title.label',
             'help' => 'admin.page.title.help',

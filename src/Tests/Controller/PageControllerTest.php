@@ -13,7 +13,7 @@ class PageControllerTest extends WebTestCase
         //self::bootKernel();
         //$container = self::$kernel->getContainer();
         //$container = self::$container;
-        /**
+        /*
         $kernel = new AppKernel();
 
         $client = new Client($kernel);
