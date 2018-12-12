@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 
 /**
- * @ORM\Entity(repositoryClass="PiedWeb\CMSBundle\Repository\MediaRepository")
+ * @ORM\MappedSuperclass
  * @Vich\Uploadable
  * UniqueEntity({"name"}, message="Ce nom existe déjà.")
  */

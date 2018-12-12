@@ -8,8 +8,7 @@ use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 
 /**
  * @ORM\MappedSuperclass
- * @ORM\Entity(repositoryClass=PageRepository::class)
- * @ORM\HasLifecycleCallbacks
+ * @ORM\HasLifecycleCallbacks()
  */
 class Page implements TranslatableInterface, PageInterface
 {

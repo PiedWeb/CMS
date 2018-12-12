@@ -27,6 +27,10 @@ sed -i -e "s/return \[/return \[\n    PiedWeb\\\CMSBundle\\\PiedWebCMSBundle::cl
 cp -R vendor/piedweb/cms-bundle/src/Resources/config/packages/. config/packages/
 php bin/console cache:clear
 
+# Create default Entity
+mkdir src/Entity
+cp -R vendor/piedweb/cms-bundle/src/Install/Entity/. src/Entity
+
 # Install web server to test
 composer require symfony/web-server-bundle --dev
 
