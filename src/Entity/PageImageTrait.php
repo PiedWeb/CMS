@@ -20,7 +20,7 @@ trait PageImageTrait
     protected $images;
 
     /**
-     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMedia", mappedBy="page",cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMediaInterface", mappedBy="page",cascade={"all"}, orphanRemoval=true)
      * @ORM\OrderBy({"position":"ASC"})
      */
     protected $pageHasMedias;

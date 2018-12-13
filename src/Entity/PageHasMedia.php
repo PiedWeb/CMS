@@ -5,10 +5,10 @@ namespace PiedWeb\CMSBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  */
-class PageHasMedia
+class PageHasMedia implements PageHasMediaInterface
 {
     use IdTrait;
 

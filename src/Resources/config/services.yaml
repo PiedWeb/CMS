@@ -105,7 +105,7 @@ services:
 
     piedweb.admin.pagehasmedia:
         class: PiedWeb\CMSBundle\Admin\PageHasMedia
-        arguments: [~, PiedWeb\CMSBundle\Entity\PageHasMedia, ~]
+        arguments: [~, '%app.entity_pagehasmedia%', ~]
         calls:
             - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
         tags:

@@ -64,7 +64,7 @@ trait MediaTrait
     protected $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMedia", mappedBy="media",cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMediaInterface", mappedBy="media",cascade={"all"}, orphanRemoval=true)
      */
     protected $pageHasMedias;
 
