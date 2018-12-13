@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User extends BaseUser implements UserInterface
 {
-    use UserTrait; //, UserExtendedTrait;
+    use UserTrait;
 
     /**
      * @ORM\Id

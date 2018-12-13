@@ -149,7 +149,7 @@ class PageAdmin extends AbstractAdmin
              'property' => 'question',   // or any field in your media entity
              'label' => 'admin.page.faq.label',
              'btn_add' => true,
-             'to_string_callback' => function ($entity, $property) {
+             'to_string_callback' => function ($entity) {//, $property) {
                  return $entity->getQuestion();
              },
          ]);
