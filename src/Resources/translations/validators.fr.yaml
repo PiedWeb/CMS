@@ -6,3 +6,7 @@ user:
         invalid: "L''adresse e-mail est invalide."
     password:
         short: 'Le mot de passe est trop court (7 caractères min.).'
+
+page:
+    slug:
+        already_used: 'Une page utilise déjà cet identifiant URL'
