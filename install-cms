@@ -29,7 +29,7 @@ php bin/console cache:clear
 
 # Create default Entity
 mkdir src/Entity
-cp -R vendor/piedweb/cms-bundle/src/Install/Entity/. src/Entity
+cp -R vendor/piedweb/cms-bundle/Install/Entity/. src/Entity
 
 # Install web server to test
 composer require symfony/web-server-bundle --dev
