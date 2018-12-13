@@ -10,7 +10,7 @@ trait UserTrait
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * Loaded from BaseUser.

@@ -12,18 +12,18 @@ trait PageImageTrait
     /**
      * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface")
      */
-    private $mainImage;
+    protected $mainImage;
 
     /**
      * @var ArrayCollection
      */
-    private $images;
+    protected $images;
 
     /**
      * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMedia", mappedBy="page",cascade={"all"}, orphanRemoval=true)
      * @ORM\OrderBy({"position":"ASC"})
      */
-    private $pageHasMedias;
+    protected $pageHasMedias;
 
     public function __construct_image()
     {

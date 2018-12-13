@@ -23,9 +23,9 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('name')->defaultValue('PiedWeb.com')->end()
                     ->scalarNode('color')->defaultValue('#1fa67a')->end()
                     ->scalarNode('default_page_template')->defaultValue('@PiedWebCMS/page/page.html.twig')->cannotBeEmpty()->end()
-                    ->scalarNode('entity_page')->defaultValue('PiedWeb\CMSBundle\Entity\Page')->cannotBeEmpty()->end()
-                    ->scalarNode('entity_media')->defaultValue('PiedWeb\CMSBundle\Entity\Media')->cannotBeEmpty()->end()
-                    ->scalarNode('entity_user')->defaultValue('PiedWeb\CMSBundle\Entity\User')->cannotBeEmpty()->end()
+                    ->scalarNode('entity_page')->defaultValue('App\Entity\Page')->cannotBeEmpty()->end()
+                    ->scalarNode('entity_media')->defaultValue('App\Entity\Media')->cannotBeEmpty()->end()
+                    ->scalarNode('entity_user')->defaultValue('App\Entity\User')->cannotBeEmpty()->end()
                     // For Fos User and maybe other bundle
                     ->scalarNode('email_sender')->defaultValue('me@tld.com')->cannotBeEmpty()->end()
                     ->scalarNode('email_sender_name')->defaultValue('PiedWebCMS')->cannotBeEmpty()->end()

@@ -14,37 +14,37 @@ trait MediaTrait
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $mimeType;
+    protected $mimeType;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $relativeDir;
+    protected $relativeDir;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $size;
+    protected $size;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $height;
+    protected $height;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $width;
+    protected $width;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    private $mainColor;
+    protected $mainColor;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $media;
+    protected $media;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -53,20 +53,20 @@ trait MediaTrait
      *
      * @var File
      */
-    private $mediaFile;
+    protected $mediaFile;
 
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=100, unique=true)
      */
-    private $name;
+    protected $name;
 
-    private $slug;
+    protected $slug;
 
     /**
      * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMedia", mappedBy="media",cascade={"all"}, orphanRemoval=true)
      */
-    private $pageHasMedias;
+    protected $pageHasMedias;
 
     public function __toString()
     {

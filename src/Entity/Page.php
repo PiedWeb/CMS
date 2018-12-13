@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use PiedWeb\CMSBundle\Repository\PageRepository;
 use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 
 /**

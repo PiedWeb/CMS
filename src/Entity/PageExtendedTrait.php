@@ -22,56 +22,56 @@ trait PageExtendedTrait
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $subTitle;
+    protected $subTitle;
 
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $excrept;
+    protected $excrept;
 
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $metaRobots;
+    protected $metaRobots;
 
     /**
      * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", inversedBy="childrenPages")
      */
-    private $parentPage;
+    protected $parentPage;
 
     /**
      * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", mappedBy="parentPage")
      */
-    private $childrenPages;
+    protected $childrenPages;
 
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $h1;
+    protected $h1;
 
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=150, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\UserInterface")
      */
-    private $author;
+    protected $author;
 
     /**
      * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface")
      */
-    private $relatedPages;
+    protected $relatedPages;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
      */
-    private $template;
+    protected $template;
 
     public function __construct_extended()
     {
