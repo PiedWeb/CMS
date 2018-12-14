@@ -51,7 +51,7 @@ yarn open
 
 ## Documentation
 
-Not yet documented. But there is [a cookbook](https://github.com/PiedWeb/CMS/blob/master/src/doc/Cookbook.rst).
+Not yet documented. But there is [a cookbook](https://github.com/PiedWeb/CMS/blob/master/src/doc/Cookbook.md).
 
 
 ## Extension
