@@ -10,27 +10,49 @@ PiedWebCMS is a Symfony Bundle built with traits. It permit to get the basic fun
 
 Build on top on [Symfony 4.1](https://github.com/symfony/symfony), [VichUploader](https://github.com/dustin10/VichUploaderBundle), [LiipImagine](https://github.com/liip/LiipImagineBundle), [Sonata Admin](https://github.com/sonata-project/SonataAdminBundle), [FOSUser](https://github.com/FriendsOfSymfony/FOSUserBundle) and more (see [composer.json](https://github.com/PiedWeb/CMS/blob/master/composer.json)).
 
-If you are interested in, demo is coming soon, stay watching.
 
 * [Installation](#installation)
     * [Packagist](https://packagist.org/packages/piedweb/cms-bundle)
+* [Test](#test)
+* [Documentation](#documentation)
 * [Extension](#extension)
-* [CookBook](#cookbook)
 * [Todo](#todo)
-* [Contributors](#contributors)
+* [Contribute](#contribute)
 * [Licence](#licence)
 
 ## Installation
 
+Supposing composer is installed globally
 ```
-# Supposing composer is installed globally
 curl https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms >> install-cms && chmod +x install-cms && ./install-cms ./my-folder
 # Valid 'a' to install all recipes !
-
-# Else, look at :
-https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms
-# Each step is describe.
 ```
+
+Else, look at [`install-cms`](https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms) where each step is describe.
+
+## Test
+
+Front End tests are in [a different git repo](https://github.com/PiedWeb/frontend-test).
+
+Tu run it, [install a new instance of PiedWebCMS](#installation), then you need :
+```
+git clone git@github.com:PiedWeb/frontend-test.git && cd frontend-test
+```
+
+Configure, in `cypress.json`, the `baseURL` of your PiedWebCMS instance.
+And run the test
+```
+# headless
+yarn run
+
+# To open cypress :
+yarn open
+```
+
+## Documentation
+
+Not yet documented. But there is [a cookbook](https://github.com/PiedWeb/CMS/blob/master/src/doc/Cookbook.rst).
+
 
 ## Extension
 
@@ -43,75 +65,34 @@ List of Bundles wich extend this one:
 * ...
 
 
-## Cookbook
-
-### Override Entity without writing more than 3 lines of code
-When you install a new project, entity are installed full featured.
-To remove default feature or add new one, you just need to override or extends `Entity/Page.php`, `Entity/Media.php` or `Entity/User.php`.
-In your app, create a new file (copying ?!) in your `src/Entity`.
-Then, edit `config/packages/piedweb_cms.yaml` to correctly set your new entity.
-
-### Edit the navbar
-- Override default navbar by creating `page.html.twig` in your project at `src/Resources/PiedWebCMSBundle/views`
-```
-{% extends '@PiedWebCMS/page/page.html.twig' %}
-
-{% block navbar %}
-    {% include '@PiedWebCMS/component/_menu.html.twig' with {'logo':{'anchor':logo_alt}} only %}
-{% endblock %}
-```
-
-### Create a redirection
-From the admin, Add a Page > Put Title and Slug as you want > Put mainContent as `Location: http://example.eg/` or `Location: http://example.eg/ 302`
-Your redirection will be at the normal page route with the slug set `domain.com/slug`
-
-
-### i18n (internationalization)
-It's by default activate (thanks Gedmo). To configure languages, edit `config/packages/piedweb_cms.yaml` and `config/packages/sonata_admin.yaml`
-
-### Add js link
-```
-{{ jslink('Pied Web', path('piedweb_cms_homepage'))|raw }}
-```
-
 ## TODO
-(half in french)
 
 ### For soon
-- test, test, test (ahah !)
-- StaticBundle not work when you change the route with a prefix (i18n for eg)
 
+- StaticBundle not work when you change the route with a prefix (i18n for eg)
 - faciliter le doublie fichier JS/CSS avec un webpack préparé comme
 
 ### Next
 
-- Think about implement cache :
-```
-cache solution https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/ https://github.com/WyriHaximus/HtmlCompress
-```
-
-### Next Next
-
-- Command line tool to generate Overriding entity (example: `piedweb:create-entity Page -traits=@PiedWebCMS\Entity\PageExtented,@PiedWebFaq\Entity\PageFaq`)
+- implement cache ? (`https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/` `https://github.com/WyriHaximus/HtmlCompress`)
 - Change translatable (gedmo) to make something more scalable and easy to use with repo (knp ?, other?)
 - search for all "todo" in the code
-- Extension: load block via ajax (like contact)
-- Extension : charger la liste des template disponible && Permettre l'édition (la création) de views/component directement online
+- Extension: load block via ajax (like [Contact](https://github.com/PiedWeb/ContactBundle))
+- Extension : load all templates and template blocks avalaible and permit edition online (better template organization)
 - Transform image reOrganizer in list (to permit showing then horizontally)
 
-## Contributors
+## Contribute
 
-No rules (yet) to contribute. It's a small individual project.
-If you use it, or just copy a piece of it, I will be glad to know it (contact@robin-d.fr) :)
+### To send a pull resquest
+
+1. Please check if test are still running without error (see [running test](#test) )
+2. Check coding standard before to commit : `php-cs-fixer fix src --rules=@Symfony --verbose && php-cs-fixer fix src --rules='{"array_syntax": {"syntax": "short"}}' --verbose`
+
+### Contributors
 
 * [Robin](https://www.robin-d.fr/) / [Pied Web](https://piedweb.com)
 * ...
 
-Check coding standard before to commit :
-```
-php-cs-fixer fix src --rules=@Symfony --verbose
-php-cs-fixer fix src --rules='{"array_syntax": {"syntax": "short"}}' --verbose
-```
 
 ## License
 

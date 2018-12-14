@@ -4,4 +4,4 @@ piedweb_cms_page:
     controller: PiedWeb\CMSBundle\Controller\PageController::show
     methods:    [GET, HEAD]
     requirements:
-        slug: '[a-zA-Z1-9\-_]*'
+        slug: '[a-zA-Z0-9\-_]*'
