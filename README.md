@@ -8,7 +8,7 @@ Yet ! Another CMS :)
 
 PiedWebCMS is a Symfony Bundle built with traits. It permit to get the basic functionalities for a website... to go further or to use as it.
 
-Build on top on [Symfony 4.1](https://github.com/symfony/symfony), [VichUploader](https://github.com/dustin10/VichUploaderBundle), [LiipImagine](https://github.com/liip/LiipImagineBundle), [Sonata Admin](https://github.com/sonata-project/SonataAdminBundle), [FOSUser](https://github.com/FriendsOfSymfony/FOSUserBundle) and more (see [composer.json](https://github.com/PiedWeb/CMS/blob/master/composer.json)).
+Build on top on [Symfony 4](https://github.com/symfony/symfony), [VichUploader](https://github.com/dustin10/VichUploaderBundle), [LiipImagine](https://github.com/liip/LiipImagineBundle), [Sonata Admin](https://github.com/sonata-project/SonataAdminBundle), [FOSUser](https://github.com/FriendsOfSymfony/FOSUserBundle) and more (see [composer.json](https://github.com/PiedWeb/CMS/blob/master/composer.json)).
 
 
 * [Installation](#installation)
