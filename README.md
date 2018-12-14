@@ -20,6 +20,8 @@ Build on top on [Symfony 4.1](https://github.com/symfony/symfony), [VichUploader
 * [Contribute](#contribute)
 * [Licence](#licence)
 
+
+
 ## Installation
 
 Supposing composer is installed globally
@@ -29,6 +31,8 @@ curl https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms >> install
 ```
 
 Else, look at [`install-cms`](https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms) where each step is describe.
+
+
 
 ## Test
 
@@ -49,9 +53,12 @@ yarn run
 yarn open
 ```
 
+
+
 ## Documentation
 
 Not yet documented. But there is [a cookbook](https://github.com/PiedWeb/CMS/blob/master/src/doc/Cookbook.md).
+
 
 
 ## Extension
@@ -63,6 +70,7 @@ List of Bundles wich extend this one:
 * [Contact](https://github.com/PiedWeb/ContactBundle)
 * [Faq](https://github.com/PiedWeb/FaqBundle)
 * ...
+
 
 
 ## TODO
@@ -81,17 +89,23 @@ List of Bundles wich extend this one:
 - Extension : load all templates and template blocks avalaible and permit edition online (better template organization)
 - Transform image reOrganizer in list (to permit showing then horizontally)
 
+
+
 ## Contribute
+
 
 ### To send a pull resquest
 
 1. Please check if test are still running without error (see [running test](#test) )
 2. Check coding standard before to commit : `php-cs-fixer fix src --rules=@Symfony --verbose && php-cs-fixer fix src --rules='{"array_syntax": {"syntax": "short"}}' --verbose`
 
+
 ### Contributors
 
 * [Robin](https://www.robin-d.fr/) / [Pied Web](https://piedweb.com)
 * ...
+
+
 
 
 ## License
