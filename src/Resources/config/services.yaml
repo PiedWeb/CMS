@@ -60,8 +60,19 @@ services:
             #- [ setTranslatableLocale, [ "@=service('request_stack').getCurrentRequest().getLocale()" ]]
 
     PiedWeb\CMSBundle\Twig\AppExtension:
-        tags: ['twig.extension']
-        arguments: [ "@request_stack", '%locale%']
+        tags:
+            - 'twig.extension'
+            #- { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+        arguments: [ "@piedweb.page_canonical"]
+
+    piedweb.page_canonical:
+        class: PiedWeb\CMSBundle\Service\PageCanonicalService
+        arguments: [ "@request_stack", "@router", '%app.default_locale_without_prefix%', '%locale%']
+        public: true
+
+    PiedWeb\CMSBundle\Service\PageCanonicalService:
+        alias: piedweb.page_canonical
+        public: true
 
 # --------
 # Repository
@@ -170,10 +181,10 @@ services:
         tags:
             - { name: "liip_imagine.cache.resolver", resolver: piedweb_relativeimgcache }
 
-    vich_uploader.pied_web.namer_property:
+    vich_uploader.piedweb.namer_property:
         class: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer
         public: true
 
     PiedWeb\CMSBundle\Service\VichUploadPropertyNamer:
-        alias: vich_uploader.pied_web.namer_property
+        alias: vich_uploader.piedweb.namer_property
         public: true

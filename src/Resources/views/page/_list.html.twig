@@ -2,7 +2,7 @@
         <ul>
             {% for page in pages %}
                 <li>
-                    <a href="{{ path('piedweb_cms_page', {'slug': page.realSlug }) }}">
+                    <a href="{{ page(page.realSlug) }}">
                         {% if page.h1 is defined and page.h1 is not null %}
                             {{ page.h1 }}
                         {% else %}

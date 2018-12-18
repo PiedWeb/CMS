@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><rss version="2.0">
     <channel>
         <title>{{ logo_alt }}</title>
-        <link>{{ url('piedweb_cms_homepage') }}</link>
+        <link>{{ (url('piedweb_cms_homepage')|trim('/', 'right')) ~ page('') }}</link>
 
         {% for page in pages %}
             <item>
@@ -12,7 +12,7 @@
                         {{ page.title }}
                     {% endif %}
                 </title>
-                <link>{{ page.slug == 'homepage' ? url('piedweb_cms_homepage') : url('piedweb_cms_page', {slug: page.getRealSlug}) }}</link>
+                <link>{{ (url('piedweb_cms_homepage')|trim('/', 'right')) ~ page(page.getRealSlug) }}</link>
                 <pubDate>{{ page.createdAt|date("D, d M Y H:i:s T") }}</pubDate>
             </item>
         {% endfor %}

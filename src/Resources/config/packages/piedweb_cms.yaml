@@ -5,6 +5,7 @@ piedweb_cms:
     #dir:                  '%kernel.project_dir%/public'
     #name:                 'Pied Web CMS'
     #color:                '#1fa67a'
+    #default_locale_without_prefix: false # Permit to have default locale accessed by /slug moreover than /locale/slug
     #default_page_template: '@PiedWebCMS/page/page.html.twig'
     #entity_page:          App\Entity\Page
     #entity_pagehasmedia:  App\Entity\PageHasMedia

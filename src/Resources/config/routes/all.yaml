@@ -12,14 +12,19 @@ piedweb_cms_homepage:
     controller: PiedWeb\CMSBundle\Controller\PageController::show
     methods:    [GET, HEAD]
 
-page:
+
+localized_page:
+    name_prefix: localized_
     resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'
     prefix: /{_locale}
     requirements:
         _locale: '%app.locales%'
     defaults:
         _locale: '%locale%'
-    trailing_slash_on_root: true # it's ever the default value
+    trailing_slash_on_root: true
+
+page:
+    resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'
 
 #_errors:
 #    resource: '@TwigBundle/Resources/config/routing/errors.xml'

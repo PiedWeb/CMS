@@ -77,7 +77,6 @@ List of Bundles wich extend this one:
 
 ### For soon
 
-- StaticBundle not work when you change the route with a prefix (i18n for eg)
 - faciliter le doublie fichier JS/CSS avec un webpack préparé comme
 
 ### Next

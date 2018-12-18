@@ -21,6 +21,12 @@ Override default navbar by creating `page.html.twig` in your project at `src/Res
 ### i18n (internationalization)
 It's by default activate (thanks Gedmo). To configure languages, edit `config/packages/piedweb_cms.yaml` and `config/packages/sonata_admin.yaml`
 
+Make internal link
+```twig
+{{ homepage() }}
+{{ page('my-slug') }}
+```
+
 ## Editor Tips
 
 ### Create a redirection

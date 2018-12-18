@@ -3,48 +3,26 @@
 namespace PiedWeb\CMSBundle\Twig;
 
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
-use Symfony\Component\HttpFoundation\RequestStack;
 use PiedWeb\RenderAttributes\AttributesTrait;
+use PiedWeb\CMSBundle\Service\PageCanonicalService;
 use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension
 {
     use AttributesTrait;
 
-    protected $request;
-    protected $router;
-
-    protected $defaultLocale;
-
-    public function __construct(RequestStack $request, ?string $defaultLocale = null)
+    public function __construct(PageCanonicalService $pageCanonical)
     {
-        $this->request = $request->getCurrentRequest();
-        $this->defaultLocale = $defaultLocale;
-    }
-
-    public function getFilters()
-    {
-        return [
-            new TwigFilter('pwi', [$this, 'checkPath']),
-        ];
+        $this->pageCanonical = $pageCanonical;
     }
 
     public function getFunctions()
     {
         return [
+            new TwigFunction('homepage', [$this->pageCanonical, 'generatePathForHomepage']),
+            new TwigFunction('page', [$this->pageCanonical, 'generatePathForPage']),
             new TwigFunction('jslink', [AppExtension::class, 'renderJavascriptLink']),
         ];
-    }
-
-    public function checkPath($path)
-    {
-        if (null !== $this->defaultLocale // maybe it's not an i18n
-            && $this->defaultLocale != $this->request->getLocale()) {
-            $path = rtrim($path, '/').'/'.$this->request->getLocale().'/';
-        }
-
-        return $path;
     }
 
     public static function renderJavascriptLink($anchor, $path, $attr = [])

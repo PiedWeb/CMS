@@ -48,9 +48,9 @@ class PageController extends AbstractController
 
         $defaultLocale = $this->container->getParameter('locale');
 
-        $expected = 'homepage' == $page->getSlug() && $defaultLocale == $request->getLocale() ?
-            $this->get('router')->generate('piedweb_cms_homepage') :
-            $this->get('router')->generate('piedweb_cms_page', ['slug' => $page->getRealSlug()])
+        $expected = 'homepage' == $page->getSlug() ?
+            $this->get('piedweb.page_canonical')->generatePathForHomepage() :
+            $this->get('piedweb.page_canonical')->generatePathForPage($page->getRealSlug())
         ;
 
         if ($real != $expected) {

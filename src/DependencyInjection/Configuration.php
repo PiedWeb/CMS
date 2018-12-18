@@ -22,6 +22,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('dir')->defaultValue('%kernel.project_dir%/public')->cannotBeEmpty()->end() // not explicit = public dir/web dir
                     ->scalarNode('name')->defaultValue('PiedWeb.com')->end()
                     ->scalarNode('color')->defaultValue('#1fa67a')->end()
+                    ->booleanNode('default_locale_without_prefix')->defaultTrue()->end()
                     ->scalarNode('default_page_template')->defaultValue('@PiedWebCMS/page/page.html.twig')->cannotBeEmpty()->end()
                     ->scalarNode('entity_page')->defaultValue('App\Entity\Page')->cannotBeEmpty()->end()
                     ->scalarNode('entity_media')->defaultValue('App\Entity\Media')->cannotBeEmpty()->end()
