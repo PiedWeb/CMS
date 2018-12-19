@@ -2,6 +2,13 @@
 
 {% block title %}{{ page.title|striptags }}{% endblock %}
 
+{% block robots %}
+    {% if page.metaRobots is defined and page.metaRobots is not null %}
+        <meta name="robots" content="{{ page.metaRobots }}">
+    {% endif %}
+    <link rel="canonical" href="{{ app_base_url is app_base_url ? app_base_url : '' }}{{ page(page.realSlug) }}" />
+{% endblock %}
+
 {% block body %}
 
     {% block navbar %}

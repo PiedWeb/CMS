@@ -27,6 +27,17 @@ Make internal link
 {{ page('my-slug') }}
 ```
 
+### Canonical with base domain :
+
+In your `config/packages/twig.yaml` add
+```
+twig:
+    ...
+    globals:
+        ...
+        app_base_url: https://mydomain.tdl`
+```
+
 ## Editor Tips
 
 ### Create a redirection

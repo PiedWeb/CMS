@@ -14,13 +14,13 @@
 
             <title>{% block title %}Pied Web{% endblock %}</title>
 
-            {% if page.metaRobots is defined and page.metaRobots is not null %}
-                <meta name="robots" content="{{ page.metaRobots }}">
-            {% endif %}
 
             {% block css %}
                 <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
             {% endblock %}
+
+            {% block robots %}{% endblock %}
+
         {% endblock %}
     </head>
     <body>

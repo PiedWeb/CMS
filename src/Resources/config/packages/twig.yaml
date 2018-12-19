@@ -13,5 +13,6 @@ twig:
     globals:
         logo_alt: "%app.name%"
         app_color: "%app.color%"
+        #app_base_url: "https://mydomain.tdl"
         #app_contact_email: "%app.contact.email%"
         #app_contact_adress: "%app.contact.adress%"
