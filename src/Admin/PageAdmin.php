@@ -77,6 +77,7 @@ class PageAdmin extends AbstractAdmin
                 'help' => 'admin.page.h1.help',
             ]);
         }
+
         $formMapper->add('slug', TextType::class, [
             'label' => 'admin.page.slug.label',
             'help' => 'admin.page.slug.help',

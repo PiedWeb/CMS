@@ -12,34 +12,34 @@ trait PageTrait
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=150)
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=200, nullable=true)
      */
-    private $title;
+    protected $title;
 
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="text", nullable=true)
      */
-    private $mainContent;
+    protected $mainContent;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $mainContentIsMarkdown;
+    protected $mainContentIsMarkdown;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     /**
      * @ORM\Column(type="integer")
@@ -66,7 +66,7 @@ trait PageTrait
     public function getRealSlug(): ?string
     {
         if ('homepage' == $this->slug) {
-            $this->slug = '';
+            return '';
         }
 
         return $this->slug;

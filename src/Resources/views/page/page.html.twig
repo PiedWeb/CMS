@@ -6,7 +6,7 @@
     {% if page.metaRobots is defined and page.metaRobots is not null %}
         <meta name="robots" content="{{ page.metaRobots }}">
     {% endif %}
-    <link rel="canonical" href="{{ app_base_url is app_base_url ? app_base_url : '' }}{{ page(page.realSlug) }}" />
+    <link rel="canonical" href="{{ app_base_url is defined ? app_base_url : '' }}{{ page(page.realSlug) }}" />
 {% endblock %}
 
 {% block body %}
