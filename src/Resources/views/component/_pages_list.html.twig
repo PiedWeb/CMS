@@ -1,13 +1,14 @@
 {# component for piedweb-devoluix-theme #}
 {% if pages is not empty %}
     {% for page in pages %}
+        {% if (page.createdAt) <= date('now') %}
         <div class="col-lg-4 col-md-6">
             <div class="mcard clickable">
 
                 {% block header %}
                 {% if page.mainImage is defined and page.mainImage is not null %}
                 <div class="card-header card-header-img">
-                    <span class="card-img-top img-fluid rounded" data-img="{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) |imagine_filter('thumb') }}">{{ page.title }}</span>
+                    <span class="card-img-top img-fluid rounded" data-img="{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) |imagine_filter('thumb') }}">{{ page.title|striptags }}</span>
                     <div class="shadow-color" data-bg="{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) |imagine_filter('thumb') }}"></div>
                 </div>
                 {% endif %}
@@ -20,11 +21,7 @@
                     {% endif %}
                     <h3 class="h5 card-title">
                         <a href="{{ page(page.realSlug) }}">
-                            {% if page.h1 is defined and page.h1 is not null %}
-                                {{ page.h1 }}
-                            {% else %}
-                                {{ page.title }}
-                            {% endif %}
+                            {{ (page.h1 is defined and page.h1 is not null ? page.h1 : page.title)|raw }}
                         </a>
                     </h3>
                 </div>
@@ -32,5 +29,6 @@
 
             </div>
         </div>
+        {% endif %}
     {% endfor %}
 {% endif %}

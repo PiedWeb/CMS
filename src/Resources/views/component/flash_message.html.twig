@@ -5,12 +5,21 @@
 #danger (red)
 #}
 {% block flash_messages %}
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                {{ message | raw }}
-            </div>
-        {% endfor %}
-    {% endfor %}
+{% if app.session is not null and app.session.flashbag.all() is not empty %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% for type, messages in app.session.flashbag.all() %}
+                <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                    {% for message in messages %}
+                            <div class=row>{{ message | raw }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
 {% endblock %}

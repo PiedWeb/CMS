@@ -20,11 +20,11 @@
                 <ul class="navbar-nav ml-auto">
                     {% for item in items %}
                         <li class="nav-item">
-                            <a{{ attr({'href':'#', class: 'nav-link'}, (item.attr is defined ? item.attr : {}))}}>{{ sitem.anchor }}</a>
+                            <a{{ attr((item.attr is defined ? item.attr : {}), {'href':'#', class: 'nav-link'})}}>{{ item.anchor }}</a>
                                 {% if item.items is defined %}
                                 <ul class="nav-sub-item">
                                     {% for sub_iteam in item.items %}
-                                        <li><a{{ attr({'href':'#'}, (sub_item.attr is defined ? sub_item.attr : {}))}}>{{ sub_item.anchor }}</a></li>
+                                        <li><a{{ attr((sub_item.attr is defined ? sub_item.attr : {}), {'href':'#'})}}>{{ sub_item.anchor }}</a></li>
                                     {% endfor %}
                                 </ul>
                                 {% endif %}

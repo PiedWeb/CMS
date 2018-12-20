@@ -7,11 +7,9 @@
         <section class="section-gap" id="content">
             <div class="container">
 
-                {% set mainContent = page.mainContentIsMarkdown ? page.mainContent|markdown : page.mainContent  %}
-                {% include(template_from_string(mainContent)) %}
+                {{ content|raw }}
 
-                {% block after_content %}
-                {% endblock %}
+                {% block after_content %}{% endblock %}
             </div>
         </section>
     {% endif %}

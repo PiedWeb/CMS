@@ -62,7 +62,7 @@ trait PageImageTrait
     public function setMainImage(?Media $mainImage): self
     {
         // TODO: Déplacer en Assert pour éviter une erreur dégueu ?!
-        if (null === $mainImage->getWidth()) {
+        if (null !== $mainImage && null === $mainImage->getWidth()) {
             throw new \Exception('mainImage must be an Image. Media imported is not an image');
         }
 

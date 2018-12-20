@@ -139,6 +139,7 @@ class PageAdmin extends AbstractAdmin
             $formMapper->add('excrept', TextareaType::class, [
             'required' => false,
             'label' => 'admin.page.excrept.label',
+            'help' => 'admin.page.excrept.help',
         ]);
         }
 

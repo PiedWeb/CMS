@@ -63,18 +63,21 @@ class PageController extends AbstractController
 
     /*
      * todo: paginate
+     * eg: {{ render(controller('\\PiedWeb\\CMSBundle\\Controller\\PageController::showList', { render: '@PiedWebCMS/page/_list.html.twig'})) }}
      */
-    public function showList(?Page $page, $render = '@PiedWebCMS/page/_list.html.twig', $limit = 100)
-    {
+    public function showList(
+        ?Page $page = null,
+        $render = '@PiedWebCMS/page/_list.html.twig',
+        $limit = 100
+    ) {
         $qb = $this->getDoctrine()->getRepository($this->container->getParameter('app.entity_page'))->getQueryToFindPublished('p');
         if (null !== $page) {
-            $qb->andWhere('p.parentPage = :id');
+            $qb->andWhere('p.parentPage = :id'.($allChildren ? ' OR p.parentPage = p.id' : ''));
             $qb->setParameter('id', $page->getId());
         }
+
         $qb->orderBy('p.createdAt', 'DESC');
         $qb->setMaxResults($limit);
-
-        $pages = $qb->getQuery()->getResult();
 
         return $this->render($render, ['pages' => $pages]);
     }

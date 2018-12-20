@@ -37,6 +37,7 @@ admin:
             label: Sous-titre
         excrept:
             label: Courte Description
+            help: Visible depuis les pages de résultats des moteurs de recherches (meta description)
         h1:
             label: Titre Imprimé
             help: Le <code>Titre Imprimé</code> sera visible sur vos pages tandis que le <code>Titre</code> de votre document s'affichera dans la barre du navigateur et sur les moteurs de recherches.

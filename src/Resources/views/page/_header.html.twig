@@ -2,18 +2,14 @@
 
 {% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
 {% set subtitle = page.subtitle is defined ? page.subTitle : null %}
-{% set description = page.excrept is defined ? page.excrept : null %}
+{% set description = excrept is defined ? excrept : null %}
 {% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
 
 {% block header_button %}
 {% endblock %}
 
 {% block fash_massage %}
-<div class="row">
-    <div class="col-sm-12">
-        {% include ('@PiedWebCMS/component/flash_message.html.twig') %}
-    </div>
-</div>
+    {% include ('@PiedWebCMS/component/flash_message.html.twig') %}
 {% endblock %}
 
 

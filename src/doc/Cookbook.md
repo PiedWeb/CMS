@@ -48,3 +48,28 @@ Your redirection will be at the normal page route with the slug set `domain.com/
 ```
 {{ jslink('Pied Web', path('piedweb_cms_homepage'))|raw }}
 ```
+
+### Add a lazy load image image (with [tyrol](https://github.com/PiedWeb/piedweb-tyrol-free-bootstrap-4-theme/blob/master/src/js/helpers.js#L3))
+```
+<span data-img="/media/thumb/media/2018/mon-image.jpg">Mon Image</span>
+```
+
+### Add a paragraph under the title in default theme
+```
+my paragraphe under the title
+<!--break-->
+following content
+```
+
+### Render children page as blog timeline
+```twig
+<div class=row>
+{% include '@PiedWebCMS/component/_pages_list.html.twig' with {pages: page.childrenPages|reverse} only %}
+</div>
+
+// Or children of children (like Blog Index on a two level organizations
+{% set pages = [] %}
+{% for p in page.childrenPages|reverse %}
+{% set pages = pages|merge(p.childrenPages) %}
+{% endfor %}
+```
