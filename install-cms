@@ -65,5 +65,8 @@ sed -i -e "s/locale: 'en'/locale: 'fr'/" config/services.yaml
 # Install Sonata Front-End Assets
 php bin/console assets:install
 
+# Create a robots.txt
+echo '' >public/robots.txt
+
 # Launch Server and Play
 php bin/console server:run
