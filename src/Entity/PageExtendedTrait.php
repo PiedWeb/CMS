@@ -102,12 +102,12 @@ trait PageExtendedTrait
         return $this;
     }
 
-    public function getMetaRobots(): ?bool
+    public function getMetaRobots(): ?string
     {
         return $this->metaRobots;
     }
 
-    public function setMetaRobots(?bool $metaRobots): self
+    public function setMetaRobots(?string $metaRobots): self
     {
         $this->metaRobots = $metaRobots;
 
