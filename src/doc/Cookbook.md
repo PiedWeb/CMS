@@ -73,3 +73,7 @@ following content
 {% set pages = pages|merge(p.childrenPages) %}
 {% endfor %}
 ```
+
+### Line break in Markdown
+
+Add two spaces at the end of the line [#](https://github.com/michelf/php-markdown/blob/lib/test/resources/markdown.mdtest/Markdown%20Documentation%20-%20Syntax.text#L184).
