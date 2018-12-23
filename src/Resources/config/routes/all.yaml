@@ -25,7 +25,3 @@ localized_page:
 
 page:
     resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'
-
-#_errors:
-#    resource: '@TwigBundle/Resources/config/routing/errors.xml'
-#    prefix:   /_error

@@ -23,6 +23,7 @@ trait RedirectionTrait
             if (filter_var($url, FILTER_VALIDATE_URL)) {
                 $this->redirectionUrl = $url;
                 $this->redirectionCode = $code;
+
                 return $url;
             }
         }

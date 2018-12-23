@@ -14,7 +14,7 @@ class PageController extends AbstractController
 
     public function show(string $slug = 'homepage', Request $request, TranslatorInterface $translator, ParameterBagInterface $params)
     {
-        $slug = '' == $slug ? 'homepage' : $slug;
+        $slug = '' == $slug ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = $this->getDoctrine()->getRepository($this->container->getParameter('app.entity_page'))->findOneBySlug($slug, $request->getLocale());
 
         // Check if page exist

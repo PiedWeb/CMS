@@ -5,12 +5,14 @@ namespace PiedWeb\CMSBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait PageTrait
 {
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=150)
+     * @Assert\NotBlank
      */
     protected $slug;
 
@@ -72,16 +74,21 @@ trait PageTrait
         return $this->slug;
     }
 
-    public function setSlug($slug): self
+    public function setSlug($slug, $set = false): self
     {
+        if ($set === true) {
+            $this->slug = $slug;
+        }
         // work around for disabled input in sonata admin
-        if (null === $slug) {
+        elseif (null === $slug) {
             if (null === $this->slug) {
                 throw new \ErrorException('slug cant be null');
             }
         } else {
-            $slg = new Slugify();
-            $this->slug = $slg->slugify($slug);
+            $slg = new Slugify(['regexp'=>'/[^A-Za-z0-9\/]+/']);
+            $slug = $slg->slugify($slug);
+            $slug = trim($slug, '/');
+            $this->slug = $slug; //$this->setSlug(trim($slug, '/'), true);
         }
 
         return $this;

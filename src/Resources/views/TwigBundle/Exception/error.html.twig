@@ -4,9 +4,9 @@
 
 {% block body %}
 
-    {% include '@PiedWebCMS/component/_header.html.twig' with {
+    {% include '@PiedWebCMS/component/_hero-banner.html.twig' with {
             title: 'error.title'|trans,
-            subtitle: 'error.serverSay'|trans ~ ' <em>' ~ status_code ~ '</em> <em>' ~ status_text ~ '</em>',
+            subtitle: (status_code is defined ? 'error.serverSay'|trans ~ ' <em>' ~ status_code ~ '</em> <em>' ~ status_text ~ '</em>' : null),
             description: 'error.description'|trans
     } only %}
 
