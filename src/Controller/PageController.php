@@ -27,11 +27,13 @@ class PageController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        // SEO redirection if we are not on the good URI (for exemple /fr/tagada instead of /tagada)
         $redirect = $this->checkIfUriIsCanonical($request, $page);
         if (false !== $redirect) {
             return $this->redirect($redirect[0], $redirect[1]);
         }
 
+        // Maybe the page is a redirection
         if (false !== $page->getRedirection()) {
             return $this->redirect($page->getRedirection(), $page->getRedirectionCode());
         }

@@ -2,10 +2,6 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Cocur\Slugify\Slugify;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 trait RedirectionTrait
 {
     protected $redirectionUrl;
@@ -25,17 +21,18 @@ trait RedirectionTrait
                 $url = preg_replace('/ [1-5][0-9]{2}$/', '', $url);
             }
             if (filter_var($url, FILTER_VALIDATE_URL)) {
-                $this->redirectionUrl  = $url;
+                $this->redirectionUrl = $url;
                 $this->redirectionCode = $code;
+                return $url;
             }
         }
 
-        $this->redirectionUrl  = false;
+        $this->redirectionUrl = false;
     }
 
     public function getRedirection()
     {
-        if ($ths->redirectionUrl === null) {
+        if (null === $this->redirectionUrl) {
             $this->manageRedirection();
         }
 
@@ -44,9 +41,10 @@ trait RedirectionTrait
 
     public function getRedirectionCode()
     {
-        if ($ths->redirectionUrl === null) {
+        if (null === $this->redirectionUrl) {
             $this->manageRedirection();
         }
 
         return $this->redirectionCode;
     }
+}
