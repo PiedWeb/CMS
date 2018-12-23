@@ -32,9 +32,8 @@ class PageController extends AbstractController
             return $this->redirect($redirect[0], $redirect[1]);
         }
 
-        $redirect = $this->getRedirection($page);
-        if (false !== $redirect) {
-            return $this->redirect($redirect[0], $redirect[1]);
+        if (false !== $page->getRedirection()) {
+            return $this->redirect($page->getRedirection(), $page->getRedirectionCode());
         }
 
         $template = method_exists($this->container->getParameter('app.entity_page'), 'getTemplate') && null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
@@ -80,26 +79,5 @@ class PageController extends AbstractController
         $qb->setMaxResults($limit);
 
         return $this->render($render, ['pages' => $pages]);
-    }
-
-    /**
-     * Check if a content don't start by 'Location: http://valid-url.tld/eg'.
-     */
-    protected function getRedirection($page)
-    {
-        $content = $page->getMainContent();
-        $code = 301; // default symfony is 302...
-        if ('Location:' == substr($content, 0, 9)) {
-            $url = trim(substr($content, 9));
-            if (preg_match('/ [1-5][0-9]{2}$/', $url, $match)) {
-                $code = intval(trim($match[0]));
-                $url = preg_replace('/ [1-5][0-9]{2}$/', '', $url);
-            }
-            if (filter_var($url, FILTER_VALIDATE_URL)) {
-                return [$url, $code];
-            }
-        }
-
-        return false;
     }
 }
