@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 
 /**
  * Page extended: // I may cut this in multiple traits
@@ -175,7 +174,7 @@ trait PageExtendedTrait
         return $this->relatedPages;
     }
 
-    public function addRelatedPage(Page $relatedPage): self
+    public function addRelatedPage(PageInterface $relatedPage): self
     {
         if (!$this->relatedPages->contains($relatedPage)) {
             $this->relatedPages[] = $relatedPage;
@@ -184,7 +183,7 @@ trait PageExtendedTrait
         return $this;
     }
 
-    public function removeRelatedPage(Page $relatedPage): self
+    public function removeRelatedPage(PageInterface $relatedPage): self
     {
         if ($this->relatedPages->contains($relatedPage)) {
             $this->relatedPages->removeElement($relatedPage);

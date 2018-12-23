@@ -8,9 +8,13 @@ use Symfony\Component\HttpFoundation\File\File;
 use Gedmo\Sluggable\Util\Urlizer;
 use Cocur\Slugify\Slugify;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 trait MediaTrait
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Column(type="string", length=50)
      */
@@ -219,7 +223,7 @@ trait MediaTrait
 
     public function addPageHasMedia(PageHasMedia $pageHasMedia)
     {
-        $pageHasMedia->setPage($this);
+        $pageHasMedia->setMedia($this);
         $this->pageHasMedias[] = $pageHasMedia;
     }
 

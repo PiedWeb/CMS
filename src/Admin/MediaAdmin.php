@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Sonata\CoreBundle\Model\Metadata;
+use Sonata\BlockBundle\Meta\Metadata;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class MediaAdmin extends AbstractAdmin
@@ -43,7 +43,6 @@ class MediaAdmin extends AbstractAdmin
         $fileFieldOptions = ['required' => false, 'data_class' => null];
         if ($media && $media->getMedia() && false !== strpos($media->getMimeType(), 'image/')) {
             $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
-            $thumb = $this->liipImage->getBrowserPath($fullPath, 'small_thumb');
             $fileFieldOptions['help'] = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
             $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'thumb').'">';
             $fileFieldOptions['help'] .= '</a>';

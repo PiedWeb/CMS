@@ -42,7 +42,7 @@ class PageHasMedia implements PageHasMediaInterface
         return $this->page;
     }
 
-    public function setMedia(MediaInterface $media = null)
+    public function setMedia(?MediaInterface $media = null)
     {
         $this->media = $media;
     }

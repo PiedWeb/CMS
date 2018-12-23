@@ -15,11 +15,11 @@ use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
  */
 class Media implements TranslatableInterface, MediaInterface
 {
-    use IdTrait, MediaTrait, TimestampableEntity, TranslatableTrait;
+    use IdTrait, MediaTrait, TranslatableTrait;
 
     public function __construct()
     {
-        $this->updatedAt = null !== $this->updatedAt ? $this->updatedAt : new \DateTimeImmutable();
-        $this->createdAt = null !== $this->createdAt ? $this->createdAt : new \DateTimeImmutable();
+        $this->updatedAt = null !== $this->updatedAt ? $this->updatedAt : new \DateTime();
+        $this->createdAt = null !== $this->createdAt ? $this->createdAt : new \DateTime();
     }
 }

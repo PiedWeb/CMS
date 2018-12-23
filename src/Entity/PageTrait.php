@@ -56,8 +56,8 @@ trait PageTrait
 
     public function __construct_page()
     {
-        $this->updatedAt = null !== $this->updatedAt ? $this->updatedAt : new \DateTimeImmutable();
-        $this->createdAt = null !== $this->createdAt ? $this->createdAt : new \DateTimeImmutable();
+        $this->updatedAt = null !== $this->updatedAt ? $this->updatedAt : new \DateTime();
+        $this->createdAt = null !== $this->createdAt ? $this->createdAt : new \DateTime();
     }
 
     public function getSlug(): ?string
@@ -76,7 +76,7 @@ trait PageTrait
 
     public function setSlug($slug, $set = false): self
     {
-        if ($set === true) {
+        if (true === $set) {
             $this->slug = $slug;
         }
         // work around for disabled input in sonata admin
@@ -85,7 +85,7 @@ trait PageTrait
                 throw new \ErrorException('slug cant be null');
             }
         } else {
-            $slg = new Slugify(['regexp'=>'/[^A-Za-z0-9\/]+/']);
+            $slg = new Slugify(['regexp' => '/[^A-Za-z0-9\/]+/']);
             $slug = $slg->slugify($slug);
             $slug = trim($slug, '/');
             $this->slug = $slug; //$this->setSlug(trim($slug, '/'), true);

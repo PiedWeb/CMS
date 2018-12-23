@@ -13,9 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\CoreBundle\Form\Type\DateTimePickerType;
-use Sonata\CoreBundle\Model\Metadata;
-//use PiedWeb\CMSBundle\Entity\User;
-//use PiedWeb\CMSBundle\Entity\Media;
+use Sonata\BlockBundle\Meta\Metadata;
 use PiedWeb\CMSBundle\Service\FeedDumpService;
 
 class PageAdmin extends AbstractAdmin
@@ -147,7 +145,7 @@ class PageAdmin extends AbstractAdmin
             $formMapper->add('faq', ModelAutocompleteType::class, [
             'required' => false,
              'multiple' => true,
-             'class' => Faq::class,
+             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_faq'),
              'property' => 'question',   // or any field in your media entity
              'label' => 'admin.page.faq.label',
              'btn_add' => true,
