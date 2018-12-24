@@ -1,8 +1,8 @@
 {% extends '@PiedWebCMS/component/_hero-banner.html.twig' %}
 
 {% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
-{% set subtitle = page.subtitle is defined ? page.subTitle : null %}
-{% set description = excrept is defined ? excrept : null %}
+{% set subtitle = page.getEmc('subtitle') %}
+{% set description = page.chapeau is not null ? include(template_from_string(page.chapeau)) : null %}
 {% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
 
 {% block header_button %}

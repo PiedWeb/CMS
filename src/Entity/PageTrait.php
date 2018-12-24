@@ -29,11 +29,6 @@ trait PageTrait
     protected $mainContent;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    protected $mainContentIsMarkdown;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
@@ -138,18 +133,6 @@ trait PageTrait
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function mainContentIsMarkdown(): bool
-    {
-        return null === $this->mainContentIsMarkdown ? false : $this->mainContentIsMarkdown;
-    }
-
-    public function setMainContentIsMarkdown(bool $mainContentIsMarkdown): self
-    {
-        $this->mainContentIsMarkdown = $mainContentIsMarkdown;
 
         return $this;
     }

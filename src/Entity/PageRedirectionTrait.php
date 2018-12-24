@@ -2,10 +2,12 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-trait RedirectionTrait
+trait PageRedirectionTrait
 {
     protected $redirectionUrl;
     protected $redirectionCode;
+
+    abstract public function getMainContent();
 
     /**
      * Check if a content don't start by 'Location: http://valid-url.tld/eg'.

@@ -10,19 +10,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Page extended: // I may cut this in multiple traits
  * - meta no-index
- * - Rich Content (subtitle, excrept, parentPage, h1, name [to do short link] )
+ * - Rich Content (meta desc, parentPage, h1, name [to do short link] )
  * - RelatedPages
  * - author (link)
  * - template.
  */
 trait PageExtendedTrait
 {
-    /**
-     * @Gedmo\Translatable
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $subTitle;
-
     /**
      * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -75,18 +69,6 @@ trait PageExtendedTrait
     public function __construct_extended()
     {
         $this->relatedPages = new ArrayCollection();
-    }
-
-    public function getSubTitle(): ?string
-    {
-        return $this->subTitle;
-    }
-
-    public function setSubTitle(?string $subTitle): self
-    {
-        $this->subTitle = $subTitle;
-
-        return $this;
     }
 
     public function getExcrept(): ?string

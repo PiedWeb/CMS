@@ -1,13 +1,9 @@
 {% block content %}
-    {% if page.mainContent is not empty %}
-        {% set ok = true %}
-    {% endif %}
-
-    {% if ok is defined and ok %}
+    {% if page.readableContent is not empty %}
         <section class="section-gap" id="content">
             <div class="container">
 
-                {{ content|raw }}
+                {{ include(template_from_string(page.readableContent)) }}
 
                 {% block after_content %}{% endblock %}
             </div>

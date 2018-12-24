@@ -4,6 +4,8 @@ namespace PiedWeb\CMSBundle\Admin;
 
 trait AdminTrait
 {
+    abstract public function setListMode($mode);
+
     /**
      * Must be a cookie to check before to do that
      * If you click one time to list, stay in liste mode.

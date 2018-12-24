@@ -1,12 +1,3 @@
-
-
-{% set mainContent = page.mainContentIsMarkdown ? page.mainContent|markdown : page.mainContent  %}
-{% set content = (mainContent is not null ? (mainContent|split('<!--break-->')) : [null]) %}
-{% set excrept = include(template_from_string(content[1] is defined ? content[0] : null)) %}
-{% set content = include(template_from_string(content[1] is defined ? content[1] : content[0])) %}
-
-
-
 {% block header %}
     {% include '@PiedWebCMS/page/_header.html.twig' %}
 {% endblock %}

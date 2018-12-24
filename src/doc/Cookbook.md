@@ -77,3 +77,14 @@ following content
 ### Line break in Markdown
 
 Add two spaces at the end of the line [#](https://github.com/michelf/php-markdown/blob/lib/test/resources/markdown.mdtest/Markdown%20Documentation%20-%20Syntax.text#L184).
+
+### Rich Content
+
+You can set specific content in your main content and grab it later in your theme. Eg with `subtitle` :
+```twig
+// My main content :
+<!--"subtitle"--Mon sous-titre !--/-->
+
+// To grab it in a twig file:
+{{ page.getEmc('subtitle') }}
+```
