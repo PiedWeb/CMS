@@ -1,12 +1,12 @@
 {% block content %}
+    <div id="content">
     {% if page.readableContent is not empty %}
-        <section class="section-gap" id="content">
+        <section class="section-gap">
             <div class="container">
-
                 {{ include(template_from_string(page.readableContent)) }}
-
                 {% block after_content %}{% endblock %}
             </div>
         </section>
     {% endif %}
+    </div>
 {% endblock %}

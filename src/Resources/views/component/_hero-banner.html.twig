@@ -37,7 +37,7 @@
 
                         {% block excrept %}
                             {% if description is defined and description is not null %}
-                            <p>{{ description|raw }}</p>
+                                {{ description|raw }}
                             {% endif %}
                         {% endblock %}
 

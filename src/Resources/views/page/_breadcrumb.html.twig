@@ -1,16 +1,14 @@
 {% if page.parentPage is defined and page.parentPage is not null %}
     {% if page.parentPage.parentPage is not null %} {#We don't generate a breadcrumb for only one parent Page#}
-
-<section class="section-gap" id="breadcrumb">
-    <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                {% include '@PiedWebCMS/page/_breadcrumb_part.html.twig' with {page: page.parentPage} only %}
-                <li class="breadcrumb-item active" aria-current="page">{{ (page.name is not null ? page.name : page.title) }}</li>
-            </ol>
-        </nav>
-    </div>
-</section>
-
+        <section class="section-gap" id="breadcrumb">
+            <div class="container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        {% include '@PiedWebCMS/page/_breadcrumb_part.html.twig' with {page: page.parentPage} only %}
+                        <li class="breadcrumb-item active" aria-current="page">{{ (page.name is not null ? page.name : page.title) }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </section>
     {% endif %}
 {% endif %}

@@ -1,13 +1,7 @@
-{#
-#success (green)
-#info (blue)
-#warning (yellow)
-#danger (red)
-#}
 {% block flash_messages %}
 {% if app.session is not null and app.session.flashbag.all() is not empty %}
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-12">
             {% for type, messages in app.session.flashbag.all() %}
                 <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert">

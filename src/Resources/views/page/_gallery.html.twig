@@ -3,15 +3,9 @@
         <div class=container>
             <div class="row mimg">
                 {% for image in page.images %}
-                    {% set img = image.relativeDir ~ '/' ~ image.media %}
-                    <div class="col-md-4 col-xs-6">
-                        <a href="{{ img|imagine_filter('default') }}">
-                           <span data-img="{{ img|imagine_filter('height_300') }}">{{ image.name }}</span>
-                        </a>
-                    </div>
+                    {% include '@PiedWebCMS/page/_breadcrumb_part.html.twig' with {'image': image} only %}
                 {% endfor %}
             </div>
         </div>
     </section>
-
 {% endif %}

@@ -1,0 +1,53 @@
+{#
+    @params array   logo {href, alt},
+    @params array   items {attr:{href...}, anchor, subitems: {...}}
+    @params boolean container
+#}
+<header id="navbar">
+    <nav class="fixed-top navbar navbar-expand-lg">
+        {{ container is defined ? '<div class="container">' : '' }}
+
+            {% block logo %}
+                {% if logo is defined %}
+                    <a class="navbar-brand" href="{% if logo.href is defined %}{{ logo.href }}{% else %}{{ homepage() }}{% endif %}">
+                        {% if logo.alt is defined %}{{ logo.alt }}{% endif %}
+                    </a>
+                {% endif %}
+            {% endblock %}
+
+            {% if items is defined %}
+
+            {% block toggle_button %}
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="text-white fa fa-list"></span>
+                </button>
+            {% endblock %}
+
+            {% block nav_list %}
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        {% for item in items %}
+                            <li class="nav-item">
+                                <a{{ attr((item.attr is defined ? item.attr : {}), {'href':'#', class: 'nav-link'})}}>{{ item.anchor }}</a>
+                                    {% if item.items is defined %}
+                                    <ul class="nav-sub-item">
+                                        {% for sub_iteam in item.items %}
+                                            <li>
+                                                <a{{ attr((sub_item.attr is defined ? sub_item.attr : {}), {'href':'#'})}}>
+                                                    {{ sub_item.anchor }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endblock %}
+
+
+            {% endif %}
+        {{ container is defined ? '</div>' : '' }}
+    </nav>
+</header>

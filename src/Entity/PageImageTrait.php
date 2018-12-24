@@ -5,7 +5,6 @@ namespace PiedWeb\CMSBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use PiedWeb\CMSBundle\Entity\MediaInterface as Media;
 
 trait PageImageTrait
 {
@@ -54,12 +53,12 @@ trait PageImageTrait
         $this->pageHasMedias->removeElement($pageHasMedia);
     }
 
-    public function getMainImage(): ?Media
+    public function getMainImage(): ?MediaInterface
     {
         return $this->mainImage;
     }
 
-    public function setMainImage(?Media $mainImage): self
+    public function setMainImage(?MediaInterface $mainImage): self
     {
         // TODO: Déplacer en Assert pour éviter une erreur dégueu ?!
         if (null !== $mainImage && null === $mainImage->getWidth()) {

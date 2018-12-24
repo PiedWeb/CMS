@@ -24,11 +24,18 @@ trait PageExtendedMainContentTrait
 
     protected function manageMainContent()
     {
-        $content = (string) $this->mainContentIsMarkdown ? Markdown::defaultTransform($this->getMainContent()) : $this->getMainContent();
+        $content = (string) $this->getMainContent();
         $content = explode('<!--break-->', $content);
 
         $this->chapeau = isset($content[1]) ? self::removeHtmlComments($content[0]) : null;
         $this->readableContent = self::removeHtmlComments(isset($content[1]) ? $content[1] : $content[0]);
+
+        if ($this->mainContentIsMarkdown) {
+            $this->chapeau = Markdown::defaultTransform($this->chapeau);
+            if (isset($content[1])) {
+                $this->readableContent = Markdown::defaultTransform($this->readableContent);
+            }
+        }
     }
 
     public function getReadableContent()

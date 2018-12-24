@@ -1,0 +1,17 @@
+{% extends '@PiedWebCMS/component/_section.html.twig' %}
+
+{% if page.relatedPages is defined and page.relatedPages is not empty %}
+    {% set pages = page.relatedPages %}
+    {% set id = 'related' %}
+    {% set light = true %}
+        {% block body %}
+            <div class="mb-2">
+                <h4 class="mb-10">{{ 'relatedPages.title'|trans }}</h4>
+            </div>
+            <div class="row">
+            {% include '@PiedWebCMS/page/_list.html.twig' with {pages: pages} only %}
+            </div>
+        {% endblock %}
+{% else %}
+    {% set exist = false %}
+{% endif %}
