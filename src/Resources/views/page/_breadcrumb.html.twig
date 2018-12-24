@@ -1,4 +1,5 @@
 {% if page.parentPage is defined and page.parentPage is not null %}
+    {{ dump(page.parentPage) }}
     {% if page.parentPage.parentPage is not null %} {#We don't generate a breadcrumb for only one parent Page#}
         <section class="section-gap" id="breadcrumb">
             <div class="container">

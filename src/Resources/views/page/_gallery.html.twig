@@ -1,11 +1,15 @@
+{% extends '@PiedWebCMS/component/_section.html.twig' %}
+
 {% if page.images is defined and page.images is not empty %}
-    <section id="gallery">
-        <div class=container>
-            <div class="row mimg">
+    {% set id = 'gallery' %}
+    {% set container = true %}
+        {% block body %}
+            <div class="row mimg d-flex justify-content-center">
                 {% for image in page.images %}
-                    {% include '@PiedWebCMS/page/_breadcrumb_part.html.twig' with {'image': image} only %}
+                    {% include '@PiedWebCMS/page/_gallery_part.html.twig' with {'image': image} only %}
                 {% endfor %}
             </div>
-        </div>
-    </section>
+        {% endblock %}
+{% else %}
+    {% set exist = false %}
 {% endif %}
