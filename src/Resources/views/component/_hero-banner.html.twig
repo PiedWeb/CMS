@@ -28,14 +28,19 @@
                             {% endif %}
                         {% endblock %}
 
+                        {% block title %}
                         {% if title is defined and title is not null %}
                             {% set titlel = title|length %}
                             <h1 class="{% if titlel > 20 %} long-h1{% endif %}">
                                 {{ title|raw }}
                             </h1>
+                            {% if image is defined and image is not null %}
+                            <p class=sr-only><a href="{{ image| imagine_filter('default') }}"><img src="{{ image| imagine_filter('thumb') }}" alt="{{ title }}" alt="{{ title }}"></a></p>
+                            {% endif %}
                         {% endif %}
+                        {% endblock %}
 
-                        {% block excrept %}
+                        {% block description %}
                             {% if description is defined and description is not null %}
                                 {{ description|raw }}
                             {% endif %}
