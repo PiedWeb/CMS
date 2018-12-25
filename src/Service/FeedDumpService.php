@@ -1,12 +1,4 @@
 <?php
-/*
- * This file is part of the Eko\FeedBundle Symfony bundle.
- *
- * (c) Vincent Composieux <vincent.composieux@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace PiedWeb\CMSBundle\Service;
 
