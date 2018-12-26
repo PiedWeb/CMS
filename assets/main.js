@@ -1,11 +1,7 @@
 /**
- * File from piedweb-tyrol-free-bootstrap-4-theme
- * Feel Free to edit it, it's yours now
- */
-/**
  * Import CSS
  */
-require("~/node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/scss/main.scss");
+require("main.scss");
 
 //import BootstrapCookieConsent from "bootstrap-cookie-consent";
 

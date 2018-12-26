@@ -3,6 +3,9 @@
 {% block title %}{{ page.title|striptags }}{% endblock %}
 
 {% block robots %}
+    {% if page.excrept is defined and page.excrept is not null %}
+        <meta name="description" content="{{ page.excrept }}">
+    {% endif %}
     {% if page.metaRobots is defined and page.metaRobots is not null %}
         <meta name="robots" content="{{ page.metaRobots }}">
     {% endif %}
