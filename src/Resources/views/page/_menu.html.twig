@@ -18,9 +18,11 @@
             {% if items is defined %}
 
             {% block toggle_button %}
+                {% if (items is defined and items is not empty) %}
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="text-white fa fa-list"></span>
                 </button>
+                {% endif %}
             {% endblock %}
 
             {% block nav_list %}
