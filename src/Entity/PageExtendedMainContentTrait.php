@@ -31,8 +31,10 @@ trait PageExtendedMainContentTrait
         $this->readableContent = self::removeHtmlComments(isset($content[1]) ? $content[1] : $content[0]);
 
         if ($this->mainContentIsMarkdown) {
+            if ($this->chapeau) {
             $this->chapeau = Markdown::defaultTransform($this->chapeau);
-            if (isset($content[1])) {
+            }
+            if ($this->readableContent) {
                 $this->readableContent = Markdown::defaultTransform($this->readableContent);
             }
         }

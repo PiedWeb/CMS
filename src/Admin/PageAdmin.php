@@ -288,7 +288,6 @@ class PageAdmin extends AbstractAdmin
             $formMapper->add('author', null, [
              'label' => 'admin.page.author.label',
              'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'),
-             'label' => 'Auteur',
              'required' => false,
             ]);
         }
