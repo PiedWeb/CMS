@@ -32,7 +32,7 @@ trait PageExtendedMainContentTrait
 
         if ($this->mainContentIsMarkdown) {
             if ($this->chapeau) {
-            $this->chapeau = Markdown::defaultTransform($this->chapeau);
+                $this->chapeau = Markdown::defaultTransform($this->chapeau);
             }
             if ($this->readableContent) {
                 $this->readableContent = Markdown::defaultTransform($this->readableContent);

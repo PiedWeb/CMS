@@ -1,7 +1,7 @@
 {
     "name": "piedweb/cms-bundle",
     "type": "symfony-bundle",
-    "description": "Pied Web CMS For Dev",
+    "description": "CMS built on top of Symfony (Admin, Front, Page Management, Media Management).",
     "keywords": [],
     "homepage": "https://piedweb.com",
     "license": "MIT",

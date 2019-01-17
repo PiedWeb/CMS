@@ -65,7 +65,9 @@ class FeedDumpService
     protected function render()
     {
         $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
-        $qb = $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi')->setParameter('noi', '%no-index%'); // We remove no-index from feed
+        $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi')->setParameter('noi', '%no-index%');
+        $qb->andWhere('p.mainContent NOT LIKE :noi')->setParameter('noi', 'Location:%');
+        $qb->setMaxResults(5);
         $pages = $qb->getQuery()->getResult();
 
         return $this->twig->render('@PiedWebCMS/page/rss.xml.twig', ['pages' => $pages]);
