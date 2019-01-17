@@ -56,20 +56,50 @@ class FeedDumpService
             throw new \RuntimeException('Method dumpFile() is not available on your Filesystem component version, you should upgrade it.');
         }
 
-        $dump = $this->render();
+        $this->dumpFeed();
+        $this->dumpSitemap();
+    }
+
+    protected function dumpFeed()
+    {
+        $dump = $this->renderFeed();
         $filepath = $this->webDir.'/feed.xml';
 
         $this->filesystem->dumpFile($filepath, $dump);
     }
 
-    protected function render()
+    protected function dumpSitemap()
+    {
+        $pages = $this->getPages();
+        $this->filesystem->dumpFile($this->webDir.'/sitemap.txt', $this->renderSitemapTxt($pages));
+        $this->filesystem->dumpFile($this->webDir.'/sitemap.xml', $this->renderSitemapXml($pages));
+    }
+
+    protected function getPages(?int $limit = null)
     {
         $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
         $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi')->setParameter('noi', '%no-index%');
         $qb->andWhere('p.mainContent NOT LIKE :noi')->setParameter('noi', 'Location:%');
-        $qb->setMaxResults(5);
-        $pages = $qb->getQuery()->getResult();
 
-        return $this->twig->render('@PiedWebCMS/page/rss.xml.twig', ['pages' => $pages]);
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    protected function renderFeed()
+    {
+        return $this->twig->render('@PiedWebCMS/page/rss.xml.twig', ['pages' => $this->getPages(5)]);
+    }
+
+    protected function renderSitemapTxt($pages)
+    {
+        return $this->twig->render('@PiedWebCMS/page/sitemap.txt.twig', ['pages' => $pages]);
+    }
+
+    protected function renderSitemapXml($pages)
+    {
+        return $this->twig->render('@PiedWebCMS/page/sitemap.xml.twig', ['pages' => $pages]);
     }
 }
