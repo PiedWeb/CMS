@@ -215,21 +215,6 @@ class PageAdmin extends AbstractAdmin
             'dp_min_view_mode' => 'days',
              'label' => 'admin.page.createdAt.label',
         ]);
-        $formMapper->add('updatedAt', DateTimePickerType::class, [
-            //'date_format' => 'd MMMM y H:mm',
-            'format' => DateTimeType::HTML5_FORMAT,
-            'dp_side_by_side' => true,
-            'dp_use_current' => true,
-            'dp_use_seconds' => false,
-            'dp_collapse' => true,
-            'dp_calendar_weeks' => false,
-            'dp_view_mode' => 'days',
-            'dp_min_view_mode' => 'days',
-             'label' => 'admin.page.updatedAt.label',
-            'attr' => [
-                ($this->getSubject()->getSlug() ? 'disabled' : 't') => '',
-            ],
-        ]);
 
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
             $formMapper->add('author', EntityType::class, [
