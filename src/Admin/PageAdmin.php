@@ -226,6 +226,9 @@ class PageAdmin extends AbstractAdmin
             'dp_view_mode' => 'days',
             'dp_min_view_mode' => 'days',
              'label' => 'admin.page.updatedAt.label',
+            'attr' => [
+                ($this->getSubject()->getSlug() ? 'disabled' : 't') => '',
+            ],
         ]);
 
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
@@ -291,6 +294,11 @@ class PageAdmin extends AbstractAdmin
              'required' => false,
             ]);
         }
+    }
+
+    public function preUpdate($page)
+    {
+        $page->setUpdatedAt(new \Datetime());
     }
 
     protected function configureListFields(ListMapper $listMapper)

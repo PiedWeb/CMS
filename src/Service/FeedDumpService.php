@@ -81,7 +81,7 @@ class FeedDumpService
         $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi')->setParameter('noi', '%no-index%');
         $qb->andWhere('p.mainContent NOT LIKE :noi')->setParameter('noi', 'Location:%');
 
-        if ($limit !== null) {
+        if (null !== $limit) {
             $qb->setMaxResults($limit);
         }
 
