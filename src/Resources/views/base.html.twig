@@ -19,6 +19,10 @@
                 <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
             {% endblock %}
 
+            {% block feed_link %}
+                <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+            {% endblock %}
+
             {% block robots %}{% endblock %}
 
         {% endblock %}
