@@ -1,7 +1,7 @@
 /**
  * Import CSS
  */
-require("main.scss");
+require("~/assets/main.scss");
 
 //import BootstrapCookieConsent from "bootstrap-cookie-consent";
 
