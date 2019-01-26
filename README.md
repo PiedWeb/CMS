@@ -11,16 +11,6 @@ PiedWebCMS is a Symfony Bundle built with traits. It permit to get the basic fun
 Build on top on [Symfony 4](https://github.com/symfony/symfony), [VichUploader](https://github.com/dustin10/VichUploaderBundle), [LiipImagine](https://github.com/liip/LiipImagineBundle), [Sonata Admin](https://github.com/sonata-project/SonataAdminBundle), [FOSUser](https://github.com/FriendsOfSymfony/FOSUserBundle) and more (see [composer.json](https://github.com/PiedWeb/CMS/blob/master/composer.json)).
 
 
-* [Installation](#installation)
-    * [Packagist](https://packagist.org/packages/piedweb/cms-bundle)
-* [Test](#test)
-* [Documentation](#documentation)
-* [Extension](#extension)
-* [Todo](#todo)
-* [Contribute](#contribute)
-* [Licence](#licence)
-
-
 
 ## Installation
 
@@ -113,7 +103,7 @@ MIT (see the LICENSE file for details)
 
 
 [![Latest Version](https://img.shields.io/github/tag/piedweb/cms.svg?style=flat&label=release)](https://github.com/PiedWeb/CMS/tags)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/PiedWeb/CMS/LICENSE.md)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/PiedWeb/CMS/LICENSE)
 [![Build Status](https://img.shields.io/travis/PiedWeb/CMS/master.svg?style=flat)](https://travis-ci.org/PiedWeb/CMS)
 [![Quality Score](https://img.shields.io/scrutinizer/g/piedweb/cms.svg?style=flat)](https://scrutinizer-ci.com/g/piedweb/cms)
 [![Total Downloads](https://img.shields.io/packagist/dt/piedweb/cms-bundle.svg?style=flat)](https://packagist.org/packages/piedweb/cms-bundle)
