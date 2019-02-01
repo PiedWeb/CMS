@@ -140,30 +140,30 @@ class PageAdmin extends AbstractAdmin
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getfaq')) {
             $formMapper->add('faq', ModelAutocompleteType::class, [
                 'required' => false,
-                 'multiple' => true,
-                 'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_faq'),
-                 'property' => 'question',   // or any field in your media entity
-                 'label' => 'admin.page.faq.label',
-                 'btn_add' => true,
-                 'to_string_callback' => function ($entity) {//, $property) {
-                     return $entity->getQuestion();
-                 },
-             ]);
+                    'multiple' => true,
+                    'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_faq'),
+                    'property' => 'question',   // or any field in your media entity
+                    'label' => 'admin.page.faq.label',
+                    'btn_add' => true,
+                    'to_string_callback' => function ($entity) {//, $property) {
+                        return $entity->getQuestion();
+                    },
+                ]);
         }
 
         //var_dump($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page')); exit;
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getrelatedPages')) {
             $formMapper->add('relatedPages', ModelAutocompleteType::class, [
                 'required' => false,
-                 'multiple' => true,
-                 'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'),
-                 'property' => 'title',   // or any field in your media entity
-                 'label' => 'admin.page.relatedPage.label',
-                 'btn_add' => false,
-                 'to_string_callback' => function ($entity) { //, $property) {
-                     return $entity->getTitle();
-                 },
-             ]);
+                    'multiple' => true,
+                    'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'),
+                    'property' => 'title',   // or any field in your media entity
+                    'label' => 'admin.page.relatedPage.label',
+                    'btn_add' => false,
+                    'to_string_callback' => function ($entity) { //, $property) {
+                        return $entity->getTitle();
+                    },
+                ]);
         }
         $formMapper->end();
 
@@ -199,7 +199,7 @@ class PageAdmin extends AbstractAdmin
             'choices' => [
                 'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
             ],
-             'label' => 'admin.page.metaRobots.label',
+                'label' => 'admin.page.metaRobots.label',
             'required' => false,
         ]);
         }
@@ -213,21 +213,21 @@ class PageAdmin extends AbstractAdmin
             'dp_calendar_weeks' => false,
             'dp_view_mode' => 'days',
             'dp_min_view_mode' => 'days',
-             'label' => 'admin.page.createdAt.label',
+                'label' => 'admin.page.createdAt.label',
         ]);
 
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
             $formMapper->add('author', EntityType::class, [
-             'label' => 'admin.page.author.label',
-             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'label' => 'Auteur',
-             'required' => false,
+                'label' => 'admin.page.author.label',
+                'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'label' => 'Auteur',
+                'required' => false,
         ]);
         }
 
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'gettemplate')) {
             $formMapper->add('template', null, [
-             'label' => 'admin.page.template.label',
-             'required' => false,
+                'label' => 'admin.page.template.label',
+                'required' => false,
             ]);
         }
 
@@ -259,7 +259,7 @@ class PageAdmin extends AbstractAdmin
             'choices' => [
                 'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
             ],
-             'label' => 'admin.page.metaRobots.label',
+                'label' => 'admin.page.metaRobots.label',
         ]);
         }
         /*
@@ -274,9 +274,9 @@ class PageAdmin extends AbstractAdmin
 
         if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
             $formMapper->add('author', null, [
-             'label' => 'admin.page.author.label',
-             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'),
-             'required' => false,
+                'label' => 'admin.page.author.label',
+                'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'),
+                'required' => false,
             ]);
         }
     }
