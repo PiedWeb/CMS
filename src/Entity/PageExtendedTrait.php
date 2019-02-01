@@ -66,7 +66,7 @@ trait PageExtendedTrait
      */
     protected $template;
 
-    public function __construct_extended()
+    public function __constructExtended()
     {
         $this->relatedPages = new ArrayCollection();
     }

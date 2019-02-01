@@ -19,12 +19,17 @@ trait PageImageTrait
     protected $images;
 
     /**
-     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMediaInterface", mappedBy="page",cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToMany(
+     *     targetEntity="PiedWeb\CMSBundle\Entity\PageHasMediaInterface",
+     *     mappedBy="page",
+     *     cascade={"all"},
+     *     orphanRemoval=true
+     * )
      * @ORM\OrderBy({"position":"ASC"})
      */
     protected $pageHasMedias;
 
-    public function __construct_image()
+    public function __constructImage()
     {
         $this->pageHasMedias = new ArrayCollection();
     }

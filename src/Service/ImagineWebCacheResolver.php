@@ -5,7 +5,8 @@ namespace PiedWeb\CMSBundle\Service;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\RequestContext;
 
-class ImagineWebCacheResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPathResolver //implements ResolverInterface
+//implements ResolverInterface
+class ImagineWebCacheResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPathResolver
 {
     public function __construct(
         Filesystem $filesystem,

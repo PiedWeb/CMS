@@ -67,7 +67,9 @@ class PageAdmin extends AbstractAdmin
             'label' => 'admin.page.title.label',
             'help' => 'admin.page.title.help',
         ]);
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getH1')) { // To do on each element to permit to use admin without all page Trait.
+
+        // Method existance is checked on each element to permit to use admin without all page Trait.
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getH1')) {
             $formMapper->add('h1', TextType::class, [
                 'required' => false,
                 'attr' => ['class' => 'input-lg'],
@@ -84,13 +86,13 @@ class PageAdmin extends AbstractAdmin
             ],
         ]);
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getMainImage')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getMainImage')) {
             $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
-            'required' => false,
-            'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_media'),
-            'label' => 'admin.page.mainImage.label',
-            'btn_edit' => false,
-        ]);
+                'required' => false,
+                'class' => $this->getContainer()->getParameter('app.entity_media'),
+                'label' => 'admin.page.mainImage.label',
+                'btn_edit' => false,
+            ]);
         }
         $formMapper->end();
 
@@ -113,7 +115,7 @@ class PageAdmin extends AbstractAdmin
 
         $formMapper->with('admin.details', ['class' => 'col-md-6 order-1']);
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getname')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getname')) {
             $formMapper->add('name', TextType::class, [
                 'label' => 'admin.page.name.label',
                 'required' => false,
@@ -121,55 +123,62 @@ class PageAdmin extends AbstractAdmin
             ]);
         }
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getparentPage')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getparentPage')) {
             $formMapper->add('parentPage', EntityType::class, [
-                'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'),
+                'class' => $this->getContainer()->getParameter('app.entity_page'),
                 'label' => 'admin.page.parentPage.label',
                 'required' => false,
             ]);
         }
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getexcrept')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getexcrept')) {
             $formMapper->add('excrept', TextareaType::class, [
-            'required' => false,
-            'label' => 'admin.page.excrept.label',
-            'help' => 'admin.page.excrept.help',
-        ]);
+                'required' => false,
+                'label' => 'admin.page.excrept.label',
+                'help' => 'admin.page.excrept.help',
+            ]);
         }
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getfaq')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getfaq')) {
             $formMapper->add('faq', ModelAutocompleteType::class, [
                 'required' => false,
                  'multiple' => true,
-                 'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_faq'),
-                 'property' => 'question',   // or any field in your media entity
+                 'class' => $this->getContainer()->getParameter('app.entity_faq'),
+                 'property' => 'question', // or any field in your media entity
                  'label' => 'admin.page.faq.label',
                  'btn_add' => true,
-                 'to_string_callback' => function ($entity) {//, $property) {
+                 'to_string_callback' => function ($entity) {
                      return $entity->getQuestion();
                  },
              ]);
         }
 
-        //var_dump($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page')); exit;
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getrelatedPages')) {
-            $formMapper->add('relatedPages', ModelAutocompleteType::class, [
-                'required' => false,
-                 'multiple' => true,
-                 'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'),
-                 'property' => 'title',   // or any field in your media entity
-                 'label' => 'admin.page.relatedPage.label',
-                 'btn_add' => false,
-                 'to_string_callback' => function ($entity) { //, $property) {
-                     return $entity->getTitle();
-                 },
-             ]);
+        //var_dump($this->getContainer()->getParameter('app.entity_page')); exit;
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getrelatedPages')) {
+            $formMapper->add(
+                'relatedPages',
+                ModelAutocompleteType::class,
+                [
+                    'required' => false,
+                     'multiple' => true,
+                     'class' => $this->getContainer()->getParameter('app.entity_page'),
+                     'property' => 'title', // or any field in your media entity
+                     'label' => 'admin.page.relatedPage.label',
+                     'btn_add' => false,
+                     'to_string_callback' => function ($entity) {
+                         return $entity->getTitle();
+                     },
+                ]
+            );
         }
         $formMapper->end();
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getimages')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getimages')) {
             $formMapper->with('admin.page.images.label', ['class' => 'col-md-3']);
-            $formMapper->add('pageHasMedias', \Sonata\CoreBundle\Form\Type\CollectionType::class, [
+            $formMapper->add(
+                'pageHasMedias',
+                \Sonata\CoreBundle\Form\Type\CollectionType::class,
+                [
                     'by_reference' => false,
                     'required' => false,
                     'label' => ' ',
@@ -194,14 +203,14 @@ class PageAdmin extends AbstractAdmin
 
         $formMapper->with('admin.edition', ['class' => 'col-md-3']);
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getmetaRobots')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getmetaRobots')) {
             $formMapper->add('metaRobots', ChoiceType::class, [
-            'choices' => [
-                'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
-            ],
-             'label' => 'admin.page.metaRobots.label',
-            'required' => false,
-        ]);
+                'choices' => [
+                    'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
+                ],
+                 'label' => 'admin.page.metaRobots.label',
+                'required' => false,
+            ]);
         }
         $formMapper->add('createdAt', DateTimePickerType::class, [
             //'date_format' => 'd MMMM y H:mm',
@@ -216,18 +225,18 @@ class PageAdmin extends AbstractAdmin
              'label' => 'admin.page.createdAt.label',
         ]);
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
             $formMapper->add('author', EntityType::class, [
-             'label' => 'admin.page.author.label',
-             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'), 'label' => 'Auteur',
-             'required' => false,
-        ]);
+                 'label' => 'admin.page.author.label',
+                 'class' => $this->getContainer()->getParameter('app.entity_user'), 'label' => 'Auteur',
+                 'required' => false,
+            ]);
         }
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'gettemplate')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'gettemplate')) {
             $formMapper->add('template', null, [
-             'label' => 'admin.page.template.label',
-             'required' => false,
+                 'label' => 'admin.page.template.label',
+                 'required' => false,
             ]);
         }
 
@@ -238,7 +247,7 @@ class PageAdmin extends AbstractAdmin
     {
         $formMapper->add('title', null, ['label' => 'admin.page.title.label']);
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getH1')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getH1')) {
             $formMapper->add('h1', null, ['label' => 'admin.page.h1.label']);
         }
 
@@ -246,21 +255,21 @@ class PageAdmin extends AbstractAdmin
 
         $formMapper->add('mainContent', null, ['label' => 'admin.page.mainContent.label']);
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getname')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getname')) {
             $formMapper->add('name', null, ['label' => 'admin.page.mainContent.label']);
         }
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getparentPage')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getparentPage')) {
             $formMapper->add('parentPage', null, ['label' => 'admin.page.parentPage.label']);
         }
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getmetaRobots')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getmetaRobots')) {
             $formMapper->add('metaRobots', null, [
-            'choices' => [
-                'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
-            ],
-             'label' => 'admin.page.metaRobots.label',
-        ]);
+                'choices' => [
+                    'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
+                ],
+                 'label' => 'admin.page.metaRobots.label',
+            ]);
         }
         /*
          * todo: implémente datepicker for orm_date in sonata
@@ -272,10 +281,10 @@ class PageAdmin extends AbstractAdmin
         ]);
         */
 
-        if (method_exists($this->getConfigurationPool()->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
+        if (method_exists($this->getContainer()->getParameter('app.entity_page'), 'getauthor')) {
             $formMapper->add('author', null, [
              'label' => 'admin.page.author.label',
-             'class' => $this->getConfigurationPool()->getContainer()->getParameter('app.entity_user'),
+             'class' => $this->getContainer()->getParameter('app.entity_user'),
              'required' => false,
             ]);
         }

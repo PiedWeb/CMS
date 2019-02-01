@@ -20,8 +20,13 @@ class MediaListener
     private $dataManager;
     private $filterManager;
 
-    public function __construct(string $projectDir, EntityManager $em, CacheManager $cacheManager, DataManager $dataManager, FilterManager $filterManager)
-    {
+    public function __construct(
+        string $projectDir,
+        EntityManager $em,
+        CacheManager $cacheManager,
+        DataManager $dataManager,
+        FilterManager $filterManager
+    ) {
         $this->projectDir = $projectDir;
         $this->em = $em;
         $this->cacheManager = $cacheManager;
@@ -102,7 +107,8 @@ class MediaListener
 
     protected function generateCache($path)
     {
-        foreach (['small_thumb', 'thumb', 'height_300', 'xs', 'sm', 'md', 'lg', 'xl', 'default'] as $filter) { //todo: get it from parameters ?!
+        //todo: get it from parameters (config) ?!
+        foreach (['small_thumb', 'thumb', 'height_300', 'xs', 'sm', 'md', 'lg', 'xl', 'default'] as $filter) {
             $this->storeImageInCache($path, $filter).'">';
         }
     }
@@ -127,8 +133,9 @@ class MediaListener
                     $filter
                 );
             }
-        } catch (RuntimeException $e) {
-            throw new \RuntimeException(sprintf('Unable to create image for path "%s" and filter "%s". Message was "%s"', $path, $filter, $e->getMessage()), 0, $e);
+        } catch (\RuntimeException $e) {
+            throw new \RuntimeException(sprintf('Unable to create image for path "%s" and filter "%s". '
+                .'Message was "%s"', $path, $filter, $e->getMessage()), 0, $e);
         }
     }
 }

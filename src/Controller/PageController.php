@@ -12,10 +12,16 @@ class PageController extends AbstractController
 {
     protected $translator;
 
-    public function show(string $slug = 'homepage', Request $request, TranslatorInterface $translator, ParameterBagInterface $params)
-    {
-        $slug = '' == $slug ? 'homepage' : rtrim(strtolower($slug), '/');
-        $page = $this->getDoctrine()->getRepository($this->container->getParameter('app.entity_page'))->findOneBySlug($slug, $request->getLocale());
+    public function show(
+        ?string $slug,
+        Request $request,
+        TranslatorInterface $translator,
+        ParameterBagInterface $params
+    ) {
+        $slug = null === $slug ? 'homepage' : rtrim(strtolower($slug), '/');
+        $page = $this->getDoctrine()
+            ->getRepository($this->container->getParameter('app.entity_page'))
+            ->findOneBySlug($slug, $request->getLocale());
 
         // Check if page exist
         if (null === $page) {
@@ -38,7 +44,8 @@ class PageController extends AbstractController
             return $this->redirect($page->getRedirection(), $page->getRedirectionCode());
         }
 
-        $template = method_exists($this->container->getParameter('app.entity_page'), 'getTemplate') && null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
+        // method_exists($this->container->getParameter('app.entity_page'), 'getTemplate') &&
+        $template = null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
 
         return $this->render($template, ['page' => $page]);
     }

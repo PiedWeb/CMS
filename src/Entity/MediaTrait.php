@@ -53,7 +53,13 @@ trait MediaTrait
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
-     * @Vich\UploadableField(mapping="media_media", fileNameProperty="media", mimeType="mimeType", size="size", dimensions="dimensions")
+     * @Vich\UploadableField(
+     *     mapping="media_media",
+     *     fileNameProperty="media",
+     *     mimeType="mimeType",
+     *     size="size",
+     *     dimensions="dimensions"
+     * )
      *
      * @var File
      */
@@ -68,7 +74,11 @@ trait MediaTrait
     protected $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageHasMediaInterface", mappedBy="media",cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToMany(
+     *     targetEntity="PiedWeb\CMSBundle\Entity\PageHasMediaInterface",
+     *     mappedBy="media",cascade={"all"},
+     *     orphanRemoval=true
+     * )
      */
     protected $pageHasMedias;
 

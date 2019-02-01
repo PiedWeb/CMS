@@ -24,4 +24,9 @@ trait AdminTrait
 
         return $this;
     }
+
+    protected function getContainer()
+    {
+        return $this->getContainer();
+    }
 }

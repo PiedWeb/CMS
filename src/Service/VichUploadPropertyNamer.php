@@ -5,7 +5,8 @@ namespace PiedWeb\CMSBundle\Service;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\PropertyMapping;
 
-class VichUploadPropertyNamer extends \Vich\UploaderBundle\Naming\PropertyNamer //implements NamerInterface, ConfigurableInterface
+//implements NamerInterface, ConfigurableInterface
+class VichUploadPropertyNamer extends \Vich\UploaderBundle\Naming\PropertyNamer
 {
     /**
      * Guess the extension of the given file.

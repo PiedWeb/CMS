@@ -15,7 +15,7 @@ trait PageExtendedMainContentTrait
      */
     protected $mainContentIsMarkdown;
 
-    abstract public function getMainContent();
+    abstract public function getMainContent(): ?string;
 
     public static function removeHtmlComments(string $content)
     {

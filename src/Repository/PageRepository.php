@@ -31,8 +31,10 @@ class PageRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getQuery()
             ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
-            ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
-        ;
+            ->setHint(
+                \Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE,
+                'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
+            );
         if (null !== $language) {
             $q->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $language);
         }

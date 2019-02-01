@@ -43,11 +43,15 @@ class MediaAdmin extends AbstractAdmin
         $fileFieldOptions = ['required' => false, 'data_class' => null];
         if ($media && $media->getMedia() && false !== strpos($media->getMimeType(), 'image/')) {
             $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
+            // Todo: move this to a twig template file
             $fileFieldOptions['help'] = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
             $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'thumb').'">';
             $fileFieldOptions['help'] .= '</a>';
-            $fileFieldOptions['help'] .= '<br><br>Chemin:<br><code>'.$this->liipImage->getBrowserPath($fullPath, 'default').'</code>';
-            $fileFieldOptions['help'] .= '<br><br>HTML:<br><code>&lt;span data-img="'.$this->liipImage->getBrowserPath($fullPath, 'default').'"&gt;'.$media->getName().'&lt;/span&gt;'.'</code>';
+            $fileFieldOptions['help'] .= '<br><br>Chemin:<br><code>';
+            $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default').'</code>';
+            $fileFieldOptions['help'] .= '<br><br>HTML:<br><code>&lt;span data-img="';
+            $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default');
+            $fileFieldOptions['help'] .= '"&gt;'.$media->getName().'&lt;/span&gt;'.'</code>';
             $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
             $fileFieldOptions['attr'] = ['ismedia' => 1];
             $fileFieldOptions['label'] = 'admin.media.mediaFile.label';
@@ -82,7 +86,7 @@ class MediaAdmin extends AbstractAdmin
             'label' => 'admin.media.mainColor.label',
         ]);
         $listMapper->add('_action', null, [
-                'actions' => [
+            'actions' => [
                 'edit' => [],
                 'delete' => [],
             ],

@@ -3,7 +3,6 @@
 /var/
 /vendor/
 .phpunit
-/phpunit.xml
 /.web-server-pid
 /node_modules/
 /public/build/

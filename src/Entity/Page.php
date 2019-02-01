@@ -20,8 +20,10 @@ class Page implements TranslatableInterface, PageInterface
 
     public function __construct()
     {
-        $this->__construct_page();
-        $this->__construct_extended();
-        $this->__construct_image();
+        $this->__constructPage();
+        $this->__constructExtended();
+        $this->__constructImage();
     }
+
+    //abstract public function getTemplate();
 }

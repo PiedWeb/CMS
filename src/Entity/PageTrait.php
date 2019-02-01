@@ -49,7 +49,7 @@ trait PageTrait
         return trim($this->slug.' ');
     }
 
-    public function __construct_page()
+    public function __constructPage()
     {
         $this->updatedAt = null !== $this->updatedAt ? $this->updatedAt : new \DateTime();
         $this->createdAt = null !== $this->createdAt ? $this->createdAt : new \DateTime();
@@ -73,9 +73,7 @@ trait PageTrait
     {
         if (true === $set) {
             $this->slug = $slug;
-        }
-        // work around for disabled input in sonata admin
-        elseif (null === $slug) {
+        } elseif (null === $slug) { // work around for disabled input in sonata admin
             if (null === $this->slug) {
                 throw new \ErrorException('slug cant be null');
             }

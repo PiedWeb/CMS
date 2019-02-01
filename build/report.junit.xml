@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Test Suite" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="0.006421">
+    <testsuite name="PiedWeb\CMSBundle\Tests\Entity\ImageTest" file="/home/robin/Bureau/rando/site/symfony/PiedWeb/CMSBundle/tests/Entity/ImageTest.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.005197">
+      <testcase name="testMedia" class="PiedWeb\CMSBundle\Tests\Entity\ImageTest" classname="PiedWeb.CMSBundle.Tests.Entity.ImageTest" file="/home/robin/Bureau/rando/site/symfony/PiedWeb/CMSBundle/tests/Entity/ImageTest.php" line="10" assertions="2" time="0.005197"/>
+    </testsuite>
+    <testsuite name="PiedWeb\CMSBundle\Tests\Entity\PageTest" file="/home/robin/Bureau/rando/site/symfony/PiedWeb/CMSBundle/tests/Entity/PageTest.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.001224">
+      <testcase name="testTitle" class="PiedWeb\CMSBundle\Tests\Entity\PageTest" classname="PiedWeb.CMSBundle.Tests.Entity.PageTest" file="/home/robin/Bureau/rando/site/symfony/PiedWeb/CMSBundle/tests/Entity/PageTest.php" line="10" assertions="2" time="0.001224"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
