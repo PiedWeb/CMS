@@ -17,6 +17,7 @@ import {
 } from "~/vendor/piedweb/cms-bundle/src/Resources/assets/helpers.js";
 
 import {
+  fixedNavBar,
   imgLazyLoad,
   backgroundLazyLoad,
   convertInLinks,
@@ -46,6 +47,7 @@ function onPageLoaded() {
 }
 // onDomLoaded fire before onPageLoeded
 function onDomLoaded() {
+  fixedNavBar();
   readableEmail(".cea");
   backgroundLazyLoad();
   applySmoothScroll();

@@ -46,7 +46,9 @@
         "symfony/test-pack": "dev-master",
         "symfony/web-server-bundle": "dev-master",
         "symfony/framework-bundle": "^4.2",
-        "symfony/yaml": "^4.2"
+        "symfony/yaml": "^4.2",
+        "phpunit/phpunit" : ">=7.0",
+        "squizlabs/php_codesniffer": "^3.0"
     },
     "config": {
         "sort-packages": false

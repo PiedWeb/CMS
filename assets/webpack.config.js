@@ -1,8 +1,7 @@
+
 var Encore = require('@symfony/webpack-encore');
 var webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const rootImport = require('babel-plugin-root-import');
-require('webpack');
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 Encore
     .setOutputPath('public/assets')
@@ -21,18 +20,19 @@ Encore
     })
 ;
 
-if (Encore.isProduction()) {
+// Configure this part if you use a CDN
+//if (Encore.isProduction()) {
      //Encore.setPublicPath('https://static.myserver.com/');
      //Encore.setManifestKeyPrefix('build/');
-}
+//}
 
-const mainConfig = Encore.getWebpackConfig();
+var mainConfig = Encore.getWebpackConfig();
 mainConfig.name = 'main';
 
+// --------------
+// Second Configuration : Permit to copy files without versioning (like logo_title.png required for sonata_admin)
+// --------------
 Encore.reset();
-
-// second configuration : permit to copy files without versioning (like logo_title.png required
-// for sonata_admin.
 Encore
     .setOutputPath('public/assets')
     .setPublicPath('/assets')
@@ -46,7 +46,7 @@ Encore
     .enableVersioning(false)
 ;
 
-const adminConfig = Encore.getWebpackConfig();
+var adminConfig = Encore.getWebpackConfig();
 adminConfig.name = 'adminConfig';
 
 module.exports = [mainConfig, adminConfig];

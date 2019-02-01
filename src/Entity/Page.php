@@ -15,7 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Page implements TranslatableInterface, PageInterface
 {
-    use IdTrait, PageTrait, PageExtendedTrait, PageImageTrait, TranslatableTrait, PageExtendedMainContentTrait, PageRedirectionTrait;
+    use IdTrait, PageTrait, PageExtendedTrait, PageImageTrait, PageExtendedMainContentTrait, PageRedirectionTrait;
+    use TranslatableTrait;
 
     public function __construct()
     {

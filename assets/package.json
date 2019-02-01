@@ -1,16 +1,13 @@
 {
-  "licence": "Remove the warning",
+  "licence": "PiedWeb/CMS",
   "browserslist": "> 1%",
   "dependencies": {},
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.21.0",
-    "babel-plugin-relative-import": "^1.0.3",
-    "babel-plugin-root-import": "^6.1.0",
-    "bootstrap.native-loader": "^1.0.7",
-    "node-sass": "^4.10.0",
+    "@symfony/webpack-encore": "^0.22",
+    "babel-plugin-root-import": "^6.1",
+    "node-sass": "^4.11",
+    "sass-loader": "^7.1",
     "piedweb-tyrol-free-bootstrap-4-theme": "^0",
-    "sass-loader": "^7.1.0",
-    "file-loader": "^2.0.0",
-    "uglifyjs-webpack-plugin": "^2.0.1"
+    "uglifyjs-webpack-plugin": "^2.1"
   }
 }
