@@ -22,6 +22,11 @@ class UserAdmin extends AbstractAdmin
         '_sort_by' => 'createdAt',
     ];
 
+    protected function exists(string $name): bool
+    {
+        return method_exists($this->getContainer()->getParameter('app.entity_user'), 'get'.$name);
+    }
+
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $now = new \DateTime();
@@ -43,7 +48,7 @@ class UserAdmin extends AbstractAdmin
             ->with('admin.user.label.profile', ['class' => 'col-md-4'])
         ;
 
-        if (method_exists($this->getContainer()->getParameter('app.entity_user'), 'getDateOfBirth')) {
+        if ($this->exists('DateOfBirth')) {
             $formMapper->add('dateOfBirth', DatePickerType::class, [
                 'years' => range(1900, $now->format('Y')),
                 'dp_min_date' => '1-1-1900',
@@ -52,25 +57,25 @@ class UserAdmin extends AbstractAdmin
                 'label' => 'admin.user.dateOfBirth.label',
             ]);
         }
-        if (method_exists($this->getContainer()->getParameter('app.entity_user'), 'getfirstname')) {
+        if ($this->exists('firstname')) {
             $formMapper->add('firstname', TextType::class, [
                 'required' => false,
                 'label' => 'admin.user.firstname.label',
             ]);
         }
-        if (method_exists($this->getContainer()->getParameter('app.entity_user'), 'getlastname')) {
+        if ($this->exists('lastname')) {
             $formMapper->add('lastname', TextType::class, [
                 'required' => false,
                 'label' => 'admin.user.lastname.label',
             ]);
         }
-        if (method_exists($this->getContainer()->getParameter('app.entity_user'), 'getcity')) {
+        if ($this->exists('city')) {
             $formMapper->add('city', TextType::class, [
                 'required' => false,
                 'label' => 'admin.user.city.label',
             ]);
         }
-        if (method_exists($this->getContainer()->getParameter('app.entity_user'), 'getphone')) {
+        if ($this->exists('phone')) {
             $formMapper->add('phone', TextType::class, [
                 'required' => false,
                 'label' => 'admin.user.phone.label',
@@ -127,13 +132,13 @@ class UserAdmin extends AbstractAdmin
             ->add('email', null, [
                 'label' => 'admin.user.email.label',
             ]);
-        if (method_exists($this->getContainer()->getParameter('app.entity_user'), 'getfirstname')) {
+        if ($this->exists('firstname')) {
             $listMapper->add('firstname', TextType::class, [
                 'editable' => true,
                 'label' => 'admin.user.firstname.label',
             ]);
         }
-        if (method_exists($this->getContainer()->getParameter('app.entity_user'), 'getlastname')) {
+        if ($this->exists('lastname')) {
             $listMapper->add('lastname', TextType::class, [
                 'editable' => true,
                 'label' => 'admin.user.lastname.label',

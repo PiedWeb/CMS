@@ -14,7 +14,7 @@ class PageListener
             return;
         }
 
-        if (!$page->getChildrenPages()->isEmpty()) {
+        if (method_exists($page, 'getChildrenPages') && !$page->getChildrenPages()->isEmpty()) {
             throw new \Exception('Action forbidden : this page have children page wich will be orphan.');
         }
         // todo: plutôt que de throw an exception, modifier la page parent des pages filles pour la page parente de

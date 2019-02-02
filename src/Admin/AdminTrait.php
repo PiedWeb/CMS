@@ -25,8 +25,10 @@ trait AdminTrait
         return $this;
     }
 
+    abstract public function getConfigurationPool();
+
     protected function getContainer()
     {
-        return $this->getContainer();
+        return $this->getConfigurationPool()->getContainer();
     }
 }

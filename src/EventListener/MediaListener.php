@@ -10,6 +10,8 @@ use League\ColorExtractor\Palette;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Liip\ImagineBundle\Imagine\Data\DataManager;
 use Liip\ImagineBundle\Imagine\Filter\FilterManager;
+use Liip\ImagineBundle\Exception\Binary\Loader\NotLoadableException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MediaListener
 {
