@@ -3,6 +3,15 @@
  */
 require("~/assets/main.scss");
 
+/**
+ * Create JS
+ *
+ * You can find two functions :
+ * - onPageLoaded
+ * - onDomLoaded
+ * The second one is called each time we change something in the DOM (for example in getBlockFromSky)
+ * // Todo: check if getBlockFromSky can call onDomLoaded
+ */
 //import BootstrapCookieConsent from "bootstrap-cookie-consent";
 
 import baguetteBox from "baguettebox.js";
@@ -12,9 +21,8 @@ var bsn = require("bootstrap.native/dist/bootstrap-native-v4");
 import {
   getBlockFromSky,
   formToSky,
-  responsiveImage,
   convertImgLinkToResponsiveImgLink
-} from "~/vendor/piedweb/cms-bundle/src/Resources/assets/helpers.js";
+} from "~/node_modules/piedweb-cms-js-helpers/src/js/helpers.js";
 
 import {
   fixedNavBar,
