@@ -41,7 +41,8 @@ import {
   allClickable
 } from "~/node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/js/helpers.js";
 
-function onPageLoaded() {
+
+function onDomLoaded() {
   allClickable(".clickable");
   imgLazyLoad();
   convertInLinks();
@@ -52,24 +53,13 @@ function onPageLoaded() {
     }
   });
   getBlockFromSky();
-}
-// onDomLoaded fire before onPageLoeded
-function onDomLoaded() {
+  addAClassOnScroll(".navbar", "nostick", 50);
   fixedNavBar();
   readableEmail(".cea");
   backgroundLazyLoad();
   applySmoothScroll();
   formToSky();
   convertImgLinkToResponsiveImgLink();
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-  onDomLoaded();
-});
-
-window.onload = function () {
-    addAClassOnScroll(".navbar", "nostick", 50);
-    onPageLoaded();
   /**
   new BootstrapCookieConsent({
     services: ["StatistiquesAnonymes", "YouTube"],
@@ -82,3 +72,7 @@ window.onload = function () {
   });
   /**/
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  onDomLoaded();
+});
