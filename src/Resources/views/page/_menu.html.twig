@@ -1,6 +1,6 @@
 {#
     @params array   logo {href, alt},
-    @params array   items {attr:{href...}, anchor, subitems: {...}}
+    @params array   items {attr:{href...}, anchor, items: [...]}
     @params boolean container
 #}
 <header id="navbar">
@@ -33,7 +33,7 @@
                                 <a{{ attr((item.attr is defined ? item.attr : {}), {'href':'#', class: 'nav-link'})}}>{{ item.anchor }}</a>
                                     {% if item.items is defined %}
                                     <ul class="nav-sub-item">
-                                        {% for sub_iteam in item.items %}
+                                        {% for sub_item in item.items %}
                                             <li>
                                                 <a{{ attr((sub_item.attr is defined ? sub_item.attr : {}), {'href':'#'})}}>
                                                     {{ sub_item.anchor }}
