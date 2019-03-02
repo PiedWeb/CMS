@@ -30,7 +30,7 @@
                     <ul class="navbar-nav ml-auto">
                         {% for item in items %}
                             <li class="nav-item">
-                                <a{{ attr((item.attr is defined ? item.attr : {}), {'href':'#', class: 'nav-link'})}}>{{ item.anchor }}</a>
+                                <a{{ mergeAttr((item.attr is defined ? item.attr : {}), {'class': 'nav-link'})}}>{{ item.anchor }}</a>
                                     {% if item.items is defined %}
                                     <ul class="nav-sub-item">
                                         {% for sub_item in item.items %}

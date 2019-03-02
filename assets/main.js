@@ -22,7 +22,7 @@ import {
   getBlockFromSky,
   formToSky,
   convertImgLinkToResponsiveImgLink
-} from "~/node_modules/piedweb-cms-js-helpers/src/js/helpers.js";
+} from "~/node_modules/piedweb-cms-js-helpers/src/helpers.js";
 
 import {
   fixedNavBar,
