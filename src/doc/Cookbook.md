@@ -38,6 +38,10 @@ twig:
         app_base_url: https://mydomain.tdl`
 ```
 
+### Install CKEditor
+
+https://gist.github.com/RobinDev/c81d6fe3f859c21865c7e100cca9e654
+
 ## Editor Tips
 
 ### Create a redirection

@@ -64,64 +64,8 @@ class PageAdmin extends AbstractAdmin
         return method_exists($this->getContainer()->getParameter('app.entity_page'), 'get'.$name);
     }
 
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFieldsBlockDetails(FormMapper $formMapper)
     {
-        if ($this->getSubject() && $this->getSubject()->getSlug()) {
-            // Better to be in  event PostUpdate page... but it's quicker
-            $this->feedDumper->dump();
-        }
-
-        $formMapper->with('admin.page.title.label', ['class' => 'col-md-9']);
-        $formMapper->add('title', TextType::class, [
-            'label' => 'admin.page.title.label',
-            'help' => 'admin.page.title.help',
-        ]);
-
-        // Method existance is checked on each element to permit to use admin without all page Trait.
-        if ($this->exists('H1')) {
-            $formMapper->add('h1', TextType::class, [
-                'required' => false,
-                'attr' => ['class' => 'input-lg'],
-                'label' => 'admin.page.h1.label',
-                'help' => 'admin.page.h1.help',
-            ]);
-        }
-
-        $formMapper->add('slug', TextType::class, [
-            'label' => 'admin.page.slug.label',
-            'help' => 'admin.page.slug.help',
-            'attr' => [
-                ($this->getSubject()->getSlug() ? 'disabled' : 't') => '',
-            ],
-        ]);
-
-        if ($this->exists('MainImage')) {
-            $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
-                'required' => false,
-                'class' => $this->getContainer()->getParameter('app.entity_media'),
-                'label' => 'admin.page.mainImage.label',
-                'btn_edit' => false,
-            ]);
-        }
-        $formMapper->end();
-
-        $formMapper->with('admin.page.mainContent.label');
-        $formMapper->add('mainContent', TextareaType::class, [
-            'attr' => [
-                'style' => 'min-height: 600px;font-size:125%;',
-                'data-editor' => 'markdown',
-                'data-gutter' => 0,
-            ],
-            'required' => false,
-            'label' => ' ',
-            'help' => 'admin.page.mainContent.help',
-        ]);
-        $formMapper->add('mainContentIsMarkdown', null, [
-            'required' => false,
-            'label' => 'markdown',
-        ]);
-        $formMapper->end();
-
         $formMapper->with('admin.details', ['class' => 'col-md-6 order-1']);
 
         if ($this->exists('name')) {
@@ -181,7 +125,69 @@ class PageAdmin extends AbstractAdmin
             );
         }
         $formMapper->end();
+    }
 
+    protected function configureFormFieldsBlockContent(FormMapper $formMapper)
+    {
+
+        $formMapper->with('admin.page.mainContent.label');
+        $formMapper->add('mainContent', TextareaType::class, [
+            'attr' => [
+                'style' => 'min-height: 600px;font-size:125%;',
+                'data-editor' => 'markdown',
+                'data-gutter' => 0,
+            ],
+            'required' => false,
+            'label' => ' ',
+            'help' => 'admin.page.mainContent.help',
+        ]);
+        $formMapper->add('mainContentIsMarkdown', null, [
+            'required' => false,
+            'label' => 'markdown',
+        ]);
+        $formMapper->end();
+    }
+
+    protected function configureFormFieldsBlockTitle(FormMapper $formMapper)
+    {
+        $formMapper->with('admin.page.title.label', ['class' => 'col-md-9']);
+        $formMapper->add('title', TextType::class, [
+            'label' => 'admin.page.title.label',
+            'help' => 'admin.page.title.help',
+        ]);
+
+        // Method existance is checked on each element to permit to use admin without all page Trait.
+        if ($this->exists('H1')) {
+            $formMapper->add('h1', TextType::class, [
+                'required' => false,
+                'attr' => ['class' => 'input-lg'],
+                'label' => 'admin.page.h1.label',
+                'help' => 'admin.page.h1.help',
+            ]);
+        }
+
+        $formMapper->add('slug', TextType::class, [
+            'label' => 'admin.page.slug.label',
+            'help' => 'admin.page.slug.help',
+            'attr' => [
+                ($this->getSubject()->getSlug() ? 'disabled' : 't') => '',
+            ],
+        ]);
+
+        if ($this->exists('MainImage')) {
+            $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
+                'required' => false,
+                'class' => $this->getContainer()->getParameter('app.entity_media'),
+                'label' => 'admin.page.mainImage.label',
+                'btn_edit' => false,
+            ]);
+        }
+        $formMapper->end();
+    }
+
+
+    protected function configureFormFieldsBlockImages(FormMapper $formMapper)
+    {
         if ($this->exists('images')) {
             $formMapper->with('admin.page.images.label', ['class' => 'col-md-3']);
             $formMapper->add(
@@ -209,7 +215,10 @@ class PageAdmin extends AbstractAdmin
             );
             $formMapper->end();
         }
+    }
 
+    protected function configureFormFieldsBlockEdition(FormMapper $formMapper)
+    {
         $formMapper->with('admin.edition', ['class' => 'col-md-3']);
 
         if ($this->exists('metaRobots')) {
@@ -250,6 +259,20 @@ class PageAdmin extends AbstractAdmin
         }
 
         $formMapper->end();
+    }
+
+    protected function configureFormFields(FormMapper $formMapper)
+    {
+        if ($this->getSubject() && $this->getSubject()->getSlug()) {
+            // Better to be in  event PostUpdate page... but it's quicker
+            $this->feedDumper->dump();
+        }
+
+        $this->configureFormFieldsBlockTitle($formMapper);
+        $this->configureFormFieldsBlockContent($formMapper);
+        $this->configureFormFieldsBlockDetails($formMapper);
+        $this->configureFormFieldsBlockImages($formMapper);
+        $this->configureFormFieldsBlockEdition($formMapper);
     }
 
     protected function configureDatagridFilters(DatagridMapper $formMapper)
