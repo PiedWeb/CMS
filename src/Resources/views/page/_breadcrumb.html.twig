@@ -3,6 +3,7 @@
         <section class="section-gap" id="breadcrumb">
             <div class="container">
                 <nav aria-label="breadcrumb">
+                    {% block label %}{% endblock %}
                     <ol class="breadcrumb">
                         {% include '@PiedWebCMS/page/_breadcrumb_part.html.twig' with {page: page.parentPage} only %}
                         <li class="breadcrumb-item active" aria-current="page">{{ (page.name is not null ? page.name : page.title) }}</li>
