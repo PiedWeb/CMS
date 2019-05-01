@@ -129,7 +129,6 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureFormFieldsBlockContent(FormMapper $formMapper)
     {
-
         $formMapper->with('admin.page.mainContent.label');
         $formMapper->add('mainContent', TextareaType::class, [
             'attr' => [
@@ -184,7 +183,6 @@ class PageAdmin extends AbstractAdmin
         }
         $formMapper->end();
     }
-
 
     protected function configureFormFieldsBlockImages(FormMapper $formMapper)
     {
