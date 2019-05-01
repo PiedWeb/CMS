@@ -5,7 +5,7 @@
     @param boolean  container   true
 #}
 {% if exist is not defined or exist %}
-    <section class="{{ (light is defined and light ? 'section-light ': '') }}section-gap"{{ (id is defined and id ? ' id="' ~ id ~ '"' : '') }}>
+    <section class="{{ (light is defined and light ? 'section-light ': '') }}section-gap"{{ (id is defined and id ? ' id="' ~ id ~ '"' : '')|raw }}>
         {{ container is not defined or container ? '<div class="container">': '' }}
             {% block body %}
 
