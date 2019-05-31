@@ -3,12 +3,8 @@
   "browserslist": "> 1%",
   "dependencies": {},
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.22",
-    "babel-plugin-root-import": "^6.1",
-    "node-sass": "^4.11",
-    "sass-loader": "^7.1",
+    "@symfony/webpack-encore": "^0",
     "piedweb-tyrol-free-bootstrap-4-theme": "^0",
     "piedweb-cms-js-helpers": "^0",
-    "uglifyjs-webpack-plugin": "^2.1"
   }
 }

@@ -12,6 +12,7 @@ class PageCanonicalService
     protected $defaultLocaleWithoutPrefix;
     protected $defaultLocale;
     protected $locale;
+    protected $params;
 
     public function __construct(
         RequestStack $request,
@@ -19,7 +20,7 @@ class PageCanonicalService
         bool $defaultLocaleWithoutPrefix = false,
         ?string $defaultLocale = null
     ) {
-        $this->request = $request->getCurrentRequest();
+        $this->request = $request;
         $this->router = $router;
         $this->defaultLocaleWithoutPrefix = $defaultLocaleWithoutPrefix;
         $this->defaultLocale = $defaultLocale;
@@ -64,8 +65,8 @@ class PageCanonicalService
             || (null !== $expectedLocale && $this->defaultLocale == $expectedLocale)
             || (
                 null === $expectedLocale
-                && null !== $this->request
-                && $this->defaultLocale == $this->request->getLocale()
+                && null !== $this->request->getCurrentRequest()
+                && $this->defaultLocale == $this->request->getCurrentRequest()->getLocale()
             )
         ;
     }
@@ -75,6 +76,10 @@ class PageCanonicalService
      */
     protected function getLocale(?string $expectedLocale)
     {
-        return $expectedLocale ?? (null === $this->request ? $this->defaultLocale : $this->request->getLocale());
+        return $expectedLocale ?? (
+            null === $this->request->getCurrentRequest()
+                ? $this->defaultLocale
+                : $this->request->getCurrentRequest()->getLocale()
+        );
     }
 }

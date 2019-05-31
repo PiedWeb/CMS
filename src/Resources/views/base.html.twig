@@ -6,7 +6,15 @@
 
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            <link rel="shortcut icon" href="/favicon.ico">
+
+            {% if app_favicon is defined and app_favicon is not null %}
+                <link rel="shortcut icon" href="{{ app_favicon }}">
+            {% endif %}
+
+
+            {% if app_icon is defined and app_icon is not null %}
+                <link rel="icon" href="{{ app_icon }}">
+            {% endif %}
 
             {% if app_color is defined and app_color is not null %}
                 <meta name="theme-color" content="{{ app_color }}"/>
