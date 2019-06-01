@@ -1,14 +1,9 @@
 
 /**
- *
-$primary          : #2779BD;
-$light-primary    : #3490DC;
-$dark-primary     : #1C3D5A;
-$secondary        : #F2D024;
-$footer-background-color: #2779BD;
-$navbar-bg          : transparent;
-$navbar-bg-nostick  : rgba(0,0,0,.5);
-$logo               : url('~piedweb-tyrol-free-bootstrap-4-theme/src/img/logo.png'); // size: 100*50
+Quick edit with variables :
+* https://github.com/PiedWeb/piedweb-tyrol-free-bootstrap-4-theme/blob/master/src/scss/theme/_variables.scss
+* https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_variables.scss
 */
 
+$logo : url('~piedweb-tyrol-free-bootstrap-4-theme/src/img/logo.png');
 @import "piedweb-tyrol-free-bootstrap-4-theme/src/scss/main.scss"

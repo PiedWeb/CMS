@@ -11,6 +11,16 @@ Encore
     .disableSingleRuntimeChunk()
     .enableVersioning(true)
     .addEntry('app', './assets/main.js')
+    .copyFiles({
+        from: './assets/icon',
+        pattern: /(fav|)icon\.(svg|ico)$/,
+        to: '[path][name].[ext]'
+    })
+    .copyFiles({
+        from: './node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/img',
+        pattern: /.*title\.(png|jpg|jpeg)$/,
+        to: '[path][name].[ext]'
+    })
     .addPlugin(new webpack.ProvidePlugin(new UglifyJSPlugin()))
     .configureFilenames({
          js: '[name].js',
@@ -26,27 +36,4 @@ Encore
      //Encore.setManifestKeyPrefix('build/');
 //}
 
-var mainConfig = Encore.getWebpackConfig();
-mainConfig.name = 'main';
-
-// --------------
-// Second Configuration : Permit to copy files without versioning (like logo_title.png required for sonata_admin)
-// --------------
-Encore.reset();
-Encore
-    .setOutputPath('public/assets')
-    .setPublicPath('/assets')
-    .disableSingleRuntimeChunk()
-    // La ligne suivant est ''inutile'', elle sert uniquement à faire exister cette deuxième config
-    .addEntry('logo_title.png', './node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/img/logo_title.png')
-    .copyFiles({
-        from: './node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/img',
-        pattern: /.*title\.(png|jpg|jpeg)$/
-    })
-    .enableVersioning(false)
-;
-
-var adminConfig = Encore.getWebpackConfig();
-adminConfig.name = 'adminConfig';
-
-module.exports = [mainConfig, adminConfig];
+module.exports = [Encore.getWebpackConfig()];

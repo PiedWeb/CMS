@@ -7,18 +7,20 @@
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-            {% if app_favicon is defined and app_favicon is not null %}
-                <link rel="shortcut icon" href="{{ app_favicon }}">
-            {% endif %}
+            {% block favicon %}
+                <link rel="shortcut icon" href="{{ asset('assets/favicon.ico') }}">
+            {% endblock %}
 
 
-            {% if app_icon is defined and app_icon is not null %}
-                <link rel="icon" href="{{ app_icon }}">
-            {% endif %}
+            {% block icon %}
+                <link rel="icon" href="{{ asset('assets/icon.svg') }}">
+            {% endblock %}
 
-            {% if app_color is defined and app_color is not null %}
-                <meta name="theme-color" content="{{ app_color }}"/>
-            {% endif %}
+            {% block app_color %}
+                {% if app_color is defined and app_color is not null %}
+                    <meta name="theme-color" content="{{ app_color }}"/>
+                {% endif %}
+            {% endblock %}
 
             <title>{% block title %}Pied Web{% endblock %}</title>
 

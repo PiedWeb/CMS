@@ -37,11 +37,16 @@ composer require symfony/web-server-bundle --dev
 
 # Copy assets
 mkdir -p assets
+mkdir -p assets/icon
 cp vendor/piedweb/cms-bundle/assets/.babelrc .babelrc
 cp vendor/piedweb/cms-bundle/assets/package.json package.json
 cp vendor/piedweb/cms-bundle/assets/webpack.config.js webpack.config.js
 cp vendor/piedweb/cms-bundle/assets/main.js assets/main.js
 cp vendor/piedweb/cms-bundle/assets/main.scss assets/main.scss
+cp vendor/piedweb/cms-bundle/assets/icon.svg assets/icon/icon.svg
+
+# Create favicon (for Chrome)
+convert -background none -resize x16 assets/icon/icon.svg assets/icon/favicon.ico
 
 # Install assets for the default theme
 yarn
