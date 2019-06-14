@@ -18,7 +18,7 @@ class PageController extends AbstractController
         TranslatorInterface $translator,
         ParameterBagInterface $params
     ) {
-        $slug = null === $slug ? 'homepage' : rtrim(strtolower($slug), '/');
+        $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = $this->getDoctrine()
             ->getRepository($this->container->getParameter('app.entity_page'))
             ->findOneBySlug($slug, $request->getLocale());
