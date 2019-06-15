@@ -18,6 +18,11 @@ class FeedDumpService
     private $em;
 
     /**
+     * @var \PiedWeb\CMSBundle\Service\PageCanonicalService
+     */
+    private $pc;
+
+    /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
     private $filesystem;
@@ -37,9 +42,15 @@ class FeedDumpService
      */
     private $page_class;
 
-    public function __construct(EntityManager $em, Twig_Environment $twig, string $webDir, string $page_class)
-    {
+    public function __construct(
+        EntityManager $em,
+        Twig_Environment $twig,
+        PageCanonicalService $pc,
+        string $webDir,
+        string $page_class
+    ) {
         $this->em = $em;
+        $this->pc = $pc;
         $this->filesystem = new Filesystem();
         $this->twig = $twig;
         $this->webDir = $webDir;
@@ -81,7 +92,23 @@ class FeedDumpService
             $qb->setMaxResults($limit);
         }
 
-        return $qb->getQuery()->getResult();
+        $pages = $qb->getQuery()->getResult();
+        $links = $this->getLinks($pages);
+
+        return $pages;
+    }
+
+    protected function getLinks($pages)
+    {
+        $links = [];
+        foreach ($pages as $key => $page) {
+            $links[$key] = 'homepage' == $page->getSlug() ?
+                $this->pc->generatePathForHomepage() :
+                $this->pc->generatePathForPage($page->getRealSlug())
+            ;
+        }
+
+        return $links;
     }
 
     protected function renderFeed()

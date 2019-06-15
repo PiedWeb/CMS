@@ -37,7 +37,7 @@ services:
 
     piedweb.feed.dumper:
         class: PiedWeb\CMSBundle\Service\FeedDumpService
-        arguments: [ "@doctrine.orm.entity_manager", "@twig", "%app.dir%", '%app.entity_page%']
+        arguments: [ "@doctrine.orm.entity_manager", "@twig", "@piedweb.page_canonical", "%app.dir%", '%app.entity_page%']
 
     # Required for sonata Translation
     stof_doctrine_extensions.listener.translatable:
@@ -102,6 +102,7 @@ services:
             - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
             - [ setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
             - [ setTemplate, [outer_list_rows_mosaic, '@@PiedWebCMS/admin/media_mosaic_body.html.twig']]
+            - [ setDefaultLocale, [ '%locale%' ] ]
         public: true
 
     piedweb.admin.media:
