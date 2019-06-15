@@ -43,7 +43,7 @@ trait PageExtendedMainContentTrait
     public function getReadableContent()
     {
         $this->manageMainContent();
-        /** Disable cache because it's generate an error with StaticBundle
+        /* Disable cache because it's generate an error with StaticBundle
         if (null === $this->readableContent) {
             $this->manageMainContent();
         }
@@ -54,9 +54,7 @@ trait PageExtendedMainContentTrait
 
     public function getChapeau()
     {
-        if (null === $this->readableContent) {
-            $this->manageMainContent();
-        }
+        $this->manageMainContent();
 
         return $this->chapeau;
     }
