@@ -42,9 +42,12 @@ trait PageExtendedMainContentTrait
 
     public function getReadableContent()
     {
+        $this->manageMainContent();
+        /** Disable cache because it's generate an error with StaticBundle
         if (null === $this->readableContent) {
             $this->manageMainContent();
         }
+        /**/
 
         return $this->readableContent;
     }
