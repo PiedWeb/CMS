@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Doctrine\ORM\EntityManager;
 use Twig_Environment;
+use PiedWeb\CMSBundle\Service\PageCanonicalService;
 
 /**
  * Inspired by https://github.com/eko/FeedBundle.
@@ -16,6 +17,11 @@ class FeedDumpService
      * @var EntityManagerInterface
      */
     private $em;
+
+    /**
+     * @var \PiedWeb\CMSBundle\Service\PageCanonicalService
+     */
+    private $pc;
 
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
@@ -37,9 +43,15 @@ class FeedDumpService
      */
     private $page_class;
 
-    public function __construct(EntityManager $em, Twig_Environment $twig, string $webDir, string $page_class)
-    {
+    public function __construct(
+        EntityManager $em,
+        Twig_Environment $twig,
+        PageCanonicalService $pc,
+        string $webDir,
+        string $page_class
+    ) {
         $this->em = $em;
+        $this->pc = $pc;
         $this->filesystem = new Filesystem();
         $this->twig = $twig;
         $this->webDir = $webDir;
@@ -81,7 +93,23 @@ class FeedDumpService
             $qb->setMaxResults($limit);
         }
 
-        return $qb->getQuery()->getResult();
+        $pages =  $qb->getQuery()->getResult();
+        $links  = $this->getLinks($pages);
+
+        return $pages;
+    }
+
+    protected function getLinks($pages)
+    {
+        $links = [];
+        foreach ($pages as $key => $page) {
+            $links[$key] = 'homepage' == $page->getSlug() ?
+                $this->pc->generatePathForHomepage() :
+                $this->pc->generatePathForPage($page->getRealSlug())
+            ;
+        }
+
+        return $links;
     }
 
     protected function renderFeed()

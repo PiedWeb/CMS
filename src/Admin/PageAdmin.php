@@ -28,7 +28,14 @@ class PageAdmin extends AbstractAdmin
 
     protected $feedDumper;
 
-    private $liipImage;
+    protected $liipImage;
+
+    protected $defaultLocale;
+
+    public function setDefaultLocale($defaultLocale)
+    {
+        $this->defaultLocale = $defaultLocale;
+    }
 
     public function setLiipImage($liipImage)
     {
@@ -261,7 +268,11 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        if ($this->getSubject() && $this->getSubject()->getSlug()) {
+        if ($this->getSubject()
+            && $this->getSubject()->getSlug()
+            // Bad Hack for disabled feed and sitemap for i18n website
+            && $this->getRequest()->get('tl') == $this->defaultLocale
+        ) {
             // Better to be in  event PostUpdate page... but it's quicker
             $this->feedDumper->dump();
         }

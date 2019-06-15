@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     message="page.slug.already_used"
  * )
  */
-class Page implements TranslatableInterface, PageInterface
+class Page implements TranslatableInterface//, PageInterface
 {
     use IdTrait, PageTrait, PageExtendedTrait, PageImageTrait, PageExtendedMainContentTrait, PageRedirectionTrait;
     use TranslatableTrait;
