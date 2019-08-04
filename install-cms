@@ -47,7 +47,7 @@ cp -r vendor/piedweb/cms-bundle/assets/icons assets/
 # Create favicon
 convert -background none assets/icons/icon.svg -define icon:auto-resize=16,32,48 assets/icons/favicon.ico
 # Advice
-# use https://realfavicongenerator.net and erase in `templates/bundles/PiedWebCMSBundle/base.html.twig` icon block
+# use https://realfavicongenerator.net and erase in `templates/bundles/PiedWebCMSBundle/base.html.twig` `favicon` block
 
 # Install assets for the default theme
 yarn
