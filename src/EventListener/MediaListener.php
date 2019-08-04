@@ -118,7 +118,7 @@ class MediaListener
     protected function storeImageInCache($path, $filter)
     {
         try {
-            if (!$this->cacheManager->isStored($path, $filter)) {
+            //if (!$this->cacheManager->isStored($path, $filter)) {
                 try {
                     $binary = $this->dataManager->find($filter, $path);
                 } catch (NotLoadableException $e) {
@@ -134,7 +134,7 @@ class MediaListener
                     $path,
                     $filter
                 );
-            }
+            //}
         } catch (\RuntimeException $e) {
             throw new \RuntimeException(sprintf('Unable to create image for path "%s" and filter "%s". '
                 .'Message was "%s"', $path, $filter, $e->getMessage()), 0, $e);
