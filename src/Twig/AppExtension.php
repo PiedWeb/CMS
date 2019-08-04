@@ -35,6 +35,6 @@ class AppExtension extends AbstractExtension
             $path = '@'.substr($path, 7);
         }
 
-        return '<span'.self::mergeAndMapAttributes($attr, ['data-rot' => str_rot13($path)]).'>'.$anchor.'</span>';
+        return '<span'.self::mergeAndMapAttributes($attr, ['data-rot' => str_rot13($path)]).' rel=nofollow>'.$anchor.'</span>';
     }
 }
