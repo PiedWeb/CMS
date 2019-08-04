@@ -229,7 +229,7 @@ class PageAdmin extends AbstractAdmin
         if ($this->exists('metaRobots')) {
             $formMapper->add('metaRobots', ChoiceType::class, [
                 'choices' => [
-                    'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
+                    'admin.page.metaRobots.choice.noIndex' => 'noindex',
                 ],
                  'label' => 'admin.page.metaRobots.label',
                 'required' => false,
@@ -307,7 +307,7 @@ class PageAdmin extends AbstractAdmin
         if ($this->exists('metaRobots')) {
             $formMapper->add('metaRobots', null, [
                 'choices' => [
-                    'admin.page.metaRobots.choice.noIndex' => 'no-index, no-follow',
+                    'admin.page.metaRobots.choice.noIndex' => 'noindex',
                 ],
                 'label' => 'admin.page.metaRobots.label',
             ]);
