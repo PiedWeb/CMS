@@ -14,7 +14,9 @@ use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
  */
 class Media implements TranslatableInterface, MediaInterface
 {
-    use IdTrait, MediaTrait, TranslatableTrait;
+    use IdTrait;
+    use MediaTrait;
+    use TranslatableTrait;
 
     public function __construct()
     {

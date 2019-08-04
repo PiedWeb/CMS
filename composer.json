@@ -19,7 +19,7 @@
         "doctrine/doctrine-bundle": "^1.10",
         "doctrine/doctrine-migrations-bundle": "^1.3|^2.0",
         "symfony/swiftmailer-bundle": "^3.2",
-        "symfony/webpack-encore-pack": "^1.0",
+        "symfony/webpack-encore-bundle": "^1",
         "umpirsky/twig-php-function": "^0.2",
         "vich/uploader-bundle": "^1.9",
         "piedweb/render-html-attributes": "^1.0",

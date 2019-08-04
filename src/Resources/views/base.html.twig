@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.getLocale() }}">
+                {% set base_url = app_base_url is defined ? app_base_url : ''  %}
     <head>
         {% block head %}
             <meta charset="UTF-8">
 
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
             {% block favicon %}
-                <link rel="shortcut icon" href="{{ asset('assets/favicon.ico') }}">
-            {% endblock %}
-
-
-            {% block icon %}
-                <link rel="icon" href="{{ asset('assets/icon.svg') }}">
+                <link rel="shortcut icon" href="{{ base_url }}{{ asset('/favicon.ico') }}">
             {% endblock %}
 
             {% block app_color %}
@@ -30,7 +25,7 @@
             {% endblock %}
 
             {% block feed_link %}
-                <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+                <link rel="alternate" type="application/rss+xml" href="{{ base_url }}/feed.xml" />
             {% endblock %}
 
             {% block robots %}{% endblock %}
