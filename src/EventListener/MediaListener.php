@@ -118,23 +118,21 @@ class MediaListener
     protected function storeImageInCache($path, $filter)
     {
         try {
-            //if (!$this->cacheManager->isStored($path, $filter)) {
-                try {
-                    $binary = $this->dataManager->find($filter, $path);
-                } catch (NotLoadableException $e) {
-                    if ($defaultImageUrl = $this->dataManager->getDefaultImageUrl($filter)) {
-                        return $defaultImageUrl;
-                    }
-
-                    throw new NotFoundHttpException('Source image could not be found', $e);
+            try {
+                $binary = $this->dataManager->find($filter, $path);
+            } catch (NotLoadableException $e) {
+                if ($defaultImageUrl = $this->dataManager->getDefaultImageUrl($filter)) {
+                    return $defaultImageUrl;
                 }
 
-                $this->cacheManager->store(
-                    $this->filterManager->applyFilter($binary, $filter),
-                    $path,
-                    $filter
-                );
-            //}
+                throw new NotFoundHttpException('Source image could not be found', $e);
+            }
+
+            $this->cacheManager->store(
+                $this->filterManager->applyFilter($binary, $filter),
+                $path,
+                $filter
+            );
         } catch (\RuntimeException $e) {
             throw new \RuntimeException(sprintf('Unable to create image for path "%s" and filter "%s". '
                 .'Message was "%s"', $path, $filter, $e->getMessage()), 0, $e);
