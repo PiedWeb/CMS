@@ -4,7 +4,7 @@
     {% set id = 'gallery' %}
     {% set container = true %}
         {% block body %}
-            <div class="row mimg d-flex justify-content-center">
+            <div class="row mimg justify-content-center">
                 {% for image in page.images %}
                     {% include '@PiedWebCMS/page/_gallery_part.html.twig' with {'image': image} only %}
                 {% endfor %}

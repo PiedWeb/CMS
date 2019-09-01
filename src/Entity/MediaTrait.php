@@ -196,6 +196,11 @@ trait MediaTrait
         return [$this->width, $this->height];
     }
 
+    public function getRatio(): float
+    {
+        return $this->height / $this->width;
+    }
+
     public function getWidth()
     {
         return $this->width;
