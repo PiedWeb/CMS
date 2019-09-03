@@ -33,16 +33,24 @@
                     <ul class="navbar-nav ml-auto">
                         {% for item in items %}
                             <li class="nav-item">
-                                <a{{ mergeAttr((item.attr is defined ? item.attr : {}), {'class': 'nav-link'})}}>
+                                {% if page.slug is defined and item.attr.href == page(page.realSlug) %}
+                                    <span class="nav-link disabled">
+                                {% else %}
+                                    <a{{ mergeAttr((item.attr is defined ? item.attr : {}), {'class': 'nav-link'})}}>
+                                {% endif %}
                                     {{ item.anchor|raw }}
-                                </a>
+                                {{ page.slug is defined and item.attr.href == page(page.realSlug) ? '</span>' : '</a>' }}
                                     {% if item.items is defined %}
                                     <ul class="nav-sub-item">
                                         {% for sub_item in item.items %}
                                             <li>
-                                                <a{{ attr((sub_item.attr is defined ? sub_item.attr : {}), {'href':'#'})}}>
+                                                 {% if page.slug is defined and sub_item.attr.href == page(page.realSlug) %}
+                                                    <span class="nav-link disabled">
+                                                {% else %}
+                                                    <a{{ attr((sub_item.attr is defined ? sub_item.attr : {}), {'href':'#'})}}>
+                                                {% endif %}
                                                     {{ sub_item.anchor|raw }}
-                                                </a>
+                                                {{ page.slug is defined and sub_item.attr.href == page(page.realSlug) ? '</span>' : '</a>' }}
                                             </li>
                                         {% endfor %}
                                     </ul>
