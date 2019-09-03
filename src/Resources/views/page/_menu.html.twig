@@ -2,14 +2,16 @@
     @params array   logo {href, alt},
     @params array   items {attr:{href...}, anchor, items: [...]}
     @params boolean container
+    @params boolean container_txt
 #}
 <header id="navbar">
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg w-100">
         {{ container is defined ? '<div class="container">' : '' }}
+        {{ container_txt is defined ? '<div class="container container-txt">' : '' }}
 
             {% block logo %}
                 {% if logo is defined %}
-                    <a class="navbar-brand" href="{% if logo.href is defined %}{{ logo.href }}{% else %}{{ homepage() }}{% endif %}">
+                    <a class="navbar-brand float-left" href="{% if logo.href is defined %}{{ logo.href }}{% else %}{{ homepage() }}{% endif %}">
                         {% if logo.alt is defined %}{{ logo.alt }}{% endif %}
                     </a>
                 {% endif %}
@@ -19,24 +21,27 @@
 
             {% block toggle_button %}
                 {% if (items is defined and items is not empty) %}
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="text-white fa fa-list"></span>
-                </button>
+                    <label class="hamburger float-right" for=toggler>
+                        <span>Menu</span>
+                    </label>
+                    <input type="checkbox" id="toggler">
                 {% endif %}
             {% endblock %}
 
             {% block nav_list %}
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         {% for item in items %}
                             <li class="nav-item">
-                                <a{{ mergeAttr((item.attr is defined ? item.attr : {}), {'class': 'nav-link'})}}>{{ item.anchor }}</a>
+                                <a{{ mergeAttr((item.attr is defined ? item.attr : {}), {'class': 'nav-link'})}}>
+                                    {{ item.anchor|raw }}
+                                </a>
                                     {% if item.items is defined %}
                                     <ul class="nav-sub-item">
                                         {% for sub_item in item.items %}
                                             <li>
                                                 <a{{ attr((sub_item.attr is defined ? sub_item.attr : {}), {'href':'#'})}}>
-                                                    {{ sub_item.anchor }}
+                                                    {{ sub_item.anchor|raw }}
                                                 </a>
                                             </li>
                                         {% endfor %}
@@ -51,5 +56,6 @@
 
             {% endif %}
         {{ container is defined ? '</div>' : '' }}
+        {{ container_txt is defined ? '</div>' : '' }}
     </nav>
 </header>

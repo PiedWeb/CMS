@@ -354,6 +354,10 @@ class PageAdmin extends AbstractAdmin
             'format' => 'd M y (H:m)',
             'label' => 'admin.page.createdAt.label',
         ]);
+        $listMapper->add('metaRobots', null, [
+            'format' => 'd M y (H:m)',
+            'label' => 'admin.page.metaRobots.label',
+        ]);
         $listMapper->add('_action', null, [
             'actions' => [
                 'show' => [],

@@ -4,10 +4,12 @@
     {% set pages = page.relatedPages %}
     {% set id = 'related' %}
     {% set light = true %}
-        {% block body %}
+        {% block title %}
             <div class="mb-2">
                 <h4 class="mb-10">{{ 'relatedPages.title'|trans }}</h4>
             </div>
+        {% endblock %}
+        {% block body %}
             <div class="row">
             {% include '@PiedWebCMS/page/_list.html.twig' with {pages: pages} only %}
             </div>

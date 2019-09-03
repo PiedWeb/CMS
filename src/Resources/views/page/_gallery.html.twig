@@ -6,7 +6,11 @@
         {% block body %}
             <div class="row mimg justify-content-center">
                 {% for image in page.images %}
-                    {% include '@PiedWebCMS/page/_gallery_part.html.twig' with {'image': image} only %}
+                    {% if loop.index <= 3 or gallery_not_lazy is defined %}
+                        {% include '@PiedWebCMS/page/_gallery_part.html.twig' with {'image': image} only %}
+                    {% else %}
+                        {% include '@PiedWebCMS/page/_gallery_part_lazy.html.twig' with {'image': image} only %}
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endblock %}

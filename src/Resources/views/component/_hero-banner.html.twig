@@ -10,6 +10,7 @@
             href
             ...
         label
+    container_txt boolean
 #}
 <section class="hero-banner">
     <div class="relative cover-banner"
@@ -17,7 +18,7 @@
             data-bg="{{ image| imagine_filter('default') }}"
             data-darken="{{ overlay is defined ? overlay : 'center' }}"
         {% endif %}>
-        <div class="container">
+        {{ container_txt is defined ? '<div class="container-txt">' : '<div class="container">' }}
             <div class="row {{ size is defined ? size : 'halfscreen' }} justify-content-center align-items-center pt-5">
                 <div class="col-md-10 col-12 pt-5">
                     <div class="banner-content text-center">
