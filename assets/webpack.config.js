@@ -23,7 +23,6 @@ Encore
     //.enableSingleRuntimeChunk() normally, don't need by default
 
     .cleanupOutputBeforeBuild()
-    .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
     .enableSassLoader()
     .disableSingleRuntimeChunk()
@@ -49,7 +48,7 @@ Encore
     /**
     .addPlugin(new PurgecssPlugin({
         paths: glob.sync('static/*.html'),
-        whitelistPatterns: [/baguetteBox/]
+        whitelistPatternsChildren: [/baguetteBox/]
     }))/**/
     .configureFilenames({
          js: '[name].js',
