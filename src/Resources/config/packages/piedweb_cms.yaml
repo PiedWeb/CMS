@@ -13,3 +13,4 @@ piedweb_cms:
     #entity_user:          App\Entity\User
     #email_sender:         me@tld.com
     #email_sender_name:    'Pied Web CMS'
+    #base_url:             'http://mydomain.tld'

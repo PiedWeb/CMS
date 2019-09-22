@@ -28,25 +28,15 @@ curl https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms >> install
 
 Else, look at [`install-cms`](https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms) where each step is describe.
 
+Then edit `config/packages/piedweb_cms.yaml` and files in `assets` to configure your web app. Default web app is stored in sqlite.
+
+## Update
+
+For `0.0.26` to newer version check `update27`.
 
 ## Test
 
-Front End tests are in [a different git repo](https://github.com/PiedWeb/frontend-test).
-
-Tu run it, [install a new instance of PiedWebCMS](#installation), then you need :
-```
-git clone git@github.com:PiedWeb/frontend-test.git && cd frontend-test
-```
-
-Configure, in `cypress.json`, the `baseURL` of your PiedWebCMS instance.
-And run the test
-```
-# headless
-yarn run
-
-# To open cypress :
-yarn open
-```
+... todo
 
 
 ## Documentation
@@ -58,11 +48,13 @@ Have a look to the [cookbook](https://github.com/PiedWeb/CMS/blob/master/src/doc
 
 List of Bundles wich extend this one:
 
-* [Reservation](https://github.com/PiedWeb/ReservationBundle)
 * [Static](https://github.com/PiedWeb/StaticBundle)
+<!--
+* [Reservation](https://github.com/PiedWeb/ReservationBundle)
 * [Contact](https://github.com/PiedWeb/ContactBundle)
 * [Faq](https://github.com/PiedWeb/FaqBundle)
 * ...
+-->
 
 ## TODO
 

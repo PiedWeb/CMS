@@ -36,7 +36,7 @@
                                 {{ title|raw }}
                             </h1>
                             {% if image is defined and image is not null %}
-                            <p class=sr-only><a href="{{ image| imagine_filter('default') }}"><img src="{{ image| imagine_filter('thumb') }}" alt="{{ title }}" alt="{{ title }}"></a></p>
+                            <p class=sr-only><a href="{{ image| imagine_filter('default') }}"><img src="{{ image| imagine_filter('thumb') }}" alt="{{ title }}" alt="{{ title|striptags }}" lazy=loading></a></p>
                             {% endif %}
                         {% endif %}
                         {% endblock %}

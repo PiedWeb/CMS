@@ -80,7 +80,9 @@ admin:
             label: Compte activé
         role:
             label: Role
+            super_admin: Super Administrateur
             admin: Administrateur
+            editor: Editeur
             user: Utilisateur
         firstname:
             label: Prénom

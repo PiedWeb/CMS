@@ -81,6 +81,7 @@ class MediaAdmin extends AbstractAdmin
         ]);
         $listMapper->add('createdAt', null, [
             'label' => 'admin.media.createdAt.label',
+            'format' => 'd/m/y',
         ]);
         $listMapper->add('mainColor', null, [
             'label' => 'admin.media.mainColor.label',

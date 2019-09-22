@@ -1,4 +1,8 @@
 sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.role
+        role_admin: ROLE_ADMIN
+        role_super_admin: ROLE_SUPER_ADMIN
     title: 'Admin'
     title_logo: assets/logo_title.png
     dashboard:
@@ -28,12 +32,6 @@ sonata_doctrine_orm_admin:
     templates:
         form:
             - "@PiedWebCMS/admin/sd_form_admin_fields.html.twig"
-
-sonata_translation:
-    locales: [fr, en] # TODO can't get array from parameters
-    default_locale: '%locale%'
-    gedmo:
-        enabled: true
 
 sonata_block:
     blocks:

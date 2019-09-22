@@ -29,6 +29,13 @@ class UserAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper): void
     {
+        // Forbid edition of other admin account except for super admin
+        if (($this->getSubject()->hasRole('ROLE_ADMIN') || $this->getSubject()->hasRole('ROLE_SUPER_ADMIN'))
+            && (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN')
+            || $this->getUser()->getId() !== $this->getSubject()->getId())) {
+            die('u can\'t edit this user'); // TODO : do better
+        }
+
         $now = new \DateTime();
 
         $formMapper
@@ -106,8 +113,14 @@ class UserAdmin extends AbstractAdmin
                         ['0', ChoiceType::class, [
                             'required' => false,
                             'label' => 'admin.user.role.label',
-                            'choices' => [
-                                'admin.user.role.admin' => 'ROLE_SUPER_ADMIN',
+                            'choices' => $this->getUser()->isSuperAdmin() ? [
+                                'admin.user.role.super_admin' => 'ROLE_SUPER_ADMIN',
+                                'admin.user.role.admin' => 'ROLE_ADMIN',
+                                'admin.user.role.editor' => 'ROLE_EDITOR',
+                                'admin.user.role.user' => 'ROLE_USER',
+                                ] : [
+                                'admin.user.role.admin' => 'ROLE_ADMIN',
+                                'admin.user.role.editor' => 'ROLE_EDITOR',
                                 'admin.user.role.user' => 'ROLE_USER',
                             ],
                         ]],

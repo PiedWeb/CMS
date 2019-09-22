@@ -31,4 +31,9 @@ trait AdminTrait
     {
         return $this->getConfigurationPool()->getContainer();
     }
+
+    protected function getUser()
+    {
+        return $this->getContainer()->get('security.token_storage')->getToken()->getUser();
+    }
 }

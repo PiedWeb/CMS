@@ -286,13 +286,13 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $formMapper)
     {
+        $formMapper->add('slug', null, ['label' => 'admin.page.slug.label']);
+
         $formMapper->add('title', null, ['label' => 'admin.page.title.label']);
 
         if ($this->exists('H1')) {
             $formMapper->add('h1', null, ['label' => 'admin.page.h1.label']);
         }
-
-        $formMapper->add('slug', null, ['label' => 'admin.page.slug.label']);
 
         $formMapper->add('mainContent', null, ['label' => 'admin.page.mainContent.label']);
 
@@ -336,32 +336,31 @@ class PageAdmin extends AbstractAdmin
         $page->setUpdatedAt(new \Datetime());
     }
 
+
     protected function configureListFields(ListMapper $listMapper)
     {
         //$this->setMosaicDefaultListMode();
 
-        $listMapper->addIdentifier('title', null, [
-            'label' => 'admin.page.title.label',
-        ]);
         $listMapper->add('slug', null, [
             'label' => 'admin.page.slug.label',
         ]);
+        $listMapper->addIdentifier('title', 'html', [
+            'label' => 'admin.page.title.label',
+        ]);
         $listMapper->add('updatedAt', null, [
-            'format' => 'd M y (H:m)',
+            'format' => 'd/m à H:m',
             'label' => 'admin.page.updatedAt.label',
         ]);
         $listMapper->add('createdAt', null, [
-            'format' => 'd M y (H:m)',
+            'format' => 'd/m/y',
             'label' => 'admin.page.createdAt.label',
         ]);
         $listMapper->add('metaRobots', null, [
-            'format' => 'd M y (H:m)',
             'label' => 'admin.page.metaRobots.label',
         ]);
         $listMapper->add('_action', null, [
             'actions' => [
                 'show' => [],
-                'edit' => [],
                 'delete' => [],
             ],
             'row_align' => 'right',
