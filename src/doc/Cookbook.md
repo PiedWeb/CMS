@@ -27,7 +27,7 @@ Make internal link
 {{ page('my-slug') }}
 ```
 
-### Canonical with base domain :
+### Canonical with base domain
 
 In your `config/packages/twig.yaml` add
 ```
@@ -37,6 +37,10 @@ twig:
         ...
         app_base_url: https://mydomain.tdl`
 ```
+
+### Optimize CSS
+
+Activate purge css commented code in `webpack.config.js`
 
 ### Install CKEditor
 

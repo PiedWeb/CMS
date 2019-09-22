@@ -336,7 +336,6 @@ class PageAdmin extends AbstractAdmin
         $page->setUpdatedAt(new \Datetime());
     }
 
-
     protected function configureListFields(ListMapper $listMapper)
     {
         //$this->setMosaicDefaultListMode();
