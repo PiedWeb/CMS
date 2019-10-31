@@ -122,7 +122,7 @@ class UserAdmin extends AbstractAdmin
                                 'admin.user.role.admin' => 'ROLE_ADMIN',
                                 'admin.user.role.editor' => 'ROLE_EDITOR',
                                 'admin.user.role.user' => 'ROLE_USER',
-                            ],
+                                ],
                         ]],
                     ],
                 ])
