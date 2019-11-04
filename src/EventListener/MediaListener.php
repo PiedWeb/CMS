@@ -45,19 +45,6 @@ class MediaListener
 
         $this->checkIfThereIsAName($media);
         $this->checkIfNameEverExistInDatabase($media);
-        $this->checkIfFileLocationIsChanging($media);
-    }
-
-    /**
-     * Todo: log i
-     * If file location is changing
-     * Create a redirection to the new Image.
-     */
-    private function checkIfFileLocationIsChanging($media)
-    {
-        if (null !== $media->getName() && 1 == 'todo') {
-            // TODO
-        }
     }
 
     /**

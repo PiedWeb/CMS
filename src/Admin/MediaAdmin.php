@@ -58,7 +58,8 @@ class MediaAdmin extends AbstractAdmin
                 $fileFieldOptions['label'] = 'admin.media.mediaFile.label';
             } else {
                 $fullPath = '/download/'.$media->getRelativeDir().'/'.$media->getMedia();
-                $fileFieldOptions['help'] = 'URL:<br><a href="'.$fullPath.'" target=_blank"><code>'.$fullPath.'</code></a>';
+                $fileFieldOptions['help'] = 'URL:<br>';
+                $fileFieldOptions['help'] .= '<a href="'.$fullPath.'" target=_blank"><code>'.$fullPath.'</code></a>';
             }
         }
 

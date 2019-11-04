@@ -12,9 +12,9 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('piedweb_cms');
         $treeBuilder
-            ->root('piedweb_cms')
+            ->getRootNode()
                 ->children()
                     ->scalarNode('media_dir_absolute') // NOT USED ??
                         ->defaultValue('%kernel.project_dir%/media')

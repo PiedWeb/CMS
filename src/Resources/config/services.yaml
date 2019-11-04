@@ -101,7 +101,6 @@ services:
             - [ setFeedDumper, [ '@piedweb.feed.dumper' ] ]
             - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
             - [ setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
-            - [ setTemplate, [outer_list_rows_mosaic, '@@PiedWebCMS/admin/media_mosaic_body.html.twig']]
             - [ setDefaultLocale, [ '%locale%' ] ]
         public: true
 

@@ -2,7 +2,6 @@
 
 namespace PiedWeb\CMSBundle\TemplateEditor;
 
-use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -11,30 +10,30 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ElementAdmin extends AbstractController
 {
-
     protected function getElements()
     {
         return new ElementRepository($this->get('kernel')->getProjectDir().'/templates');
     }
 
-    public function listElement() {
-        return $this->render('@PiedWebCMS/admin/theme.list.html.twig', ['elements'=>$this->getElements()->getAll()]);
+    public function listElement()
+    {
+        return $this->render('@PiedWebCMS/admin/theme.list.html.twig', ['elements' => $this->getElements()->getAll()]);
     }
 
     protected function getElement($encodedPath)
     {
-        if ($encodedPath !== null) {
+        if (null !== $encodedPath) {
             $element = $this->getElements()->getOneByEncodedPath($encodedPath);
             if (!$element) {
                 throw $this->createNotFoundException('This element does not exist...');
             }
         }
 
-        return $element??new Element($this->get('kernel')->getProjectDir().'/templates');
+        return $element ?? new Element($this->get('kernel')->getProjectDir().'/templates');
     }
 
-    public function editElement($encodedPath = null, Request $request) {
-
+    public function editElement($encodedPath = null, Request $request = null)
+    {
         $element = $this->getElement($encodedPath);
 
         $form = $this->editElementForm($element);
@@ -44,12 +43,14 @@ class ElementAdmin extends AbstractController
             $element = $form->getData();
             $element->storeElement();
 
-            return $this->redirectToRoute('piedweb_cms_template_editor_edit', ['encodedPath' => $element->getEncodedPath()]);
+            return $this->redirectToRoute('piedweb_cms_template_editor_edit', [
+                'encodedPath' => $element->getEncodedPath(),
+            ]);
         }
 
         return $this->render('@PiedWebCMS/admin/theme.edit.html.twig', [
             'element' => $element,
-            'form'=> $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -68,13 +69,12 @@ class ElementAdmin extends AbstractController
             ->getForm();
     }
 
-    public function deleteElement ($encodedPath, Request $request) {
-
-
+    public function deleteElement($encodedPath, Request $request)
+    {
         $element = $this->getElement($encodedPath);
 
         $form = $this->createFormBuilder()
-           ->add('delete', SubmitType::class, ['label' => 'Supprimer', 'attr' => ['class'=>'btn-danger']])
+           ->add('delete', SubmitType::class, ['label' => 'Supprimer', 'attr' => ['class' => 'btn-danger']])
             ->getForm();
 
         $form->handleRequest($request);
@@ -88,7 +88,7 @@ class ElementAdmin extends AbstractController
 
         return $this->render('@PiedWebCMS/admin/theme.delete.html.twig', [
             'form' => $form->createView(),
-            'element' => $element
+            'element' => $element,
         ]);
     }
 }

@@ -95,22 +95,8 @@ class FeedDumpService
         }
 
         $pages = $qb->getQuery()->getResult();
-        $links = $this->getLinks($pages);
 
         return $pages;
-    }
-
-    protected function getLinks($pages)
-    {
-        $links = [];
-        foreach ($pages as $key => $page) {
-            $links[$key] = 'homepage' == $page->getSlug() ?
-                $this->pc->generatePathForHomepage() :
-                $this->pc->generatePathForPage($page->getRealSlug())
-            ;
-        }
-
-        return $links;
     }
 
     protected function renderFeed()

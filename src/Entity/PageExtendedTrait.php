@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -11,7 +10,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Page extended: // I may cut this in multiple traits
  * - meta no-index
  * - Rich Content (meta desc, parentPage, h1, name [to do short link] )
- * - RelatedPages
  * - author (link)
  * - template.
  */
@@ -55,11 +53,6 @@ trait PageExtendedTrait
      * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\UserInterface")
      */
     protected $author;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface")
-     */
-    protected $relatedPages;
 
     /**
      * @ORM\Column(type="string", length=250, nullable=true)
@@ -144,32 +137,6 @@ trait PageExtendedTrait
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Page[]
-     */
-    public function getRelatedPages(): Collection
-    {
-        return $this->relatedPages;
-    }
-
-    public function addRelatedPage(PageInterface $relatedPage): self
-    {
-        if (!$this->relatedPages->contains($relatedPage)) {
-            $this->relatedPages[] = $relatedPage;
-        }
-
-        return $this;
-    }
-
-    public function removeRelatedPage(PageInterface $relatedPage): self
-    {
-        if ($this->relatedPages->contains($relatedPage)) {
-            $this->relatedPages->removeElement($relatedPage);
-        }
 
         return $this;
     }

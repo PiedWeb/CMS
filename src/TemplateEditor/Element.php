@@ -4,7 +4,6 @@ namespace PiedWeb\CMSBundle\TemplateEditor;
 
 class Element
 {
-
     /**
      * @var string
      */
@@ -28,13 +27,13 @@ class Element
     public function __construct($templateDir, $path = null)
     {
         $this->templateDir = realpath($templateDir);
-        $this->path        = substr($path, strlen($this->templateDir));
-        $this->code        = $this->loadCode();
+        $this->path = substr($path, strlen($this->templateDir));
+        $this->code = $this->loadCode();
     }
 
     protected function loadCode()
     {
-        if ($this->path !== null && file_exists($this->getTemplateDir().$this->getPath())) {
+        if (null !== $this->path && file_exists($this->getTemplateDir().$this->getPath())) {
             return file_get_contents($this->getTemplateDir().$this->getPath());
         }
 
@@ -58,7 +57,7 @@ class Element
 
     public function setPath(string $path)
     {
-        if ($this->path === null) {
+        if (null === $this->path) {
             $this->path = $path;
         } else {
             if ($this->path != $path) {
