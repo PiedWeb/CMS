@@ -12,3 +12,19 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+
+piedweb_cms_template_editor_list:
+    path: /admin/template/list
+    controller: PiedWeb\CMSBundle\TemplateEditor\ElementAdmin::listElement
+
+piedweb_cms_template_editor_edit:
+    path: /admin/template/edit/{encodedPath}
+    controller: PiedWeb\CMSBundle\TemplateEditor\ElementAdmin::editElement
+
+piedweb_cms_template_editor_create:
+    path: /admin/template/create
+    controller: PiedWeb\CMSBundle\TemplateEditor\ElementAdmin::editElement
+
+piedweb_cms_template_editor_delete:
+    path: /admin/template/delete/{encodedPath}
+    controller: PiedWeb\CMSBundle\TemplateEditor\ElementAdmin::deleteElement

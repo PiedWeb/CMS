@@ -127,7 +127,7 @@ services:
         class: PiedWeb\CMSBundle\Admin\UserAdmin
         arguments: [~, '%app.entity_user%', ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: admin.label.list }
+            - { name: sonata.admin, manager_type: orm, label: admin.label.user }
         public: true
 
 # --------

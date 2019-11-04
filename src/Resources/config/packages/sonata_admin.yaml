@@ -15,12 +15,16 @@ sonata_admin:
                 items:
                     - piedweb.admin.page
                     - piedweb.admin.media
+                    - route:        piedweb_static_generate
+                      label:        Actualiser
 
-            app.admin.group.user:
-                label: Utilisateurs #admin.label.user
-                label_catalogue: Utilisateurs #admin.label.user
+            app.admin.group.setting:
+                label: Paramètres #admin.label.user
+                label_catalogue: Paramètres #admin.label.user
                 items:
                     - piedweb.admin.user
+                    - route:        piedweb_cms_template_editor_list
+                      label:        Thème
     options:
         lock_protection: true
     assets:

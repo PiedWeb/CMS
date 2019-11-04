@@ -54,16 +54,6 @@ class PageAdmin extends AbstractAdmin
     }
 
     /**
-    public function getFormTheme()
-    {
-
-        return array_merge(
-            parent::getFormTheme(),
-            array('@PiedWebCMS/admin/edit-media.html.twig')
-        );
-    }**/
-
-    /**
      * Check if page entity's item $name exist.
      */
     protected function exists(string $name): bool
@@ -375,7 +365,6 @@ class PageAdmin extends AbstractAdmin
             $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
             $thumb = $this->liipImage->getBrowserPath($fullPath, 'thumb');
         } else {
-
             $thumb = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMnB4IiB2ZXJzaW9uP
                 SIxLjEiIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMycHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIg
                 eG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8

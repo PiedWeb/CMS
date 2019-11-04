@@ -111,6 +111,8 @@ admin:
         createdAt:
             label: Date d'upload
 
+    element:
+        deleted: Elément supprimé.
 #---
 # Errors Page(s)
 #---
