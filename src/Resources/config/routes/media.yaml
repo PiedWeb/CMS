@@ -1,0 +1,7 @@
+
+piedweb_cms_media:
+    path:     /download/{path}
+    controller: PiedWeb\CMSBundle\Controller\MediaController::download
+    methods:    [GET, HEAD]
+    requirements:
+        path: '[a-zA-Z0-9\-/\.]*'

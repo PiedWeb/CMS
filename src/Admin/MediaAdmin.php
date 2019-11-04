@@ -41,21 +41,27 @@ class MediaAdmin extends AbstractAdmin
         ]); // ['data_class'=>null]
 
         $fileFieldOptions = ['required' => false, 'data_class' => null];
-        if ($media && $media->getMedia() && false !== strpos($media->getMimeType(), 'image/')) {
-            $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
-            // Todo: move this to a twig template file
-            $fileFieldOptions['help'] = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
-            $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'thumb').'">';
-            $fileFieldOptions['help'] .= '</a>';
-            $fileFieldOptions['help'] .= '<br><br>Chemin:<br><code>';
-            $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default').'</code>';
-            $fileFieldOptions['help'] .= '<br><br>HTML:<br><code>&lt;span data-img="';
-            $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default');
-            $fileFieldOptions['help'] .= '"&gt;'.$media->getName().'&lt;/span&gt;'.'</code>';
-            $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
-            $fileFieldOptions['attr'] = ['ismedia' => 1];
-            $fileFieldOptions['label'] = 'admin.media.mediaFile.label';
+        if ($media && $media->getMedia()) {
+                if (false !== strpos($media->getMimeType(), 'image/')) {
+                $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
+                // Todo: move this to a twig template file
+                $fileFieldOptions['help'] = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
+                $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'thumb').'">';
+                $fileFieldOptions['help'] .= '</a>';
+                $fileFieldOptions['help'] .= '<br><br>Chemin:<br><code>';
+                $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default').'</code>';
+                $fileFieldOptions['help'] .= '<br><br>HTML:<br><code>&lt;span data-img="';
+                $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default');
+                $fileFieldOptions['help'] .= '"&gt;'.$media->getName().'&lt;/span&gt;'.'</code>';
+                $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
+                $fileFieldOptions['attr'] = ['ismedia' => 1];
+                $fileFieldOptions['label'] = 'admin.media.mediaFile.label';
+            } else {
+                $fullPath = '/download/'.$media->getRelativeDir().'/'.$media->getMedia();
+                $fileFieldOptions['help'] = 'HTML:<br><a href="'.$fullPath.'" target=_blank"><code>'.$fullPath.'</code></a>';
+            }
         }
+
         $formMapper->add('mediaFile', FileType::class, $fileFieldOptions); // ['data_class'=>null]
     }
 

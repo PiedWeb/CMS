@@ -12,6 +12,8 @@ piedweb_cms_homepage:
     controller: PiedWeb\CMSBundle\Controller\PageController::show
     methods:    [GET, HEAD]
 
+media:
+    resource: '@PiedWebCMSBundle/Resources/config/routes/media.yaml'
 
 localized_page:
     name_prefix: localized_
