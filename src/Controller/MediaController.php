@@ -5,7 +5,6 @@ namespace PiedWeb\CMSBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
-use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -20,7 +19,6 @@ class MediaController extends AbstractController
         TranslatorInterface $translator,
         ParameterBagInterface $params
     ) {
-
         $pathToFile = $this->get('kernel')->getProjectDir().'/media/'.substr(str_replace('..', '', $path), strlen('media/'));
 
         if (!file_exists($pathToFile)) {
@@ -31,6 +29,5 @@ class MediaController extends AbstractController
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
         return $response;
-
     }
 }
