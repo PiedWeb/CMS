@@ -94,7 +94,10 @@ services:
 
     piedweb.admin.page:
         class: PiedWeb\CMSBundle\Admin\PageAdmin
-        arguments: [~, '%app.entity_page%', ~]
+        arguments:
+            - ~
+            - '%app.entity_page%'
+            - PiedWeb\CMSBundle\Controller\PageAdminController
         tags:
             - { name: sonata.admin, manager_type: orm, label: admin.label.page }
         calls:

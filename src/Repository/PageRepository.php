@@ -44,4 +44,15 @@ class PageRepository extends ServiceEntityRepository
 
         return isset($result[0]) ? $result[0] : null;
     }
+
+    public function getPagesWithoutParent()
+    {
+        $q = $this->createQueryBuilder('p')
+            ->andWhere('p.parentPage is NULL')
+            ->orderBy('p.slug', 'DESC')
+            ->getQuery()
+        ;
+
+        return $q->getResult();
+    }
 }

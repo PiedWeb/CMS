@@ -60,13 +60,11 @@ List of Bundles wich extend this one:
 
 ### Next
 
-- implement cache ? (`https://github.com/FriendsOfSymfony/FOSHttpCacheBundle/` `https://github.com/WyriHaximus/HtmlCompress`)
 - Change translatable (gedmo) to make something more scalable and easy to use with repo (knp ?, other?)
 - search for all "todo" in the code
 - Extension: load block via ajax (like [Contact](https://github.com/PiedWeb/ContactBundle))
-- Extension : load all templates and template blocks avalaible and permit edition online (better template organization)
-- Transform image reOrganizer in list (to permit showing then horizontally)
-
+- clean and test the code
+- export/import CSV (via cli/via admin)
 
 ## Credits
 

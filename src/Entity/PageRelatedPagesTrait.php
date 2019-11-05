@@ -12,6 +12,11 @@ trait PageRelatedPagesTrait
      */
     protected $relatedPages;
 
+    public function __constructRelatedPagesT()
+    {
+        $this->relatedPages = new ArrayCollection();
+    }
+
     /**
      * @return Collection|Page[]
      */

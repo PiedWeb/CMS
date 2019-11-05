@@ -28,3 +28,4 @@ piedweb_cms_template_editor_create:
 piedweb_cms_template_editor_delete:
     path: /admin/template/delete/{encodedPath}
     controller: PiedWeb\CMSBundle\TemplateEditor\ElementAdmin::deleteElement
+

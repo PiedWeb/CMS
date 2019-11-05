@@ -1,0 +1,38 @@
+<?php
+
+namespace PiedWeb\CMSBundle\Controller;
+
+use Sonata\AdminBundle\Controller\CRUDController;
+
+class PageAdminController extends CRUDController
+{
+    public function listAction()
+    {
+        $request = $this->getRequest();
+        if ($listMode = $request->get('_list_mode')) {
+            $this->admin->setListMode($listMode);
+        }
+
+        $listMode = $this->admin->getListMode();
+        if ('tree' === $listMode) {
+            return $this->treeAction();
+        }
+
+        return parent::listAction();
+    }
+
+    public function treeAction()
+    {
+        $pages = $this->getDoctrine()
+            ->getRepository($this->container->getParameter('app.entity_page'))
+            ->getPagesWithoutParent();
+
+        return $this->render('@PiedWebCMS/admin/treeView.html.twig', [
+            'pages' => $pages,
+            'list' => $this->admin->getList(),
+            'admin' => $this->admin,
+            'base_template' => $this->getBaseTemplate(),
+            'action' => 'list',
+        ]);
+    }
+}

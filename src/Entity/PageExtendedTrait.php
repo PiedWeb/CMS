@@ -2,7 +2,6 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -61,7 +60,6 @@ trait PageExtendedTrait
 
     public function __constructExtended()
     {
-        $this->relatedPages = new ArrayCollection();
     }
 
     public function getExcrept(): ?string

@@ -32,6 +32,14 @@ class PageAdmin extends AbstractAdmin
 
     protected $defaultLocale;
 
+    public function __construct($code, $class, $baseControllerName)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->listModes['tree'] = [
+            'class' => 'fa fa-sitemap',
+        ];
+    }
+
     public function setDefaultLocale($defaultLocale)
     {
         $this->defaultLocale = $defaultLocale;
@@ -103,7 +111,6 @@ class PageAdmin extends AbstractAdmin
              ]);
         }
 
-        //var_dump($this->getContainer()->getParameter('app.entity_page')); exit;
         if ($this->exists('relatedPages')) {
             $formMapper->add(
                 'relatedPages',
@@ -226,7 +233,6 @@ class PageAdmin extends AbstractAdmin
             ]);
         }
         $formMapper->add('createdAt', DateTimePickerType::class, [
-            //'date_format' => 'd MMMM y H:mm',
             'format' => DateTimeType::HTML5_FORMAT,
             'dp_side_by_side' => true,
             'dp_use_current' => true,
@@ -302,15 +308,6 @@ class PageAdmin extends AbstractAdmin
                 'label' => 'admin.page.metaRobots.label',
             ]);
         }
-        /*
-         * todo: implémente datepicker for orm_date in sonata
-        $formMapper->add('createdAt', 'doctrine_orm_date', [
-             'label' => 'admin.page.createdAt.label',
-        ]);
-        $formMapper->add('updatedAt', null, [
-             'label' => 'admin.page.updatedAt.label',
-        ]);
-        */
 
         if ($this->exists('author')) {
             $formMapper->add('author', null, [
@@ -328,8 +325,6 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        //$this->setMosaicDefaultListMode();
-
         $listMapper->add('slug', null, [
             'label' => 'admin.page.slug.label',
         ]);
