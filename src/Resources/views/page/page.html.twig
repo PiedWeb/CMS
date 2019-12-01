@@ -18,11 +18,8 @@
         {% include '@PiedWebCMS/page/_menu.html.twig' with {'logo':{'alt':logo_alt}} %}
     {% endblock %}
 
-    {% block header %}
-        {% include '@PiedWebCMS/page/_header.html.twig' %}
-    {% endblock %}
-
     {% block content %}
+        {% set container = page.getEmc('container') ? page.getEmc('container') : 'container container-txt' %}
         {% include '@PiedWebCMS/page/_main_content.html.twig' %}
     {% endblock %}
 

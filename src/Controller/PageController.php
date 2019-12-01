@@ -2,11 +2,11 @@
 
 namespace PiedWeb\CMSBundle\Controller;
 
+use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
-use PiedWeb\CMSBundle\Entity\PageInterface as Page;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PageController extends AbstractController
 {

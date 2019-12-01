@@ -1,11 +1,44 @@
+
+
+{% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
+{% set subtitle = page.getEmc('subtitle') %}
+{% set description = page.chapeau is not null ? include(template_from_string(page.chapeau)) : null %}
+{% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
+
 {% block content %}
-    <div id="content">
     {% if page.readableContent is not empty %}
-        <section class="section-gap">
-            <div class="container">
-                {{ include(template_from_string(page.readableContent)) }}
+        <section class="{{container is defined ? ' '~container : ''}}" id="content">
+
+                {% block title %}
+
+                    {% if subtitle is defined and subtitle is not null %}<span class="subtitle">{{ subtitle }}</span>{% endif %}
+
+                    <h1>{{ title|raw }}</h1>
+
+                    {% block description %}
+                        {% if description is defined and description is not null %}
+                            {{ description|raw }}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% if image is defined and image is not null %}
+                            <p class=mimg>
+                                <a href="{{ image| imagine_filter('default') }}">
+                                    <img src="{{ image| imagine_filter('thumb') }}"
+                                        data-img="{{ image| imagine_filter('default') }}" class="img-fluid"
+                                        loading="lazy" alt="{{  title|striptags }}">
+                                </a>
+                            </p>
+                    {% endif %}
+                {% endblock %}
+
+
+                {% block main_content %}
+                    {{ include(template_from_string(page.readableContent)) }}
+                {% endblock %}
+
                 {% block after_content %}{% endblock %}
-            </div>
+
         </section>
     {% endif %}
     </div>

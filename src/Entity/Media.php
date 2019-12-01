@@ -3,9 +3,9 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\MappedSuperclass

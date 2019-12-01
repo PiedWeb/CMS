@@ -35,14 +35,11 @@ class Mailer
     /**
      * Mailer constructor.
      *
-     * @param \Swift_Mailer         $mailer
-     * @param UrlGeneratorInterface $router
-     * @param EngineInterface       $templating
-     * @param array                 $parameters
+     * @param array $parameters
      */
     public function __construct(
         \Swift_Mailer $mailer,
-        UrlGeneratorInterface  $router,
+        UrlGeneratorInterface $router,
         EngineInterface $templating,
         string $fromEmail,
         string $fromName

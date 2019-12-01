@@ -2,9 +2,9 @@
 
 namespace PiedWeb\CMSBundle\Service;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Doctrine\ORM\EntityManager;
 use Twig_Environment;
 
 /**
@@ -85,8 +85,7 @@ class FeedDumpService
     protected function getPages(?int $limit = null)
     {
         $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
-        $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots != :noi OR p.metaRobots NOT LIKE :noi2')
-           ->setParameter('noi', 'noindex')
+        $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi2')
            ->setParameter('noi2', '%noindex%');
         $qb->andWhere('p.mainContent NOT LIKE :noi')->setParameter('noi', 'Location:%');
 
@@ -95,6 +94,9 @@ class FeedDumpService
         }
 
         $pages = $qb->getQuery()->getResult();
+
+        //foreach ($pages as $page) echo $page->getMetaRobots().' '.$page->getTitle().'<br>';
+        //exit('feed updated');
 
         return $pages;
     }

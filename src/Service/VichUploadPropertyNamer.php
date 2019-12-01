@@ -10,10 +10,6 @@ class VichUploadPropertyNamer extends \Vich\UploaderBundle\Naming\PropertyNamer
 {
     /**
      * Guess the extension of the given file.
-     *
-     * @param UploadedFile $file
-     *
-     * @return string|null
      */
     private function getExtension(UploadedFile $file): ?string
     {

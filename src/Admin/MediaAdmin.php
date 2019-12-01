@@ -3,13 +3,13 @@
 namespace PiedWeb\CMSBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sonata\BlockBundle\Meta\Metadata;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class MediaAdmin extends AbstractAdmin
 {
@@ -46,13 +46,19 @@ class MediaAdmin extends AbstractAdmin
                 $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
                 // Todo: move this to a twig template file
                 $fileFieldOptions['help'] = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
-                $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'thumb').'">';
+                $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'default').'"'
+                    .' style="max-width:100%">';
                 $fileFieldOptions['help'] .= '</a>';
                 $fileFieldOptions['help'] .= '<br><br>Chemin:<br><code>';
                 $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default').'</code>';
-                $fileFieldOptions['help'] .= '<br><br>HTML:<br><code>&lt;span data-img="';
-                $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default');
-                $fileFieldOptions['help'] .= '"&gt;'.$media->getName().'&lt;/span&gt;'.'</code>';
+                $fileFieldOptions['help'] .= '<br><br>HTML:<br><pre>';
+                $fileFieldOptions['help'] .= htmlentities('<a href="'
+                    .$this->liipImage->getBrowserPath($fullPath, 'default').'">'
+                    .chr(10).'  <img src="'.$this->liipImage->getBrowserPath($fullPath, 'thumb').'"'
+                    .' data-img="'.$this->liipImage->getBrowserPath($fullPath, 'default').'"'
+                    .' class="img-fluid" loading="lazy" alt="'.$media->getName().'">'
+                    .chr(10).'</a>');
+                $fileFieldOptions['help'] .= '</pre>';
                 $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
                 $fileFieldOptions['attr'] = ['ismedia' => 1];
                 $fileFieldOptions['label'] = 'admin.media.mediaFile.label';

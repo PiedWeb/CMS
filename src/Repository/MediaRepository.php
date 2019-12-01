@@ -2,8 +2,8 @@
 
 namespace PiedWeb\CMSBundle\Repository;
 
-use PiedWeb\CMSBundle\Entity\Media;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use PiedWeb\CMSBundle\Entity\Media;
 
 /**
  * @method Media|null find($id, $lockMode = null, $lockVersion = null)

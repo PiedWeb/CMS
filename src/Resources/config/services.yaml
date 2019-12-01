@@ -74,6 +74,17 @@ services:
         alias: piedweb.page_canonical
         public: true
 
+    piedweb.media_command:
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@parameter_bag"
+            - '@liip_imagine.cache.manager'
+            - '@liip_imagine.data.manager'
+            - '@liip_imagine.filter.manager'
+            - "%app.dir%"
+        class: PiedWeb\CMSBundle\Command\MediaCommand
+        tags: ['console.command']
+
 # --------
 # Repository
 # --------

@@ -46,6 +46,16 @@ Activate purge css commented code in `webpack.config.js`
 
 https://gist.github.com/RobinDev/c81d6fe3f859c21865c7e100cca9e654
 
+## Maintaining
+
+### Update all cached image
+
+Command line
+
+```
+bin/console media:cache:generate
+```
+
 ## Editor Tips
 
 ### Create a redirection

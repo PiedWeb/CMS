@@ -2,7 +2,6 @@
 
 namespace PiedWeb\CMSBundle\EventListener;
 
-use Vich\UploaderBundle\Event\Event;
 use Doctrine\ORM\EntityManager;
 use League\ColorExtractor\Color;
 use League\ColorExtractor\ColorExtractor;
@@ -10,11 +9,12 @@ use League\ColorExtractor\Palette;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Liip\ImagineBundle\Imagine\Data\DataManager;
 use Liip\ImagineBundle\Imagine\Filter\FilterManager;
-use Liip\ImagineBundle\Exception\Binary\Loader\NotLoadableException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Vich\UploaderBundle\Event\Event;
 
 class MediaListener
 {
+    use MediaCacheGeneratorTrait;
+
     private $projectDir;
     private $iterate = 1;
     private $em;
@@ -91,38 +91,6 @@ class MediaListener
             $object->setMainColor(Color::fromIntToHex($colors[0]));
 
             $this->generateCache('/'.$relativeDir.'/'.$object->getMedia());
-        }
-    }
-
-    protected function generateCache($path)
-    {
-        //todo: get it from parameters (config) ?!
-        foreach (['small_thumb', 'thumb', 'height_300', 'xs', 'sm', 'md', 'lg', 'xl', 'default'] as $filter) {
-            $this->storeImageInCache($path, $filter).'">';
-        }
-    }
-
-    protected function storeImageInCache($path, $filter)
-    {
-        try {
-            try {
-                $binary = $this->dataManager->find($filter, $path);
-            } catch (NotLoadableException $e) {
-                if ($defaultImageUrl = $this->dataManager->getDefaultImageUrl($filter)) {
-                    return $defaultImageUrl;
-                }
-
-                throw new NotFoundHttpException('Source image could not be found', $e);
-            }
-
-            $this->cacheManager->store(
-                $this->filterManager->applyFilter($binary, $filter),
-                $path,
-                $filter
-            );
-        } catch (\RuntimeException $e) {
-            throw new \RuntimeException(sprintf('Unable to create image for path "%s" and filter "%s". '
-                .'Message was "%s"', $path, $filter, $e->getMessage()), 0, $e);
         }
     }
 }

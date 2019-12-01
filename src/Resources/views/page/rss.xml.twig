@@ -1,22 +1,25 @@
-{% set base = app_base_url is defined ? app_base_url : (url('piedweb_cms_homepage')|trim('/', 'right')) %}<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-<channel>
-{% block header %}
-<title>{{ logo_alt }}</title>
-<link>{{ base ~ page('') }}</link>
-<description>{% block description %}{{ ('feed.description'|trans) }}{% endblock %}</description>
-<atom:link href="{{ base }}/feed.xml" rel="self" type="application/rss+xml" />
-{% endblock %}
-{% for page in pages %}
-{% block item %}
-<item>
-<title>{{ (page.h1 is defined and page.h1 is not null ? page.h1 : page.title)|striptags }}</title>
-<link>{{ base ~ page(page.getRealSlug) }}</link>
-<guid>{{ base ~ page(page.getRealSlug) }}</guid>
-<pubDate>{{ page.createdAt|date('D, d M Y H:i:s O') }}</pubDate>
-</item>
-{% endblock %}
-{% endfor %}
-</channel>
+{% set base = app_base_url is defined ? app_base_url : (url('piedweb_cms_homepage')|trim('/', 'right')) %}<?xml version="1.0"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        {% block header %}
+
+        <title>{{ logo_alt }}</title>
+        <link>{{ base ~ page('') }}</link>
+        <description><![CDATA[{% block description %}{{ ('feed.description'|trans) }}{% endblock %}]]></description>
+        <atom:link href="{{ base }}/feed.xml" rel="self" type="application/rss+xml" />
+        {% endblock %}
+        {% for page in pages %}
+        {% block item %}
+
+        <item>
+            <title><![CDATA[{{ (page.h1 is defined and page.h1 is not null ? page.h1 : page.title)|striptags|html_entity_decode }}]]></title>
+            <link>{{ base ~ page(page.getRealSlug) }}</link>
+            <guid>{{ base ~ page(page.getRealSlug) }}</guid>
+            <pubDate>{{ page.createdAt|date('D, d M Y H:i:s O') }}</pubDate>
+        </item>
+        {% endblock %}
+        {% endfor %}
+
+    </channel>
 </rss>
 

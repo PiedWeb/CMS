@@ -2,9 +2,10 @@
 
 namespace PiedWeb\CMSBundle\Twig;
 
-use Twig\Extension\AbstractExtension;
-use PiedWeb\RenderAttributes\AttributesTrait;
 use PiedWeb\CMSBundle\Service\PageCanonicalService;
+use PiedWeb\RenderAttributes\AttributesTrait;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension
@@ -14,6 +15,13 @@ class AppExtension extends AbstractExtension
     public function __construct(PageCanonicalService $pageCanonical)
     {
         $this->pageCanonical = $pageCanonical;
+    }
+
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('html_entity_decode', 'html_entity_decode'),
+        ];
     }
 
     public function getFunctions()

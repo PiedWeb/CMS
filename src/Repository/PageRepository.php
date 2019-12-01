@@ -2,9 +2,9 @@
 
 namespace PiedWeb\CMSBundle\Repository;
 
-use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
+use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 
 /**
  * @method Page|null find($id, $lockMode = null, $lockVersion = null)
