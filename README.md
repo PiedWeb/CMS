@@ -70,6 +70,7 @@ List of Bundles wich extend this one:
 
 - [PiedWeb](https://piedweb.com)
 - [All Contributors](https://github.com/PiedWeb/:package_skake/graphs/contributors)
+- [qwanturank](https://qwanturankseo.com/)
 
 ## License
 
