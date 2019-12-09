@@ -1,0 +1,25 @@
+{% extends '@PiedWebCMS/page/page.html.twig' %}
+
+{% block content %}
+
+    {% block title %}
+        {% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
+        {% set subtitle = page.getEmc('subtitle') %}
+        {% set description = page.chapeau is not null ? include(template_from_string(page.chapeau)) : null %}
+        {% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
+        {% include '@PiedWebCMS/component/_hero-banner.html.twig' %}
+    {% endblock %}
+
+    {% if page.readableContent is not empty %}
+        <section class="{{container is defined ? ' '~container : ''}}" id="content">
+
+            {% block main_content %}
+                {{ include(template_from_string(page.readableContent)) }}
+            {% endblock %}
+
+            {% block after_content %}{% endblock %}
+
+        </section>
+    {% endif %}
+
+{% endblock %}
