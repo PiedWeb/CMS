@@ -80,8 +80,10 @@ cp -f vendor/piedweb/cms-bundle/src/Resources/config/routes/all.yaml config/rout
 php bin/console doctrine:schema:create
 
 # Add an admin user :
-php bin/console fos:user:create admin@example.tld admin@example.tld p@ssword
-php bin/console fos:user:promote admin@example.tld ROLE_SUPER_ADMIN
+read -p 'Email: ' emailvar
+read -sp 'Password: ' passvar
+php bin/console fos:user:create $emailvar $emailvar $passvar
+php bin/console fos:user:promote $emailvar ROLE_SUPER_ADMIN
 
 # Install Sonata Front-End Assets
 php bin/console assets:install
