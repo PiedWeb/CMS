@@ -24,7 +24,6 @@
         "umpirsky/twig-php-function": "^0.2",
         "vich/uploader-bundle": "^1.11",
         "piedweb/render-html-attributes": "^1.0",
-        "piedweb/static-bundle": "^0",
         "gedmo/doctrine-extensions": "^2.4",
         "knplabs/knp-markdown-bundle": "^1.8",
         "league/color-extractor": "^0.3",

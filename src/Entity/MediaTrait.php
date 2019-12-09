@@ -66,6 +66,7 @@ trait MediaTrait
     protected $mediaFile;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=100, unique=true)
      */
     protected $name;

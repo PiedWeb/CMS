@@ -173,7 +173,7 @@ class PageAdmin extends AbstractAdmin
             'label' => 'admin.page.slug.label',
             'help' => 'admin.page.slug.help',
             'attr' => [
-                ($this->getSubject()->getSlug() ? 'disabled' : 't') => '',
+                ($this->getSubject() ? ($this->getSubject()->getSlug() ? 'disabled' : 't') : 't') => '',
             ],
         ]);
 

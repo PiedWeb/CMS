@@ -11,6 +11,7 @@ use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class UserAdmin extends AbstractAdmin
 {
@@ -30,10 +31,9 @@ class UserAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper): void
     {
         // Forbid edition of other admin account except for super admin
-        if (($this->getSubject()->hasRole('ROLE_ADMIN') || $this->getSubject()->hasRole('ROLE_SUPER_ADMIN'))
-            && (!$this->getUser()->hasRole('ROLE_SUPER_ADMIN')
-            || $this->getUser()->getId() !== $this->getSubject()->getId())) {
-            die('u can\'t edit this user'); // TODO : do better
+        if (($this->getSubject()->hasRole('ROLE_SUPER_ADMIN')
+            && $this->getUser()->getId() !== $this->getSubject()->getId())) {
+            throw new AccessDeniedException('u can\'t edit this user'); // TODO : do better
         }
 
         $now = new \DateTime();
