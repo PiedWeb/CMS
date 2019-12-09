@@ -2,7 +2,10 @@
 
 {% block content %}
 
-    {% block title %}
+    {% block content_title %}
+        {% set container_txt = true %}
+        {% set overlay = 'inverse' %}
+        {# value https://github.com/PiedWeb/piedweb-tyrol-free-bootstrap-4-theme/blob/6abee4cc05b7dc4d13483a45c269d2529a25edd0/src/js/helpers.js#L46 #}
         {% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
         {% set subtitle = page.getEmc('subtitle') %}
         {% set description = page.chapeau is not null ? include(template_from_string(page.chapeau)) : null %}
@@ -11,7 +14,7 @@
     {% endblock %}
 
     {% if page.readableContent is not empty %}
-        <section class="{{container is defined ? ' '~container : ''}}" id="content">
+        <section class="{{container is defined ? ' '~container : 'container container-txt mb-5 mt-5'}}" id="content">
 
             {% block main_content %}
                 {{ include(template_from_string(page.readableContent)) }}

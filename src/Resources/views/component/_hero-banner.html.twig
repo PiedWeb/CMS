@@ -19,9 +19,8 @@
             data-darken="{{ overlay is defined ? overlay : 'center' }}"
         {% endif %}>
         {{ container_txt is defined ? '<div class="container-txt">' : '<div class="container">' }}
-            <div class="row {{ size is defined ? size : 'halfscreen' }} justify-content-center align-items-center pt-5">
-                <div class="col-md-10 col-12 pt-5">
-                    <div class="banner-content text-center">
+            <div class="{{ size is defined ? size : 'halfscreen' }} position-relative">
+                    <div class="banner-content pt-4 pb-1">
 
                         {% block subTitle %}
                             {% if subtitle is defined and subtitle is not null %}
@@ -59,7 +58,6 @@
 
 
                 </div>
-            </div>
         </div>
     </div>
 </section>

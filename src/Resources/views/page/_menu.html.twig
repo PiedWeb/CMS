@@ -3,9 +3,10 @@
     @params array   items {attr:{href...}, anchor, items: [...]}
     @params boolean container
     @params boolean container_txt
+    @params boolean fixed_top
 #}
 <header id="navbar">
-    <nav class="navbar navbar-expand-lg w-100">
+    <nav class="navbar navbar-expand-lg w-100{{ fixed_top is defined ? ' fixed-top' : ''}}">
         {{ container is defined ? '<div class="container">' : '' }}
         {{ container_txt is defined ? '<div class="container container-txt">' : '' }}
 
