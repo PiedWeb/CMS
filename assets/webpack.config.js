@@ -6,7 +6,7 @@ require('webpack');
 
 /**
 const PurgecssPlugin = require('purgecss-webpack-plugin')
-var glob = require("glob")
+var glob = require("glob-all")
 /**/
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -47,8 +47,14 @@ Encore
     .addPlugin(new webpack.ProvidePlugin(new UglifyJSPlugin()))
     /**
     .addPlugin(new PurgecssPlugin({
-        paths: glob.sync('static/*.html'),
-        whitelistPatternsChildren: [/baguetteBox/]
+        paths: glob.sync([
+            'static/*.html',
+            'vendor/piedweb/cms-bundle/src/Resources/views/** /*.html.twig',
+            'templates/** /*.html.twig',
+        ]),
+        whitelistPatternsChildren: [
+            /baguette/, /form/, /col/, /pt/, /mt/, ,/pb/, /mb/, /\.p-/, /\.m-/, /fullwidth/, /turbolinks/
+        ]
     }))/**/
     .configureFilenames({
          js: '[name].js',

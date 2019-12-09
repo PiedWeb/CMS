@@ -11,7 +11,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
 class MediaCommand extends Command
 {
@@ -49,7 +48,6 @@ class MediaCommand extends Command
         string $webDir
     ) {
         $this->em = $em;
-        $this->filesystem = new Filesystem();
         $this->params = $params;
         $this->webDir = $webDir;
         $this->cacheManager = $cacheManager;
