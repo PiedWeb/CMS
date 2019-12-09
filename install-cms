@@ -12,7 +12,7 @@ echo "Installation running in folder $folder"
 rm -rf ${folder}
 
 # Install symfony
-composer create-project symfony/skeleton ${folder}
+composer create-project symfony/skeleton ${folder} ^4.4
 cd ${folder}
 
 # Install Pied Web CMS
