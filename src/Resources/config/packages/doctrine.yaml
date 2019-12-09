@@ -31,7 +31,6 @@ doctrine:
                 type: annotation
                 alias: Gedmo
                 prefix: Gedmo\Translatable\Entity
-                # make sure vendor library location is correct
                 dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
         resolve_target_entities:
             PiedWeb\CMSBundle\Entity\PageInterface: '%app.entity_page%'
