@@ -20,7 +20,7 @@
         {% endif %}>
         {{ container_txt is defined ? '<div class="container-txt">' : '<div class="container">' }}
             <div class="{{ size is defined ? size : 'halfscreen' }} position-relative">
-                    <div class="banner-content pt-4 pb-1">
+                    <div class="banner-content pt-4 {{ overlay is defined and overlay == 'inverse' ? 'pb-1' : 'pb-4' }}">
 
                         {% block subTitle %}
                             {% if subtitle is defined and subtitle is not null %}

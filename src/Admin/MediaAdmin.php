@@ -52,12 +52,13 @@ class MediaAdmin extends AbstractAdmin
                 $fileFieldOptions['help'] .= '<br><br>Chemin:<br><code>';
                 $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default').'</code>';
                 $fileFieldOptions['help'] .= '<br><br>HTML:<br><pre>';
-                $fileFieldOptions['help'] .= htmlentities('<a href="'
-                    .$this->liipImage->getBrowserPath($fullPath, 'default').'">'
-                    .chr(10).'  <img src="'.$this->liipImage->getBrowserPath($fullPath, 'thumb').'"'
-                    .' data-img="'.$this->liipImage->getBrowserPath($fullPath, 'default').'"'
-                    .' class="img-fluid" loading="lazy" alt="'.$media->getName().'">'
-                    .chr(10).'</a>');
+                $fileFieldOptions['help'] .= '{%'
+                    .chr(10).'    include \'@PiedWebCMS/component/_inline_image.html.twig\' with { '
+                    .chr(10).'        \'image_src\' : \''.$this->liipImage->getBrowserPath($fullPath, 'default').'\','
+                    .chr(10).'        \'image_alt\' : \''.str_replace('"', '', $media->getName()).'\','
+                    .chr(10).'        \'rounded\' : true,'
+                    .chr(10).'    } only'
+                    .chr(10).'%}';
                 $fileFieldOptions['help'] .= '</pre>';
                 $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
                 $fileFieldOptions['attr'] = ['ismedia' => 1];
