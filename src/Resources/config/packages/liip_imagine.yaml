@@ -57,24 +57,24 @@ liip_imagine:
                 auto_rotate: ~
                 strip: ~
         md: #992px
-            quality: 95
-            jpeg_quality:          95
+            quality: 90
+            jpeg_quality:          90
             filters:
                 relative_resize:
                     widen: 992
                 auto_rotate: ~
                 strip: ~
         lg: #1200px
-            quality: 95
-            jpeg_quality:          95
+            quality: 90
+            jpeg_quality:          90
             filters:
                 relative_resize:
                     widen: 1200
                 auto_rotate: ~
                 strip: ~
         xl: #1200px+
-            quality: 95
-            jpeg_quality:          95
+            quality: 90
+            jpeg_quality:          90
             filters:
                 relative_resize:
                     widen: 1600
@@ -82,8 +82,8 @@ liip_imagine:
                 strip: ~
 
         default:
-            quality: 100
-            jpeg_quality:          100
+            quality: 90
+            jpeg_quality:          90
             filters:
                 downscale:
                     max: [1980, 1280]

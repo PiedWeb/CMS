@@ -103,7 +103,7 @@ admin:
     media:
         name:
             label: Nom
-            help: "<small>Choisissez un à plusieurs mots décrivant votre fichier. N'hésitez pas à utiliser des mots clefs pour retrouver facilement votre image (ex: Massif des Ecrins - Glacier de la Meije)</small>"
+            help: "<small>Choisissez un à plusieurs mots décrivant votre fichier. N'hésitez pas à utiliser des mots clefs pour retrouver facilement votre image (ex: Massif des Ecrins - Glacier de la Meije). Texte alternatif, utilisé pour l'accessibilité des pages web (non-voyant).</small>"
         mediaFile:
             label: Fichier
         mainColor:

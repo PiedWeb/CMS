@@ -55,7 +55,7 @@ trait MediaTrait
      *
      * @Vich\UploadableField(
      *     mapping="media_media",
-     *     fileNameProperty="media",
+     *     fileNameProperty="slug",
      *     mimeType="mimeType",
      *     size="size",
      *     dimensions="dimensions"
@@ -87,12 +87,22 @@ trait MediaTrait
         return $this->name.' ';
     }
 
+    public function setSlug($slug)
+    {
+        $this->setMedia($slug);
+
+        return $this;
+    }
+
     public function getSlug(): string
     {
-        if (!$this->slug) {
+        if ($this->slug) {
+            return $this->slug;
+        } elseif ($this->media) {
+            $this->slug = preg_replace('/\\.[^.\\s]{3,4}$/', '', $this->media);
+        } else {
             $slugify = new Slugify();
-
-            return $this->slug = $slugify->slugify($this->getName()); //Urlizer::urlize($this->getName());
+            $this->slug = $slugify->slugify($this->getName()); //Urlizer::urlize($this->getName());
         }
 
         return $this->slug;

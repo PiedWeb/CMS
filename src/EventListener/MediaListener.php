@@ -62,12 +62,10 @@ class MediaListener
     {
         $same = $this->em->getRepository(get_class($media))->findOneBy(['name' => $media->getName()]);
         if ($same && (null == $media->getId() || $media->getId() != $same->getId())) {
-            $media->setName($media->getName().' ('.$this->iterate.')');
+            $media->setName(preg_replace('/\([0-9]+\)$/', '', $media->getName()).' ('.$this->iterate.')');
             ++$this->iterate;
             $this->checkIfNameEverExistInDatabase($media);
         }
-
-        return $media;
     }
 
     /**
