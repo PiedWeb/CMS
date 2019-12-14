@@ -29,3 +29,12 @@ piedweb_cms_template_editor_delete:
     path: /admin/template/delete/{encodedPath}
     controller: PiedWeb\CMSBundle\TemplateEditor\ElementAdmin::deleteElement
 
+
+
+piedweb_cms_markdown_cheatsheet:
+    path: /admin/markdown-cheatsheet
+    #controller: PiedWeb\CMSBundle\Controller\PageController::show
+    methods:    [GET, HEAD]
+    controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults:
+        template:  '@PiedWebCMS/admin/markdown_cheatsheet.html.twig'

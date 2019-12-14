@@ -4,7 +4,7 @@
 
 {% block robots %}
     {% if page.excrept is defined and page.excrept is not null %}
-        <meta name="description" content="{{ page.excrept }}">
+        <meta name="description" content="{{ page.excrept|escape }}">
     {% endif %}
     {% if page.metaRobots is defined and page.metaRobots is not null %}
         <meta name="robots" content="{{ page.metaRobots }}">
@@ -19,8 +19,9 @@
     {% endblock %}
 
     {% block content %}
-        {% set container = page.getEmc('container') ? page.getEmc('container') : 'container container-txt' %}
-        {% include '@PiedWebCMS/page/_main_content.html.twig' %}
+        <section class="{{ page.getEmc('container') ? page.getEmc('container') : 'container container-txt' }} pb-5 pt-5" id="content">
+            {% include '@PiedWebCMS/page/_main_content.html.twig' %}
+        </section>
     {% endblock %}
 
     {% block gallery %}

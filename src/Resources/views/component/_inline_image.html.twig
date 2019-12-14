@@ -6,9 +6,9 @@
 #}
 
 {% if image_src is defined %}
-    <p class=mimg>
-        <a href="{{ image_src }}">
-          <img src="{{ image_src|replace({'/default/':'/thumb/'}) }}" data-img="{{ image_src }}" class="{{ rounded is defined ? 'rounded':'' }}{{image_class is defined ? ' '~image_class : ' img-fluid'}}" loading="lazy" alt="{{ image_alt }}">
-        </a>
-    </p>
+<p class=mimg>
+    <a href="{{ image_src }}">
+      <img src="{{ image_src|replace({'/default/':'/thumb/'}) }}" data-img="{{ image_src }}" class="{{ rounded is defined ? 'rounded':'' }}{{image_class is defined ? ' '~image_class : ' img-fluid'}}" loading="lazy" alt="{{ image_alt }}">
+    </a>
+</p>
 {% endif %}

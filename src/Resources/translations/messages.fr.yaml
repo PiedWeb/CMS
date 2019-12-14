@@ -66,9 +66,12 @@ admin:
             label: Moteur de thème (facultatif)
         mainContent:
             label: Corps de la page
-            help: Vous pouvez utilisez des balises HTML ainsi que les fonctionnalités de Twig.
+            help: Les balises HTML ainsi que les fonctionnalités de Twig sont autorisées.
         mainImage:
             label: Image d'en-tête
+        markdown:
+            label: Formatage markdown
+            help: Applique l'enrichissement du texte via la syntaxe Markdown. <br><a href="/admin/markdown-cheatsheet" target=_blank>Voir la documentation</a>.
 
 
     user:

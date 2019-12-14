@@ -25,7 +25,6 @@
         "vich/uploader-bundle": "^1.11",
         "piedweb/render-html-attributes": "^1.0",
         "gedmo/doctrine-extensions": "^2.4",
-        "knplabs/knp-markdown-bundle": "^1.8",
         "league/color-extractor": "^0.3",
         "twig/extensions": "^1.5",
         "symfony/finder": "^4.4",
@@ -42,7 +41,8 @@
         "symfony/twig-bundle":"^4.4",
         "symfony/validator":"^4.4",
         "symfony/web-link":"^4.4",
-        "symfony/yaml":"^4.4"
+        "symfony/yaml":"^4.4",
+        "avensome/commonmark-bundle": "^0.1.1"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.4",

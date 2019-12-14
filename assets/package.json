@@ -14,5 +14,8 @@
     "uglifyjs-webpack-plugin": "^2.2",
     "babel-plugin-root-import": "^6.4",
     "purgecss": "^1.4"
+  },
+  "scripts": {
+    "encore": "encore"
   }
 }

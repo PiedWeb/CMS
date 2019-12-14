@@ -2,8 +2,6 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use Michelf\Markdown;
-
 trait PageExtendedMainContentTrait
 {
     protected $chapeau;
@@ -32,10 +30,10 @@ trait PageExtendedMainContentTrait
 
         if ($this->mainContentIsMarkdown) {
             if ($this->chapeau) {
-                $this->chapeau = Markdown::defaultTransform($this->chapeau);
+                $this->chapeau = '{% filter markdown %}'.$this->chapeau.'{% endfilter %}';
             }
             if ($this->readableContent) {
-                $this->readableContent = Markdown::defaultTransform($this->readableContent);
+                $this->readableContent = '{% filter markdown %}'.$this->readableContent.'{% endfilter %}';
             }
         }
     }
