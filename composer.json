@@ -42,7 +42,7 @@
         "symfony/validator":"^4.4",
         "symfony/web-link":"^4.4",
         "symfony/yaml":"^4.4",
-        "avensome/commonmark-bundle": "^0.1.1"
+        "knplabs/knp-markdown-bundle": "^1.8"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.4",
