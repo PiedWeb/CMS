@@ -12,6 +12,20 @@
     <link rel="canonical" href="{{ app_base_url is defined ? app_base_url : '' }}{{ page(page.realSlug) }}" />
 {% endblock %}
 
+{% block open_graph %}
+    {% if page is defined %}
+        <meta name="og:title" content="{{ (page.h1 is not null ? page.h1 : page.title)|striptags }}">
+        <meta name="og:url" content="{{ base_url }}{{ page(page.realSlug) }}">
+        {% if page.excrept %}
+            <meta name="og:description" content="{{ page.excrept|striptags }}">
+        {% endif %}
+        {% if page.mainImage is defined and page.mainImage is not null %}
+            <meta name="og:image" content="{{ base_url }}{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media)|imagine_filter('default') }}">
+        {% endif %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
 
     {% block navbar %}
