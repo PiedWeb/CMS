@@ -294,7 +294,7 @@ class PageAdmin extends AbstractAdmin
         $formMapper->add('mainContent', null, ['label' => 'admin.page.mainContent.label']);
 
         if ($this->exists('name')) {
-            $formMapper->add('name', null, ['label' => 'admin.page.mainContent.label']);
+            $formMapper->add('name', null, ['label' => 'admin.page.name.label']);
         }
 
         if ($this->exists('parentPage')) {
