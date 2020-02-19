@@ -8,7 +8,7 @@
                 {% block header %}
                 {% if page.mainImage is defined and page.mainImage is not null %}
                 <div class="card-header card-header-img p-0">
-                    <span class="card-img-top img-fluid rounded" data-img="{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) |imagine_filter('thumb') }}">{{ page.title|striptags }}</span>
+                    <span class="card-img-top img-fluid rounded" data-img="{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) |imagine_filter('thumb') }}" loading=lazy>{{ page.title|striptags }}</span>
                 </div>
                 {% endif %}
                 {% endblock %}

@@ -24,7 +24,12 @@ class PageAdmin extends AbstractAdmin
         '_page' => 1,
         '_sort_order' => 'DESC',
         '_sort_by' => 'updatedAt',
+        '_per_page' => 256,
     ];
+
+    protected $perPageOptions = [16, 250, 1000];
+
+    protected $maxPerPage = 1000;
 
     protected $feedDumper;
 
