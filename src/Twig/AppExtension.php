@@ -66,7 +66,7 @@ class AppExtension extends AbstractExtension
         $slugify = new Slugify();
         $name = $slugify->slugify($name);
 
-        return $env->render('@PiedWebCMS/component/_txt_bookmark.html.twig', ['name' => $name]);
+        return $env->render('@PiedWebCMS/component/_txt_anchor.html.twig', ['name' => $name]);
     }
 
     public static function renderEncodedMail(Twig_Environment $env, $mail)
