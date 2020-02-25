@@ -67,7 +67,7 @@ trait PageExtendedMainContentTrait
 
     public function getEmc($name)
     {
-        if (preg_match('/<!--"'.$name.'"--(.*)--\/-->/s', $this->getMainContent(), $match)) {
+        if (preg_match('/<!--"'.$name.'"--(.*)--\/-->/sU', $this->getMainContent(), $match)) {
             return $match[1];
         }
     }

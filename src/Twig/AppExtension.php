@@ -49,14 +49,19 @@ class AppExtension extends AbstractExtension
                 'needs_environment' => true,
             ]),
             new TwigFunction(
-                'bookmark',
-                [AppExtension::class, 'renderTxtBookbmark'],
+                'bookmark', // = anchor
+                [AppExtension::class, 'renderTxtAnchor'],
+                ['is_safe' => ['html'], 'needs_environment' => true]
+            ),
+            new TwigFunction(
+                'anchor', // = bookmark
+                [AppExtension::class, 'renderTxtAnchor'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
         ];
     }
 
-    public static function renderTxtBookbmark(Twig_Environment $env, $name)
+    public static function renderTxtAnchor(Twig_Environment $env, $name)
     {
         $slugify = new Slugify();
         $name = $slugify->slugify($name);
