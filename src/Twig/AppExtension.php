@@ -58,6 +58,11 @@ class AppExtension extends AbstractExtension
                 [AppExtension::class, 'renderTxtAnchor'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
+            new TwigFunction(
+                'mail', // = bookmark
+                [AppExtension::class, 'renderMail'],
+                ['is_safe' => ['html'], 'needs_environment' => true]
+            ),
         ];
     }
 
@@ -67,6 +72,13 @@ class AppExtension extends AbstractExtension
         $name = $slugify->slugify($name);
 
         return $env->render('@PiedWebCMS/component/_txt_anchor.html.twig', ['name' => $name]);
+    }
+
+    public static function renderMail(Twig_Environment $env, $mail, $class = '')
+    {
+        $mail = str_rot13($mail);
+
+        return $env->render('@PiedWebCMS/component/_mail.html.twig', ['mail' => $mail, 'class' => $class]);
     }
 
     public static function renderEncodedMail(Twig_Environment $env, $mail)
