@@ -197,6 +197,7 @@ services:
     vich_uploader.piedweb.namer_property:
         class: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer
         public: true
+        arguments: ['@Vich\UploaderBundle\Util\Transliterator']
 
     PiedWeb\CMSBundle\Service\VichUploadPropertyNamer:
         alias: vich_uploader.piedweb.namer_property

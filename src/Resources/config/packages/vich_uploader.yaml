@@ -4,6 +4,7 @@ vich_uploader:
     mappings:
         media_media:
             #uri_prefix:
+            uri_prefix:
             upload_destination: '%app.media_dir_absolute%'
             namer:
                 service: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer #Vich\UploaderBundle\Naming\PropertyNamer
