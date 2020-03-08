@@ -42,8 +42,8 @@ admin:
             label: Titre Imprimé
             help: Le <code>Titre Imprimé</code> sera visible sur vos pages tandis que le <code>Titre</code> de votre document s'affichera dans la barre du navigateur et sur les moteurs de recherches.
         name:
-            label: Nom court permettant d'identifier la page
-            help: Utiliser dans le fil d'arianne.
+            label: Nom court
+            help: Permet d'identifier la page, utilisé dans le fil d'arianne.
         faq:
             label: Questions Associées
         relatedPage:
