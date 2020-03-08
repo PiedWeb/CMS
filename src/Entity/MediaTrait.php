@@ -82,6 +82,11 @@ trait MediaTrait
      */
     protected $pageHasMedias;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", mappedBy="mainImage")
+     */
+    protected $mainImagePages;
+
     public function __toString()
     {
         return $this->name.' ';
@@ -255,5 +260,10 @@ trait MediaTrait
     public function removePageHasMedia(PageHasMedia $pageHasMedia)
     {
         $this->pageHasMedias->removeElement($pageHasMedia);
+    }
+
+    public function getMainImagePages()
+    {
+        return $this->mainImagePages;
     }
 }

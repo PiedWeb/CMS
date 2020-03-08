@@ -55,4 +55,16 @@ class PageRepository extends ServiceEntityRepository
 
         return $q->getResult();
     }
+
+    public function getPagesUsingMedia($media)
+    {
+        $q = $this->createQueryBuilder('p')
+            ->andWhere('p.mainContent LIKE :val')
+            ->setParameter('val', '%'.$media.'%')
+            ->getQuery()
+            ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker');
+
+        //var_dump($q->getSql()); exit;
+        return $q->getResult();
+    }
 }

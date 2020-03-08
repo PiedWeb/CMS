@@ -109,6 +109,11 @@ trait PageExtendedTrait
         return $this->h1;
     }
 
+    public function getH1eTitle(): ?string
+    {
+        return $this->h1 ?? $this->title;
+    }
+
     public function setH1(?string $h1): self
     {
         $this->h1 = $h1;

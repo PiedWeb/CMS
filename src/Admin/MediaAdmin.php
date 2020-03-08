@@ -63,6 +63,8 @@ class MediaAdmin extends AbstractAdmin
                 $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
                 $fileFieldOptions['attr'] = ['ismedia' => 1];
                 $fileFieldOptions['label'] = 'admin.media.mediaFile.label';
+
+                $fileFieldOptions['help'] .= $this->getRelativePage($media);
             } else {
                 $fullPath = '/download/'.$media->getRelativeDir().'/'.$media->getMedia();
                 $fileFieldOptions['help'] = 'URL:<br>';
@@ -71,6 +73,21 @@ class MediaAdmin extends AbstractAdmin
         }
 
         $formMapper->add('mediaFile', FileType::class, $fileFieldOptions); // ['data_class'=>null]
+    }
+
+    protected function getRelativePage($media)
+    {
+        $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
+
+        $pages = $this->getConfigurationPool()->getContainer()->get('doctrine')
+                    ->getRepository($this->getContainer()->getParameter('app.entity_page'))
+                    ->getPagesUsingMedia($this->liipImage->getBrowserPath($fullPath, 'default'));
+
+        return $this->getContainer()->get('twig')->render('@PiedWebCMS/admin/media_relatedPages.html.twig', [
+            'content' => $pages,
+            'gallery' => $media->getPageHasMedias(),
+            'mainImage' => $media->getMainImagePages(),
+        ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

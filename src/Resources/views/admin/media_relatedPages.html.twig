@@ -1,0 +1,36 @@
+
+
+<h3 style="padding-top:30px">Sur les pages</h3>
+
+{% if mainImage.count > 0 %}
+    <h4>Via l'illustration principale</h4>
+    <ul>
+        {% for page in mainImage %}
+            {% block item %}
+                <li><a href="/admin/page/{{ page.id }}/edit">{{ page.h1eTitle|raw }}</a></li>
+            {% endblock %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if gallery.count > 0 %}
+    <h4>Via une gallerie</h4>
+    <ul>
+        {% for page in gallery %}
+            {% block item2 %}
+                <li><a href="/admin/page/{{ page.id }}/edit">{{ page.h1eTitle|raw }}</a></li>
+            {% endblock %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if content %}
+    <h4>Via le contenu</h4>
+    <ul>
+        {% for page in content %}
+            {% block item3 %}
+                <li><a href="/admin/page/{{ page.id }}/edit">{{ page.h1eTitle|raw }}</a></li>
+            {% endblock %}
+        {% endfor %}
+    </ul>
+{% endif %}
