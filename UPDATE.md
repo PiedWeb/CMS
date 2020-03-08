@@ -1,7 +1,14 @@
 UPDATE with BC BREAK
 ==================
 
-## Before 0.0.27
+## Update to 0.0.59
+
+- Update database
+   ```
+   bin/console make:migration && bin/console doctrine:migrations:migrate
+   ```
+   
+## Update to 0.0.27
 
 -   Create symlink for config file
     ```

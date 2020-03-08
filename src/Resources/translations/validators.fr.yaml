@@ -10,3 +10,5 @@ user:
 page:
     slug:
         already_used: 'Une page utilise déjà cet identifiant URL'
+    otherProperties:
+        malformed: 'Les propriétés supplémentaires doivent respecter le format YAML.'

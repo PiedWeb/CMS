@@ -72,6 +72,9 @@ admin:
         markdown:
             label: Formatage markdown
             help: Applique l'enrichissement du texte via la syntaxe Markdown. <br><a href="/admin/markdown-cheatsheet" target=_blank>Voir la documentation</a>.
+        otherProperties:
+            label: Autre
+            help: Au format YAML.
 
 
     user:

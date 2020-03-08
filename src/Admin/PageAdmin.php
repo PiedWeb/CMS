@@ -157,6 +157,20 @@ class PageAdmin extends AbstractAdmin
         $formMapper->end();
     }
 
+    public function configureFormFieldsBlockOtherProperties(FormMapper $formMapper)
+    {
+        $formMapper->with('admin.page.otherProperties.label');
+        $formMapper->add('otherProperties', null, [
+            'required' => false,
+            'attr' => [
+                'style' => 'min-height: 10vh;font-size:125%;',
+            ],
+            'label' => ' ',
+            //'help' => 'admin.page.otherProperties.help',
+        ]);
+        $formMapper->end();
+    }
+
     protected function configureFormFieldsBlockTitle(FormMapper $formMapper)
     {
         $formMapper->with('admin.page.title.label', ['class' => 'col-md-9']);
@@ -284,6 +298,7 @@ class PageAdmin extends AbstractAdmin
         $this->configureFormFieldsBlockDetails($formMapper);
         $this->configureFormFieldsBlockImages($formMapper);
         $this->configureFormFieldsBlockEdition($formMapper);
+        $this->configureFormFieldsBlockOtherProperties($formMapper);
     }
 
     protected function configureDatagridFilters(DatagridMapper $formMapper)
