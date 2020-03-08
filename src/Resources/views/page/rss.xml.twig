@@ -3,20 +3,22 @@
     <channel>
         {% block header %}
 
-        <title>{{ logo_alt }}</title>
-        <link>{{ base ~ page('') }}</link>
-        <description><![CDATA[{% block description %}{{ ('feed.description'|trans) }}{% endblock %}]]></description>
-        <atom:link href="{{ base }}/feed.xml" rel="self" type="application/rss+xml" />
+        <title>{{ page is defined ? page.title : logo_alt }}</title>
+        <link>{{ page is defined ? base ~ '/' ~ page.slug : base ~ page('') }}</link>
+        <description><![CDATA[{% block description %} {% endblock %}]]></description>
+        <atom:link href="{{ base }}/{{ page is defined ? page.slug ~ '/feed' : 'feed.xml' }}" rel="self" type="application/rss+xml" />
         {% endblock %}
+        {% set pages = page is defined ? (page.childrenPages|reverse )|slice(0,5): pages %}
         {% for page in pages %}
         {% block item %}
-
-        <item>
-            <title><![CDATA[{{ (page.h1 is defined and page.h1 is not null ? page.h1 : page.title)|striptags|html_entity_decode }}]]></title>
-            <link>{{ base ~ page(page.getRealSlug) }}</link>
-            <guid>{{ base ~ page(page.getRealSlug) }}</guid>
-            <pubDate>{{ page.createdAt|date('D, d M Y H:i:s O') }}</pubDate>
-        </item>
+            {% if page.metaRobots != 'noindex' %}
+                <item>
+                    <title><![CDATA[{{ (page.h1 is defined and page.h1 is not null ? page.h1 : page.title)|striptags|html_entity_decode }}]]></title>
+                    <link>{{ base ~ page(page.getRealSlug) }}</link>
+                    <guid>{{ base ~ page(page.getRealSlug) }}</guid>
+                    <pubDate>{{ page.createdAt|date('D, d M Y H:i:s O') }}</pubDate>
+                </item>
+            {% endif %}
         {% endblock %}
         {% endfor %}
 

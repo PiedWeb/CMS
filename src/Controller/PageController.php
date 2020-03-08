@@ -6,6 +6,7 @@ use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class PageController extends AbstractController
@@ -83,5 +84,36 @@ class PageController extends AbstractController
         $plainText = \PiedWeb\CMSBundle\Twig\AppExtension::convertMarkdownImage($request->request->get('plaintext'));
 
         return $this->render('@PiedWebCMS/admin/preview.html.twig', ['page' => $page, 'plainText' => $plainText]);
+    }
+
+    public function feed(
+        ?string $slug,
+        Request $request,
+        TranslatorInterface $translator,
+        ParameterBagInterface $params
+    ) {
+        $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
+        $page = $this->getDoctrine()
+            ->getRepository($this->container->getParameter('app.entity_page'))
+            ->findOneBySlug($slug, $request->getLocale());
+
+        // Check if page exist
+        if (null === $page || $page->getChildrenPages()->count() < 1) {
+            throw $this->createNotFoundException();
+        }
+
+        // Check if page is public
+        if ($page->getCreatedAt() > new \DateTimeImmutable() && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createNotFoundException();
+        }
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/xml');
+
+        return $this->render(
+            '@PiedWebCMS/page/rss.xml.twig',
+            ['page' => $page],
+            $response
+        );
     }
 }

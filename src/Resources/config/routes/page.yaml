@@ -1,7 +1,15 @@
 
+piedweb_cms_page_feed:
+    path: /{slug}.xml
+    controller: PiedWeb\CMSBundle\Controller\PageController::feed
+    methods:    [GET, HEAD]
+    requirements:
+        slug: '[a-zA-Z0-9\-/]*'
+
 piedweb_cms_page:
     path:     /{slug}
     controller: PiedWeb\CMSBundle\Controller\PageController::show
     methods:    [GET, HEAD]
     requirements:
         slug: '[a-zA-Z0-9\-/]*'
+
