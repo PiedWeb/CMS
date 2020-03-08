@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% block content_title %}
+    {% block title %}
         {% set container_txt = true %}
         {% set overlay = 'inverse' %}
         {# value https://github.com/PiedWeb/piedweb-tyrol-free-bootstrap-4-theme/blob/6abee4cc05b7dc4d13483a45c269d2529a25edd0/src/js/helpers.js#L46 #}
@@ -13,16 +13,17 @@
         {% include '@PiedWebCMS/component/_hero-banner.html.twig' %}
     {% endblock %}
 
-    {% if page.readableContent is not empty %}
-        <section class="{{container is defined ? ' '~container : 'container container-txt mb-5 mt-5'}}" id="content">
+    {% block main_content %}
+        {% if page.readableContent is not empty %}
+            <section class="{{container is defined ? ' '~container : 'container container-txt mb-5 mt-5'}}">
 
-            {% block main_content %}
-                {{ include(template_from_string(page.readableContent)) }}
-            {% endblock %}
+                {% block main_content %}
+                    {{ include(template_from_string(page.readableContent)) }}
+                {% endblock %}
 
-            {% block after_content %}{% endblock %}
+                {% block after_content %}{% endblock %}
 
-        </section>
-    {% endif %}
-
+            </section>
+        {% endif %}
+    {% endblock %}
 {% endblock %}

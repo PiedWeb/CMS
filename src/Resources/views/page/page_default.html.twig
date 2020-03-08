@@ -28,26 +28,9 @@
 
 {% block body %}
 
-    {% block navbar %}
-        {% include '@PiedWebCMS/page/_menu.html.twig' with {'logo':{'alt':logo_alt}} %}
-    {% endblock %}
 
     {% block content %}
-        <section class="{{ page.getEmc('container') ? page.getEmc('container') : 'container container-txt' }} pb-5 pt-5" id="content">
-            {% include '@PiedWebCMS/page/_main_content.html.twig' %}
-        </section>
-    {% endblock %}
-
-    {% block gallery %}
-        {% include '@PiedWebCMS/page/_gallery.html.twig' %}
-    {% endblock %}
-
-    {% block relatedContent %}
-        {% include '@PiedWebCMS/page/_related.html.twig' %}
-    {% endblock %}
-
-    {% block breadcrumb %}
-        {% include '@PiedWebCMS/page/_breadcrumb.html.twig' %}
+        {% include '@PiedWebCMS/page/_main_content.html.twig' %}
     {% endblock %}
 
     {% block footer %}
@@ -56,6 +39,10 @@
 
     {% block extra_footer %}
         {% include '@PiedWebCMS/page/_extra_footer.html.twig' %}
+    {% endblock %}
+
+    {% block navbar %}
+        {% include '@PiedWebCMS/page/_menu.html.twig' with {'logo':{'alt':logo_alt}} %}
     {% endblock %}
 
 {% endblock %}

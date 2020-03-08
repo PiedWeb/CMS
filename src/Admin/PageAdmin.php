@@ -141,7 +141,7 @@ class PageAdmin extends AbstractAdmin
         $formMapper->with('admin.page.mainContent.label');
         $formMapper->add('mainContent', TextareaType::class, [
             'attr' => [
-                'style' => 'min-height: 80vh;font-size:125%;',
+                'style' => 'min-height: 80vh;font-size:125%; max-width:900px',
                 'data-editor' => 'markdown',
                 'data-gutter' => 0,
             ],

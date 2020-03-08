@@ -11,16 +11,28 @@
             ...
         label
     container_txt boolean
+    banner_content_position     stick
 #}
-<section class="hero-banner">
-    <div class="relative cover-banner"
-        {% if image is defined and image is not null %}
-            data-bg="{{ image| imagine_filter('default') }}"
-            data-darken="{{ overlay is defined ? overlay : 'center' }}"
-        {% endif %}>
-        {{ container_txt is defined ? '<div class="container-txt">' : '<div class="container">' }}
-            <div class="{{ size is defined ? size : 'halfscreen' }} position-relative">
-                    <div class="banner-content pt-4 {{ overlay is defined and overlay == 'inverse' ? 'pb-1' : 'pb-4' }}">
+{% if image is defined and image is not null %}
+    <section class="hero-banner mb-3 next-navbar">
+
+        <div class="cover-banner"
+        {% if color is defined and color is not null %}style="background:{{ color }}"{% endif %}
+            {% if image is defined and image is not null %}
+                data-bg="{{ image| imagine_filter('default') }}"
+                data-darken="{{ overlay is defined ? overlay : '' }}"
+                data-pos="no-repeat center center"
+                {% for bg in multiple_bg %}
+                    {% set bg1 = bg|split(':') %}
+                    data-bg_{{ bg1.0 }}="{{ bg1.1 }}"
+                {% endfor %}
+            {% endif %}
+        >
+            <div class="{{ size is defined ? size : 'halfscreen' }} container{{ container_txt is defined ? '-txt' : '' }} mt-4">
+                    <div class="
+                        banner-content pb-3 pt-3
+                        {{ overlay is defined and overlay == 'inverse' ? 'pb-1' : 'pb-4' }}
+                         {{ banner_content_position ?? ' stick-bottom'}}">
 
                         {% block subTitle %}
                             {% if subtitle is defined and subtitle is not null %}
@@ -29,15 +41,9 @@
                         {% endblock %}
 
                         {% block title %}
-                        {% if title is defined and title is not null %}
-                            {% set titlel = title|length %}
-                            <h1 class="{% if titlel > 20 %} long-h1{% endif %}">
-                                {{ title|raw }}
-                            </h1>
-                            {% if image is defined and image is not null %}
-                            <p class=sr-only><a href="{{ image| imagine_filter('default') }}"><img src="{{ image| imagine_filter('thumb') }}" alt="{{ title|striptags }}" loading=lazy></a></p>
+                            {% if title is defined and title is not null %}
+                                <h1>{{ title|raw }}</h1>
                             {% endif %}
-                        {% endif %}
                         {% endblock %}
 
                         {% block description %}
@@ -51,13 +57,28 @@
                                     <a{{ mergeAttr({'class': 'btn btn-header-light'}, button.attr) }}>{{ button.label }}</a>
                             {% endif %}
                         {% endblock %}
+
                     </div>
-
-                {% block fash_massage %}
-                {% endblock %}
-
-
                 </div>
-        </div>
+
+                {% block image_for_small_device %}
+                    {% if image is defined and image is not null %}
+                    <div class=d-md-none>
+                        <img
+                            srcset="{{ image| imagine_filter('xs') }} 576w, {{ image| imagine_filter('md') }} 992w"
+                            src="{{ image| imagine_filter('default') }}"
+                            alt="{{ image_alt|striptags }}" loading=lazy class=img-fluid>
+                    </div>
+                    {% endif %}
+                {% endblock %}
+            </div>
+
+    </section>
+{% else %}
+    <div class="container container-txt pt-5 pb-3 next-navbar">
+        {{ block('subTitle') }}
+        {{ block('title') }}
+        {{ block('description') }}
+        {{ block('header_button') }}
     </div>
-</section>
+{% endif %}

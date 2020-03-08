@@ -6,25 +6,38 @@
 {% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
 
 {% block content %}
+
+    <div class="next-navbar {{ container is defined ? container : 'container container-txt mb-5' }}">
         {% block title %}
-            {% if subtitle is defined and subtitle is not null %}<span class="subtitle">{{ subtitle }}</span>{% endif %}
-            <h1>{{ title|raw|punctuation_beautifer }}</h1>
-            {% block description %}
-                {% if description is defined and description is not null %}
-                    {{ description|raw }}
-                {% endif %}
-            {% endblock %}
-            {% if image is defined and image is not null %}
-                    <p class=mimg>
-                        <a href="{{ image| imagine_filter('default') }}">
-                            <img src="{{ image| imagine_filter('thumb') }}"
-                                data-img="{{ image| imagine_filter('default') }}" class="img-fluid"
-                                loading="lazy" alt="{{  title|striptags }}">
-                        </a>
-                    </p>
-            {% endif %}
+
+            <div class="container container-txt pt-4">
+
+                {% if subtitle is defined and subtitle is not null %}<span class="subtitle">{{ subtitle }}</span>{% endif %}
+
+                <h1>{{ title|raw|punctuation_beautifer }}</h1>
+
+                {% block description %}
+                    {% if description is defined and description is not null %}
+                        {{ description|raw }}
+                    {% endif %}
+                {% endblock %}
+
+                {% block main_image %}
+                    {% if image is defined and image is not null %}
+                            <p class=mimg>
+                                <a href="{{ image| imagine_filter('default') }}">
+                                    <img src="{{ image| imagine_filter('thumb') }}"
+                                        data-img="{{ image| imagine_filter('default') }}" class="img-fluid"
+                                        loading="lazy" alt="{{  title|striptags }}">
+                                </a>
+                            </p>
+                    {% endif %}
+                {% endblock %}
+
+            </div>
         {% endblock %}
 
+        {% block fash_massage %} {% endblock %}
 
         {% block main_content %}
             {% apply punctuation_beautifer %}
@@ -33,4 +46,18 @@
         {% endblock %}
 
         {% block after_content %}{% endblock %}
+
+
+        {% block gallery %}
+            {% include '@PiedWebCMS/page/_gallery.html.twig' %}
+        {% endblock %}
+
+        {% block relatedContent %}
+            {% include '@PiedWebCMS/page/_related.html.twig' %}
+        {% endblock %}
+
+        {% block breadcrumb %}
+            {% include '@PiedWebCMS/page/_breadcrumb.html.twig' %}
+        {% endblock %}
+    </div>
 {% endblock %}
