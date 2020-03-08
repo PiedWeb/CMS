@@ -49,6 +49,7 @@ $(function() {
         spellChecker: false,
         insertTexts: {
             link: ["[", "]()"],
+            image: ["![", "](/media/default/...)"],
         },
         minHeight: "70vh",
         syncSideBySidePreviewScroll: false,
@@ -61,7 +62,7 @@ $(function() {
                 clearTimeout(timeoutPreviewRender);
                 timeoutPreviewRender = setTimeout(function () {
                     customPreview(plainText, preview)
-                }, 2300);
+                }, 1000);
             });
         },
         /**/

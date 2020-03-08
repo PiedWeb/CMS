@@ -40,7 +40,9 @@ trait PageExtendedMainContentTrait
         $content = explode('<!--break-->', $content);
 
         $this->chapeau = isset($content[1]) ? self::removeHtmlComments($content[0]) : null;
-        $this->readableContent = self::removeHtmlComments(isset($content[1]) ? $content[1] : $content[0]);
+        $this->readableContent = \PiedWeb\CMSBundle\Twig\AppExtension::convertMarkdownImage(
+            self::removeHtmlComments(isset($content[1]) ? $content[1] : $content[0])
+        );
 
         if ($this->mainContentIsMarkdown) {
             if ($this->chapeau) {

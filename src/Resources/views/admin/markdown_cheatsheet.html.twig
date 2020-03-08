@@ -171,15 +171,9 @@ Ma citation :
 
 <h2 id=img>Image</h2>
 
-<p>Voir le code proposé dans l'interface d'admin pour insérer une image dans le document : </p>
+<p>Voir le code proposé dans l'interface de gestion de l'image pour l'insérer. Exemple : </p>
 <pre>
-{{ "{%
-    include '@PiedWebCMS/component/_inline_image.html.twig' with {
-        'image_src' : '/media/default/media/yyyy/file.jpg',
-        'image_alt' : 'Escape game restaurant',
-        'rounded' : true,
-    } only
-%}"|escape }}
+    ![Texte alternatif](/media/default/media/mon-image.jpg)
 </pre>
 <hr class="mb-5 mt-5">
 

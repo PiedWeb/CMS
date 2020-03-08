@@ -42,8 +42,8 @@
         "symfony/validator":"^4.4",
         "symfony/web-link":"^4.4",
         "symfony/yaml":"^4.4",
-        "knplabs/knp-markdown-bundle": "^1.8",
-        "symfony/maker-bundle": "^1.14"
+        "symfony/maker-bundle": "^1.14",
+        "knplabs/knp-markdown-bundle": "^1.8"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.4",

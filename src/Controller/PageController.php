@@ -80,7 +80,7 @@ class PageController extends AbstractController
                 ->findOneBySlug(rtrim(strtolower($slug), '/'), $request->getLocale())
         ;
 
-        $plainText = $request->request->get('plaintext');
+        $plainText = \PiedWeb\CMSBundle\Twig\AppExtension::convertMarkdownImage($request->request->get('plaintext'));
 
         return $this->render('@PiedWebCMS/admin/preview.html.twig', ['page' => $page, 'plainText' => $plainText]);
     }

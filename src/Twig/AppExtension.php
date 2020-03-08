@@ -22,6 +22,7 @@ class AppExtension extends AbstractExtension
     public function getFilters()
     {
         return [
+            //new TwigFilter('markdown', [AppExtension::class, 'markdownToHtml'], ['is_safe' => ['all']]),
             new TwigFilter('html_entity_decode', 'html_entity_decode'),
             new TwigFilter(
                 'punctuation_beautifer',
@@ -29,6 +30,16 @@ class AppExtension extends AbstractExtension
                 ['is_safe' => ['html']]
             ),
         ];
+    }
+
+    public static function convertMarkdownImage(string $body)
+    {
+        return preg_replace('/(?:!\[(.*?)\]\((.*?)\))/', '{%'
+            .PHP_EOL.'    include "@PiedWebCMS/component/_inline_image.html.twig" with {'
+            .PHP_EOL.'        "image_src" : "$2",'
+            .PHP_EOL.'        "image_alt" : "$1"'
+            .PHP_EOL.'    } only'
+            .PHP_EOL.'%}'.PHP_EOL, $body);
     }
 
     public function getFunctions()
