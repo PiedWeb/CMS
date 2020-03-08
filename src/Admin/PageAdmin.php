@@ -164,6 +164,7 @@ class PageAdmin extends AbstractAdmin
             'required' => false,
             'attr' => [
                 'style' => 'min-height: 10vh;font-size:125%;',
+                'data-editor' => 'yaml',
             ],
             'label' => ' ',
             //'help' => 'admin.page.otherProperties.help',

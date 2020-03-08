@@ -1,0 +1,105 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+
+{% block navbar_title %}
+    {{ block('title') }}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.8/ace.js"></script>
+<style>
+    .ace_scroller {margin-top:40px;}
+    .ace_editor {padding: 0}
+</style>
+<script>
+$(function() {
+  $('textarea[data-editor]').each(function() {
+    var textarea = $(this);
+    var mode = textarea.data('editor');
+    var editDiv = $('<div>', {
+      width: textarea.width(),
+      height: textarea.height(),
+      'class': textarea.attr('class')
+    }).insertBefore(textarea);
+    textarea.css('display', 'none');
+    var editor = ace.edit(editDiv[0]);
+    editor.renderer.setShowGutter(textarea.data('gutter'));
+    editor.getSession().setValue(textarea.val());
+    editor.getSession().setMode("ace/mode/" + mode);
+    editor.setFontSize("20px");
+    editor.getSession().setUseWrapMode(true);
+    //editor.setTheme("ace/theme/idle_fingers");
+
+    var toolbar = buildDom(["div", {
+        class: "toolbar",
+        style: 'position:relative; width:100%; background: #eee; border-bottom: 1px solid lightgray; margin:auto' },
+        ["button", {
+            style: "font-weight: bold",
+            onclick: function() {
+                event.preventDefault();
+                editor.insertSnippet("**${1:$SELECTION}**");
+                editor.renderer.scrollCursorIntoView()
+            }
+        }, "G"],
+        ["button", {
+            style: "font-style: italic",
+            onclick: function() {
+                editor.insertSnippet("*${1:$SELECTION}*");
+                editor.renderer.scrollCursorIntoView()
+            }
+        }, "I"],
+    ]);
+    console.log(editDiv[0])
+    editDiv[0].appendChild(toolbar);
+
+    // copy back to textarea on form submit...
+    textarea.closest('form').submit(function() {
+      textarea.val(editor.getSession().getValue());
+    })
+  });
+});
+function buildDom(arr, parent, refs) {
+    if (typeof arr == "string" && arr) {
+        var txt = document.createTextNode(arr);
+        if (parent)
+            parent.appendChild(txt);
+        return txt;
+    }
+
+    if (!Array.isArray(arr))
+        return arr;
+    if (typeof arr[0] != "string" || !arr[0]) {
+        var els = [];
+        for (var i = 0; i < arr.length; i++) {
+            var ch = buildDom(arr[i], parent, refs);
+            ch && els.push(ch);
+        }
+        return els;
+    }
+
+    var el = document.createElement(arr[0]);
+    var options = arr[1];
+    var childIndex = 1;
+    if (options && typeof options == "object" && !Array.isArray(options)) {
+        childIndex = 2;
+        Object.keys(options).forEach(function(n) {
+            var val = options[n];
+            if (n === "class") {
+                el.className = Array.isArray(val) ? val.join(" ") : val;
+            } else if (typeof val == "function") {
+                el[n] = val;
+            } else if (n === "ref") {
+                if (refs) refs[val] = el;
+            } else {
+                el.setAttribute(n, val);
+            }
+        });
+    }
+    for (var i = childIndex; i < arr.length; i++)
+        buildDom(arr[i], el, refs);
+    if (parent)
+        parent.appendChild(el);
+    return el;
+};
+
+</script>
+{% endblock %}
+

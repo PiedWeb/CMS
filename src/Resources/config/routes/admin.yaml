@@ -30,11 +30,16 @@ piedweb_cms_template_editor_delete:
     controller: PiedWeb\CMSBundle\TemplateEditor\ElementAdmin::deleteElement
 
 
-
 piedweb_cms_markdown_cheatsheet:
     path: /admin/markdown-cheatsheet
-    #controller: PiedWeb\CMSBundle\Controller\PageController::show
     methods:    [GET, HEAD]
     controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
     defaults:
         template:  '@PiedWebCMS/admin/markdown_cheatsheet.html.twig'
+
+piedweb_cms_markdown_preview:
+    path: /admin/preview/{slug}
+    methods:    [POST, GET]
+    controller: PiedWeb\CMSBundle\Controller\PageController::preview
+    requirements:
+        slug: '[a-zA-Z0-9\-/]*'

@@ -1,0 +1,24 @@
+
+<html>
+    <body>
+{{ block("css", "@PiedWebCMS/base.html.twig") }}
+
+<div style="padding:10px">
+    {% apply punctuation_beautifer %}
+        {% filter markdown %}{{ include(template_from_string(plainText)) }}{% endfilter %}
+    {% endapply %}
+</div>
+{{ block("script", "@PiedWebCMS/base.html.twig") }}
+
+    </body>
+</html>
+
+
+<script>
+    console.log(document.getElementById('previewf'));
+console.log(window.document.title);
+
+document = document.getElementById('previewf');
+
+console.log(document);
+</script>

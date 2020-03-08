@@ -1,35 +1,91 @@
 {% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
 
-
 {% block navbar_title %}
     {{ block('title') }}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js"></script>
+<link rel="stylesheet" href="https://piedweb.com/cdn/easymde.min.css">
+<script src="https://piedweb.com/cdn/easymde.min.js"></script>
+<style>
+    .editor-toolbar.fullscreen, .CodeMirror-fullscreen {
+        z-index:100000000;
+    }
+    .editor-preview {
+        background: #fff;
+        overflow: hidden;
+        padding: 0
+    }
+</style>
 <script>
 $(function() {
-  $('textarea[data-editor]').each(function() {
-    var textarea = $(this);
-    var mode = textarea.data('editor');
-    var editDiv = $('<div>', {
-      position: 'absolute',
-      width: textarea.width(),
-      height: textarea.height(),
-      'class': textarea.attr('class')
-    }).insertBefore(textarea);
-    textarea.css('display', 'none');
-    var editor = ace.edit(editDiv[0]);
-    editor.renderer.setShowGutter(textarea.data('gutter'));
-    editor.getSession().setValue(textarea.val());
-    editor.getSession().setMode("ace/mode/" + mode);
-    editor.setFontSize("20px");
-    editor.getSession().setUseWrapMode(true);
-    //editor.setTheme("ace/theme/idle_fingers");
+  var timeoutPreviewRender = null;
+  $('textarea[data-editor="markdown"]').each(function () {
+    var editor = new EasyMDE({
+        element: $(this)[0],
+        toolbar: [
+            "bold",
+            "italic",
+            "heading-2",
+            "heading-3",
+            "|",
+            "unordered-list",
+            "ordered-list",
+            "|",
+            "link",
+            "image",
+            "quote",
+            "code",
+            "side-by-side",
+            "fullscreen",
+            {
+                name: 'guide',
+                action: '/admin/markdown-cheatsheet',
+                className: 'fa fa-question-circle',
+                noDisable: true,
+                title: 'Documentation',
+                default: true,
+            }
+        ],
+        status: ["autosave", "lines", "words", "cursor"],
+        spellChecker: false,
+        insertTexts: {
+            link: ["[", "]()"],
+        },
+        minHeight: "70vh",
+        syncSideBySidePreviewScroll: false,
+        previewRender: function(plainText, preview) {
 
-    // copy back to textarea on form submit...
-    textarea.closest('form').submit(function() {
-      textarea.val(editor.getSession().getValue());
-    })
-  });
+            if (!document.getElementById('previewf')) {
+                customPreview(plainText, preview);
+            }
+            document.addEventListener('keyup', function (e) {
+                clearTimeout(timeoutPreviewRender);
+                timeoutPreviewRender = setTimeout(function () {
+                    customPreview(plainText, preview)
+                }, 2300);
+            });
+        },
+        /**/
+    });
+      });
 });
+
+function customPreview(plainText, preview) {
+  var XHR = new XMLHttpRequest();
+  var urlEncodedData = encodeURIComponent('plaintext') + '=' + encodeURIComponent(plainText).replace(/%20/g, '+');
+  XHR.addEventListener('load', function(event) {
+    if (!document.getElementById('previewf')) {
+        preview.innerHTML = '<iframe width=100% height=100% id=previewf src="/admin/preview/{{ object.slug }}" frameborder="0" border="0" cellspacing="0"></iframe>';
+        document.getElementById('previewf').srcdoc = XHR.response;
+    } else {
+         document.getElementById('previewf').srcdoc = XHR.response;
+    }
+  });
+  XHR.addEventListener('error', function(event) {
+    preview.innerHTML = 'Oups! Quelque chose s\'est mal passé.';
+  });
+  XHR.open('POST', '/admin/preview/{{ object.slug }}');
+  XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  XHR.send(urlEncodedData);
+}
 </script>
 {% endblock %}

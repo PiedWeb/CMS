@@ -66,4 +66,22 @@ class PageController extends AbstractController
 
         return false;
     }
+
+    public function preview(
+        ?string $slug,
+        Request $request
+    ) {
+        $pageEntity = $this->container->getParameter('app.entity_page');
+
+        $page = (null === $slug || '' === $slug) ?
+            new $pageEntity()
+            : $this->getDoctrine()
+                ->getRepository($pageEntity)
+                ->findOneBySlug(rtrim(strtolower($slug), '/'), $request->getLocale())
+        ;
+
+        $plainText = $request->request->get('plaintext');
+
+        return $this->render('@PiedWebCMS/admin/preview.html.twig', ['page' => $page, 'plainText' => $plainText]);
+    }
 }

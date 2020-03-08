@@ -127,11 +127,14 @@ trait PageExtendedMainContentTrait
             $this->otherPropertiesParsed = $this->otherProperties ? Yaml::parse($this->otherProperties) : [];
         }
 
+        return $this->otherPropertiesParsed[$name] ?? null;
+        /*
         if (!isset($this->otherPropertiesParsed[$name])) {
             throw new \Exception('"'.$name.'" is not defined.');
         }
 
         return $this->otherPropertiesParsed[$name];
+        /**/
     }
 
     /**
