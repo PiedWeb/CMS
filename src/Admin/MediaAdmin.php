@@ -45,21 +45,17 @@ class MediaAdmin extends AbstractAdmin
             if (false !== strpos($media->getMimeType(), 'image/')) {
                 $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
                 // Todo: move this to a twig template file
-                $fileFieldOptions['help'] = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
-                $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'default').'"'
+                $fileFieldOptions['help'] = '<div class=row><div class=col-md-6><a href="'
+                    .$this->liipImage->getBrowserPath($fullPath, 'default').'">';
+                $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'md').'"'
                     .' style="max-width:100%">';
                 $fileFieldOptions['help'] .= '</a>';
-                $fileFieldOptions['help'] .= '<br><br>Chemin:<br><code>';
+                $fileFieldOptions['help'] .= '</div><div class=col-md-6>Chemin:<br><code>';
                 $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default').'</code>';
                 $fileFieldOptions['help'] .= '<br><br>HTML:<br><pre>';
-                $fileFieldOptions['help'] .= '{%'
-                    .chr(10).'    include \'@PiedWebCMS/component/_inline_image.html.twig\' with { '
-                    .chr(10).'        \'image_src\' : \''.$this->liipImage->getBrowserPath($fullPath, 'default').'\','
-                    .chr(10).'        \'image_alt\' : \''.str_replace('"', '', $media->getName()).'\','
-                    .chr(10).'        \'rounded\' : true,'
-                    .chr(10).'    } only'
-                    .chr(10).'%}';
-                $fileFieldOptions['help'] .= '</pre>';
+                $fileFieldOptions['help'] .= '!['.str_replace(']', '', $media->getName()).']';
+                $fileFieldOptions['help'] .= '('.$this->liipImage->getBrowserPath($fullPath, 'default').')';
+                $fileFieldOptions['help'] .= '</pre></div></div>';
                 $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
                 $fileFieldOptions['attr'] = ['ismedia' => 1];
                 $fileFieldOptions['label'] = 'admin.media.mediaFile.label';
