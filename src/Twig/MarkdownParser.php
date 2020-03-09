@@ -128,11 +128,6 @@ class MarkdownParser extends MarkdownExtra
         return str_replace("\t", str_repeat(' ', $this->tab_width), $text);
     }
 
-    public function _initDetab()
-    {
-        return;
-    }
-
     /**
      * Disable unless html_block.
      */
@@ -151,7 +146,11 @@ class MarkdownParser extends MarkdownExtra
     public function doAutoLinks($text)
     {
         if (!$this->features['auto_mailto']) {
-            return preg_replace_callback('{<((https?|ftp|dict):[^\'">\s]+)>}i', [&$this, '_doAutoLinks_url_callback'], $text);
+            return preg_replace_callback(
+                '{<((https?|ftp|dict):[^\'">\s]+)>}i',
+                [&$this, '_doAutoLinks_url_callback'],
+                $text
+            );
         }
 
         return parent::doAutoLinks($text);
@@ -174,7 +173,8 @@ class MarkdownParser extends MarkdownExtra
         // First, handle reference-style links: [link text] [id]
         //
         if ($this->features['reference_link']) {
-            $text = preg_replace_callback('{
+            $text = preg_replace_callback(
+                '{
                 (               # wrap whole match in $1
                   \[
                     ('.$this->nested_brackets_re.')	# link text = $2
@@ -188,14 +188,17 @@ class MarkdownParser extends MarkdownExtra
                   \]
                 )
                 }xs',
-            [&$this, '_doAnchors_reference_callback'], $text);
+                [&$this, '_doAnchors_reference_callback'],
+                $text
+            );
         }
 
         //
         // Next, inline-style links: [link text](url "optional title")
         //
         if ($this->features['inline_link']) {
-            $text = preg_replace_callback('{
+            $text = preg_replace_callback(
+                '{
                 (               # wrap whole match in $1
                   \[
                     ('.$this->nested_brackets_re.')	# link text = $2
@@ -218,7 +221,9 @@ class MarkdownParser extends MarkdownExtra
                   (?:[ ]? '.$this->id_class_attr_catch_re.' )?	 # $8 = id/class attributes
                 )
                 }xs',
-            [&$this, '_doAnchors_inline_callback'], $text);
+                [&$this, '_doAnchors_inline_callback'],
+                $text
+            );
         }
 
         //
@@ -227,14 +232,17 @@ class MarkdownParser extends MarkdownExtra
         // or [link text](/foo)
         //
         if ($this->features['shortcut_link']) {
-            $text = preg_replace_callback('{
+            $text = preg_replace_callback(
+                '{
                 (               # wrap whole match in $1
                   \[
                     ([^\[\]]+)  # link text = $2; can\'t contain [ or ]
                   \]
                 )
                 }xs',
-            [&$this, '_doAnchors_reference_callback'], $text);
+                [&$this, '_doAnchors_reference_callback'],
+                $text
+            );
         }
 
         $this->in_anchor = false;
