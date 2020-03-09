@@ -30,6 +30,10 @@ piedweb_cms_template_editor_delete:
     controller: PiedWeb\CMSBundle\TemplateEditor\ElementAdmin::deleteElement
 
 
+piedweb_cms_page_scanner:
+    path: /admin/page/scan
+    controller: PiedWeb\CMSBundle\Controller\PageScannerController::scanAction
+
 piedweb_cms_markdown_cheatsheet:
     path: /admin/markdown-cheatsheet
     methods:    [GET, HEAD]

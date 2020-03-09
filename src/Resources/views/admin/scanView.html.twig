@@ -1,0 +1,35 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block title %}
+- Vérification du contenu
+{% endblock %}
+
+{% block sonata_admin_content %}
+    {% if message is defined %}
+        <p class="alert alert-success">{{ message|trans }}</p>
+    {% else %}
+        <div class="box box-{{ errors is empty ? 'success' : 'warning' }}">
+             <div class="box-header">
+                <h3 class="box-title">Scan du site</h3>
+            </div>
+            <div class="box-body">
+                {% if errors is empty %}
+                    Le scan a été complété avec succès : le contenu ne semble comporter aucune erreur.
+                {% else %}
+                    <ul>
+                        {% for error in errors %}
+                            <li>
+                                <a href="{{ path('admin_app_page_edit', {'id' : 1 }) }}" d=error.page.id>
+                                    {{ error.page.slug|striptags }}
+                                </a> : {{ error.message|raw }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="box-footer clearfix">
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

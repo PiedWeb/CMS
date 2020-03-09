@@ -15,12 +15,21 @@ sonata_admin:
                 items:
                     - piedweb.admin.page
                     - piedweb.admin.media
+
+            app.admin.group.static:
+                label: Mettre en ligne
+                label_catalogue: Mettre en ligne
+                icon:            '<i class="fa fa-bolt"></i>'
+                items:
+                    - route:        piedweb_cms_page_scanner
+                      label:        Vérifier le contenu
                     - route:        piedweb_static_generate
                       label:        Actualiser
 
             app.admin.group.setting:
                 label: Paramètres #admin.label.user
                 label_catalogue: Paramètres #admin.label.user
+                icon:            '<i class="fa fa-wrench"></i>'
                 items:
                     - piedweb.admin.user
                     - route:        piedweb_cms_template_editor_list
