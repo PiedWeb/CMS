@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
                         ->defaultValue('App\Entity\PageHasMedia')
                         ->cannotBeEmpty()
                     ->end()
+                    ->scalarNode('email_to_notify')->defaultValue('')->end()
                     // For Fos User and maybe other bundle
                     ->scalarNode('email_sender')->defaultValue('me@tld.com')->cannotBeEmpty()->end()
                     ->scalarNode('email_sender_name')->defaultValue('PiedWebCMS')->cannotBeEmpty()->end()

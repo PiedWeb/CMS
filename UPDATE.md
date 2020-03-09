@@ -7,7 +7,11 @@ UPDATE with BC BREAK
    ```
    bin/console make:migration && bin/console doctrine:migrations:migrate
    ```
-   
+
+- to activate email notifer
+    - params default mailer (`.env`)
+    - params `email_to_notify` in `piedweb_cms.yaml` config file.
+
 ## Update to 0.0.27
 
 -   Create symlink for config file
