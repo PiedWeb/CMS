@@ -2,7 +2,6 @@
 
 namespace PiedWeb\CMSBundle\Admin;
 
-use PiedWeb\CMSBundle\Service\FeedDumpService;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -31,8 +30,6 @@ class PageAdmin extends AbstractAdmin
 
     protected $maxPerPage = 1000;
 
-    protected $feedDumper;
-
     protected $liipImage;
 
     protected $defaultLocale;
@@ -53,11 +50,6 @@ class PageAdmin extends AbstractAdmin
     public function setLiipImage($liipImage)
     {
         $this->liipImage = $liipImage;
-    }
-
-    public function setFeedDumper(FeedDumpService $feedDumper)
-    {
-        $this->feedDumper = $feedDumper;
     }
 
     public function configure()
@@ -285,15 +277,6 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $formMapper)
     {
-        if ($this->getSubject()
-            && $this->getSubject()->getSlug()
-            // Bad Hack for disabled feed and sitemap for i18n website
-            && $this->getRequest()->get('tl') == $this->defaultLocale
-        ) {
-            // Better to be in  event PostUpdate page... but it's quicker
-            $this->feedDumper->dump();
-        }
-
         $this->configureFormFieldsBlockTitle($formMapper);
         $this->configureFormFieldsBlockContent($formMapper);
         $this->configureFormFieldsBlockDetails($formMapper);

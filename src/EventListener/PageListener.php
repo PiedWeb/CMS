@@ -17,4 +17,14 @@ class PageListener
         // todo: plutôt que de throw an exception, modifier la page parent des pages filles pour la page parente de
         // la page actuelle (ou rien)
     }
+
+    public function postUpdate(Page $page)
+    {
+        $this->feedDumper->postPersist();
+    }
+
+    public function setFeedDumper(FeedDumperService $feedDumper)
+    {
+        $this->feedDumper = $feedDumper;
+    }
 }

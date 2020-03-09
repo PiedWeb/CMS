@@ -67,6 +67,11 @@ class FeedDumpService
         $this->dumpSitemap();
     }
 
+    public function postUpdate()
+    {
+        $this->dump();
+    }
+
     protected function dumpFeed()
     {
         $dump = $this->renderFeed();
