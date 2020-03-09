@@ -12,3 +12,4 @@ page:
         already_used: 'Une page utilise déjà cet identifiant URL'
     otherProperties:
         malformed: 'Les propriétés supplémentaires doivent respecter le format YAML.'
+    pageRendering: "Une erreur s'est glissée dans votre contenu... impossible de générer la page."

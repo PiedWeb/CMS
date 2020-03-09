@@ -41,6 +41,19 @@ services:
         tags:
             - { name: doctrine.orm.entity_listener, entity: '%app.entity_page%', event: postUpdate }
 
+    #PiedWeb\CMSBundle\Controller\PageController:
+        #autowire: true
+        #tags:
+            #- { name: doctrine.orm.entity_listener, entity: '%app.entity_page%', event: preUpdate }
+
+    piedweb.page_rendering.validator:
+        class: PiedWeb\CMSBundle\Validator\Constraints\PageRenderingValidator
+        arguments:
+            - "%app.default_page_template%"
+            - "@twig"
+        tags:
+            - { name: validator.constraint_validator, alias: page_rendering }
+
     # Required for sonata Translation
     stof_doctrine_extensions.listener.translatable:
         class: Gedmo\Translatable\TranslatableListener

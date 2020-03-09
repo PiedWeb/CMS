@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Validator\Constraints\PageRendering;
 use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -12,6 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("slug",
  *     message="page.slug.already_used"
  * )
+ * @PageRendering()
  */
 class Page implements TranslatableInterface, PageInterface
 {
