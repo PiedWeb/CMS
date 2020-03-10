@@ -2,7 +2,6 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -20,7 +19,6 @@ trait PageExtendedMainContentTrait
     protected $mainContentIsMarkdown;
 
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(type="text", nullable=true)
      */
     protected $otherProperties;

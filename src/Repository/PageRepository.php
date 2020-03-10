@@ -23,6 +23,7 @@ class PageRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
     public function findOneBySlug($slug, $language = null)
     {
         $q = $this->createQueryBuilder('p')
@@ -43,8 +44,7 @@ class PageRepository extends ServiceEntityRepository
         $result = $q->getResult();
 
         return isset($result[0]) ? $result[0] : null;
-    }
-
+    }/**/
     public function getPagesWithoutParent()
     {
         $q = $this->createQueryBuilder('p')
@@ -62,7 +62,8 @@ class PageRepository extends ServiceEntityRepository
             ->andWhere('p.mainContent LIKE :val')
             ->setParameter('val', '%'.$media.'%')
             ->getQuery()
-            ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker');
+            //->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
+        ;
 
         //var_dump($q->getSql()); exit;
         return $q->getResult();

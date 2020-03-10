@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Page extended: // I may cut this in multiple traits
@@ -15,13 +14,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
 trait PageExtendedTrait
 {
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $excrept;
 
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $metaRobots;
@@ -38,13 +35,11 @@ trait PageExtendedTrait
     protected $childrenPages;
 
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $h1;
 
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     protected $name;

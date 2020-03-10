@@ -58,15 +58,17 @@ class MediaAdmin extends AbstractAdmin
             ])
         ->end();
         if ($media && $media->getMedia()) {
-            $formMapper->with('Aperçu', [
+            $formMapper->with('admin.media.preview.label', [
                 'class' => 'col-md-12',
                 'description' => $this->showMediaPreview(),
+                'empty_message' => false,
             ])->end();
 
             if ($this->issetRelatedPages()) {
-                $formMapper->with('Related', [
+                $formMapper->with('admin.media.related.label', [
                 'class' => 'col-md-12',
                 'description' => $this->showRelatedPages(),
+                'empty_message' => false,
             ])->end();
             }
         }

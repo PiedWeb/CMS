@@ -1,5 +1,2 @@
-sonata_translation:
-    locales: ['%locale%']
-    default_locale: '%locale%'
-    gedmo:
-        enabled: true
+
+# todo: delete

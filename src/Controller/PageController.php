@@ -22,7 +22,7 @@ class PageController extends AbstractController
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = $this->getDoctrine()
             ->getRepository($this->container->getParameter('app.entity_page'))
-            ->findOneBySlug($slug, $request->getLocale());
+            ->findOneBySlug($slug);
 
         // Check if page exist
         if (null === $page) {
@@ -78,7 +78,7 @@ class PageController extends AbstractController
             new $pageEntity()
             : $this->getDoctrine()
                 ->getRepository($pageEntity)
-                ->findOneBySlug(rtrim(strtolower($slug), '/'), $request->getLocale())
+                ->findOneBySlug(rtrim(strtolower($slug), '/'))
         ;
 
         $plainText = \PiedWeb\CMSBundle\Twig\AppExtension::convertMarkdownImage($request->request->get('plaintext'));
@@ -95,7 +95,7 @@ class PageController extends AbstractController
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = $this->getDoctrine()
             ->getRepository($this->container->getParameter('app.entity_page'))
-            ->findOneBySlug($slug, $request->getLocale());
+            ->findOneBySlug($slug);
 
         // Check if page exist
         if (null === $page || $page->getChildrenPages()->count() < 1) {

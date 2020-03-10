@@ -4,26 +4,22 @@ namespace PiedWeb\CMSBundle\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait PageTrait
 {
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=150)
      * @Assert\NotBlank
      */
     protected $slug;
 
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     protected $title;
 
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(type="text", nullable=true)
      */
     protected $mainContent;

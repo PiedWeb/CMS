@@ -55,3 +55,4 @@ class PageRenderingValidator extends ConstraintValidator
 
         }
     }
+*/

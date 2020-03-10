@@ -162,11 +162,28 @@ class PageAdmin extends AbstractAdmin
             //'help' => 'admin.page.otherProperties.help',
         ]);
         $formMapper->end();
+
+        $formMapper->with('admin.page.translations.label');
+
+        // check if translation is another language todo
+        $formMapper->add('translations', ModelAutocompleteType::class, [
+                    'required' => false,
+                    'multiple' => true,
+                    'class' => $this->getContainer()->getParameter('app.entity_page'),
+                    'property' => 'slug',
+                    'label' => ' ',
+                    'help' => 'admin.page.translations.help',
+                    'btn_add' => false,
+                    'to_string_callback' => function ($entity) {
+                        return $entity->getSlug(); // switch for getLocale
+                    },
+                ]);
+        $formMapper->end();
     }
 
     protected function configureFormFieldsBlockTitle(FormMapper $formMapper)
     {
-        $formMapper->with('admin.page.title.label', ['class' => 'col-md-9']);
+        $formMapper->with('admin.page.title.label', ['class' => 'col-md-7']);
         $formMapper->add('title', TextType::class, [
             'label' => 'admin.page.title.label',
             'help' => 'admin.page.title.help',
@@ -182,6 +199,17 @@ class PageAdmin extends AbstractAdmin
             ]);
         }
 
+        if ($this->exists('MainImage')) {
+            $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
+                'required' => false,
+                'class' => $this->getContainer()->getParameter('app.entity_media'),
+                'label' => 'admin.page.mainImage.label',
+                'btn_edit' => false,
+            ]);
+        }
+        $formMapper->end();
+
+        $formMapper->with('admin.page.params.label', ['class' => 'col-md-5']);
         $formMapper->add('slug', TextType::class, [
             'label' => 'admin.page.slug.label',
             'help' => 'admin.page.slug.help',
@@ -189,13 +217,10 @@ class PageAdmin extends AbstractAdmin
                 ($this->getSubject() ? ($this->getSubject()->getSlug() ? 'disabled' : 't') : 't') => '',
             ],
         ]);
-
-        if ($this->exists('MainImage')) {
-            $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
-                'required' => false,
-                'class' => $this->getContainer()->getParameter('app.entity_media'),
-                'label' => 'admin.page.mainImage.label',
-                'btn_edit' => false,
+        if ($this->exists('Locale')) {
+            $formMapper->add('locale', TextType::class, [
+                'label' => 'admin.page.locale.label',
+                'help' => 'admin.page.locale.help',
             ]);
         }
         $formMapper->end();

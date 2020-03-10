@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Sonata\TranslationBundle\Model\Gedmo\TranslatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -12,11 +11,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * UniqueEntity({"name"}, message="Ce nom existe déjà.")
  */
-class Media implements TranslatableInterface, MediaInterface
+class Media implements MediaInterface
 {
     use IdTrait;
     use MediaTrait;
-    use TranslatableTrait;
+    //use TranslatableTrait; // todo : to remove with sonata i18n
 
     public function __construct()
     {
