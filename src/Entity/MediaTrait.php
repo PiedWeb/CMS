@@ -9,6 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Sluggable\Util\Urlizer;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Yaml\Yaml;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 trait MediaTrait
@@ -66,10 +67,14 @@ trait MediaTrait
     protected $mediaFile;
 
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=100, unique=true)
      */
     protected $name;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $names;
 
     protected $slug;
 
@@ -141,17 +146,34 @@ trait MediaTrait
         return $this;
     }
 
-    public function getName(): ?string
+    public function getName($locale = null): ?string
     {
-        return $this->name;
+        $names = $this->getNames(true);
+
+        return $locale && isset($names[$locale]) ? $locale : $this->name;
+    }
+
+    public function getNames($yaml = false)
+    {
+        return true === $yaml && null !== $this->names ? Yaml::parse($this->names) : $this->names;
+    }
+
+    public function setNames(?string $names): self
+    {
+        $this->name = $names;
+
+        return $this;
+    }
+
+    public function getNameByLocale($locale)
+    {
+        $names = $this->getNames(true);
+
+        return $names[$locale] ?? $this->getName();
     }
 
     public function setName(?string $name): self
     {
-        //if ($this->name !== null) { // sinon renommer l'media
-        //throw new \Exception('Can\'t edit name.');
-        //}
-
         $this->name = $name;
 
         return $this;
@@ -265,5 +287,10 @@ trait MediaTrait
     public function getMainImagePages()
     {
         return $this->mainImagePages;
+    }
+
+    public function getFullPath(): ?string
+    {
+        return null !== $this->media ? '/'.$this->getRelativeDir().'/'.$this->getMedia() : null;
     }
 }

@@ -109,9 +109,12 @@ admin:
     media:
         name:
             label: Nom
-            help: "<small>Choisissez un à plusieurs mots décrivant votre fichier. N'hésitez pas à utiliser des mots clefs pour retrouver facilement votre image (ex: Massif des Ecrins - Glacier de la Meije). Texte alternatif, utilisé pour l'accessibilité des pages web (non-voyant).</small>"
+            help: "Texte alternatif, utilisé pour l'accessibilité des pages web (non-voyant).<br><small>Choisissez un à plusieurs mots décrivant votre fichier. N'hésitez pas à utiliser des mots clefs pour retrouver facilement votre image (ex: Massif des Ecrins - Glacier de la Meije).</small>"
         mediaFile:
             label: Fichier
+        names:
+            label: "Traduction"
+            help: "Format <code>Language: nom traduit</code> (ex: <code>en: my image description</code>).<br>Une traduction par ligne."
         mainColor:
             label: Couleur Principale
         createdAt:

@@ -22,6 +22,7 @@ class MediaAdmin extends AbstractAdmin
     ];
 
     private $liipImage;
+    private $relatedPages;
 
     public function setLiipImage($liipImage)
     {
@@ -32,58 +33,132 @@ class MediaAdmin extends AbstractAdmin
     {
         $media = $this->getSubject();
 
-        //$type = $media && $media->getName() === null ? TextType::class : HiddenType::class;
-        $formMapper->add('name', TextType::class, [
-            'required' => false,
-            'help' => 'admin.media.name.help',
-            'label' => 'admin.media.name.label',
-            'attr' => ['ismedia' => 1],
-        ]); // ['data_class'=>null]
+        $formMapper->with('Media', [
+            'class' => 'col-md-6',
+        ])
+            ->add('name', TextType::class, [
+                    'required' => false,
+                    'help' => 'admin.media.name.help',
+                    'label' => 'admin.media.name.label',
+                    'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
+                ])
+            ->add('mediaFile', FileType::class, [
+                'label' => 'admin.media.mediaFile.label',
+            ])
+        ->end();
 
-        $fileFieldOptions = ['required' => false, 'data_class' => null];
+        $formMapper->with('i18n', [
+            'class' => 'col-md-6',
+        ])
+            ->add('names', null, [
+                'required' => false,
+                'help' => 'admin.media.names.help',
+                'label' => 'admin.media.names.label',
+                'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
+            ])
+        ->end();
         if ($media && $media->getMedia()) {
-            if (false !== strpos($media->getMimeType(), 'image/')) {
-                $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
-                // Todo: move this to a twig template file
-                $fileFieldOptions['help'] = '<div class=row><div class=col-md-6><a href="'
-                    .$this->liipImage->getBrowserPath($fullPath, 'default').'">';
-                $fileFieldOptions['help'] .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'md').'"'
-                    .' style="max-width:100%">';
-                $fileFieldOptions['help'] .= '</a>';
-                $fileFieldOptions['help'] .= '</div><div class=col-md-6>Chemin:<br><code>';
-                $fileFieldOptions['help'] .= $this->liipImage->getBrowserPath($fullPath, 'default').'</code>';
-                $fileFieldOptions['help'] .= '<br><br>HTML:<br><pre>';
-                $fileFieldOptions['help'] .= '!['.str_replace(']', '', $media->getName()).']';
-                $fileFieldOptions['help'] .= '('.$this->liipImage->getBrowserPath($fullPath, 'default').')';
-                $fileFieldOptions['help'] .= '</pre></div></div>';
-                $fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
-                $fileFieldOptions['attr'] = ['ismedia' => 1];
-                $fileFieldOptions['label'] = 'admin.media.mediaFile.label';
+            $formMapper->with('Aperçu', [
+                'class' => 'col-md-12',
+                'description' => $this->showMediaPreview(),
+            ])->end();
 
-                $fileFieldOptions['help'] .= $this->getRelativePage($media);
-            } else {
-                $fullPath = '/download/'.$media->getRelativeDir().'/'.$media->getMedia();
-                $fileFieldOptions['help'] = 'URL:<br>';
-                $fileFieldOptions['help'] .= '<a href="'.$fullPath.'" target=_blank"><code>'.$fullPath.'</code></a>';
+            if ($this->issetRelatedPages()) {
+                $formMapper->with('Related', [
+                'class' => 'col-md-12',
+                'description' => $this->showRelatedPages(),
+            ])->end();
             }
         }
 
-        $formMapper->add('mediaFile', FileType::class, $fileFieldOptions); // ['data_class'=>null]
+        /*
+        //$type = $media && $media->getName() === null ? TextType::class : HiddenType::class;
+        $formMapper->add('name', TextType::class, [
+        'required' => false,
+        'help' => 'admin.media.name.help',
+        'label' => 'admin.media.name.label',
+        'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
+        ]); // ['data_class'=>null]
+
+        $formMapper->add('names', null, [
+        'required' => false,
+        'help' => 'admin.media.names.help',
+        'label' => 'admin.media.names.label',
+        'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
+        ]);**/
+
+        /*
+        $fileFieldOptions = ['required' => false, 'data_class' => null];
+        if ($media && $media->getMedia()) {
+            $fileFieldOptions['help'] = $this->showImagePreview();
+                //$fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
+                //$fileFieldOptions['attr'] = ['ismedia' => 1];
+                //$fileFieldOptions['label'] = 'admin.media.mediaFile.label';
+
+            $fileFieldOptions['help'] .= $this->showRelatedPages();
+        }
+        **/
+
+        //$formMapper->add('mediaFile', FileType::class, $fileFieldOptions); // ['data_class'=>null]
     }
 
-    protected function getRelativePage($media)
+    protected function showMediaPreview(): string
     {
-        $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
+        $media = $this->getSubject();
+
+        $template = false !== strpos($media->getMimeType(), 'image/') ?
+            '@PiedWebCMS/admin/media_show.preview_image.html.twig'
+            : '@PiedWebCMS/admin/media_show.preview.html.twig';
+
+        return $this->getContainer()->get('twig')->render($template, [
+                'media' => $media,
+        ]);
+    }
+
+    protected function issetRelatedPages(): bool
+    {
+        $relatedPages = $this->getRelatedPages();
+
+        if (
+            !empty($relatedPages['content'])
+            || $relatedPages['gallery']->count() > 0
+            || $relatedPages['mainImage']->count() > 0
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    protected function getRelatedPages(): ?array
+    {
+        if (null !== $this->relatedPages) {
+            return $this->relatedPages;
+        }
+
+        $media = $this->getSubject();
 
         $pages = $this->getConfigurationPool()->getContainer()->get('doctrine')
-                    ->getRepository($this->getContainer()->getParameter('app.entity_page'))
-                    ->getPagesUsingMedia($this->liipImage->getBrowserPath($fullPath, 'default'));
+            ->getRepository($this->getContainer()->getParameter('app.entity_page'))
+            ->getPagesUsingMedia($this->liipImage->getBrowserPath($media->getFullPath(), 'default'));
 
-        return $this->getContainer()->get('twig')->render('@PiedWebCMS/admin/media_relatedPages.html.twig', [
+        $this->relatedPages = [
             'content' => $pages,
             'gallery' => $media->getPageHasMedias(),
             'mainImage' => $media->getMainImagePages(),
-        ]);
+        ];
+
+        return $this->relatedPages;
+    }
+
+    protected function showRelatedPages(): string
+    {
+        $media = $this->getSubject();
+
+        return $this->getContainer()->get('twig')->render(
+            '@PiedWebCMS/admin/media_show.relatedPages.html.twig',
+            $this->getRelatedPages()
+        );
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
