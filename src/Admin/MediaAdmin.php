@@ -8,7 +8,6 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\BlockBundle\Meta\Metadata;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class MediaAdmin extends AbstractAdmin
@@ -72,36 +71,6 @@ class MediaAdmin extends AbstractAdmin
             ])->end();
             }
         }
-
-        /*
-        //$type = $media && $media->getName() === null ? TextType::class : HiddenType::class;
-        $formMapper->add('name', TextType::class, [
-        'required' => false,
-        'help' => 'admin.media.name.help',
-        'label' => 'admin.media.name.label',
-        'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
-        ]); // ['data_class'=>null]
-
-        $formMapper->add('names', null, [
-        'required' => false,
-        'help' => 'admin.media.names.help',
-        'label' => 'admin.media.names.label',
-        'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
-        ]);**/
-
-        /*
-        $fileFieldOptions = ['required' => false, 'data_class' => null];
-        if ($media && $media->getMedia()) {
-            $fileFieldOptions['help'] = $this->showImagePreview();
-                //$fileFieldOptions['sonata_help'] = $fileFieldOptions['help'];
-                //$fileFieldOptions['attr'] = ['ismedia' => 1];
-                //$fileFieldOptions['label'] = 'admin.media.mediaFile.label';
-
-            $fileFieldOptions['help'] .= $this->showRelatedPages();
-        }
-        **/
-
-        //$formMapper->add('mediaFile', FileType::class, $fileFieldOptions); // ['data_class'=>null]
     }
 
     protected function showMediaPreview(): string
@@ -173,6 +142,9 @@ class MediaAdmin extends AbstractAdmin
         */
         $datagridMapper->add('name', null, [
             'label' => 'admin.media.name.label',
+        ]);
+        $datagridMapper->add('names', null, [
+            'label' => 'admin.media.names.label',
         ]);
     }
 

@@ -15,15 +15,5 @@ piedweb_cms_homepage:
 media:
     resource: '@PiedWebCMSBundle/Resources/config/routes/media.yaml'
 
-localized_page:
-    name_prefix: localized_
-    resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'
-    prefix: /{_locale}
-    requirements:
-        _locale: '%app.locales%'
-    defaults:
-        _locale: '%locale%'
-    trailing_slash_on_root: true
-
 page:
     resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'

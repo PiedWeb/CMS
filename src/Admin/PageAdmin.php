@@ -312,6 +312,7 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $formMapper)
     {
+        $formMapper->add('locale', null, ['label' => 'admin.page.locale.label']);
         $formMapper->add('slug', null, ['label' => 'admin.page.slug.label']);
 
         $formMapper->add('title', null, ['label' => 'admin.page.title.label']);

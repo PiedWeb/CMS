@@ -15,7 +15,6 @@ class Media implements MediaInterface
 {
     use IdTrait;
     use MediaTrait;
-    //use TranslatableTrait; // todo : to remove with sonata i18n
 
     public function __construct()
     {

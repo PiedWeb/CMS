@@ -23,6 +23,7 @@ class PageController extends AbstractController
         $page = $this->getDoctrine()
             ->getRepository($this->container->getParameter('app.entity_page'))
             ->findOneBySlug($slug);
+        $request->setLocale($page->getLocale());
 
         // Check if page exist
         if (null === $page) {

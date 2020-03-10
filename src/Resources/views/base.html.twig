@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.getLocale() }}">
+<html lang="{{ page.locale ?? app.request.getLocale() }}">
 {% set base_url = app_base_url is defined ? app_base_url : ''  %}
     <head>
         {% block head %}

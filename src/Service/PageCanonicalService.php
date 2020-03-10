@@ -28,13 +28,6 @@ class PageCanonicalService
 
     public function generatePathForHomepage(?string $expectedLocale = null)
     {
-        if (false === $this->isForDefaultLocale($expectedLocale)) {
-            return $this->router->generate('localized_piedweb_cms_page', [
-                'slug' => '',
-                '_locale' => $this->getLocale($expectedLocale),
-            ]);
-        }
-
         return $this->router->generate('piedweb_cms_homepage');
     }
 
@@ -47,39 +40,6 @@ class PageCanonicalService
             return $this->generatePathForHomepage($expectedLocale);
         }
 
-        if (null === $this->defaultLocale
-            || ($this->isForDefaultLocale($expectedLocale) && $this->defaultLocaleWithoutPrefix)
-        ) {
-            return $this->router->generate('piedweb_cms_page', ['slug' => $slug]);
-        }
-
-        return $this->router->generate('localized_piedweb_cms_page', [
-            'slug' => $slug,
-            '_locale' => $this->getLocale($expectedLocale),
-        ]);
-    }
-
-    protected function isForDefaultLocale(?string $expectedLocale = null)
-    {
-        return null === $this->defaultLocale // maybe it's not an i18n app
-            || (null !== $expectedLocale && $this->defaultLocale == $expectedLocale)
-            || (
-                null === $expectedLocale
-                && null !== $this->request->getCurrentRequest()
-                && $this->defaultLocale == $this->request->getCurrentRequest()->getLocale()
-            )
-        ;
-    }
-
-    /**
-     * Always get a locale even if we are not in a request.
-     */
-    protected function getLocale(?string $expectedLocale)
-    {
-        return $expectedLocale ?? (
-            null === $this->request->getCurrentRequest()
-                ? $this->defaultLocale
-                : $this->request->getCurrentRequest()->getLocale()
-        );
+        return $this->router->generate('piedweb_cms_page', ['slug' => $slug]);
     }
 }
