@@ -91,7 +91,7 @@ class FeedDumpService
     {
         $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
         $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi2')
-           ->setParameter('noi2', '%noindex%');
+            ->setParameter('noi2', '%noindex%');
         $qb->andWhere('p.mainContent NOT LIKE :noi')->setParameter('noi', 'Location:%');
 
         if (null !== $limit) {

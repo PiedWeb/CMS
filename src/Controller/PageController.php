@@ -58,8 +58,7 @@ class PageController extends AbstractController
 
         $expected = 'homepage' == $page->getSlug() ?
             $this->get('piedweb.page_canonical')->generatePathForHomepage() :
-            $this->get('piedweb.page_canonical')->generatePathForPage($page->getRealSlug())
-        ;
+            $this->get('piedweb.page_canonical')->generatePathForPage($page->getRealSlug());
 
         if ($real != $expected) {
             return [$request->getBasePath().$expected, 301];
@@ -78,9 +77,8 @@ class PageController extends AbstractController
         $page = (null === $slug || '' === $slug) ?
             new $pageEntity()
             : $this->getDoctrine()
-                ->getRepository($pageEntity)
-                ->findOneBySlug(rtrim(strtolower($slug), '/'))
-        ;
+            ->getRepository($pageEntity)
+            ->findOneBySlug(rtrim(strtolower($slug), '/'));
 
         $plainText = \PiedWeb\CMSBundle\Twig\AppExtension::convertMarkdownImage($request->request->get('plaintext'));
 

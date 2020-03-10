@@ -19,8 +19,7 @@ class PageRepository extends ServiceEntityRepository
         return $this->createQueryBuilder($p)
             ->andWhere($p.'.createdAt <=  :nwo')
             ->setParameter('nwo', new \DateTime())
-            ->orderBy($p.'.createdAt', 'DESC')
-        ;
+            ->orderBy($p.'.createdAt', 'DESC');
     }
 
     /**
@@ -44,14 +43,14 @@ class PageRepository extends ServiceEntityRepository
         $result = $q->getResult();
 
         return isset($result[0]) ? $result[0] : null;
-    }/**/
+    }
+     /**/
     public function getPagesWithoutParent()
     {
         $q = $this->createQueryBuilder('p')
             ->andWhere('p.parentPage is NULL')
             ->orderBy('p.slug', 'DESC')
-            ->getQuery()
-        ;
+            ->getQuery();
 
         return $q->getResult();
     }

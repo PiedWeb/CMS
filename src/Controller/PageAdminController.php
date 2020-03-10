@@ -27,12 +27,15 @@ class PageAdminController extends CRUDController
             ->getRepository($this->container->getParameter('app.entity_page'))
             ->getPagesWithoutParent();
 
-        return $this->renderWithExtraParams('@PiedWebCMS/admin/treeView.html.twig', [
+        return $this->renderWithExtraParams(
+            '@PiedWebCMS/admin/treeView.html.twig',
+            [
             'pages' => $pages,
             'list' => $this->admin->getList(),
             'admin' => $this->admin,
             'base_template' => $this->getBaseTemplate(),
             'action' => 'list',
-        ]);
+            ]
+        );
     }
 }

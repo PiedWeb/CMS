@@ -97,7 +97,7 @@ class PageScannerService
 
         $checkDatabase = 0 !== strpos($slug, 'media/'); // we avoid to check in db the media, file exists is enough
         $page = true !== $checkDatabase ? null : $this->em->getRepository(get_class($this->currentPage))
-                ->findOneBySlug('' == $slug ? 'homepage' : $slug);
+            ->findOneBySlug('' == $slug ? 'homepage' : $slug);
 
         $this->everChecked[$slug] = (null === $page && !file_exists($this->webDir.'/'.$slug)) ? false : true;
 

@@ -32,7 +32,8 @@ class UserAdmin extends AbstractAdmin
     {
         // Forbid edition of other admin account except for super admin
         if (($this->getSubject()->hasRole('ROLE_SUPER_ADMIN')
-            && $this->getUser()->getId() !== $this->getSubject()->getId())) {
+            && $this->getUser()->getId() !== $this->getSubject()->getId())
+        ) {
             throw new AccessDeniedException('u can\'t edit this user'); // TODO : do better
         }
 
@@ -41,61 +42,91 @@ class UserAdmin extends AbstractAdmin
         $formMapper
             ->with('admin.user.label.id', ['class' => 'col-md-4'])
                     //->add('username')
-                    ->add('email', null, [
+            ->add(
+                'email',
+                null,
+                [
                         'label' => 'admin.user.email.label',
-                    ])
-                    ->add('plainPassword', TextType::class, [
+                        ]
+            )
+            ->add(
+                'plainPassword',
+                TextType::class,
+                [
                         'required' => (!$this->getSubject() || null === $this->getSubject()->getId()),
                         'label' => 'admin.user.password.label',
-                    ])
-            ->end()
-        ;
+                        ]
+            )
+            ->end();
 
         $formMapper
-            ->with('admin.user.label.profile', ['class' => 'col-md-4'])
-        ;
+            ->with('admin.user.label.profile', ['class' => 'col-md-4']);
 
         if ($this->exists('DateOfBirth')) {
-            $formMapper->add('dateOfBirth', DatePickerType::class, [
+            $formMapper->add(
+                'dateOfBirth',
+                DatePickerType::class,
+                [
                 'years' => range(1900, $now->format('Y')),
                 'dp_min_date' => '1-1-1900',
                 'dp_max_date' => $now->format('c'),
                 'required' => false,
                 'label' => 'admin.user.dateOfBirth.label',
-            ]);
+                ]
+            );
         }
         if ($this->exists('firstname')) {
-            $formMapper->add('firstname', TextType::class, [
+            $formMapper->add(
+                'firstname',
+                TextType::class,
+                [
                 'required' => false,
                 'label' => 'admin.user.firstname.label',
-            ]);
+                ]
+            );
         }
         if ($this->exists('lastname')) {
-            $formMapper->add('lastname', TextType::class, [
+            $formMapper->add(
+                'lastname',
+                TextType::class,
+                [
                 'required' => false,
                 'label' => 'admin.user.lastname.label',
-            ]);
+                ]
+            );
         }
         if ($this->exists('city')) {
-            $formMapper->add('city', TextType::class, [
+            $formMapper->add(
+                'city',
+                TextType::class,
+                [
                 'required' => false,
                 'label' => 'admin.user.city.label',
-            ]);
+                ]
+            );
         }
         if ($this->exists('phone')) {
-            $formMapper->add('phone', TextType::class, [
+            $formMapper->add(
+                'phone',
+                TextType::class,
+                [
                 'required' => false,
                 'label' => 'admin.user.phone.label',
-            ]);
+                ]
+            );
         }
 
         $formMapper->end()
 
             ->with('admin.user.label.security', ['class' => 'col-md-4'])
-                ->add('enabled', null, [
+            ->add(
+                'enabled',
+                null,
+                [
                     'required' => false,
                     'label' => 'admin.user.enabled.label',
-                ])
+                    ]
+            )
 
                 /*
                 ->with('Groups')
@@ -107,7 +138,10 @@ class UserAdmin extends AbstractAdmin
                 ->end()
                 */
 
-                ->add('roles', ImmutableArrayType::class, [
+            ->add(
+                'roles',
+                ImmutableArrayType::class,
+                [
                     'label' => false,
                     'keys' => [
                         ['0', ChoiceType::class, [
@@ -125,10 +159,10 @@ class UserAdmin extends AbstractAdmin
                                 ],
                         ]],
                     ],
-                ])
+                    ]
+            )
 
-            ->end()
-        ;
+            ->end();
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -142,37 +176,61 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('email', null, [
+            ->add(
+                'email',
+                null,
+                [
                 'label' => 'admin.user.email.label',
-            ]);
+                ]
+            );
         if ($this->exists('firstname')) {
-            $listMapper->add('firstname', TextType::class, [
+            $listMapper->add(
+                'firstname',
+                TextType::class,
+                [
                 'editable' => true,
                 'label' => 'admin.user.firstname.label',
-            ]);
+                ]
+            );
         }
         if ($this->exists('lastname')) {
-            $listMapper->add('lastname', TextType::class, [
+            $listMapper->add(
+                'lastname',
+                TextType::class,
+                [
                 'editable' => true,
                 'label' => 'admin.user.lastname.label',
-            ]);
+                ]
+            );
         }
 
-        /**todo
+        /*
+* todo
         $listMapper->add('roles[0]', null, [
                 'label' => 'admin.user.role.label',
             ]);
         /**/
         $listMapper
-            ->add('enabled', null, [
+            ->add(
+                'enabled',
+                null,
+                [
                 'editable' => true,
                 'label' => 'admin.user.enabled.label',
-            ])
-            ->add('createdAt', null, [
+                ]
+            )
+            ->add(
+                'createdAt',
+                null,
+                [
                 'editable' => true,
                 'label' => 'admin.user.createdAt.label',
-            ])
-            ->add('_action', null, [
+                ]
+            )
+            ->add(
+                '_action',
+                null,
+                [
                 'actions' => [
                     'edit' => [],
                     'delete' => [],
@@ -180,7 +238,7 @@ class UserAdmin extends AbstractAdmin
                 'row_align' => 'right',
                 'header_class' => 'text-right',
                 'label' => 'admin.action',
-            ])
-        ;
+                ]
+            );
     }
 }

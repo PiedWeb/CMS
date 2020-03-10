@@ -37,22 +37,3 @@ class PageRenderingValidator extends ConstraintValidator
         }
     }
 }
-
-/*
-    public function preUpdate(Page $page)
-    {
-         return $this->context->buildViolation('oups')
-                ->addViolation();
-
-        // Maybe the page is a redirection
-        if (false !== $page->getRedirection()) {
-            $this->redirect($page->getRedirection(), $page->getRedirectionCode());
-        } else {
-
-        $template = null !== $page->getTemplate() ? $page->getTemplate() : $this->parameterBag->get('app.default_page_template');
-
-        $this->render($template, ['page' => $page]);
-
-        }
-    }
-*/

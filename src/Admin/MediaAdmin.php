@@ -32,43 +32,67 @@ class MediaAdmin extends AbstractAdmin
     {
         $media = $this->getSubject();
 
-        $formMapper->with('Media', [
+        $formMapper->with(
+            'Media',
+            [
             'class' => 'col-md-6',
-        ])
-            ->add('name', TextType::class, [
+            ]
+        )
+            ->add(
+                'name',
+                TextType::class,
+                [
                     'required' => false,
                     'help' => 'admin.media.name.help',
                     'label' => 'admin.media.name.label',
                     'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
-                ])
-            ->add('mediaFile', FileType::class, [
+                ]
+            )
+            ->add(
+                'mediaFile',
+                FileType::class,
+                [
                 'label' => 'admin.media.mediaFile.label',
-            ])
-        ->end();
+                ]
+            )
+            ->end();
 
-        $formMapper->with('i18n', [
+        $formMapper->with(
+            'i18n',
+            [
             'class' => 'col-md-6',
-        ])
-            ->add('names', null, [
+            ]
+        )
+            ->add(
+                'names',
+                null,
+                [
                 'required' => false,
                 'help' => 'admin.media.names.help',
                 'label' => 'admin.media.names.label',
                 'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
-            ])
-        ->end();
+                ]
+            )
+            ->end();
         if ($media && $media->getMedia()) {
-            $formMapper->with('admin.media.preview.label', [
+            $formMapper->with(
+                'admin.media.preview.label',
+                [
                 'class' => 'col-md-12',
                 'description' => $this->showMediaPreview(),
                 'empty_message' => false,
-            ])->end();
+                ]
+            )->end();
 
             if ($this->issetRelatedPages()) {
-                $formMapper->with('admin.media.related.label', [
-                'class' => 'col-md-12',
-                'description' => $this->showRelatedPages(),
-                'empty_message' => false,
-            ])->end();
+                $formMapper->with(
+                    'admin.media.related.label',
+                    [
+                    'class' => 'col-md-12',
+                    'description' => $this->showRelatedPages(),
+                    'empty_message' => false,
+                    ]
+                )->end();
             }
         }
     }
@@ -81,17 +105,19 @@ class MediaAdmin extends AbstractAdmin
             '@PiedWebCMS/admin/media_show.preview_image.html.twig'
             : '@PiedWebCMS/admin/media_show.preview.html.twig';
 
-        return $this->getContainer()->get('twig')->render($template, [
+        return $this->getContainer()->get('twig')->render(
+            $template,
+            [
                 'media' => $media,
-        ]);
+            ]
+        );
     }
 
     protected function issetRelatedPages(): bool
     {
         $relatedPages = $this->getRelatedPages();
 
-        if (
-            !empty($relatedPages['content'])
+        if (!empty($relatedPages['content'])
             || $relatedPages['gallery']->count() > 0
             || $relatedPages['mainImage']->count() > 0
         ) {
@@ -140,34 +166,58 @@ class MediaAdmin extends AbstractAdmin
             'label' => 'admin.media.createdAt.label',
         ]);
         */
-        $datagridMapper->add('name', null, [
+        $datagridMapper->add(
+            'name',
+            null,
+            [
             'label' => 'admin.media.name.label',
-        ]);
-        $datagridMapper->add('names', null, [
+            ]
+        );
+        $datagridMapper->add(
+            'names',
+            null,
+            [
             'label' => 'admin.media.names.label',
-        ]);
+            ]
+        );
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $this->setMosaicDefaultListMode();
 
-        $listMapper->add('name', null, [
+        $listMapper->add(
+            'name',
+            null,
+            [
             'label' => 'admin.media.name.label',
-        ]);
-        $listMapper->add('createdAt', null, [
+            ]
+        );
+        $listMapper->add(
+            'createdAt',
+            null,
+            [
             'label' => 'admin.media.createdAt.label',
             'format' => 'd/m/y',
-        ]);
-        $listMapper->add('mainColor', null, [
+            ]
+        );
+        $listMapper->add(
+            'mainColor',
+            null,
+            [
             'label' => 'admin.media.mainColor.label',
-        ]);
-        $listMapper->add('_action', null, [
+            ]
+        );
+        $listMapper->add(
+            '_action',
+            null,
+            [
             'actions' => [
                 'edit' => [],
                 'delete' => [],
             ],
-        ]);
+            ]
+        );
     }
 
     public function getObjectMetadata($media)

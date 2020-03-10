@@ -43,28 +43,38 @@ class ElementAdmin extends AbstractController
             $element = $form->getData();
             $element->storeElement();
 
-            return $this->redirectToRoute('piedweb_cms_template_editor_edit', [
+            return $this->redirectToRoute(
+                'piedweb_cms_template_editor_edit',
+                [
                 'encodedPath' => $element->getEncodedPath(),
-            ]);
+                ]
+            );
         }
 
-        return $this->render('@PiedWebCMS/admin/theme.edit.html.twig', [
+        return $this->render(
+            '@PiedWebCMS/admin/theme.edit.html.twig',
+            [
             'element' => $element,
             'form' => $form->createView(),
-        ]);
+            ]
+        );
     }
 
     protected function editElementForm(Element $element)
     {
         return $this->createFormBuilder($element)
             ->add('path', TextType::class)
-            ->add('code', TextareaType::class, [
+            ->add(
+                'code',
+                TextareaType::class,
+                [
                 'attr' => [
                     'style' => 'min-height: 90vh;font-size:125%;',
                     'data-editor' => 'markdown',
                     'data-gutter' => 0,
                 ],
-            ])
+                ]
+            )
 
             ->getForm();
     }
@@ -74,7 +84,7 @@ class ElementAdmin extends AbstractController
         $element = $this->getElement($encodedPath);
 
         $form = $this->createFormBuilder()
-           ->add('delete', SubmitType::class, ['label' => 'Supprimer', 'attr' => ['class' => 'btn-danger']])
+            ->add('delete', SubmitType::class, ['label' => 'Supprimer', 'attr' => ['class' => 'btn-danger']])
             ->getForm();
 
         $form->handleRequest($request);
@@ -86,9 +96,12 @@ class ElementAdmin extends AbstractController
             return $this->redirectToRoute('piedweb_cms_template_editor_list');
         }
 
-        return $this->render('@PiedWebCMS/admin/theme.delete.html.twig', [
+        return $this->render(
+            '@PiedWebCMS/admin/theme.delete.html.twig',
+            [
             'form' => $form->createView(),
             'element' => $element,
-        ]);
+            ]
+        );
     }
 }

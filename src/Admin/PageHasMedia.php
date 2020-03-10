@@ -30,23 +30,25 @@ class PageHasMedia extends AbstractAdmin
         }
 
         $formMapper
-            ->add('media', ModelListType::class, [
+            ->add(
+                'media',
+                ModelListType::class,
+                [
                 'required' => false,
                 'btn_delete' => false,
                 'btn_edit' => false,
                 'btn_add' => (!$media) ? ' ' : false,
                 'btn_list' => (!$media) ? ' ' : false,
                 'sonata_help' => $help,
-            ])
-            ->add('position', HiddenType::class)
-        ;
+                ]
+            )
+            ->add('position', HiddenType::class);
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
             ->add('media')
-            ->add('page')
-        ;
+            ->add('page');
     }
 }

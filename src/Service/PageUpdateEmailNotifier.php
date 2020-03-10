@@ -70,7 +70,8 @@ class PageUpdateEmailNotifier
         $message = (new \Swift_Message('Update on '.$this->appName))
         ->setFrom($this->emailSender)
         ->setTo($this->emailToNotify)
-        ->setBody('La page `<a href="'.$adminUrl.'">'.$page->getSlug().'</a>` a été modifiée.',
+        ->setBody(
+            'La page `<a href="'.$adminUrl.'">'.$page->getSlug().'</a>` a été modifiée.',
             'text/html'
         );
 

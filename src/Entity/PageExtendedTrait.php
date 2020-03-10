@@ -30,7 +30,7 @@ trait PageExtendedTrait
 
     /**
      * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", mappedBy="parentPage")
-     * @ORM\OrderBy({"id" = "ASC"})
+     * @ORM\OrderBy({"id"                                                    = "ASC"})
      */
     protected $childrenPages;
 

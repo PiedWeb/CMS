@@ -65,8 +65,7 @@ trait PageI18nTrait
             $translation->addTranslation($this, false);
 
             foreach ($this->translations as $otherTranslation) {
-                if (
-                    $otherTranslation != $this // déjà fait
+                if ($otherTranslation != $this // déjà fait
                     && $otherTranslation != $translation // on ne se référence pas soit-même
                 ) {
                     $otherTranslation->addTranslation($translation, false);
@@ -93,8 +92,7 @@ trait PageI18nTrait
             $translation->removeTranslation($this, false);
 
             foreach ($this->translations as $otherTranslation) {
-                if (
-                    $otherTranslation != $this // déjà fait
+                if ($otherTranslation != $this // déjà fait
                     && $otherTranslation != $translation // on ne se déréférence pas soit-même
                 ) {
                     $otherTranslation->removeTranslation($translation, false);

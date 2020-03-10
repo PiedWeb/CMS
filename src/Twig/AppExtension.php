@@ -34,12 +34,16 @@ class AppExtension extends AbstractExtension
 
     public static function convertMarkdownImage(string $body)
     {
-        return preg_replace('/(?:!\[(.*?)\]\((.*?)\))/', '{%'
+        return preg_replace(
+            '/(?:!\[(.*?)\]\((.*?)\))/',
+            '{%'
             .PHP_EOL.'    include "@PiedWebCMS/component/_inline_image.html.twig" with {'
             .PHP_EOL.'        "image_src" : "$2",'
             .PHP_EOL.'        "image_alt" : "$1"'
             .PHP_EOL.'    } only'
-            .PHP_EOL.'%}'.PHP_EOL, $body);
+            .PHP_EOL.'%}'.PHP_EOL,
+            $body
+        );
     }
 
     public function getFunctions()
@@ -47,18 +51,30 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('homepage', [$this->pageCanonical, 'generatePathForHomepage']),
             new TwigFunction('page', [$this->pageCanonical, 'generatePathForPage']),
-            new TwigFunction('jslink', [AppExtension::class, 'renderJavascriptLink'], [
+            new TwigFunction(
+                'jslink',
+                [AppExtension::class, 'renderJavascriptLink'],
+                [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-            ]),
-            new TwigFunction('link', [AppExtension::class, 'renderJavascriptLink'], [
+                ]
+            ),
+            new TwigFunction(
+                'link',
+                [AppExtension::class, 'renderJavascriptLink'],
+                [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-            ]),
-            new TwigFunction('mail', [AppExtension::class, 'renderEncodedMail'], [
+                ]
+            ),
+            new TwigFunction(
+                'mail',
+                [AppExtension::class, 'renderEncodedMail'],
+                [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-            ]),
+                ]
+            ),
             new TwigFunction(
                 'bookmark', // = anchor
                 [AppExtension::class, 'renderTxtAnchor'],
@@ -116,9 +132,12 @@ class AppExtension extends AbstractExtension
             $path = '@'.substr($path, 7);
         }
 
-        return $env->render('@PiedWebCMS/component/_javascript_link.html.twig', [
+        return $env->render(
+            '@PiedWebCMS/component/_javascript_link.html.twig',
+            [
             'attr' => self::mergeAndMapAttributes($attr, ['data-rot' => str_rot13($path)]),
             'anchor' => $anchor,
-        ]);
+            ]
+        );
     }
 }

@@ -44,12 +44,12 @@ class MarkdownParser extends MarkdownExtra
      *
      * @param array $features enabled or disabled features
      *
-     * You can pass an array of features to disable some of them for performance improvement.
-     * E.g.
-     * $features = array(
-     *     'table' => false,
-     *     'definition_list' => false
-     * )
+     *                        You can pass an array of features to disable some of them for performance improvement.
+     *                        E.g.
+     *                        $features = array(
+     *                        'table' => false,
+     *                        'definition_list' => false
+     *                        )
      */
     public function __construct(array $features = [])
     {

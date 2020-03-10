@@ -62,8 +62,7 @@ class MediaCommand extends Command
     {
         $this
             ->setName('media:cache:generate')
-            ->setDescription('Generate all images cache')
-        ;
+            ->setDescription('Generate all images cache');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
