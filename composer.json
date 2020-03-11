@@ -40,7 +40,7 @@
         "symfony/twig-bundle":"^4.4",
         "symfony/validator":"^4.4",
         "symfony/web-link":"^4.4",
-        "symfony/yaml":"^4.4",
+        "symfony/yaml":"^5.0",
         "symfony/dotenv": "^4.4",
         "symfony/maker-bundle": "^1.14",
         "knplabs/knp-markdown-bundle": "^1.8"
