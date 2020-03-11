@@ -65,7 +65,6 @@ class PageController extends AbstractController
 
         if ($real != $expected) {
             return [$request->getBasePath().$expected, 301];
-            // may log ?
         }
 
         return false;

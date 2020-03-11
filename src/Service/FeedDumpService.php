@@ -42,12 +42,17 @@ class FeedDumpService
      */
     private $page_class;
 
+    private $locale;
+    private $locales;
+
     public function __construct(
         EntityManager $em,
         Twig_Environment $twig,
         PageCanonicalService $pc,
         string $webDir,
-        string $page_class
+        string $page_class,
+        string $locale,
+        string $locales
     ) {
         $this->em = $em;
         $this->pc = $pc;
@@ -55,6 +60,11 @@ class FeedDumpService
         $this->twig = $twig;
         $this->webDir = $webDir;
         $this->page_class = $page_class;
+        $this->locale = $locale;
+        $this->locales = explode('|', $locales);
+        if (empty($this->locales)) {
+            $this->locales = [$locale];
+        }
     }
 
     /**
@@ -63,8 +73,10 @@ class FeedDumpService
      */
     public function dump()
     {
-        $this->dumpFeed();
-        $this->dumpSitemap();
+        foreach ($this->locales as $locale) {
+            $this->dumpFeed($locale);
+            $this->dumpSitemap($locale);
+        }
     }
 
     public function postUpdate()
@@ -72,27 +84,33 @@ class FeedDumpService
         $this->dump();
     }
 
-    protected function dumpFeed()
+    protected function dumpFeed(string $locale)
     {
-        $dump = $this->renderFeed();
-        $filepath = $this->webDir.'/feed.xml';
+        $dump = $this->renderFeed($locale);
+        $filepath = $this->webDir.'/feed'.($this->locale == $locale ? '' : '.'.$locale).'.xml';
 
         $this->filesystem->dumpFile($filepath, $dump);
     }
 
-    protected function dumpSitemap()
+    protected function dumpSitemap(string $locale)
     {
-        $pages = $this->getPages();
-        $this->filesystem->dumpFile($this->webDir.'/sitemap.txt', $this->renderSitemapTxt($pages));
-        $this->filesystem->dumpFile($this->webDir.'/sitemap.xml', $this->renderSitemapXml($pages));
+        $file = $this->webDir.'/sitemap'.($this->locale == $locale ? '' : '.'.$locale);
+
+        $pages = $this->getPages($locale);
+        $this->filesystem->dumpFile($file.'.txt', $this->renderSitemapTxt($pages));
+        $this->filesystem->dumpFile($file.'.xml', $this->renderSitemapXml($pages));
     }
 
-    protected function getPages(?int $limit = null)
+    protected function getPages(string $locale, ?int $limit = null)
     {
         $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
         $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi2')
             ->setParameter('noi2', '%noindex%');
-        $qb->andWhere('p.mainContent NOT LIKE :noi')->setParameter('noi', 'Location:%');
+        $qb->andWhere('p.mainContent IS NULL OR p.mainContent NOT LIKE :noi')->setParameter('noi', 'Location:%');
+
+        // avoid bc break and site with no locale configured
+        $qb->andWhere(($this->locale == $locale ? 'p.locale IS NULL OR ' : '').'p.locale LIKE :locale')
+            ->setParameter('locale', $locale);
 
         if (null !== $limit) {
             $qb->setMaxResults($limit);
@@ -106,9 +124,9 @@ class FeedDumpService
         return $pages;
     }
 
-    protected function renderFeed()
+    protected function renderFeed(string $locale)
     {
-        return $this->twig->render('@PiedWebCMS/page/rss.xml.twig', ['pages' => $this->getPages(5)]);
+        return $this->twig->render('@PiedWebCMS/page/rss.xml.twig', ['pages' => $this->getPages($locale, 5)]);
     }
 
     protected function renderSitemapTxt($pages)
