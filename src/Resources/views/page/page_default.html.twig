@@ -12,6 +12,17 @@
     <link rel="canonical" href="{{ app_base_url is defined ? app_base_url : '' }}{{ page(page.realSlug) }}" />
 {% endblock %}
 
+
+{% block alternate_language %}
+    {% if page.locale is not null %}
+        <link rel="alternate" hreflang="{{ page.locale }}" href="{{ base_url }}{{ page(page.slug) }}" />
+        {% for translation in page.translations %}
+            <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ base_url }}{{ page(translation.slug) }}" />
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+
 {% block open_graph %}
     {% if page is defined %}
         <meta name="og:title" content="{{ (page.h1 is not null ? page.h1 : page.title)|striptags }}">
