@@ -66,9 +66,9 @@ class PageAdmin extends AbstractAdmin
         return method_exists($this->getContainer()->getParameter('app.entity_page'), 'get'.$name);
     }
 
-    protected function configureFormFieldsBlockDetails(FormMapper $formMapper)
+    protected function configureFormFieldsBlockDetails(FormMapper $formMapper): FormMapper
     {
-        $formMapper->with('admin.details', ['class' => 'col-md-6 order-1']);
+        $formMapper->with('admin.details', ['class' => 'col-md-5']);
 
         if ($this->exists('name')) {
             $formMapper->add(
@@ -141,12 +141,17 @@ class PageAdmin extends AbstractAdmin
                 ]
             );
         }
+
+        $this->configureFormFieldOtherProperties($formMapper);
+
         $formMapper->end();
+
+        return $formMapper;
     }
 
-    protected function configureFormFieldsBlockContent(FormMapper $formMapper)
+    protected function configureFormFieldsBlockContent(FormMapper $formMapper): FormMapper
     {
-        $formMapper->with('admin.page.mainContent.label');
+        $formMapper->with('admin.page.mainContent.label', ['class' => 'col-md-7']);
         $formMapper->add(
             'mainContent',
             TextareaType::class,
@@ -171,12 +176,13 @@ class PageAdmin extends AbstractAdmin
             ]
         );
         $formMapper->end();
+
+        return $formMapper;
     }
 
-    public function configureFormFieldsBlockOtherProperties(FormMapper $formMapper)
+    public function configureFormFieldOtherProperties(FormMapper $formMapper): FormMapper
     {
-        $formMapper->with('admin.page.otherProperties.label');
-        $formMapper->add(
+        return !$this->exists('otherProperties') ? $formMapper : $formMapper->add(
             'otherProperties',
             null,
             [
@@ -185,16 +191,15 @@ class PageAdmin extends AbstractAdmin
                 'style' => 'min-height: 10vh;font-size:125%;',
                 'data-editor' => 'yaml',
             ],
-            'label' => ' ',
-            //'help' => 'admin.page.otherProperties.help',
+            'label' => 'admin.page.otherProperties.label',
+            'help' => 'admin.page.otherProperties.help',
             ]
         );
-        $formMapper->end();
+    }
 
-        $formMapper->with('admin.page.translations.label');
-
-        // check if translation is another language todo
-        $formMapper->add(
+    public function configueFormFieldTranslations(FormMapper $formMapper): FormMapper
+    {
+        return $formMapper->add(
             'translations',
             ModelAutocompleteType::class,
             [
@@ -202,18 +207,19 @@ class PageAdmin extends AbstractAdmin
                     'multiple' => true,
                     'class' => $this->getContainer()->getParameter('app.entity_page'),
                     'property' => 'slug',
-                    'label' => ' ',
+                    'label' => 'admin.page.translations.label',
                     'help' => 'admin.page.translations.help',
                     'btn_add' => false,
                     'to_string_callback' => function ($entity) {
-                        return $entity->getSlug(); // switch for getLocale
+                        return $entity->getLocale() ?? $entity->getSlug(); // switch for getLocale
+                            // todo : remove it in next release and leave only get locale
+                            // todo : add a clickable link to the other admin
                     },
             ]
         );
-        $formMapper->end();
     }
 
-    protected function configureFormFieldsBlockTitle(FormMapper $formMapper)
+    protected function configureFormFieldsBlockTitle(FormMapper $formMapper): FormMapper
     {
         $formMapper->with('admin.page.title.label', ['class' => 'col-md-7']);
         $formMapper->add(
@@ -276,12 +282,14 @@ class PageAdmin extends AbstractAdmin
             );
         }
         $formMapper->end();
+
+        return $formMapper;
     }
 
-    protected function configureFormFieldsBlockImages(FormMapper $formMapper)
+    protected function configureFormFieldsBlockImages(FormMapper $formMapper): FormMapper
     {
         if ($this->exists('images')) {
-            $formMapper->with('admin.page.images.label', ['class' => 'col-md-3']);
+            $formMapper->with('admin.page.images.label', ['class' => 'col-md-5']);
             $formMapper->add(
                 'pageHasMedias',
                 \Sonata\CoreBundle\Form\Type\CollectionType::class,
@@ -307,11 +315,13 @@ class PageAdmin extends AbstractAdmin
             );
             $formMapper->end();
         }
+
+        return $formMapper;
     }
 
-    protected function configureFormFieldsBlockEdition(FormMapper $formMapper)
+    protected function configureFormFieldsBlockEdition(FormMapper $formMapper): FormMapper
     {
-        $formMapper->with('admin.edition', ['class' => 'col-md-3']);
+        $formMapper->with('admin.edition', ['class' => 'col-md-5']);
 
         if ($this->exists('metaRobots')) {
             $formMapper->add(
@@ -348,7 +358,7 @@ class PageAdmin extends AbstractAdmin
                 EntityType::class,
                 [
                  'label' => 'admin.page.author.label',
-                 'class' => $this->getContainer()->getParameter('app.entity_user'), 'label' => 'Auteur',
+                 'class' => $this->getContainer()->getParameter('app.entity_user'),
                  'required' => false,
                 ]
             );
@@ -365,7 +375,13 @@ class PageAdmin extends AbstractAdmin
             );
         }
 
+        if ($this->exists('translations')) {
+            $this->configueFormFieldTranslations($formMapper);
+        }
+
         $formMapper->end();
+
+        return $formMapper;
     }
 
     protected function configureFormFields(FormMapper $formMapper)
@@ -373,9 +389,8 @@ class PageAdmin extends AbstractAdmin
         $this->configureFormFieldsBlockTitle($formMapper);
         $this->configureFormFieldsBlockContent($formMapper);
         $this->configureFormFieldsBlockDetails($formMapper);
-        $this->configureFormFieldsBlockImages($formMapper);
         $this->configureFormFieldsBlockEdition($formMapper);
-        $this->configureFormFieldsBlockOtherProperties($formMapper);
+        $this->configureFormFieldsBlockImages($formMapper);
     }
 
     protected function configureDatagridFilters(DatagridMapper $formMapper)

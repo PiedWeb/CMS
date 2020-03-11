@@ -22,6 +22,11 @@ admin:
         content: Contenu
         list: Liste
         user: Utilisateur
+        manage: Mettre en ligne
+        update: Actualiser
+        params: Paramètres
+        theme: Thème
+        check_content: Vérifier le contenu
 
     action: Action
     details: Details
@@ -41,7 +46,7 @@ admin:
         subTitle:
             label: Sous-titre
         translations:
-            label: 'Traducations'
+            label: 'Traductions'
             help: ' '
         excrept:
             label: Courte Description
@@ -74,15 +79,15 @@ admin:
             label: Moteur de thème (facultatif)
         mainContent:
             label: Corps de la page
-            help: Les balises HTML ainsi que les fonctionnalités de Twig sont autorisées.
+            help: Les balises HTML ainsi que les fonctionnalités de Twig sont autorisées.<br><br>
         mainImage:
             label: Image d'en-tête
         markdown:
             label: Formatage markdown
-            help: Applique l'enrichissement du texte via la syntaxe Markdown. <br><a href="/admin/markdown-cheatsheet" target=_blank>Voir la documentation</a>.
+            help: Applique l'enrichissement du texte via la syntaxe Markdown à l'intégralité du contenu.<br>Sinon utilisé directement <code>{% filter markdown %}mon texte{% endfilter %}</code>. <br><a href="/admin/markdown-cheatsheet" target=_blank>En savoir plus</a>.
         otherProperties:
-            label: Autre
-            help: Au format YAML.
+            label: Autres paramètres
+            help: Au format <em>YAML</em>.
 
 
     user:
