@@ -13,6 +13,20 @@
     container_txt boolean
     banner_content_position     stick
 #}
+
+{% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
+{% set subtitle = page.subtitle %}
+{% set description = page.chapeau is not null ? include(template_from_string(page.chapeau)) : null %}
+{% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
+{% set image_alt = page.mainImage is defined and page.mainImage is not null ? page.mainImage.name : title %}
+{% set color = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.mainColor) : null %}
+
+{% set overlay = page.bg_transition ?? overlay ?? '' %}
+{% set size = page.headerSize ?? size ?? 'thirdscreen' %}
+{% set container_txt = true %}
+{% set multiple_bg = page.bg_multiple ? page.bg_multiple|split(';') : [] %}
+
+
 {% if image is defined and image is not null %}
     <section class="hero-banner mb-3 next-navbar">
 
@@ -22,10 +36,10 @@
                 data-bg="{{ image| imagine_filter('default') }}"
                 data-darken="{{ overlay is defined ? overlay : '' }}"
                 data-pos="no-repeat center center"
-                {% for bg in multiple_bg %}
+                {% if multiple_bg is defined %}{% for bg in multiple_bg %}
                     {% set bg1 = bg|split(':') %}
                     data-bg_{{ bg1.0 }}="{{ bg1.1 }}"
-                {% endfor %}
+                {% endfor %}{% endif %}
             {% endif %}
         >
             <div class="{{ size is defined ? size : 'halfscreen' }} container{{ container_txt is defined ? '-txt' : '' }} mt-4">

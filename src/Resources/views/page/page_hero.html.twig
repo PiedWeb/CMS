@@ -3,23 +3,14 @@
 {% block content %}
 
     {% block title %}
-        {% set container_txt = true %}
-        {% set overlay = 'inverse' %}
-        {# value https://github.com/PiedWeb/piedweb-tyrol-free-bootstrap-4-theme/blob/6abee4cc05b7dc4d13483a45c269d2529a25edd0/src/js/helpers.js#L46 #}
-        {% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
-        {% set subtitle = page.getEmc('subtitle') %}
-        {% set description = page.chapeau is not null ? include(template_from_string(page.chapeau)) : null %}
-        {% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
-        {% include '@PiedWebCMS/component/_hero-banner.html.twig' %}
+        {% include '@PiedWebCMS/page/_hero-banner.html.twig' %}
     {% endblock %}
 
     {% block main_content %}
         {% if page.readableContent is not empty %}
             <section class="{{container is defined ? ' '~container : 'container container-txt mb-5 mt-5'}}">
 
-                {% block main_content %}
                     {{ include(template_from_string(page.readableContent)) }}
-                {% endblock %}
 
                 {% block after_content %}{% endblock %}
 

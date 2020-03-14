@@ -1,14 +1,13 @@
 {#
     @params array   logo {href, alt},
     @params array   items {attr:{href...}, anchor, items: [...]}
-    @params boolean container
-    @params boolean container_txt
-    @params boolean fixed_top
+    @params string menu_container
+    @params string menu_position
 #}
+
 <header id="navbar">
-    <nav class="navbar navbar-expand-lg bg-white w-100 fixed-top">
-        {{ container is defined ? '<div class="container">' : '' }}
-        {{ container_txt is defined ? '<div class="container container-txt">' : '' }}
+    <nav class="navbar navbar-expand-lg bg-white w-100 {{ menu_position|default('position-absolute top-0') }}">
+        <div class="{{ menu_container|default('container') }}">
 
             {% block logo %}
                 {% if logo is defined %}
@@ -64,7 +63,6 @@
 
 
             {% endif %}
-        {{ container is defined ? '</div>' : '' }}
-        {{ container_txt is defined ? '</div>' : '' }}
+        </div>
     </nav>
 </header>

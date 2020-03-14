@@ -39,6 +39,10 @@
 
 {% block body %}
 
+    {% block next-navbar %}
+        <div class=next-navbar></div>
+    {% endblock %}
+
 
     {% block content %}
         {% include '@PiedWebCMS/page/_main_content.html.twig' %}

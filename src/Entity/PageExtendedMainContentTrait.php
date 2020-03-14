@@ -145,7 +145,7 @@ trait PageExtendedMainContentTrait
         if (preg_match('/^get/', $method)) {
             $property = lcfirst(preg_replace('/^get/', '', $method));
             if (!property_exists(get_class($this), $property)) {
-                return $this->getOtherPropertiesParsed($property) ?? $this->getEmc($name);
+                return $this->getOtherPropertiesParsed($property) ?? $this->getEmc($property);
                 // todo remove the else next release
             }
 
