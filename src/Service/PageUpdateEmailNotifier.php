@@ -15,6 +15,9 @@ class PageUpdateEmailNotifier
     private $emailSender;
     private $emailToNotify;
     private $router;
+    private $appName;
+    private $rootDir;
+    private $filesystem;
 
     public function __construct(
         string $appName,

@@ -10,30 +10,21 @@ sonata_admin:
             #- { type: sonata.admin.block.admin_list, position: left }
         groups:
             app.admin.group.page:
-                label: admin.label.content
-                label_catalogue: messages
+                label: Pages #admin.label.content
+                label_catalogue: Pages #admin.label.content
                 items:
                     - piedweb.admin.page
                     - piedweb.admin.media
-
-            app.admin.group.static:
-                label: admin.label.manage
-                label_catalogue: messages
-                icon:            '<i class="fa fa-bolt"></i>'
-                items:
-                    - route:        piedweb_cms_page_scanner
-                      label:        admin.label.check_content
                     - route:        piedweb_static_generate
-                      label:        admin.label.update
+                      label:        Actualiser
 
             app.admin.group.setting:
-                label: admin.label.params
-                label_catalogue: messages
-                icon:            '<i class="fa fa-wrench"></i>'
+                label: Paramètres #admin.label.user
+                label_catalogue: Paramètres #admin.label.user
                 items:
                     - piedweb.admin.user
                     - route:        piedweb_cms_template_editor_list
-                      label:        admin.label.theme
+                      label:        Thème
     options:
         lock_protection: true
     assets:
@@ -51,6 +42,6 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts: [admin]
 
-        #sonata_translation.block.locale_switcher: ~
+        sonata_translation.block.locale_switcher: ~
         sonata.admin.block.search_result:
             contexts:   [admin]

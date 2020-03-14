@@ -5,6 +5,7 @@ twig:
     paths:
         "%kernel.root_dir%/../vendor/sonata-project/admin-bundle/src/Resources/views": SonataAdmin
         "%kernel.root_dir%/../templates": App
+        "%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Resources/views/FOSUserBundle/views": FOSUser
         "%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Resources/views/TwigBundle": Twig
     form_themes:
         - 'bootstrap_4_layout.html.twig'

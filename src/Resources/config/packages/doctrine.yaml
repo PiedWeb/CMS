@@ -26,7 +26,7 @@ doctrine:
                 type: annotation
                 dir: 'Entity'
                 alias: PiedWebCMS
-#            FOSUserBundle: ~
+            FOSUserBundle: ~
             translatable:
                 type: annotation
                 alias: Gedmo

@@ -1,7 +1,7 @@
 security:
     encoders:
         '%app.entity_user%':
-            algorithm: auto
+            algorithm: bcrypt
 
     role_hierarchy:
         ROLE_EDITOR:
@@ -23,25 +23,19 @@ security:
         strategy: unanimous
 
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        piedweb_cms_user_provider:
-            entity:
-                class: '%app.entity_user%'
-                property: email
-
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
-            http_basic:
-                realm: Secured Area
-            guard:
-                authenticators:
-                    - PiedWeb\CMSBundle\Security\UserAuthenticator
-            logout:
-                path: piedweb_cms_logout
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+            logout:       true
+            anonymous:    true
             remember_me:
                 lifetime: 31536000 # a year
                 always_remember_me: true
