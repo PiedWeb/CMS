@@ -252,7 +252,10 @@ class PageAdmin extends AbstractAdmin
     {
         if ($this->exists('images')) {
             $formMapper->with('admin.page.images.label', ['class' => 'col-md-5']);
-            $formMapper->add('pageHasMedias', \Sonata\CoreBundle\Form\Type\CollectionType::class, [
+            $formMapper->add(
+                'pageHasMedias',
+                \Sonata\CoreBundle\Form\Type\CollectionType::class,
+                [
                     'by_reference' => false,
                     'required' => false,
                     'label' => ' ',
