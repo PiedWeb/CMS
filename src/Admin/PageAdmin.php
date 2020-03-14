@@ -71,46 +71,31 @@ class PageAdmin extends AbstractAdmin
         $formMapper->with('admin.details', ['class' => 'col-md-5']);
 
         if ($this->exists('name')) {
-            $formMapper->add(
-                'name',
-                TextType::class,
-                [
+            $formMapper->add('name', TextType::class, [
                 'label' => 'admin.page.name.label',
                 'required' => false,
                 'help' => 'admin.page.name.help',
-                ]
-            );
+            ]);
         }
 
         if ($this->exists('parentPage')) {
-            $formMapper->add(
-                'parentPage',
-                EntityType::class,
-                [
+            $formMapper->add('parentPage', EntityType::class, [
                 'class' => $this->getContainer()->getParameter('app.entity_page'),
                 'label' => 'admin.page.parentPage.label',
                 'required' => false,
-                ]
-            );
+            ]);
         }
 
         if ($this->exists('excrept')) {
-            $formMapper->add(
-                'excrept',
-                TextareaType::class,
-                [
+            $formMapper->add('excrept', TextareaType::class, [
                 'required' => false,
                 'label' => 'admin.page.excrept.label',
                 'help' => 'admin.page.excrept.help',
-                ]
-            );
+            ]);
         }
 
         if ($this->exists('faq')) {
-            $formMapper->add(
-                'faq',
-                ModelAutocompleteType::class,
-                [
+            $formMapper->add('faq', ModelAutocompleteType::class, [
                 'required' => false,
                 'multiple' => true,
                 'class' => $this->getContainer()->getParameter('app.entity_faq'),
@@ -120,15 +105,11 @@ class PageAdmin extends AbstractAdmin
                 'to_string_callback' => function ($entity) {
                     return $entity->getQuestion();
                 },
-                ]
-            );
+            ]);
         }
 
         if ($this->exists('relatedPages')) {
-            $formMapper->add(
-                'relatedPages',
-                ModelAutocompleteType::class,
-                [
+            $formMapper->add('relatedPages', ModelAutocompleteType::class, [
                     'required' => false,
                     'multiple' => true,
                     'class' => $this->getContainer()->getParameter('app.entity_page'),
@@ -138,8 +119,7 @@ class PageAdmin extends AbstractAdmin
                     'to_string_callback' => function ($entity) {
                         return $entity->getTitle();
                     },
-                ]
-            );
+            ]);
         }
 
         $this->configureFormFieldOtherProperties($formMapper);
@@ -152,10 +132,7 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFieldsBlockContent(FormMapper $formMapper): FormMapper
     {
         $formMapper->with('admin.page.mainContent.label', ['class' => 'col-md-7']);
-        $formMapper->add(
-            'mainContent',
-            TextareaType::class,
-            [
+        $formMapper->add('mainContent', TextareaType::class, [
             'attr' => [
                 'style' => 'min-height: 80vh;font-size:125%; max-width:900px',
                 'data-editor' => 'markdown',
@@ -164,17 +141,12 @@ class PageAdmin extends AbstractAdmin
             'required' => false,
             'label' => ' ',
             'help' => 'admin.page.mainContent.help',
-            ]
-        );
-        $formMapper->add(
-            'mainContentIsMarkdown',
-            null,
-            [
+        ]);
+        $formMapper->add('mainContentIsMarkdown', null, [
             'required' => false,
             'label' => 'admin.page.markdown.label',
             'help' => 'admin.page.markdown.help',
-            ]
-        );
+        ]);
         $formMapper->end();
 
         return $formMapper;
@@ -182,10 +154,7 @@ class PageAdmin extends AbstractAdmin
 
     public function configureFormFieldOtherProperties(FormMapper $formMapper): FormMapper
     {
-        return !$this->exists('otherProperties') ? $formMapper : $formMapper->add(
-            'otherProperties',
-            null,
-            [
+        return !$this->exists('otherProperties') ? $formMapper : $formMapper->add('otherProperties', null, [
             'required' => false,
             'attr' => [
                 'style' => 'min-height: 10vh;font-size:125%;',
@@ -193,16 +162,12 @@ class PageAdmin extends AbstractAdmin
             ],
             'label' => 'admin.page.otherProperties.label',
             'help' => 'admin.page.otherProperties.help',
-            ]
-        );
+        ]);
     }
 
     public function configueFormFieldTranslations(FormMapper $formMapper): FormMapper
     {
-        return $formMapper->add(
-            'translations',
-            ModelAutocompleteType::class,
-            [
+        return $formMapper->add('translations', ModelAutocompleteType::class, [
                     'required' => false,
                     'multiple' => true,
                     'class' => $this->getContainer()->getParameter('app.entity_page'),
@@ -215,71 +180,50 @@ class PageAdmin extends AbstractAdmin
                             // todo : remove it in next release and leave only get locale
                             // todo : add a clickable link to the other admin
                     },
-            ]
-        );
+        ]);
     }
 
     protected function configureFormFieldsBlockTitle(FormMapper $formMapper): FormMapper
     {
         $formMapper->with('admin.page.title.label', ['class' => 'col-md-7']);
-        $formMapper->add(
-            'title',
-            TextType::class,
-            [
+        $formMapper->add('title', TextType::class, [
             'label' => 'admin.page.title.label',
             'help' => 'admin.page.title.help',
-            ]
-        );
+        ]);
 
         // Method existance is checked on each element to permit to use admin without all page Trait.
         if ($this->exists('H1')) {
-            $formMapper->add(
-                'h1',
-                TextType::class,
-                [
+            $formMapper->add('h1', TextType::class, [
                 'required' => false,
                 'attr' => ['class' => 'input-lg'],
                 'label' => 'admin.page.h1.label',
                 'help' => 'admin.page.h1.help',
-                ]
-            );
+            ]);
         }
 
         if ($this->exists('MainImage')) {
-            $formMapper->add(
-                'mainImage',
-                \Sonata\AdminBundle\Form\Type\ModelListType::class,
-                [
+            $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
                 'required' => false,
                 'class' => $this->getContainer()->getParameter('app.entity_media'),
                 'label' => 'admin.page.mainImage.label',
                 'btn_edit' => false,
-                ]
-            );
+            ]);
         }
         $formMapper->end();
 
         $formMapper->with('admin.page.params.label', ['class' => 'col-md-5']);
-        $formMapper->add(
-            'slug',
-            TextType::class,
-            [
+        $formMapper->add('slug', TextType::class, [
             'label' => 'admin.page.slug.label',
             'help' => 'admin.page.slug.help',
             'attr' => [
                 ($this->getSubject() ? ($this->getSubject()->getSlug() ? 'disabled' : 't') : 't') => '',
             ],
-            ]
-        );
+        ]);
         if ($this->exists('Locale')) {
-            $formMapper->add(
-                'locale',
-                TextType::class,
-                [
+            $formMapper->add('locale', TextType::class, [
                 'label' => 'admin.page.locale.label',
                 'help' => 'admin.page.locale.help',
-                ]
-            );
+            ]);
         }
         $formMapper->end();
 
@@ -290,10 +234,7 @@ class PageAdmin extends AbstractAdmin
     {
         if ($this->exists('images')) {
             $formMapper->with('admin.page.images.label', ['class' => 'col-md-5']);
-            $formMapper->add(
-                'pageHasMedias',
-                \Sonata\CoreBundle\Form\Type\CollectionType::class,
-                [
+            $formMapper->add('pageHasMedias', \Sonata\CoreBundle\Form\Type\CollectionType::class, [
                     'by_reference' => false,
                     'required' => false,
                     'label' => ' ',
@@ -324,22 +265,15 @@ class PageAdmin extends AbstractAdmin
         $formMapper->with('admin.edition', ['class' => 'col-md-5']);
 
         if ($this->exists('metaRobots')) {
-            $formMapper->add(
-                'metaRobots',
-                ChoiceType::class,
-                [
+            $formMapper->add('metaRobots', ChoiceType::class, [
                 'choices' => [
                     'admin.page.metaRobots.choice.noIndex' => 'noindex',
                 ],
                  'label' => 'admin.page.metaRobots.label',
                 'required' => false,
-                ]
-            );
+            ]);
         }
-        $formMapper->add(
-            'createdAt',
-            DateTimePickerType::class,
-            [
+        $formMapper->add('createdAt', DateTimePickerType::class, [
             'format' => DateTimeType::HTML5_FORMAT,
             'dp_side_by_side' => true,
             'dp_use_current' => true,
@@ -349,30 +283,21 @@ class PageAdmin extends AbstractAdmin
             'dp_view_mode' => 'days',
             'dp_min_view_mode' => 'days',
             'label' => 'admin.page.createdAt.label',
-            ]
-        );
+        ]);
 
         if ($this->exists('author')) {
-            $formMapper->add(
-                'author',
-                EntityType::class,
-                [
+            $formMapper->add('author', EntityType::class, [
                  'label' => 'admin.page.author.label',
                  'class' => $this->getContainer()->getParameter('app.entity_user'),
                  'required' => false,
-                ]
-            );
+            ]);
         }
 
         if ($this->exists('template')) {
-            $formMapper->add(
-                'template',
-                null,
-                [
+            $formMapper->add('template', null, [
                  'label' => 'admin.page.template.label',
                  'required' => false,
-                ]
-            );
+            ]);
         }
 
         if ($this->exists('translations')) {
@@ -415,28 +340,20 @@ class PageAdmin extends AbstractAdmin
         }
 
         if ($this->exists('metaRobots')) {
-            $formMapper->add(
-                'metaRobots',
-                null,
-                [
+            $formMapper->add('metaRobots', null, [
                 'choices' => [
                     'admin.page.metaRobots.choice.noIndex' => 'noindex',
                 ],
                 'label' => 'admin.page.metaRobots.label',
-                ]
-            );
+            ]);
         }
 
         if ($this->exists('author')) {
-            $formMapper->add(
-                'author',
-                null,
-                [
+            $formMapper->add('author', null, [
                  'label' => 'admin.page.author.label',
                  'class' => $this->getContainer()->getParameter('app.entity_user'),
                  'required' => false,
-                ]
-            );
+            ]);
         }
     }
 
@@ -447,47 +364,24 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->add(
-            'slug',
-            null,
-            [
+        $listMapper->add('slug', null, [
             'label' => 'admin.page.slug.label',
-            ]
-        );
-        $listMapper->addIdentifier(
-            'title',
-            'html',
-            [
+        ]);
+        $listMapper->addIdentifier('title', 'html', [
             'label' => 'admin.page.title.label',
-            ]
-        );
-        $listMapper->add(
-            'updatedAt',
-            null,
-            [
+        ]);
+        $listMapper->add('updatedAt', null, [
             'format' => 'd/m à H:m',
             'label' => 'admin.page.updatedAt.label',
-            ]
-        );
-        $listMapper->add(
-            'createdAt',
-            null,
-            [
+        ]);
+        $listMapper->add('createdAt', null, [
             'format' => 'd/m/y',
             'label' => 'admin.page.createdAt.label',
-            ]
-        );
-        $listMapper->add(
-            'metaRobots',
-            null,
-            [
+        ]);
+        $listMapper->add('metaRobots', null, [
             'label' => 'admin.page.metaRobots.label',
-            ]
-        );
-        $listMapper->add(
-            '_action',
-            null,
-            [
+        ]);
+        $listMapper->add('_action', null, [
             'actions' => [
                 'show' => [],
                 'delete' => [],
@@ -495,8 +389,7 @@ class PageAdmin extends AbstractAdmin
             'row_align' => 'right',
             'header_class' => 'text-right',
             'label' => 'admin.action',
-            ]
-        );
+        ]);
     }
 
     public function getObjectMetadata($page)
