@@ -7,7 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
-        "cocur/slugify": "^3.2",
+        "cocur/slugify": "^4.0",
         "dpolac/twig-lambda": "^1.0",
         "liip/imagine-bundle": "^2.3",
         "sonata-project/admin-bundle": "^3",
