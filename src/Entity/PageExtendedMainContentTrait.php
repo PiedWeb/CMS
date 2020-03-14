@@ -112,7 +112,7 @@ trait PageExtendedMainContentTrait
         if (!empty($this->otherProperties)) {
             // ou utiliser yaml_parse
             try {
-                $validate = Yaml::parse($this->otherProperties);
+                Yaml::parse($this->otherProperties);
             } catch (ParseException $exception) {
                 $context->buildViolation('page.otherProperties.malformed') //'$exception->getMessage())
                     ->atPath('otherProperties')

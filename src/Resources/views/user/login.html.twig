@@ -28,26 +28,14 @@
            value="{{ csrf_token('authenticate') }}"
     >
 
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
+    <div class="custom-control custom-checkbox mb-20">
+        <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="custom-control-input" checked />
+        <label for="remember_me" class="custom-control-label look-disabled small">{{ 'security.login.remember_me'|trans }}</label>
+    </div>
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-
-        <div class="custom-control custom-checkbox mb-20">
-            <input type="checkbox" id="remember_me" name="_remember_me" value="on" class="custom-control-input" checked />
-            <label for="remember_me" class="custom-control-label look-disabled small">{{ 'security.login.remember_me'|trans }}</label>
-        </div>
-
-        <div>
-          <button type="submit" class="btn btn-primary btn-circle">{{ 'security.login.label_button'|trans }}</button>
-        </div>
+    <div>
+      <button type="submit" class="btn btn-primary btn-circle">{{ 'security.login.label_button'|trans }}</button>
+    </div>
 
 </form>
 {% endblock %}

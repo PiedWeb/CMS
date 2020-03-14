@@ -32,7 +32,7 @@ Then edit `config/packages/piedweb_cms.yaml` and files in `assets` to configure 
 
 ## Update
 
-For `0.0.26` to newer version check `update27`.
+Check [Update.md](https://raw.githubusercontent.com/PiedWeb/CMS/master/UPDATE.md)
 
 ## Test
 

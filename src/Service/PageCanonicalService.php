@@ -26,7 +26,7 @@ class PageCanonicalService
         $this->defaultLocale = $defaultLocale;
     }
 
-    public function generatePathForHomepage(?string $expectedLocale = null)
+    public function generatePathForHomepage()
     {
         return $this->router->generate('piedweb_cms_homepage');
     }
@@ -37,7 +37,7 @@ class PageCanonicalService
     public function generatePathForPage(string $slug, ?string $expectedLocale = null)
     {
         if ('' == $slug) {
-            return $this->generatePathForHomepage($expectedLocale);
+            return $this->generatePathForHomepage();
         }
 
         return $this->router->generate('piedweb_cms_page', ['slug' => $slug]);

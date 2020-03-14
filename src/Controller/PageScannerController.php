@@ -7,6 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PageScannerController extends AbstractController
 {
+    /**
+     * @var PageScannerService
+     */
+    protected $scanner;
+
     public function __construct(PageScannerService $scanner)
     {
         $this->scanner = $scanner;

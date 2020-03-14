@@ -88,10 +88,7 @@ class PageController extends AbstractController
     }
 
     public function feed(
-        ?string $slug,
-        Request $request,
-        TranslatorInterface $translator,
-        ParameterBagInterface $params
+        ?string $slug
     ) {
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = $this->getDoctrine()

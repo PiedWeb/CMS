@@ -123,8 +123,6 @@ class MediaAdmin extends AbstractAdmin
 
     protected function showRelatedPages(): string
     {
-        $media = $this->getSubject();
-
         return $this->getContainer()->get('twig')->render(
             '@PiedWebCMS/admin/media_show.relatedPages.html.twig',
             $this->getRelatedPages()
