@@ -20,6 +20,12 @@ UPDATE with BC BREAK
       UPDATE `user` SET `roles`= '["ROLE_SUPER_ADMIN"]' WHERE _rowid_='2';
       ```
 
+- remove from composer.json
+  ```
+              "require": "4.4.*"
+  ```
+  and bump php to 7.3
+
 
 ## Update to 0.0.27
 

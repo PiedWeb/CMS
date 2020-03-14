@@ -71,14 +71,6 @@ trait PageExtendedMainContentTrait
         return $this->chapeau;
     }
 
-    /**
-     * Shortcut, will be destroy soon.
-     */
-    public function getSubtitle()
-    {
-        return $this->getEmc('subtitle');
-    }
-
     public function mainContentIsMarkdown(): bool
     {
         return null === $this->mainContentIsMarkdown ? false : $this->mainContentIsMarkdown;
@@ -153,7 +145,8 @@ trait PageExtendedMainContentTrait
         if (preg_match('/^get/', $method)) {
             $property = lcfirst(preg_replace('/^get/', '', $method));
             if (!property_exists(get_class($this), $property)) {
-                return $this->getOtherPropertiesParsed($property);
+                return $this->getOtherPropertiesParsed($property) ?? $this->getEmc($name);
+                // todo remove the else next release
             }
 
             return $this->$property;
