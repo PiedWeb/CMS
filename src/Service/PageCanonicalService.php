@@ -34,7 +34,7 @@ class PageCanonicalService
     /**
      * @var string Permit to generate a link for another language than the current request
      */
-    public function generatePathForPage(string $slug, ?string $expectedLocale = null)
+    public function generatePathForPage(string $slug)
     {
         if ('' == $slug) {
             return $this->generatePathForHomepage();

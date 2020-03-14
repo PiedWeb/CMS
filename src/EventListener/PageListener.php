@@ -3,7 +3,7 @@
 namespace PiedWeb\CMSBundle\EventListener;
 
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
-use PiedWeb\CMSBundle\Service\FeedDumperService;
+use PiedWeb\CMSBundle\Service\FeedDumpService;
 
 class PageListener
 {
@@ -23,7 +23,7 @@ class PageListener
         $this->feedDumper->postPersist();
     }
 
-    public function setFeedDumper(FeedDumperService $feedDumper)
+    public function setFeedDumper(FeedDumpService $feedDumper)
     {
         $this->feedDumper = $feedDumper;
     }

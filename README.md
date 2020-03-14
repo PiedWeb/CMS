@@ -60,11 +60,13 @@ List of Bundles wich extend this one:
 
 ### Next
 
-- Change translatable (gedmo) to make something more scalable and easy to use with repo (knp ?, other?)
 - search for all "todo" in the code
 - Extension: load block via ajax (like [Contact](https://github.com/PiedWeb/ContactBundle))
 - clean and test the code
-- export/import CSV (via cli/via admin)
+- export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
+- revoir l'installation auto
+- revoir le système de traduction : suite et fin (MEDIA : permettre de customiser le slug en fonction de la locale (controller ? ou symlinking from entity))
+- sf5 : développer l'admin pour easyadminv3
 
 ## Credits
 
