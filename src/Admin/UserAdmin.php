@@ -6,7 +6,6 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Sonata\CoreBundle\Form\Type\ImmutableArrayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -42,21 +41,13 @@ class UserAdmin extends AbstractAdmin
         $formMapper
             ->with('admin.user.label.id', ['class' => 'col-md-4'])
                     //->add('username')
-            ->add(
-                'email',
-                null,
-                [
+            ->add('email', null, [
                         'label' => 'admin.user.email.label',
-                        ]
-            )
-            ->add(
-                'plainPassword',
-                TextType::class,
-                [
+            ])
+            ->add('plainPassword', TextType::class, [
                         'required' => (!$this->getSubject() || null === $this->getSubject()->getId()),
                         'label' => 'admin.user.password.label',
-                        ]
-            )
+            ])
             ->end();
 
         $formMapper
@@ -119,35 +110,13 @@ class UserAdmin extends AbstractAdmin
         $formMapper->end()
 
             ->with('admin.user.label.security', ['class' => 'col-md-4'])
-            ->add(
-                'enabled',
-                null,
-                [
-                    'required' => false,
-                    'label' => 'admin.user.enabled.label',
-                    ]
-            )
-
-                /*
-                ->with('Groups')
-                    ->add('groups', ModelType::class, [
-                        'required' => false,
-                        'expanded' => true,
-                        'multiple' => true,
-                    ])
-                ->end()
-                */
-
-            ->add(
-                'roles',
-                ImmutableArrayType::class,
-                [
+            ->add('roles', ImmutableArrayType::class, [
                     'label' => false,
                     'keys' => [
                         ['0', ChoiceType::class, [
                             'required' => false,
                             'label' => 'admin.user.role.label',
-                            'choices' => $this->getUser()->isSuperAdmin() ? [
+                            'choices' => $this->getUser()->hasRole('ROLE_SUPER_ADMIN') ? [
                                 'admin.user.role.super_admin' => 'ROLE_SUPER_ADMIN',
                                 'admin.user.role.admin' => 'ROLE_ADMIN',
                                 'admin.user.role.editor' => 'ROLE_EDITOR',
@@ -159,9 +128,7 @@ class UserAdmin extends AbstractAdmin
                                 ],
                         ]],
                     ],
-                    ]
-            )
-
+            ])
             ->end();
     }
 
@@ -176,13 +143,9 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add(
-                'email',
-                null,
-                [
+            ->add('email', null, [
                 'label' => 'admin.user.email.label',
-                ]
-            );
+            ]);
         if ($this->exists('firstname')) {
             $listMapper->add(
                 'firstname',
@@ -211,26 +174,11 @@ class UserAdmin extends AbstractAdmin
             ]);
         /**/
         $listMapper
-            ->add(
-                'enabled',
-                null,
-                [
-                'editable' => true,
-                'label' => 'admin.user.enabled.label',
-                ]
-            )
-            ->add(
-                'createdAt',
-                null,
-                [
+            ->add('createdAt', null, [
                 'editable' => true,
                 'label' => 'admin.user.createdAt.label',
-                ]
-            )
-            ->add(
-                '_action',
-                null,
-                [
+            ])
+            ->add('_action', null, [
                 'actions' => [
                     'edit' => [],
                     'delete' => [],
@@ -238,7 +186,6 @@ class UserAdmin extends AbstractAdmin
                 'row_align' => 'right',
                 'header_class' => 'text-right',
                 'label' => 'admin.action',
-                ]
-            );
+            ]);
     }
 }

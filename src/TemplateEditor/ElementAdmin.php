@@ -70,7 +70,7 @@ class ElementAdmin extends AbstractController
                 [
                 'attr' => [
                     'style' => 'min-height: 90vh;font-size:125%;',
-                    'data-editor' => 'markdown',
+                    'data-editor' => 'twig',
                     'data-gutter' => 0,
                 ],
                 ]

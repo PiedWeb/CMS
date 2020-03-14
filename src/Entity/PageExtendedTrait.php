@@ -45,11 +45,6 @@ trait PageExtendedTrait
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\UserInterface")
-     */
-    protected $author;
-
-    /**
      * @ORM\Column(type="string", length=250, nullable=true)
      */
     protected $template;
@@ -124,18 +119,6 @@ trait PageExtendedTrait
     public function setName(?string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?User
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?User $author): self
-    {
-        $this->author = $author;
 
         return $this;
     }

@@ -4,5 +4,5 @@
 
 {% set img = image.relativeDir ~ '/' ~ image.media %}
     <a href="{{ img|imagine_filter('default') }}">
-       <span data-img="{{ img|imagine_filter('height_300') }}" loading="lazy" class="img-fluid m-2">{{ image.name(page.locale) }}</span>
+       <span data-img="{{ img|imagine_filter('height_300') }}" loading="lazy" class="img-fluid m-2">{{ image.name(page.locale ?? null) }}</span>
     </a>

@@ -12,6 +12,15 @@ UPDATE with BC BREAK
     - params default mailer (`.env`)
     - params `email_to_notify` in `piedweb_cms.yaml` config file.
 
+- remove FOSUser :
+    - update security if it's not a link (see current `src/Resources/config/packages/security.yaml`)
+    - update roles's field in user table with json format : `["ROLE_SUPER_ADMIN"]`
+      ```
+      sqlite3 var/app.db
+      UPDATE `user` SET `roles`= '["ROLE_SUPER_ADMIN"]' WHERE _rowid_='2';
+      ```
+
+
 ## Update to 0.0.27
 
 -   Create symlink for config file

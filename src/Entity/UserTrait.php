@@ -13,10 +13,10 @@ trait UserTrait
     protected $createdAt;
 
     /**
-     * Loaded from BaseUser.
-     *
+     * @var string
+     * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email(
-     *     message = "user.email.invalid"
+     *     message = "user.email.invalid",
      *     checkMX = true
      * )
      */
@@ -34,11 +34,143 @@ trait UserTrait
     protected $plainPassword;
 
     /**
-     * @ORM\PrePersist
+     * @ORM\Column(type="json")
      */
-    public function overrideUsernameWithEmail()
+    private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    public function __toString()
     {
-        $this->username = $this->email;
+        return $this->email;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = static::ROLE_DEFAULT;
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function hasRole($role)
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
+    }
+
+    /**
+        public function __construct()
+    {
+        $this->roles = [];
+    }
+    public function addRole($role)
+    {
+        $role = strtoupper($role);
+        if ($role === static::ROLE_DEFAULT) {
+            return $this;
+        }
+
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+
+    public function removeRole($role)
+    {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }/**/
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
     }
 
     /**

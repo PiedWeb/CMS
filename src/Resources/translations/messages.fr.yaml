@@ -14,6 +14,17 @@ en: English
 # Entity
 #---
 
+#---
+# Security
+#---
+security:
+    login:
+        title: Connexion
+        email: Email
+        password: Mot de passe
+        label_button: Se connecter
+        remember_me: Se souvenir de moi
+        email_not_found: Votre email n'a pu être trouvé.
 
 #---
 # Admin
@@ -51,7 +62,7 @@ admin:
             label: Sous-titre
         translations:
             label: 'Traductions'
-            help: ' '
+            help: "Utiliser l'url pour trouver la page (ex : en/my-other)."
         excrept:
             label: Courte Description
             help: Visible depuis les pages de résultats des moteurs de recherches (meta description)

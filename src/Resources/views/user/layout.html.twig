@@ -1,0 +1,17 @@
+{% extends '@PiedWebCMS/base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <section class=" mt-5 pt-5">
+            <div class="container container-txt pt-3 pb-3">
+                <h1 class="mb-40 text-center">{{ block('title') }}</h1>
+                <div class="text-left col-xs-12 col-lg-5 mx-auto mt-5">
+                    {% block main_content %}{% endblock %}
+                </div>
+            </div>
+        </section>
+    {% endblock %}
+
+{% endblock %}

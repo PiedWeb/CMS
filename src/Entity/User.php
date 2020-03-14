@@ -1,12 +1,10 @@
 <?php
 
-// src/AppBundle/Entity/User.php
-
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface as sfUserInterface;
 
 /**
  * @ORM\MappedSuperclass
@@ -15,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     message="user.email.already_used"
  * )
  */
-class User extends BaseUser implements UserInterface
+class User implements UserInterface, sfUserInterface
 {
     use UserTrait;
 

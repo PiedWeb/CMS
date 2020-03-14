@@ -24,13 +24,13 @@ class PageController extends AbstractController
             ->getRepository($this->container->getParameter('app.entity_page'))
             ->findOneBySlug($slug);
 
-        if (null !== $page->getLocale()) { // avoid bc break, todo remove it
-            $request->setLocale($page->getLocale());
-        }
-
         // Check if page exist
         if (null === $page) {
             throw $this->createNotFoundException();
+        }
+
+        if (null !== $page->getLocale()) { // avoid bc break, todo remove it
+            $request->setLocale($page->getLocale());
         }
 
         // Check if page is public
@@ -111,10 +111,6 @@ class PageController extends AbstractController
         $response = new Response();
         $response->headers->set('Content-Type', 'text/xml');
 
-        return $this->render(
-            '@PiedWebCMS/page/rss.xml.twig',
-            ['page' => $page],
-            $response
-        );
+        return $this->render('@PiedWebCMS/page/rss.xml.twig', ['page' => $page], $response);
     }
 }
