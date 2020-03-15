@@ -18,6 +18,7 @@ UPDATE with BC BREAK
       ```
       sqlite3 var/app.db
       UPDATE `user` SET `roles`= '["ROLE_SUPER_ADMIN"]';
+      UPDATE `page` SET `locale`= 'fr';
       ```
 
 - remove from composer.json
