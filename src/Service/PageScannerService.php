@@ -44,8 +44,8 @@ class PageScannerService
             return true; // or status code
         }
 
-        $template = null !== $page->getTemplate() ? $page->getTemplate() : $this->defaultTemplate;
-        $this->pageHtml = $this->twig->render($template, ['page' => $page]);
+        //$template = null !== $page->getTemplate() ? $page->getTemplate() : $this->defaultTemplate;
+        $this->pageHtml = $this->twig->render($this->defaultTemplate, ['page' => $page]);
 
         // 2. Je récupère tout les liens et je les check
         // href="", data-rot="" data-img="", src="", data-bg

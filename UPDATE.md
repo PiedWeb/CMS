@@ -17,7 +17,7 @@ UPDATE with BC BREAK
     - update roles's field in user table with json format : `["ROLE_SUPER_ADMIN"]`
       ```
       sqlite3 var/app.db
-      UPDATE `user` SET `roles`= '["ROLE_SUPER_ADMIN"]' WHERE _rowid_='2';
+      UPDATE `user` SET `roles`= '["ROLE_SUPER_ADMIN"]';
       ```
 
 - remove from composer.json

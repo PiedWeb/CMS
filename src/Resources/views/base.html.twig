@@ -1,43 +1,44 @@
 <!DOCTYPE html>
-<html lang="{{ page.locale ?? app.request.getLocale() }}">
-{% set base_url = app_base_url is defined ? app_base_url : ''  %}
+{% block html_opener %}<html>{% endblock %}
+
+{% block head %}
     <head>
-        {% block head %}
-            <meta charset="UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-            {% block favicon %}
-                <link rel="shortcut icon" href="{{ base_url }}{{ asset('/favicon.ico') }}">
-            {% endblock %}
-
-            {% block app_color %}
-                {% if app_color is defined and app_color is not null %}
-                    <meta name="theme-color" content="{{ app_color }}"/>
-                {% endif %}
-            {% endblock %}
-
-            <title>{% block title %}Pied Web{% endblock %}</title>
-
-
-            {% block css %}
-                <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
-            {% endblock %}
-
-            {% block feed_link %}
-                <link rel="alternate" type="application/rss+xml" href="{{ base_url }}/feed.xml" />
-            {% endblock %}
-
-            {% block robots %}{% endblock %}
-
-            {% block alternate_language %}{% endblock %}
-
-            {% block open_graph %}
-            {% endblock %}
-
+        {% block favicon %}
+            <link rel="shortcut icon" href="{{ app_base_url|default('') }}{{ asset('/favicon.ico') }}">
         {% endblock %}
+
+        {% block app_color %}
+            {% if app_color is defined and app_color is not null %}
+                <meta name="theme-color" content="{{ app_color }}"/>
+            {% endif %}
+        {% endblock %}
+
+        <title>{% block title %}Pied Web CMS !{% endblock %}</title>
+
+
+        {% block css %}
+            <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
+        {% endblock %}
+
+        {% block feed %}
+            <link
+                rel="alternate"
+                type="application/rss+xml"
+                href="{{ app_base_url|default('') }}/feed.xml"
+                title="{{ logo_alt|default('') }} &raquo; {{ 'feed.alternate_title'|trans }}"
+             />
+        {% endblock %}
+
+        {% block robots %}{% endblock %}
+        {% block alternate_language %}{% endblock %}
+        {% block open_graph %}{% endblock %}
     </head>
-    <body>
+{% endblock %}
+
+    <body class="{{ body_class|default('') }}">
 
         {% block body %}{% endblock %}
 

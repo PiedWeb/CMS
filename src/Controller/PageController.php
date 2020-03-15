@@ -50,9 +50,10 @@ class PageController extends AbstractController
         }
 
         // method_exists($this->container->getParameter('app.entity_page'), 'getTemplate') &&
-        $template = null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
+        //$template = null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
+        // todo remove it, it's now manage directly in the template
 
-        return $this->render($template, ['page' => $page]);
+        return $this->render($params->get('app.default_page_template'), ['page' => $page]);
     }
 
     protected function checkIfUriIsCanonical($request, $page)

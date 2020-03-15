@@ -164,7 +164,8 @@ error:
     description: Un écrou semble s'être dévisser.<br>Merci de nous informer sur votre environnement lorsque cette erreur c'est produite.<br><br><a href="/" class="btn btn-secondary">Retour</a>
 
 #---
-# Errors Page(s)
+# Feed
 #---
 feed:
-    description: Dernière page créée.
+    description: Dernière page publiée.
+    alternate_title: Flux

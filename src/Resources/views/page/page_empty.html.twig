@@ -1,0 +1,8 @@
+{% extends '@PiedWebCMS/page/page_default.html.twig' %}
+
+
+{% block body %}
+    {% apply punctuation_beautifer %}
+        {{ include(template_from_string(page.readableContent)) }}
+    {% endapply %}
+{% endblock %}

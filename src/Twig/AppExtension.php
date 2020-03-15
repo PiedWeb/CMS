@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Twig;
 
 use Cocur\Slugify\Slugify;
+use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\PageCanonicalService;
 use PiedWeb\RenderAttributes\AttributesTrait;
 use Twig\Extension\AbstractExtension;
@@ -51,30 +52,18 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('homepage', [$this->pageCanonical, 'generatePathForHomepage']),
             new TwigFunction('page', [$this->pageCanonical, 'generatePathForPage']),
-            new TwigFunction(
-                'jslink',
-                [AppExtension::class, 'renderJavascriptLink'],
-                [
+            new TwigFunction('jslink', [AppExtension::class, 'renderJavascriptLink'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-                ]
-            ),
-            new TwigFunction(
-                'link',
-                [AppExtension::class, 'renderJavascriptLink'],
-                [
+            ]),
+            new TwigFunction('link', [AppExtension::class, 'renderJavascriptLink'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-                ]
-            ),
-            new TwigFunction(
-                'mail',
-                [AppExtension::class, 'renderEncodedMail'],
-                [
+            ]),
+            new TwigFunction('mail', [AppExtension::class, 'renderEncodedMail'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-                ]
-            ),
+            ]),
             new TwigFunction(
                 'bookmark', // = anchor
                 [AppExtension::class, 'renderTxtAnchor'],
@@ -90,7 +79,20 @@ class AppExtension extends AbstractExtension
                 [AppExtension::class, 'renderMail'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
+            new TwigFunction(
+                'isCurrentPage', // = bookmark
+                [$this, 'isCurrentPage'],
+                ['is_safe' => ['html'], 'needs_environment' => false]
+            ),
         ];
+    }
+
+    public function isCurrentPage(string $uri, ?Page $currentPage)
+    {
+        return
+            null === $currentPage || $uri != $this->pageCanonical->generatePathForPage($currentPage->getRealSlug())
+            ? false
+            : true;
     }
 
     public static function renderTxtAnchor(Twig_Environment $env, $name)

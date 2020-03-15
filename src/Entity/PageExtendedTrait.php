@@ -94,14 +94,9 @@ trait PageExtendedTrait
         return $this->childrenPages;
     }
 
-    public function getH1(): ?string
+    public function getH1($elseReturnTitle = false): ?string
     {
-        return $this->h1;
-    }
-
-    public function getH1eTitle(): ?string
-    {
-        return $this->h1 ?? $this->title;
+        return $this->h1 ?? (true === $elseReturnTitle ? $this->title : null);
     }
 
     public function setH1(?string $h1): self

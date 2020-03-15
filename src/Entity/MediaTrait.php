@@ -146,11 +146,13 @@ trait MediaTrait
         return $this;
     }
 
-    public function getName($locale = null): ?string
+    public function getName($getLocalized = null, $onlyLocalized = false): ?string
     {
         $names = $this->getNames(true);
 
-        return $locale && isset($names[$locale]) ? $locale : $this->name;
+        return $getLocalized ?
+            (isset($names[$locale]) ? $names[$locale] : ($onlyLocalized ? null : $this->name))
+            : $this->name;
     }
 
     public function getNames($yaml = false)
@@ -292,5 +294,6 @@ trait MediaTrait
     public function getFullPath(): ?string
     {
         return null !== $this->media ? '/'.$this->getRelativeDir().'/'.$this->getMedia() : null;
+        // todo : check if / is needed
     }
 }

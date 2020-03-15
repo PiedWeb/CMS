@@ -1,5 +1,9 @@
 <footer id="footer">
     {% block footer %}
-        {% include '@PiedWebCMS/page/_alternate_links.html.twig' %}
+        {% include '@PiedWebCMS/page/component/_alternate_links.html.twig' %}
+    {% endblock %}
+
+    {% block extra_footer %}
+        {% include '@PiedWebCMS/page/_extra_footer.html.twig' %}
     {% endblock %}
 </footer>

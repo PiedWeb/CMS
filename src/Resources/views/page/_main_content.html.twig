@@ -1,43 +1,37 @@
 
 
-{% set title = page.h1 is defined and page.h1 is not null ? page.h1 : page.title %}
-{% set subtitle = page.getEmc('subtitle') %}
-{% set description = page.chapeau is not null ? include(template_from_string(page.chapeau)) : null %}
 {% set image = page.mainImage is defined and page.mainImage is not null ? (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) : null %}
 
 {% block content %}
 
-    <div class="next-navbar {{ container is defined ? container : 'container container-txt mb-5' }}">
-        {% block title %}
+    <div class="next-navbar {{ page.container|default(container ?? 'container container-txt pt-4 mb-5') }}" id="content">
 
-            <div class="container container-txt pt-4">
+        {% block fash_message %}{% endblock %}
 
-                {% if subtitle is defined and subtitle is not null %}<span class="subtitle">{{ subtitle }}</span>{% endif %}
+        {% block content_title %}
+            {% if page.subtitle is not null %}
+                <span class="subtitle">{{ page.subtitle }}</span>
+            {% endif %}
 
-                <h1>{{ title|raw|punctuation_beautifer }}</h1>
+            <h1>{{ page.h1|default(page.title)|raw|punctuation_beautifer }}</h1>
 
-                {% block description %}
-                    {% if description is defined and description is not null %}
-                        {{ description|raw }}
-                    {% endif %}
-                {% endblock %}
+            {% block description %}
+                {% if page.chapeau is not null %}
+                    {% include(template_from_string(page.chapeau)) %}
+                {% endif %}
+            {% endblock %}
 
-                {% block main_image %}
-                    {% if image is defined and image is not null %}
-                            <p class=mimg>
-                                <a href="{{ image| imagine_filter('default') }}">
-                                    <img src="{{ image| imagine_filter('thumb') }}"
-                                        data-img="{{ image| imagine_filter('default') }}" class="img-fluid"
-                                        loading="lazy" alt="{{  title|striptags }}">
-                                </a>
-                            </p>
-                    {% endif %}
-                {% endblock %}
-
-            </div>
+            {% block main_image %}
+                {% if page.mainImage is not null %}
+                    {%
+                        include '@PiedWebCMS/component/_inline_image.html.twig' with {
+                            'image_src': page.mainImage.fullPath|imagine_filter('default'),
+                            'image_alt': page.mainImage.name(page.locale, true)|default(page.title),
+                        }
+                    %}
+                {% endif %}
+            {% endblock %}
         {% endblock %}
-
-        {% block fash_massage %} {% endblock %}
 
         {% block main_content %}
             {% apply punctuation_beautifer %}
@@ -45,19 +39,9 @@
             {% endapply %}
         {% endblock %}
 
-        {% block after_content %}{% endblock %}
-
-
-        {% block gallery %}
-            {% include '@PiedWebCMS/page/_gallery.html.twig' %}
-        {% endblock %}
-
-        {% block relatedContent %}
-            {% include '@PiedWebCMS/page/_related.html.twig' %}
-        {% endblock %}
-
         {% block breadcrumb %}
             {% include '@PiedWebCMS/page/_breadcrumb.html.twig' %}
         {% endblock %}
+
     </div>
 {% endblock %}

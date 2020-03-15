@@ -3,7 +3,7 @@
     <ul>
         {% for page in mainImage %}
             {% block item %}
-                <li><a href="/admin/page/{{ page.id }}/edit">{{ page.h1eTitle|raw }}</a></li>
+                <li><a href="/admin/page/{{ page.id }}/edit">{{ page.h1|default(page.title)|raw }}</a></li>
             {% endblock %}
         {% endfor %}
     </ul>
@@ -14,7 +14,7 @@
     <ul>
         {% for page in gallery %}
             {% block item2 %}
-                <li><a href="/admin/page/{{ page.id }}/edit">{{ page.h1eTitle|raw }}</a></li>
+                <li><a href="/admin/page/{{ page.id }}/edit">{{ page.h1|default(page.title)|raw }}</a></li>
             {% endblock %}
         {% endfor %}
     </ul>
@@ -25,7 +25,7 @@
     <ul>
         {% for page in content %}
             {% block item3 %}
-                <li><a href="/admin/page/{{ page.id }}/edit">{{ page.h1eTitle|raw }}</a></li>
+                <li><a href="/admin/page/{{ page.id }}/edit">{{ page.h1|default(page.title)|raw }}</a></li>
             {% endblock %}
         {% endfor %}
     </ul>

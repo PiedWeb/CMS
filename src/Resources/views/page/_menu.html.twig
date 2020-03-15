@@ -1,12 +1,14 @@
 {#
-    @params array   logo {href, alt},
-    @params array   items {attr:{href...}, anchor, items: [...]}
-    @params string menu_container
-    @params string menu_position
+    @params array       logo {href, alt},
+    @params array       menu_items {attr:{href...}, anchor, items: [...]} // todo remove next realse the bc break items
+    @params string      menu_container
+    @params string      menu_position
+    @params string      menu_bg
 #}
+{% set menu_items = menu_items ?? (items ?? null) %}
 
-<header id="navbar">
-    <nav class="navbar navbar-expand-lg bg-white w-100 {{ menu_position|default('position-absolute top-0') }}">
+
+    <nav class="navbar navbar-expand-lg {{ menu_bg|default('bg-primary') }} w-100 {{ menu_position|default('position-absolute top-0') }}">
         <div class="{{ menu_container|default('container') }}">
 
             {% block logo %}
@@ -17,10 +19,9 @@
                 {% endif %}
             {% endblock %}
 
-            {% if items is defined %}
 
             {% block toggle_button %}
-                {% if (items is defined and items is not empty) %}
+                {% if menu_items is defined and menu_items is not empty %}
                     <label class="hamburger float-right" for=toggler>
                         <span>Menu</span>
                     </label>
@@ -29,40 +30,40 @@
             {% endblock %}
 
             {% block nav_list %}
-                <div class="navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        {% for item in items %}
-                            <li class="nav-item">
-                                {% if page.slug is defined and item.attr.href == page(page.realSlug) %}
-                                    <span class="nav-link disabled">
-                                {% else %}
-                                    <a{{ mergeAttr((item.attr is defined ? item.attr : {}), {'class': 'nav-link'})}}>
-                                {% endif %}
-                                    {{ item.anchor|raw }}
-                                {{ page.slug is defined and item.attr.href == page(page.realSlug) ? '</span>' : '</a>' }}
-                                    {% if item.items is defined %}
-                                    <ul class="nav-sub-item">
-                                        {% for sub_item in item.items %}
-                                            <li>
-                                                 {% if page.slug is defined and sub_item.attr.href == page(page.realSlug) %}
-                                                    <span class="nav-link disabled">
-                                                {% else %}
-                                                    <a{{ attr((sub_item.attr is defined ? sub_item.attr : {}), {'href':'#'})}}>
-                                                {% endif %}
-                                                    {{ sub_item.anchor|raw }}
-                                                {{ page.slug is defined and sub_item.attr.href == page(page.realSlug) ? '</span>' : '</a>' }}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                    {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                {% if menu_items is defined and menu_items is not empty %}
+                    <div class="navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            {% block nav_list_tems %}
+                                {% for item in menu_items %}
+                                    <li class="nav-item">
+                                        {% if isCurrentPage(item.attr.href, page) %}
+                                            <span class="nav-link disabled">
+                                        {% else %}
+                                            <a{{ mergeAttr((item.attr is defined ? item.attr : {}), {'class': 'nav-link'})}}>
+                                        {% endif %}
+                                            {{ item.anchor|raw }}
+                                        {{ page.slug is defined and item.attr.href == page(page.realSlug) ? '</span>' : '</a>' }}
+                                            {% if item.items is defined %}
+                                            <ul class="nav-sub-item">
+                                                {% for sub_item in item.items %}
+                                                    <li>
+                                                         {% if page.slug is defined and sub_item.attr.href == page(page.realSlug) %}
+                                                            <span class="nav-link disabled">
+                                                        {% else %}
+                                                            <a{{ attr((sub_item.attr is defined ? sub_item.attr : {}), {'href':'#'})}}>
+                                                        {% endif %}
+                                                            {{ sub_item.anchor|raw }}
+                                                        {{ page.slug is defined and sub_item.attr.href == page(page.realSlug) ? '</span>' : '</a>' }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% endif %}
+                                    </li>
+                                {% endfor %}
+                            {% endblock %}
+                        </ul>
+                    </div>
+                {% endif %}
             {% endblock %}
-
-
-            {% endif %}
         </div>
     </nav>
-</header>

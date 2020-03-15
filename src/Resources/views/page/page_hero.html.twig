@@ -1,20 +1,93 @@
 {% extends '@PiedWebCMS/page/page_default.html.twig' %}
 
+{#
+
+main_image_size
+main_image_pos
+main_image_bg_transition
+main_image_inside_container
+main_image_inside_class
+
+OtherProperties:
+    main_image_bg_transition        string      Permit to overlay the background. Default empty (nothing appear). Could be `center`, `inverse`, `default` or directly `radial-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) )`, etc. [See more](https://github.com/PiedWeb/piedweb-tyrol-free-bootstrap-4-theme/blob/master/src/js/helpers.js#L42)
+    main_image_pos                  string      Permit to change the background-position details
+    main_image_multiple             string      Multiple image's uri seprate with `;` (ex: winter:/media/defaut/winter.jpg)
+    main_image_size                 string      halfscreen, thirdscreen... css classes
+    main_image_inside_container     string
+    main_image_inside_class         string      default stick-bottom
+#}
+
 {% block content %}
+    {% if page.mainImage is not null %}
+    {% block content_title %}
+    <div class="hero-banner mb-3 next-navbar">
 
-    {% block title %}
-        {% include '@PiedWebCMS/page/_hero-banner.html.twig' %}
+        <div class="cover-banner"
+            style="background:{{ page.mainImage.mainColor }}"
+            data-bg="{{ page.mainImage.fullPath|imagine_filter('default') }}"
+            data-darken="{{ page.main_image_bg_transition|default(main_image_bg_transition ?? 'default') }}"
+            data-pos="{{ page.main_image_pos|default(main_image_pos ?? 'no-repeat center center') }}"
+            {% if page.main_image_multiple is not null %}
+                {% for bg in page.main_image_multiple|split(';') %}
+                    {% set bg1 = bg|split(':') %}
+                    data-bg_{{ bg1.0 }}="{{ bg1.1 }}"
+                {% endfor %}
+            {% endif %}
+        >
+            <div class="position-relative
+                {{ page.main_image_size|default(main_image_size ?? 'halfscreen') }}
+                {{ page.main_image_inside_container|default(main_image_inside_container ?? 'container container-txt pt-4') }}
+            ">
+                    <div class="banner-content {{ page.main_image_inside_class|default(main_image_inside_class ?? 'pb-3 pt-3 stick-bottom')}}">
+
+                        {% block subTitle %}
+                            {% if page.subtitle is not null %}
+                                <span class="subtitle">{{ page.subtitle|raw  }}</span>
+                            {% endif %}
+                        {% endblock %}
+
+                        {% block h1 %}
+                            <h1>{{ page.h1|default(page.title)|raw }}</h1>
+                        {% endblock %}
+
+                        {% block description %}
+                            {% if page.chapeau is not null %}
+                                {% include(template_from_string(page.chapeau)) %}
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                </div>
+
+                {% block image_for_small_device %}
+                    {% if page.mainImage is not null %}
+                    <div class=d-md-none>
+                        <img
+                            srcset="{{ page.mainImage.fullPath|imagine_filter('xs') }} 576w, {{ page.mainImage.fullPath|imagine_filter('md') }} 992w"
+                            src="{{ page.mainImage.fullPath|imagine_filter('default') }}"
+                            alt="{{ page.mainImage.name(page.locale, true)|default(page.title)|striptags }}" loading=lazy class=img-fluid>
+                    </div>
+                    {% endif %}
+                {% endblock %}
+            </div>
+
+    </div>
     {% endblock %}
 
-    {% block main_content %}
-        {% if page.readableContent is not empty %}
-            <section class="{{container is defined ? ' '~container : 'container container-txt mb-5 mt-5'}}">
+    <div class="next-navbar {{ page.container|default(container ?? 'container container-txt pt-4 mb-5') }}" id="content">
 
-                    {{ include(template_from_string(page.readableContent)) }}
+        {% block main_content %}
+            {% apply punctuation_beautifer %}
+                {{ include(template_from_string(page.readableContent)) }}
+            {% endapply %}
+        {% endblock %}
 
-                {% block after_content %}{% endblock %}
 
-            </section>
-        {% endif %}
-    {% endblock %}
+        {% block breadcrumb %}
+            {% include '@PiedWebCMS/page/_breadcrumb.html.twig' %}
+        {% endblock %}
+    </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}
+
