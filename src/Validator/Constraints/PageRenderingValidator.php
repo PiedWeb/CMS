@@ -34,6 +34,8 @@ class PageRenderingValidator extends ConstraintValidator
         } catch (\Exception $exception) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();
+            $this->context->buildViolation($exception->getMessage())
+                ->addViolation();
         }
     }
 }

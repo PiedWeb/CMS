@@ -64,7 +64,8 @@ OtherProperties:
                         <img
                             srcset="{{ page.mainImage.fullPath|imagine_filter('xs') }} 576w, {{ page.mainImage.fullPath|imagine_filter('md') }} 992w"
                             src="{{ page.mainImage.fullPath|imagine_filter('default') }}"
-                            alt="{{ page.mainImage.name(page.locale, true)|default(page.title)|striptags }}" loading=lazy class=img-fluid>
+                            alt="{{ page.mainImage.name|default(page.title)|striptags }}" loading=lazy class=img-fluid>
+                            {# todo : debug this page.mainImage.name(page.locale, true)|default(page.title)|striptags #}
                     </div>
                     {% endif %}
                 {% endblock %}

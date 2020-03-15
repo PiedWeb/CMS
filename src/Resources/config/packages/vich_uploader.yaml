@@ -8,6 +8,3 @@ vich_uploader:
             namer:
                 service: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer #Vich\UploaderBundle\Naming\PropertyNamer
                 options: { property: 'slug'}
-            #directory_namer:
-            #    service: vich_uploader.namer_directory_current_date_time
-            #    options: {date_time_format: 'Y'}

@@ -70,6 +70,8 @@ List of Bundles wich extend this one:
     => soit j'en créé un nouveau
     => soit je prends page_raw... en affinant les réglages (comme container, menu_* etc.)
 
+- clear (twig) cache when update a theme file in prod environment
+
 - twig shortcut for gallery
 - clean and better naming for Admin View Files
 
