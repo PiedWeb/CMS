@@ -151,7 +151,7 @@ trait MediaTrait
         $names = $this->getNames(true);
 
         return $getLocalized ?
-            (isset($names[$locale]) ? $names[$locale] : ($onlyLocalized ? null : $this->name))
+            (isset($names[$getLocalized]) ? $names[$getLocalized] : ($onlyLocalized ? null : $this->name))
             : $this->name;
     }
 
