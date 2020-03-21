@@ -183,7 +183,9 @@ class PageAdmin extends AbstractAdmin
             'help' => 'admin.page.translations.help',
             'btn_add' => false,
             'to_string_callback' => function ($entity) {
-                return $entity->getLocale() ? $entity->getLocale().' ('.$entity->getSlug().')' : $entity->getSlug(); // switch for getLocale
+                return $entity->getLocale()
+                    ? $entity->getLocale().' ('.$entity->getSlug().')'
+                    : $entity->getSlug(); // switch for getLocale
                     // todo : remove it in next release and leave only get locale
                     // todo : add a clickable link to the other admin
             },
