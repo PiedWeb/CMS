@@ -24,10 +24,10 @@
 - [Lien hypertexte](#link)
     - [Lien vers une adresse mail (protection spam)](#mail)
     - [Lien vers une partie de page](#fragment)
-- [Listes](#liste)
+- [Listes](#list)
 - [Paragraphes et saut de ligne](#p)
 - [Citation](#quote)
-- [Image](#img)
+- [Image et galeries](#img)
 - [Video](#video)
 {% endfilter %}
 </div>
@@ -171,10 +171,26 @@ Ma citation :
 
 <h2 id=img>Image</h2>
 
-<p>Voir le code proposé dans l'interface de gestion de l'image pour l'insérer. Exemple : </p>
+<p>Exemple (le code suivant est normalement proposé dans le gestionnaire de l'image) : </p>
 <pre>
-    ![Texte alternatif](/media/default/media/mon-image.jpg)
+![Texte alternatif](/media/default/media/mon-image.jpg)
 </pre>
+
+<hr class="mb-5 mt-5">
+
+<h2>Galerie</h2>
+
+<p>Pour afficher toutes les images liées à une <code>page</code> :</p>
+<pre>
+{{ "{{ gallery(page) }}" }}
+</pre>
+
+<p>Pour afficher seulement les 4 premières images liées à la <code>page</code> :</p>
+
+<pre>
+{{ "{{ gallery(page, 1, 4) }}" }}
+</pre>
+
 <hr class="mb-5 mt-5">
 
 

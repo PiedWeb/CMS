@@ -84,7 +84,21 @@ class AppExtension extends AbstractExtension
                 [$this, 'isCurrentPage'],
                 ['is_safe' => ['html'], 'needs_environment' => false]
             ),
+            new TwigFunction(
+                'gallery',
+                [$this, 'renderGallery'],
+                ['is_safe' => ['html'], 'needs_environment' => true]
+            ),
         ];
+    }
+
+    public function renderGallery(Twig_Environment $env, Page $currentPage, $filterImageFrom = 1, $filterImageTo = 1001)
+    {
+        return $env->render('@PiedWebCMS/page/_gallery.html.twig', [
+            'page' => $currentPage,
+            'galleryFilterFrom' => $filterImageFrom - 1,
+            'galleryFilterTo' => $filterImageTo - 1,
+        ]);
     }
 
     public function isCurrentPage(string $uri, ?Page $currentPage)

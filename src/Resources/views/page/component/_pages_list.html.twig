@@ -1,0 +1,35 @@
+{# component for piedweb-devoluix-theme #}
+{% if pages is not empty %}
+    <ul class="row list-unstyled">
+    {% for page in pages %}
+        {% if (page.createdAt) <= date('now') %}
+        <li class="col-xl-3 col-lg-4 col-md-6">
+            <div class="mcard clickable">
+
+                {% block header %}
+                {% if page.mainImage is defined and page.mainImage is not null %}
+                <div class="card-header card-header-img p-0">
+                    <span class="card-img-top img-fluid rounded" data-img="{{ (page.mainImage.relativeDir ~ '/' ~ page.mainImage.media) |imagine_filter('thumb') }}" loading=lazy>{{ page.title|striptags }}</span>
+                </div>
+                {% endif %}
+                {% endblock %}
+
+                {% block body %}
+                <div class="card-body">
+                     {% if page.excreptProduct is defined and page.excreptProduct is not null %}
+                        <div class="card-text text-muted"><small>{{ page.excreptProduct }}</small></div>
+                    {% endif %}
+                    <h3 class="pt-1 h5 card-title">
+                        <a href="{{ page(page.realSlug) }}">
+                            {{ (page.h1 is defined and page.h1 is not null ? page.h1 : page.title)|raw }}
+                        </a>
+                    </h3>
+                </div>
+                {% endblock %}
+
+            </div>
+        </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% endif %}

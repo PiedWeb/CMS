@@ -1,0 +1,28 @@
+
+{% if page.images is defined and page.images is not empty %}
+    <div class="row mimg justify-content-center">
+        {% for image in page.images.slice(galleryFilterFrom|default('0'), galleryFilterTo|default('1000')) %}
+            {{ _self.galleryPart(image, page, loop.index <= 3 or gallery_not_lazy is defined ? false : true) }}
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+{% macro galleryPart(image, page = null, lazy = false) %}
+    <a href="{{ image.fullPath|imagine_filter('default') }}">
+        {% if lazy == false %}
+            <img
+                src="{{ image.fullPath|imagine_filter('height_300') }}"
+                loading="lazy"
+                alt="{{ image.name(page is defined ? page.locale : null) }}"
+                class="img-fluid m-2"
+            >
+        {% else %}
+           <span
+                data-img="{{ image.fullPath|imagine_filter('height_300') }}"
+                loading="lazy"
+                class="img-fluid m-2"
+            >{{ image.name(page.locale ?? null) }}</span>
+        {% endif %}
+    </a>
+{% endmacro %}
