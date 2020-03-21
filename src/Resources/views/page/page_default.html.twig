@@ -25,9 +25,9 @@
 
 {% block alternate_language %}
     {% if page.locale is not null %}
-        <link rel="alternate" hreflang="{{ page.locale }}" href="{{ app_base_url|default('') }}{{ page(page.slug) }}" />
+        <link rel="alternate" hreflang="{{ page.locale }}" href="{{ app_base_url|default('') }}{{ page(page.realSlug) }}" />
         {% for translation in page.translations %}
-            <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ app_base_url|default('') }}{{ page(translation.slug) }}" />
+            <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ app_base_url|default('') }}{{ page(translation.realSlug) }}" />
         {% endfor %}
     {% endif %}
 {% endblock %}
@@ -58,6 +58,7 @@
     {% endif %}
 {% endblock %}
 
+
 {% block body %}
 
     {% block content %}
@@ -69,7 +70,7 @@
     {% endblock %}
 
     {% block navbar %}
-        {% include '@PiedWebCMS/page/_menu.html.twig' with {'logo':{'alt':logo_alt}} %}
+        {% include '@PiedWebCMS/page/_menu.html.twig' with {'logo':logo} %}
     {% endblock %}
 
 {% endblock %}

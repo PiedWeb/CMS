@@ -13,7 +13,7 @@
 
             {% block logo %}
                 {% if logo is defined %}
-                    <a class="navbar-brand float-left" href="{% if logo.href is defined %}{{ logo.href }}{% else %}{{ homepage() }}{% endif %}">
+                    <a class="navbar-brand float-left" href="{{ logo.href|default(homepage()) }}">
                         {% if logo.alt is defined %}{{ logo.alt }}{% endif %}
                     </a>
                 {% endif %}
