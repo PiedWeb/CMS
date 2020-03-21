@@ -1,14 +1,16 @@
-{% if page.parentPage is defined and page.parentPage is not null %}
-    {% if page.parentPage.parentPage is not null %} {#We don't generate a breadcrumb for only one parent Page#}
-        <nav class="{{ breadcrumb_class|default('mt-4 mb-4 container') }}" id="breadcrumb" aria-label="breadcrumb">
-            {% block label %}{% endblock %}
-            <ol class="breadcrumb">
-                {{ _self.breadcrumbPart(page.parentPage) }}
-                <li class="breadcrumb-item active" aria-current="page">{{ (page.name is not null ? page.name : page.title) }}</li>
-            </ol>
-        </nav>
+
+
+    {% if page.parentPage is defined and page.parentPage is not null %}
+        {% if page.parentPage.parentPage is not null %} {#We don't generate a breadcrumb for only one parent Page#}
+            <nav class="{{ breadcrumb_class|default('mt-4 mb-4 container') }}" id="breadcrumb" aria-label="breadcrumb">
+                {% block label %}{% endblock %}
+                <ol class="breadcrumb">
+                    {{ _self.breadcrumbPart(page.parentPage) }}
+                    <li class="breadcrumb-item active" aria-current="page">{{ (page.name is not null ? page.name : page.title) }}</li>
+                </ol>
+            </nav>
+        {% endif %}
     {% endif %}
-{% endif %}
 
 {% macro breadcrumbPart(page) %}
     {% if page.parentPage is not null %}

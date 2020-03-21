@@ -8,7 +8,7 @@
 {% set menu_items = menu_items ?? (items ?? null) %}
 
 
-    <nav class="navbar navbar-expand-lg {{ menu_bg|default('bg-primary') }} w-100 {{ menu_position|default('position-absolute top-0') }}">
+    <nav class="navbar navbar-expand-lg {{ menu_bg|default('bg-primary') }} w-100 {{ menu_position|default('position-absolute top-0') }}" id="navbar">
         <div class="{{ menu_container|default('container') }}">
 
             {% block logo %}
@@ -32,7 +32,7 @@
             {% block nav_list %}
                 {% if menu_items is defined and menu_items is not empty %}
                     <div class="navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto">
+                        <ul class="navbar-nav ml-auto w-100">
                             {% block nav_list_tems %}
                                 {% for item in menu_items %}
                                     <li class="nav-item">

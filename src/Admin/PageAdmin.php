@@ -183,7 +183,7 @@ class PageAdmin extends AbstractAdmin
             'help' => 'admin.page.translations.help',
             'btn_add' => false,
             'to_string_callback' => function ($entity) {
-                return $entity->getLocale() ?? $entity->getSlug(); // switch for getLocale
+                return $entity->getLocale() ? $entity->getLocale().' ('.$entity->getSlug().')' : $entity->getSlug(); // switch for getLocale
                     // todo : remove it in next release and leave only get locale
                     // todo : add a clickable link to the other admin
             },
@@ -221,8 +221,17 @@ class PageAdmin extends AbstractAdmin
         $formMapper->with('admin.page.params.label', ['class' => 'col-md-5']);
         $formMapper->add('slug', TextType::class, [
             'label' => 'admin.page.slug.label',
-            'help' => 'admin.page.slug.help',
+            'help' => $this->getSubject() && $this->getSubject()->getSlug()
+                ? '<span class="btn btn-link" onclick="toggleDisabled()" id="disabledLinkSlug">
+                    <i class="fa fa-unlock"></i></span>
+                    <script>function toggleDisabled() {
+                        $(".slug_disabled").first().removeAttr("disabled");
+                        $(".slug_disabled").first().focus();
+                        $("#disabledLinkSlug").first().remove();
+                    }</script>'
+                : 'admin.page.slug.help',
             'attr' => [
+                'class' => 'slug_disabled',
                 ($this->getSubject() ? ($this->getSubject()->getSlug() ? 'disabled' : 't') : 't') => '',
             ],
         ]);
