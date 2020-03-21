@@ -31,6 +31,7 @@ class PageController extends AbstractController
 
         if (null !== $page->getLocale()) { // avoid bc break, todo remove it
             $request->setLocale($page->getLocale());
+            $this->get('translator')->setLocale($page->getLocale());
         }
 
         // Check if page is public

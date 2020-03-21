@@ -27,6 +27,7 @@ UPDATE with BC BREAK
   ```
   and bump php to 7.3
 
+- remove `localized_page` from `config/routes.yaml`
 
 ## Update to 0.0.27
 
