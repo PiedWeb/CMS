@@ -70,7 +70,7 @@
     {% endblock %}
 
     {% block navbar %}
-        {% include '@PiedWebCMS/page/_menu.html.twig' with {'logo':logo} %}
+        {% include '@PiedWebCMS/page/_menu.html.twig' with {'logo':logo|default({'alt':logo_alt}) } %}
     {% endblock %}
 
 {% endblock %}
