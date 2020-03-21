@@ -7,6 +7,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class ElementAdmin extends AbstractController
 {
@@ -32,6 +34,18 @@ class ElementAdmin extends AbstractController
         return $element ?? new Element($this->get('kernel')->getProjectDir().'/templates');
     }
 
+    protected function clearTwigCache()
+    {
+        $twigCacheFolder = $this->get('twig')->getCache(true);
+
+        $process = new Process(['rm', '-rf', $twigCacheFolder]);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+    }
+
     public function editElement($encodedPath = null, Request $request = null)
     {
         $element = $this->getElement($encodedPath);
@@ -42,6 +56,8 @@ class ElementAdmin extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $element = $form->getData();
             $element->storeElement();
+
+            $this->clearTwigCache();
 
             return $this->redirectToRoute(
                 'piedweb_cms_template_editor_edit',
