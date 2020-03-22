@@ -81,14 +81,18 @@ trait MediaTrait
     /**
      * @ORM\OneToMany(
      *     targetEntity="PiedWeb\CMSBundle\Entity\PageHasMediaInterface",
-     *     mappedBy="media",cascade={"all"},
+     *     mappedBy="media",
+     *     cascade={"all"},
      *     orphanRemoval=true
      * )
      */
     protected $pageHasMedias;
 
     /**
-     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", mappedBy="mainImage")
+     * @ORM\OneToMany(
+     *      targetEntity="PiedWeb\CMSBundle\Entity\PageInterface",
+     *      mappedBy="mainImage"
+     * )
      */
     protected $mainImagePages;
 
@@ -289,6 +293,16 @@ trait MediaTrait
     public function getMainImagePages()
     {
         return $this->mainImagePages;
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function removeMainImageFromPages()
+    {
+        foreach ($this->mainImagePages as $page) {
+            $page->setMainImage(null);
+        }
     }
 
     public function getFullPath(): ?string

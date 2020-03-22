@@ -9,7 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 trait PageImageTrait
 {
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface", inversedBy="mainImagePages")
+     * @ORM\ManyToOne(
+     *      targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface",
+     *      cascade={"all"},
+     *      inversedBy="mainImagePages"
+     * )
      */
     protected $mainImage;
 

@@ -70,18 +70,17 @@ List of Bundles wich extend this one:
     => soit j'en créé un nouveau
     => soit je prends page_raw... en affinant les réglages (comme container, menu_* etc.)
 
-- /!\ Si je supprime un media... c'est la cata (pas de supperssion en cascade dans les pages)
-
 - clean and better naming for Admin View Files
+
+- Revoir la gestion des sitemaps/feed par langue CMS/Static...
 
 - revoir le système de traduction : suite et fin (MEDIA : permettre de customiser le slug en fonction de la locale (controller ? ou symlinking from entity))
 - export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
 - revoir l'installation auto
 - sf5 : développer l'admin pour easyadminv3
 
-- search for all "todo" in the code
+- search for all "todo" in the code, clean and test the code
 - Extension: load block via ajax (like [Contact](https://github.com/PiedWeb/ContactBundle))
-- clean and test the code
 
 ## Credits
 

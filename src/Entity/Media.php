@@ -9,6 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\MappedSuperclass
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  * UniqueEntity({"name"}, message="Ce nom existe déjà.")
  */
 class Media implements MediaInterface

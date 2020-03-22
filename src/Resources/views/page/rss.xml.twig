@@ -6,7 +6,7 @@
         <title>{{ page is defined ? page.title : logo_alt }}</title>
         <link>{{ page is defined ? base ~ '/' ~ page.realSlug : base ~ page('') }}</link>
         <description><![CDATA[{% block description %} {% endblock %}]]></description>
-        <atom:link href="{{ base }}/{{ page is defined ? (page.slug == 'homepage' ? 'index' : page.realSlug ~ '.xml' : 'feed.xml' }}" rel="self" type="application/rss+xml" />
+        <atom:link href="{{ base }}/{{ page is defined ? (page.slug == 'homepage' ? 'index' : page.realSlug) ~ '.xml' : 'feed.xml' }}" rel="self" type="application/rss+xml" />
         {% endblock %}
         {% set pages = page is defined ? (page.childrenPages|reverse )|slice(0,5): pages %}
         {% for page in pages %}
