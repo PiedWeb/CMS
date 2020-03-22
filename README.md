@@ -60,7 +60,7 @@ List of Bundles wich extend this one:
 
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
 - [ ] multi-site (and international compatibility = manage domain for Page)
-- [ ] revoir l'installation auto (debug : installation de 0.0.58)
+- [ ] revoir l'installation auto (debug : installation de 0.0.58... will be resolved when bumping to sf5 else keep only framework bundle + flex and relaunch composer update)
 - [ ] sf5 : développer l'admin via easyadminv3 ?
 - [ ] search for all "todo" in the code, clean and test the code
 - [ ] Extension: load block via ajax (like [Contact](https://github.com/PiedWeb/ContactBundle)) (and manage some dynamics)
