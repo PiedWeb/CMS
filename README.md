@@ -72,7 +72,7 @@ List of Bundles wich extend this one:
 
 - clean and better naming for Admin View Files
 
-- Revoir la gestion des sitemaps/feed par langue CMS/Static...
+- multi-site (and international compatibility = manage base for Page)
 
 - revoir le système de traduction : suite et fin (MEDIA : permettre de customiser le slug en fonction de la locale (controller ? ou symlinking from entity))
 - export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)

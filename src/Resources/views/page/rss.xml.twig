@@ -2,11 +2,14 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         {% block header %}
-
-        <title>{{ page is defined ? page.title : logo_alt }}</title>
-        <link>{{ page is defined ? base ~ '/' ~ page.realSlug : base ~ page('') }}</link>
-        <description><![CDATA[{% block description %} {% endblock %}]]></description>
-        <atom:link href="{{ base }}/{{ page is defined ? (page.slug == 'homepage' ? 'index' : page.realSlug) ~ '.xml' : 'feed.xml' }}" rel="self" type="application/rss+xml" />
+        <title>{{ page.title|default(logo_alt) }}</title>
+        <link>{{ base ~ page(page.realSlug|default('')) }}</link>
+        <description><![CDATA[{% block description %}{{ page.excrept|default('') }}{% endblock %}]]></description>
+        <atom:link
+            href="{{ base }}/{{ feedUri|default((page.slug == 'homepage' ? 'index' : page.realSlug) ~ '.xml') }}"
+            rel="self"
+            type="application/rss+xml"
+        />
         {% endblock %}
         {% set pages = page is defined ? (page.childrenPages|reverse )|slice(0,5): pages %}
         {% for page in pages %}

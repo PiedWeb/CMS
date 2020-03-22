@@ -86,7 +86,7 @@ class FeedDumpService
 
     protected function dumpFeed(string $locale)
     {
-        $dump = $this->renderFeed($locale);
+        $dump = $this->renderFeed($locale, 'feed'.($this->locale == $locale ? '' : '.'.$locale).'.xml');
         $filepath = $this->webDir.'/feed'.($this->locale == $locale ? '' : '.'.$locale).'.xml';
 
         $this->filesystem->dumpFile($filepath, $dump);
@@ -124,9 +124,17 @@ class FeedDumpService
         return $pages;
     }
 
-    protected function renderFeed(string $locale)
+    protected function renderFeed(string $locale, string $feedUri)
     {
-        return $this->twig->render('@PiedWebCMS/page/rss.xml.twig', ['pages' => $this->getPages($locale, 5)]);
+        // assuming yoy name it with your locale identifier
+        $LocaleHomepage = $this->em->getRepository($this->page_class)->findOneBySlug($locale);
+        $page = $LocaleHomepage ?? $this->em->getRepository($this->page_class)->findOneBySlug('homepage');
+
+        return $this->twig->render('@PiedWebCMS/page/rss.xml.twig', [
+            'pages' => $this->getPages($locale, 5),
+            'page' => $page,
+            'feedUri' => $feedUri,
+        ]);
     }
 
     protected function renderSitemapTxt($pages)

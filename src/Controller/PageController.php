@@ -92,7 +92,12 @@ class PageController extends AbstractController
     public function feed(
         ?string $slug
     ) {
-        $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
+        if ('homepage' == $slug) {
+            return $this->redirect($this->generateUrl('piedweb_cms_page_feed', ['slug' => 'index']), 301);
+        }
+
+        $slug = (null === $slug || 'index' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
+
         $page = $this->getDoctrine()
             ->getRepository($this->container->getParameter('app.entity_page'))
             ->findOneBySlug($slug);
