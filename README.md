@@ -58,8 +58,6 @@ List of Bundles wich extend this one:
 
 ## TODO
 
-### Next
-
 - documenter les othersProperties (bg_multiple, bg_transition, feeds...)
 - documenter twig extension (isCurrentPage...)
 
@@ -72,9 +70,8 @@ List of Bundles wich extend this one:
 
 - clean and better naming for Admin View Files
 
-- multi-site (and international compatibility = manage base for Page)
+- multi-site (and international compatibility = manage domain for Page)
 
-- revoir le système de traduction : suite et fin (MEDIA : permettre de customiser le slug en fonction de la locale (controller ? ou symlinking from entity))
 - export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
 - revoir l'installation auto
 - sf5 : développer l'admin pour easyadminv3

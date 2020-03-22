@@ -142,9 +142,12 @@ trait PageExtendedMainContentTrait
         if ('_action' == $method) {
             return; // avoid error with sonata
         }
+
         if (preg_match('/^get/', $method)) {
             $property = lcfirst(preg_replace('/^get/', '', $method));
             if (!property_exists(get_class($this), $property)) {
+                dump($this->getOtherPropertiesParsed($property));
+
                 return $this->getOtherPropertiesParsed($property) ?? $this->getEmc($property);
                 // todo remove the else next release
             }
@@ -156,7 +159,7 @@ trait PageExtendedMainContentTrait
                 return call_user_func_array([$this, 'get'.ucfirst($method)], $arguments);
             }
 
-            return $this->getOtherPropertiesParsed(lcfirst($method));
+            return $this->getOtherPropertiesParsed(lcfirst($method)) ?? $this->getEmc($method);
         }
     }
 
