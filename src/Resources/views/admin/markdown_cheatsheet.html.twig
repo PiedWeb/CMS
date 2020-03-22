@@ -58,11 +58,13 @@
 <h2>Chapeau</h2>
 
 Un chapeau peut aussi être utilisé (paragraphe sous le titre) :
-```
+
+<pre>
 Ce paragraphe est un chapeau.
-<!--break-->
+{{ '&lt;!--break--&gt;' }}
 Ceci est le reste de mon contenu...
-```
+</pre>
+
 <hr class="mb-5 mt-5">
 
 <h2 id=style>Style de Texte</h2>
@@ -238,7 +240,7 @@ Ma citation :
 <h2 id=redirect>Redirection</h2>
 Votre contenu doit contenir uniquement :
 <pre>
-Location: http://example.eg/`
+Location: http://example.eg/
 </pre>
 <hr class="mb-5 mt-5">
 
@@ -246,23 +248,24 @@ Location: http://example.eg/`
 <h2 id=rich-content>Contenu enrichi</h2>
 
 {% filter markdown %}
-- `subtitle` string
-- `container` string  <br>
+- `subtitle`
+- `container`  <br>
    Readable content wrapper. Défaut *container container-txt pt-4 mb-5*
 - `feeds` array(type, uri, title)
-- `main_image_pos` string <br>
+- `main_image_pos`  <br>
   Permet de changer la position du background (css).
-- `main_image_size` string <br>
+- `main_image_size`  <br>
   halfscreen, thirdscreen... css class.
-- `main_image_inside_container` string <br>
+- `main_image_inside_container`  <br>
   défaut container *container-txt pt-4*
-- `main_image_inside_class` string <br>
+- `main_image_inside_class`  <br>
   Default *stick-bottom* <br>
   Text wrapper, défaut : *container container-txt pt-4*.
 - `main_image_multiple` array <br>
   Plusieurs images en fonction d'un hash contenu dans l'url (ex: winter:/media/defaut/winter.jpg)
-- `main_image_bg_transition`        string  <br>
+- `main_image_bg_transition`       <br>
   Permet de rajouter un calque devant le fond. Peut être `center`, `inverse`, `default` ou directement `radial-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) )`.
+- ...
 
 {% endfilter %}
 
