@@ -54,8 +54,8 @@ class PageAdmin extends AbstractAdmin
 
     public function configure()
     {
-        $this->setTemplate('edit', '@PiedWebCMS/admin/edit.html.twig');
-        $this->setTemplate('show', '@PiedWebCMS/admin/show_page.html.twig');
+        $this->setTemplate('edit', '@PiedWebCMS/admin/page_edit.html.twig');
+        $this->setTemplate('show', '@PiedWebCMS/admin/page_show.html.twig');
     }
 
     /**

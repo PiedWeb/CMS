@@ -2,6 +2,9 @@
 
 namespace PiedWeb\CMSBundle\TemplateEditor;
 
+/**
+ * Entity.
+ */
 class Element
 {
     /**
@@ -33,7 +36,7 @@ class Element
 
     protected function loadCode()
     {
-        if (null !== $this->path && file_exists($this->getTemplateDir().$this->getPath())) {
+        if ($this->path && file_exists($this->getTemplateDir().$this->getPath())) {
             return file_get_contents($this->getTemplateDir().$this->getPath());
         }
 
@@ -60,11 +63,14 @@ class Element
         if (null === $this->path) {
             $this->path = $path;
         } else {
+            $path = '/'.ltrim($path, '/');
             if ($this->path != $path) {
-                if (file_exists($this->getTemplateDir().$path)) {
-                    throw new \Exception('file ever exist');
+                if (file_exists($this->getTemplateDir().$path)) { // check if we don't erase an other file
+                    throw new \Exception('file ever exist'); // todo move it to assert to avoid error 500..
                 } else {
-                    $this->unlink = $this->getTemplateDir().$this->path;
+                    if ($this->path && file_exists($this->getTemplateDir().$this->path)) { // we will delete if we rename it
+                        $this->unlink = $this->getTemplateDir().$this->path;
+                    }
                     $this->path = $path;
                 }
             }

@@ -19,7 +19,7 @@ class ElementAdmin extends AbstractController
 
     public function listElement()
     {
-        return $this->render('@PiedWebCMS/admin/theme.list.html.twig', ['elements' => $this->getElements()->getAll()]);
+        return $this->render('@PiedWebCMS/admin/theme_list.html.twig', ['elements' => $this->getElements()->getAll()]);
     }
 
     protected function getElement($encodedPath)
@@ -68,7 +68,7 @@ class ElementAdmin extends AbstractController
         }
 
         return $this->render(
-            '@PiedWebCMS/admin/theme.edit.html.twig',
+            '@PiedWebCMS/admin/theme_edit.html.twig',
             [
             'element' => $element,
             'form' => $form->createView(),
@@ -80,17 +80,14 @@ class ElementAdmin extends AbstractController
     {
         return $this->createFormBuilder($element)
             ->add('path', TextType::class)
-            ->add(
-                'code',
-                TextareaType::class,
-                [
+            ->add('code', TextareaType::class, [
                 'attr' => [
                     'style' => 'min-height: 90vh;font-size:125%;',
                     'data-editor' => 'twig',
                     'data-gutter' => 0,
                 ],
-                ]
-            )
+                'required' => false,
+            ])
 
             ->getForm();
     }
@@ -113,7 +110,7 @@ class ElementAdmin extends AbstractController
         }
 
         return $this->render(
-            '@PiedWebCMS/admin/theme.delete.html.twig',
+            '@PiedWebCMS/admin/theme_delete.html.twig',
             [
             'form' => $form->createView(),
             'element' => $element,

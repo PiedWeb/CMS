@@ -86,7 +86,7 @@ class PageController extends AbstractController
 
         $plainText = \PiedWeb\CMSBundle\Twig\AppExtension::convertMarkdownImage($request->request->get('plaintext'));
 
-        return $this->render('@PiedWebCMS/admin/preview.html.twig', ['page' => $page, 'plainText' => $plainText]);
+        return $this->render('@PiedWebCMS/admin/page_preview.html.twig', ['page' => $page, 'plainText' => $plainText]);
     }
 
     public function feed(

@@ -44,7 +44,7 @@ sonata_admin:
 sonata_doctrine_orm_admin:
     templates:
         form:
-            - "@PiedWebCMS/admin/sd_form_admin_fields.html.twig"
+            - "@PiedWebCMS/admin/Form/sd_form_admin_fields.html.twig"
 
 sonata_block:
     blocks:

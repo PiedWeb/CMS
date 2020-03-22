@@ -58,10 +58,9 @@ List of Bundles wich extend this one:
 
 ## TODO
 
-- [ ] better naming for Admin View Files
-- [ ] multi-site (and international compatibility = manage domain for Page)
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
-- [ ] revoir l'installation auto
+- [ ] multi-site (and international compatibility = manage domain for Page)
+- [ ] revoir l'installation auto (debug : installation de 0.0.58)
 - [ ] sf5 : développer l'admin via easyadminv3 ?
 - [ ] search for all "todo" in the code, clean and test the code
 - [ ] Extension: load block via ajax (like [Contact](https://github.com/PiedWeb/ContactBundle)) (and manage some dynamics)

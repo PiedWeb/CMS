@@ -33,7 +33,7 @@ class PageScannerController extends AbstractController
             }
         }
 
-        return $this->render('@PiedWebCMS/admin/scanView.html.twig', [
+        return $this->render('@PiedWebCMS/admin/page_scanView.html.twig', [
             'errors' => $errors,
         ]);
     }
