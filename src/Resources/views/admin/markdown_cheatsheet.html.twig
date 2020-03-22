@@ -19,7 +19,7 @@
 {% filter markdown %}
 ###### <small style="text-transform:uppercase;">Sommaire</small>
 
-- [Titre et sous-titre](#titre)
+- [Titre, sous-titre et chapeau](#title)
 - [Style de texte](#style)
 - [Lien hypertexte](#link)
     - [Lien vers une adresse mail (protection spam)](#mail)
@@ -29,11 +29,15 @@
 - [Citation](#quote)
 - [Image et galeries](#img)
 - [Video](#video)
+- [Pages enfants (blog/news/...)](#children)
+- [Redirection](#redirect)
+- [Contenu enrichi](#rich-content)
+
 {% endfilter %}
 </div>
 
 <hr class="mb-5 mt-5">
-<h2 id=titre>Titre et sous-titre</h2>
+<h2 id=title>Titre et sous-titre</h2>
 <pre>
 ## Titre 2 (h2)<br>
 ### Titre 3 (h3)<br>
@@ -48,6 +52,17 @@
 #### Titre 5 (h5)
 #### Titre 6 (h6)
 {% endfilter %}
+
+<hr class="mb-5 mt-5">
+
+<h2>Chapeau</h2>
+
+Un chapeau peut aussi être utilisé (paragraphe sous le titre) :
+```
+Ce paragraphe est un chapeau.
+<!--break-->
+Ceci est le reste de mon contenu...
+```
 <hr class="mb-5 mt-5">
 
 <h2 id=style>Style de Texte</h2>
@@ -75,6 +90,10 @@ Gras et Italique : **astérisques et _underscore_**.
 
 [un autre site](https://example.tld/)
 {% endfilter %}
+
+Lien dissimulé pour les moteurs de recherches :
+
+<pre>{{ "{{ link('Pied Web', 'https://piedweb.com/') }}" }}</pre>
 
 <h3 id=mail>Lien vers une adresse mail</h3>
 <pre>
@@ -197,7 +216,55 @@ Ma citation :
 <h2 id=video>Vidéo</h2>
 <p>Déconseillé, préférer une image avec une icône lecture renvoyant vers Youtude/Vimeo/...</p>
 
+<hr class="mb-5 mt-5">
+<h2 id=children>Lister les pages enfants (blog/news/...)</h2>
 
+<pre>
+{{ "
+<div class=row>
+{% include '@PiedWebCMS/component/_pages_list.html.twig' with {pages: page.childrenPages|reverse} only %}
+</div>
+
+// Or children of children (like Blog Index on a two level organizations
+{% set pages = [] %}
+{% for p in page.childrenPages|reverse %}
+{% set pages = pages|merge(p.childrenPages) %}
+{% endfor %}" }}
+</pre>
+
+<hr class="mb-5 mt-5">
+
+
+<h2 id=redirect>Redirection</h2>
+Votre contenu doit contenir uniquement :
+<pre>
+Location: http://example.eg/`
+</pre>
+<hr class="mb-5 mt-5">
+
+
+<h2 id=rich-content>Contenu enrichi</h2>
+
+{% filter markdown %}
+- `subtitle` string
+- `container` string  <br>
+   Readable content wrapper. Défaut *container container-txt pt-4 mb-5*
+- `feeds` array(type, uri, title)
+- `main_image_pos` string <br>
+  Permet de changer la position du background (css).
+- `main_image_size` string <br>
+  halfscreen, thirdscreen... css class.
+- `main_image_inside_container` string <br>
+  défaut container *container-txt pt-4*
+- `main_image_inside_class` string <br>
+  Default *stick-bottom* <br>
+  Text wrapper, défaut : *container container-txt pt-4*.
+- `main_image_multiple` array <br>
+  Plusieurs images en fonction d'un hash contenu dans l'url (ex: winter:/media/defaut/winter.jpg)
+- `main_image_bg_transition`        string  <br>
+  Permet de rajouter un calque devant le fond. Peut être `center`, `inverse`, `default` ou directement `radial-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) )`.
+
+{% endfilter %}
 
 </div>
 

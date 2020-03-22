@@ -58,16 +58,6 @@ List of Bundles wich extend this one:
 
 ## TODO
 
-- documenter les othersProperties (bg_multiple, bg_transition, feeds...)
-- documenter twig extension (isCurrentPage...)
-
-
-- documenter la personnalisation d'un thème (+ params comme body_class, container, menu_*, etc.)
-- documenter page_default, page_hero, page_raw, page_empty
-    => en modifiant page.html.twig, je choisis un autre format par défault
-    => soit j'en créé un nouveau
-    => soit je prends page_raw... en affinant les réglages (comme container, menu_* etc.)
-
 - clean and better naming for Admin View Files
 
 - multi-site (and international compatibility = manage domain for Page)
