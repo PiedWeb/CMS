@@ -4,6 +4,7 @@
     @params string      menu_container
     @params string      menu_position
     @params string      menu_bg
+    @params string      menu_navbar_nav_class
 #}
 {% set menu_items = menu_items ?? (items ?? null) %}
 
@@ -32,7 +33,7 @@
             {% block nav_list %}
                 {% if menu_items is defined and menu_items is not empty %}
                     <div class="navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto w-100">
+                        <ul class="{{ menu_navbar_nav_class|default('navbar-nav ml-auto w-100') }}">
                             {% block nav_list_tems %}
                                 {% for item in menu_items %}
                                     <li class="nav-item">
