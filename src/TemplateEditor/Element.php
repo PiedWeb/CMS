@@ -60,7 +60,7 @@ class Element
 
     public function setPath(string $path)
     {
-        if (strpos($path, '..') !== false) { // avoiding to store in an other folder than templates.
+        if (false !== strpos($path, '..')) { // avoiding to store in an other folder than templates.
             throw new \Exception('You can\'t do that...');
         }
 

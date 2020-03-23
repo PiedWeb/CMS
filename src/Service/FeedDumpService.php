@@ -73,6 +73,8 @@ class FeedDumpService
      */
     public function dump()
     {
+        $this->dumpSitemap();
+
         foreach ($this->locales as $locale) {
             $this->dumpFeed($locale);
             $this->dumpSitemap($locale);
@@ -92,16 +94,17 @@ class FeedDumpService
         $this->filesystem->dumpFile($filepath, $dump);
     }
 
-    protected function dumpSitemap(string $locale)
+    protected function dumpSitemap(?string $locale = null)
     {
-        $file = $this->webDir.'/sitemap'.($this->locale == $locale ? '' : '.'.$locale);
+        //$file = $this->webDir.'/sitemap'.($this->locale == $locale ? '' : '.'.$locale);
+        $file = $this->webDir.'/sitemap'.(null === $locale ? '' : '.'.$locale);
 
         $pages = $this->getPages($locale);
         $this->filesystem->dumpFile($file.'.txt', $this->renderSitemapTxt($pages));
         $this->filesystem->dumpFile($file.'.xml', $this->renderSitemapXml($pages));
     }
 
-    protected function getPages(string $locale, ?int $limit = null)
+    protected function getPages(?string $locale, ?int $limit = null)
     {
         $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
         $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi2')
@@ -109,8 +112,10 @@ class FeedDumpService
         $qb->andWhere('p.mainContent IS NULL OR p.mainContent NOT LIKE :noi')->setParameter('noi', 'Location:%');
 
         // avoid bc break and site with no locale configured
-        $qb->andWhere(($this->locale == $locale ? 'p.locale IS NULL OR ' : '').'p.locale LIKE :locale')
+        if (null !== $locale) {
+            $qb->andWhere(($this->locale == $locale ? 'p.locale IS NULL OR ' : '').'p.locale LIKE :locale')
             ->setParameter('locale', $locale);
+        }
 
         if (null !== $limit) {
             $qb->setMaxResults($limit);
