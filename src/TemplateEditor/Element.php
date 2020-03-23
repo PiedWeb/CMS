@@ -68,7 +68,8 @@ class Element
                 if (file_exists($this->getTemplateDir().$path)) { // check if we don't erase an other file
                     throw new \Exception('file ever exist'); // todo move it to assert to avoid error 500..
                 } else {
-                    if ($this->path && file_exists($this->getTemplateDir().$this->path)) { // we will delete if we rename it
+                    // we will delete if we rename it
+                    if ($this->path && file_exists($this->getTemplateDir().$this->path)) {
                         $this->unlink = $this->getTemplateDir().$this->path;
                     }
                     $this->path = $path;
