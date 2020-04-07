@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <div class="next-navbar {{ page.container|default(container ?? 'container container-txt pt-4 mb-5') }}" id="content">
+    <div class="{{ page.container|default(container ?? 'next-navbar container container-txt pt-4 mb-5') }}" id="content">
 
         {% block fash_message %}{% endblock %}
 
