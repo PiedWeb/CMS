@@ -26,10 +26,6 @@ trait MediaCacheGeneratorTrait
 
     protected function generateCache(MediaInterface $media)
     {
-        if ('alice-accompagnatrice' != $media->getSlug()) {
-            return;
-        }
-
         $this->createWebP($media);
 
         $path = '/'.$media->getRelativeDir().'/'.$media->getMedia();
