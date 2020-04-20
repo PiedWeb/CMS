@@ -15,12 +15,12 @@ class MediaListener
 {
     use MediaCacheGeneratorTrait;
 
-    private $projectDir;
-    private $iterate = 1;
-    private $em;
-    private $cacheManager;
-    private $dataManager;
-    private $filterManager;
+    protected $projectDir;
+    protected $iterate = 1;
+    protected $em;
+    protected $cacheManager;
+    protected $dataManager;
+    protected $filterManager;
 
     public function __construct(
         string $projectDir,
@@ -51,14 +51,14 @@ class MediaListener
      * Si l'utilisateur ne propose pas de nom pour l'image,
      * on récupère celui d'origine duquel on enlève son extension.
      */
-    private function checkIfThereIsAName($media)
+    protected function checkIfThereIsAName($media)
     {
         if (null === $media->getName() || empty($media->getName())) {
             $media->setName(preg_replace('/\\.[^.\\s]{3,4}$/', '', $media->getMediaFile()->getClientOriginalName()));
         }
     }
 
-    private function checkIfNameEverExistInDatabase($media)
+    protected function checkIfNameEverExistInDatabase($media)
     {
         $same = $this->em->getRepository(get_class($media))->findOneBy(['name' => $media->getName()]);
         if ($same && (null == $media->getId() || $media->getId() != $same->getId())) {
@@ -73,22 +73,22 @@ class MediaListener
      */
     public function onVichUploaderPostUpload(Event $event)
     {
-        $object = $event->getObject();
+        $media = $event->getObject();
         $mapping = $event->getMapping();
 
-        $absoluteDir = $mapping->getUploadDestination().'/'.$mapping->getUploadDir($object);
+        $absoluteDir = $mapping->getUploadDestination().'/'.$mapping->getUploadDir($media);
         $relativeDir = substr_replace($absoluteDir, '', 0, strlen($this->projectDir) + 1);
 
-        $object->setRelativeDir($relativeDir);
+        $media->setRelativeDir($relativeDir);
 
-        if (false !== strpos($object->getMimeType(), 'image/')) {
-            $img = $mapping->getUploadDestination().'/'.$mapping->getUploadDir($object).'/'.$object->getMedia();
+        if (false !== strpos($media->getMimeType(), 'image/')) {
+            $img = $mapping->getUploadDestination().'/'.$mapping->getUploadDir($media).'/'.$media->getMedia();
             $palette = Palette::fromFilename($img, Color::fromHexToInt('#FFFFFF'));
             $extractor = new ColorExtractor($palette);
             $colors = $extractor->extract();
-            $object->setMainColor(Color::fromIntToHex($colors[0]));
+            $media->setMainColor(Color::fromIntToHex($colors[0]));
 
-            $this->generateCache('/'.$relativeDir.'/'.$object->getMedia());
+            $this->generateCache($media);
         }
     }
 }

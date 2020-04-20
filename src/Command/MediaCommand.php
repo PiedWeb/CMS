@@ -54,6 +54,7 @@ class MediaCommand extends Command
         $this->dataManager = $dataManager;
         $this->filterManager = $filterManager;
         $this->staticDir = $this->webDir.'/../static';
+        $this->projectDir = $this->webDir.'/..';
 
         parent::__construct();
     }
@@ -77,8 +78,8 @@ class MediaCommand extends Command
 
         foreach ($medias as $media) {
             if (false !== strpos($media->getMimeType(), 'image/')) {
-                $path = '/'.$media->getRelativeDir().'/'.$media->getMedia();
-                $this->generateCache($path);
+                //$path = '/'.$media->getRelativeDir().'/'.$media->getMedia();
+                $this->generateCache($media);
             }
         }
 

@@ -42,7 +42,8 @@
         "symfony/yaml":"^5.0",
         "symfony/dotenv": "^5.0",
         "symfony/maker-bundle": "^1.14",
-        "knplabs/knp-markdown-bundle": "^1.8"
+        "knplabs/knp-markdown-bundle": "^1.8",
+        "rosell-dk/webp-convert": "^2.3"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0",
