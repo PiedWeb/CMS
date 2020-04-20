@@ -310,4 +310,10 @@ trait MediaTrait
         return null !== $this->media ? '/'.$this->getRelativeDir().'/'.$this->getMedia() : null;
         // todo : check if / is needed
     }
+
+    public function getFullPathWebP(): ?string
+    {
+        return null !== $this->media ? '/'.$this->getRelativeDir().'/'.$this->getSlug().'.webp' : null;
+        // todo : check if / is needed
+    }
 }

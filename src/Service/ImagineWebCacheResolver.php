@@ -23,14 +23,18 @@ class ImagineWebCacheResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver
 
     public function resolve($path, $filter)
     {
-        $path = ltrim($path, '/media');
+        if (0 === strpos($path, '/media')) { // avoid duplicate media in url
+            $path = substr($path, 6);
+        }
 
         return '/'.$this->getFileUrl($path, $filter);
     }
 
     protected function getFilePath($path, $filter)
     {
-        $path = ltrim($path, '/media');
+        if (0 === strpos($path, '/media')) {
+            $path = substr($path, 6);
+        }
 
         return $this->webRoot.'/'.$this->getFullPath($path, $filter);
     }

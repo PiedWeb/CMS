@@ -7,8 +7,9 @@ use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Liip\ImagineBundle\Imagine\Data\DataManager;
 use Liip\ImagineBundle\Imagine\Filter\FilterManager;
 use PiedWeb\CMSBundle\Entity\MediaInterface;
+use PiedWeb\CMSBundle\Service\WebPConverter;
+//use WebPConvert\Convert\Converters\Stack as WebPConverter;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use WebPConvert\WebPConvert;
 
 /**
  * @require dataManager
@@ -19,29 +20,43 @@ trait MediaCacheGeneratorTrait
 {
     protected $projectDir;
 
+    protected $webPConverterOptions = [
+        'converters' => ['cwebp', 'gd', 'vips', 'imagick', 'gmagick', 'imagemagick', 'graphicsmagick', 'wpc', 'ewww'],
+    ];
+
     protected function generateCache(MediaInterface $media)
     {
-        //todo: get it from parameters (config) ?!
+        if ('alice-accompagnatrice' != $media->getSlug()) {
+            return;
+        }
+
+        $this->createWebP($media);
+
+        $path = '/'.$media->getRelativeDir().'/'.$media->getMedia();
+        $binary = $this->getBinary($path);
+        $pathWebP = '/'.$media->getRelativeDir().'/'.$media->getSlug().'.webp';
+
+        //todo: get liip conf from parameters (config) ?!
         foreach (['small_thumb', 'thumb', 'height_300', 'xs', 'sm', 'md', 'lg', 'xl', 'default'] as $filter) {
-            $this->createWebP($media);
-            $this->storeImageInCache('/'.$media->getRelativeDir().'/'.$media->getMedia(), $filter);
-            $this->storeImageInCache('/'.$media->getRelativeDir().'/'.$media->getSlug().'.webp', $filter);
+            $this->storeImageInCache($path, $binary, $filter);
+            $this->imgToWebP($media, $filter); //$this->storeImageInCache($pathWebP, $binary, $filter); liip not optimized...
         }
     }
 
-    protected function storeImageInCache($path, $filter)
+    protected function getBinary($path)
     {
         try {
-            try {
-                $binary = $this->dataManager->find($filter, $path);
-            } catch (NotLoadableException $e) {
-                if ($defaultImageUrl = $this->dataManager->getDefaultImageUrl($filter)) {
-                    return $defaultImageUrl;
-                }
+            $binary = $this->dataManager->find('default', $path);
+        } catch (NotLoadableException $e) {
+            throw new NotFoundHttpException('Source image could not be found', $e);
+        }
 
-                throw new NotFoundHttpException('Source image could not be found', $e);
-            }
+        return $binary;
+    }
 
+    protected function storeImageInCache($path, $binary, $filter): void
+    {
+        try {
             $this->cacheManager->store(
                 $this->filterManager->applyFilter($binary, $filter),
                 $path,
@@ -53,11 +68,22 @@ trait MediaCacheGeneratorTrait
         }
     }
 
-    protected function createWebP(MediaInterface $media)
+    protected function imgToWebP(MediaInterface $media, string $filter): void
+    {
+        $webPConverter = new WebPConverter(
+            $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getMedia(),
+            $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getSlug().'.webp',
+            $this->webPConverterOptions
+        );
+        $webPConverter->doConvert();
+    }
+
+    protected function createWebP(MediaInterface $media): void
     {
         $destination = $this->projectDir.'/'.$media->getRelativeDir().'/'.$media->getSlug().'.webp';
         $source = $this->projectDir.'/'.$media->getRelativeDir().'/'.$media->getMedia();
-        $options = [];
-        WebPConvert::convert($source, $destination, $options);
+        $webPConverter = new WebPConverter($source, $destination, $this->webPConverterOptions);
+        $webPConverter->doConvert();
+        $this->webPConverterOptions = ['converters' => [$webPConverter->getConverterUsed()]];
     }
 }
