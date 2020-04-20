@@ -105,12 +105,21 @@ class AppExtension extends AbstractExtension
 
     public static function transformInlineImageToMedia(string $src)
     {
-        $src = substr($src, strlen('/media/default/'));
+        if (self::isInternalImage($src)) {
+            $src = substr($src, strlen('/media/default/'));
+
+            $media = new Media();
+            $media->setRelativeDir('/media');
+            $media->setMedia($src);
+            $media->setSlug(preg_replace('@(\.jpg|\.jpeg|\.png|\.gif)$@', '', $src), true);
+
+            return $media;
+        }
 
         $media = new Media();
-        $media->setRelativeDir('/media');
-        $media->setMedia($src);
-        $media->setSlug(preg_replace('@(\.jpg|\.jpeg|\.png|\.gif)$@', '', $src), true);
+        $media->setRelativeDir($src);
+        $media->setMedia('');
+        $media->setSlug('', true);
 
         return $media;
     }

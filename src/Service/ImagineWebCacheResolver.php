@@ -32,8 +32,7 @@ class ImagineWebCacheResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver
 
     protected function getFilePath($path, $filter)
     {
-        //if (0 === strpos($path, '/media')) {
-        if (preg_match('@/media/([^/])/media@', $path, $match)) {
+        if (0 === strpos($path, '/media')) {
             $path = substr($path, 6);
         }
 

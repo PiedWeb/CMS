@@ -315,13 +315,17 @@ trait MediaTrait
 
     public function getFullPath(): ?string
     {
-        return null !== $this->media ? '/'.$this->getRelativeDir().'/'.$this->getMedia() : null;
+        return null !== $this->media
+            ? '/'.$this->getRelativeDir().($this->getMedia() ? '/'.$this->getMedia() : '')
+            : null;
         // todo : check if / is needed
     }
 
     public function getFullPathWebP(): ?string
     {
-        return null !== $this->media ? '/'.$this->getRelativeDir().'/'.$this->getSlug().'.webp' : null;
+        return null !== $this->media
+            ? '/'.$this->getRelativeDir().($this->getSlug() ? '/'.$this->getSlug().'.webp' : '')
+            : null;
         // todo : check if / is needed
     }
 }
