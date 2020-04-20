@@ -23,7 +23,7 @@ class ImagineWebCacheResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver
 
     public function resolve($path, $filter)
     {
-        if (0 === strpos($path, '/media')) { // avoid duplicate media in url
+        if (preg_match('@/media/([^/])/media@', $path, $match)) {
             $path = substr($path, 6);
         }
 
@@ -32,7 +32,8 @@ class ImagineWebCacheResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver
 
     protected function getFilePath($path, $filter)
     {
-        if (0 === strpos($path, '/media')) {
+        //if (0 === strpos($path, '/media')) {
+        if (preg_match('@/media/([^/])/media@', $path, $match)) {
             $path = substr($path, 6);
         }
 
