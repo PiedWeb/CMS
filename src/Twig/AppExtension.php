@@ -15,6 +15,9 @@ class AppExtension extends AbstractExtension
 {
     use AttributesTrait;
 
+    /** @var PageCanonicalService */
+    protected $pageCanonical;
+
     public function __construct(PageCanonicalService $pageCanonical)
     {
         $this->pageCanonical = $pageCanonical;
