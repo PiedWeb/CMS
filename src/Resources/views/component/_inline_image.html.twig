@@ -38,6 +38,7 @@
                     ~' src="'~ image.fullPath|imagine_filter('default') ~'"'
                     ~' loading="lazy"'
                     ~' class="'~ (rounded is defined ? 'rounded':'') ~ (image_class is defined ? ' '~image_class : ' img-fluid') ~'"'
+                    ~' width="10000" height="10000"'
                     ~' alt="' ~ image.name(page is defined ? page.locale : null) ~'">'
             ~'</picture>',
             image.fullPath|imagine_filter('default'),

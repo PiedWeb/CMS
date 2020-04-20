@@ -21,6 +21,7 @@
                 ~ image.fullPath|imagine_filter('height_300') ~' 576w'
             ~'"'
             ~' src="'~ image.fullPath|imagine_filter('default') ~'" loading="lazy" class="m-2" style="height:300px;width:auto"'
+            ~' width="10000" height="10000"'
             ~' alt="' ~ image.name(page is defined ? page.locale : null) ~'">'
     ~'</picture>',
     image.fullPath|imagine_filter('default'),
