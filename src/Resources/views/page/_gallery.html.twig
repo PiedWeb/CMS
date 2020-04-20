@@ -9,20 +9,9 @@
 
 
 {% macro galleryPart(image, page = null, lazy = false) %}
-    <a href="{{ image.fullPath|imagine_filter('default') }}">
-        {% if lazy == false %}
-            <img
-                src="{{ image.fullPath|imagine_filter('height_300') }}"
-                loading="lazy"
-                alt="{{ image.name(page is defined ? page.locale : null) }}"
-                class="img-fluid m-2"
-            >
-        {% else %}
-           <span
-                data-img="{{ image.fullPath|imagine_filter('height_300') }}"
-                loading="lazy"
-                class="img-fluid m-2"
-            >{{ image.name(page.locale ?? null) }}</span>
-        {% endif %}
-    </a>
+    {{ link(''
+        ~'<img srcset="'~ image.fullPath|imagine_filter('height_300') ~' 576w"'
+        ~' src="'~ image.fullPath|imagine_filter('default') ~'" loading="lazy" class="img-fluid m-2"'
+        ~' alt="' ~ image.name(page is defined ? page.locale : null) ~'">',
+        image.fullPath|imagine_filter('default')) }}
 {% endmacro %}

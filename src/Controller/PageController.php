@@ -46,7 +46,7 @@ class PageController extends AbstractController
         }
 
         // Maybe the page is a redirection
-        if (false !== $page->getRedirection()) {
+        if ($page->getRedirection()) {
             return $this->redirect($page->getRedirection(), $page->getRedirectionCode());
         }
 

@@ -73,6 +73,13 @@ function onDomLoaded() {
   /**/
 }
 
+function onDomChanged()
+{
+    baguetteBox.run(".mimg", {});
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   onDomLoaded();
 });
+
+document.addEventListener('linksBuilt', onDomChanged);

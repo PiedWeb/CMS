@@ -151,7 +151,7 @@ class AppExtension extends AbstractExtension
         return $env->render(
             '@PiedWebCMS/component/_javascript_link.html.twig',
             [
-            'attr' => self::mergeAndMapAttributes($attr, ['data-rot' => str_rot13($path)]),
+            'attr' => self::mergeAndMapAttributes($attr, ['class' => 'a', 'data-rot' => str_rot13($path)]),
             'anchor' => $anchor,
             ]
         );
