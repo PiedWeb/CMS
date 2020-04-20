@@ -35,7 +35,8 @@ trait MediaCacheGeneratorTrait
         //todo: get liip conf from parameters (config) ?!
         foreach (['small_thumb', 'thumb', 'height_300', 'xs', 'sm', 'md', 'lg', 'xl', 'default'] as $filter) {
             $this->storeImageInCache($path, $binary, $filter);
-            $this->imgToWebP($media, $filter); //$this->storeImageInCache($pathWebP, $binary, $filter); liip not optimized...
+            $this->imgToWebP($media, $filter);
+            //$this->storeImageInCache($pathWebP, $binary, $filter); liip not optimized...
         }
     }
 

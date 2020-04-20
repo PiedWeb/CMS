@@ -25,12 +25,14 @@ OtherProperties:
         <div class="cover-banner"
             style="background:{{ page.mainImage.mainColor }}"
             data-bg="{{ page.mainImage.fullPath|imagine_filter('default') }}"
+            data-bg-webp="{{ page.mainImage.fullPathWebP|imagine_filter('default') }}"
             data-darken="{{ page.main_image_bg_transition|default(main_image_bg_transition ?? 'default') }}"
             data-pos="{{ page.main_image_pos|default(main_image_pos ?? 'no-repeat center center') }}"
             {% if page.main_image_multiple is not null %}
                 {% for bg in page.main_image_multiple|split(';') %}
                     {% set bg1 = bg|split(':') %}
                     data-bg_{{ bg1.0 }}="{{ bg1.1 }}"
+                    data-bg-webp_{{ bg1.0 }}="{{ getImageFrom(bg1.1).fullPathWebP|imagine_filter('default') }}"
                 {% endfor %}
             {% endif %}
         >
