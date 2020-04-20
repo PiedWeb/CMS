@@ -101,8 +101,14 @@ trait MediaTrait
         return $this->name.' ';
     }
 
-    public function setSlug($slug)
+    public function setSlug($slug, $force = false)
     {
+        if (true === $force) {
+            $this->slug = $slug;
+
+            return $this;
+        }
+
         $this->setMedia($slug);
 
         return $this;
@@ -112,12 +118,14 @@ trait MediaTrait
     {
         if ($this->slug) {
             return $this->slug;
-        } elseif ($this->media) {
-            $this->slug = preg_replace('/\\.[^.\\s]{3,4}$/', '', $this->media);
-        } else {
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->getName()); //Urlizer::urlize($this->getName());
         }
+
+        if ($this->media) {
+            return $this->slug = preg_replace('/\\.[^.\\s]{3,4}$/', '', $this->media);
+        }
+
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->getName()); //Urlizer::urlize($this->getName());
 
         return $this->slug;
     }

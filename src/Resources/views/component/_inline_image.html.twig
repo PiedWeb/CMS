@@ -14,18 +14,41 @@
 
 {% if image_src is defined %}
 <p class="{{ gallery_class|default('mimg') }}">
+    {% if isInternalImage(image_src) %}
+        {% set image =  getImageFrom(image_src) %}
         {{ link(''
-        ~'<img'
-        ~' srcset="'
-            ~ image_src|replace({'/default/':'/xs/'}) ~' 576w'
-            ~','~ image_src|replace({'/default/':'/sm/'}) ~' 768w'
-            ~','~ image_src|replace({'/default/':'/md/'}) ~' 992w'
-            ~','~ image_src|replace({'/default/':'/lg/'}) ~' 1200w'
-            ~','~ image_src|replace({'/default/':'/xl/'}) ~' 1600w'
-        ~'"'
-        ~' src="'~ image_src ~'" loading="lazy"'
-        ~' class="' ~ (rounded is defined ? 'rounded':'') ~ (image_class is defined ? ' '~image_class : ' img-fluid') ~ '"'
-        ~' alt="' ~ image_alt ~'">',
-        image_src) }}
+            ~'<picture>'
+                ~'<source'
+                    ~' srcset="'
+                        ~ image.fullPathWebP|imagine_filter('xs') ~' 576w'
+                        ~','~ image.fullPathWebP|imagine_filter('sm') ~' 768w'
+                        ~','~ image.fullPathWebP|imagine_filter('md') ~' 992w'
+                        ~','~ image.fullPathWebP|imagine_filter('lg') ~' 1200w'
+                        ~','~ image.fullPathWebP|imagine_filter('xl') ~' 1600w'
+                    ~'"'
+                    ~' />'
+                ~'<img'
+                    ~' srcset="'
+                        ~ image.fullPath|imagine_filter('xs') ~' 576w'
+                        ~','~ image.fullPath|imagine_filter('sm') ~' 768w'
+                        ~','~ image.fullPath|imagine_filter('md') ~' 992w'
+                        ~','~ image.fullPath|imagine_filter('lg') ~' 1200w'
+                        ~','~ image.fullPath|imagine_filter('xl') ~' 1600w'
+                    ~'"'
+                    ~' src="'~ image.fullPath|imagine_filter('default') ~'"'
+                    ~' loading="lazy"'
+                    ~' class="'~ (rounded is defined ? 'rounded':'') ~ (image_class is defined ? ' '~image_class : ' img-fluid') ~'"'
+                    ~' alt="' ~ image.name(page is defined ? page.locale : null) ~'">'
+            ~'</picture>',
+            image.fullPath|imagine_filter('default'),
+            { 'dwl': image.fullPathWebP|imagine_filter('default') }) }}
+
+    {% else %}
+        <img
+            src="{{ image_src }}"
+            loading="lazy"
+            class="{{ (rounded is defined ? 'rounded':'') ~ (image_class is defined ? ' '~image_class : ' img-fluid') }}"
+            alt="{{ image_alt }}" />
+    {% endif %}
     </p>
 {% endif %}

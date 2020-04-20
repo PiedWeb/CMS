@@ -38,6 +38,7 @@ import {
   readableEmail,
   applySmoothScroll,
   addAClassOnScroll,
+  convertImageLinkToWebPLink,
   allClickable
 } from "~/node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/js/helpers.js";
 
@@ -80,6 +81,7 @@ function onDomChanged()
 
 document.addEventListener("DOMContentLoaded", function() {
   onDomLoaded();
+  convertImageLinkToWebPLink();
 });
 
 document.addEventListener('linksBuilt', onDomChanged);

@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Twig;
 
 use Cocur\Slugify\Slugify;
+use PiedWeb\CMSBundle\Entity\Media;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\PageCanonicalService;
 use PiedWeb\RenderAttributes\AttributesTrait;
@@ -92,7 +93,26 @@ class AppExtension extends AbstractExtension
                 [$this, 'renderGallery'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
+            new TwigFunction('isInternalImage', [AppExtension::class, 'isInternalImage']),
+            new TwigFunction('getImageFrom', [AppExtension::class, 'transformInlineImageToMedia']),
         ];
+    }
+
+    public static function isInternalImage(string $media): bool
+    {
+        return 0 === strpos($media, '/media/default/');
+    }
+
+    public static function transformInlineImageToMedia(string $src)
+    {
+        $src = substr($src, strlen('/media/default/'));
+
+        $media = new Media();
+        $media->setRelativeDir('/media');
+        $media->setMedia($src);
+        $media->setSlug(preg_replace('@(\.jpg|\.jpeg|\.png|\.gif)$@', '', $src), true);
+
+        return $media;
     }
 
     public function renderGallery(Twig_Environment $env, Page $currentPage, $filterImageFrom = 1, $filterImageTo = 1001)

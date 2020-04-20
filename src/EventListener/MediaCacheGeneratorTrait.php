@@ -34,7 +34,7 @@ trait MediaCacheGeneratorTrait
 
         $path = '/'.$media->getRelativeDir().'/'.$media->getMedia();
         $binary = $this->getBinary($path);
-        $pathWebP = '/'.$media->getRelativeDir().'/'.$media->getSlug().'.webp';
+        //$pathWebP = '/'.$media->getRelativeDir().'/'.$media->getSlug().'.webp';
 
         //todo: get liip conf from parameters (config) ?!
         foreach (['small_thumb', 'thumb', 'height_300', 'xs', 'sm', 'md', 'lg', 'xl', 'default'] as $filter) {

@@ -10,8 +10,19 @@
 
 {% macro galleryPart(image, page = null, lazy = false) %}
     {{ link(''
-        ~'<img srcset="'~ image.fullPath|imagine_filter('height_300') ~' 576w"'
-        ~' src="'~ image.fullPath|imagine_filter('default') ~'" loading="lazy" class="img-fluid m-2"'
-        ~' alt="' ~ image.name(page is defined ? page.locale : null) ~'">',
-        image.fullPath|imagine_filter('default')) }}
+    ~'<picture>'
+        ~'<source'
+            ~' srcset="'
+                ~ image.fullPathWebP|imagine_filter('height_300') ~' 576w'
+            ~'"'
+            ~' />'
+        ~'<img'
+            ~' srcset="'
+                ~ image.fullPath|imagine_filter('height_300') ~' 576w'
+            ~'"'
+            ~' src="'~ image.fullPath|imagine_filter('default') ~'" loading="lazy" class="m-2" style="height:300px;width:auto"'
+            ~' alt="' ~ image.name(page is defined ? page.locale : null) ~'">'
+    ~'</picture>',
+    image.fullPath|imagine_filter('default'),
+    { 'dwl': image.fullPathWebP|imagine_filter('default') }) }}
 {% endmacro %}
