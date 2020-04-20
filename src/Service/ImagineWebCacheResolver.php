@@ -23,7 +23,10 @@ class ImagineWebCacheResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver
 
     public function resolve($path, $filter)
     {
-        if (preg_match('@/media/([^/])/media@', $path, $match)) {
+        if (0 === strpos($path, 'media')) {
+            $path = substr($path, 5);
+        }
+        if (0 === strpos($path, '/media')) {
             $path = substr($path, 6);
         }
 

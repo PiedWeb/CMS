@@ -67,12 +67,20 @@ trait MediaCacheGeneratorTrait
 
     protected function imgToWebP(MediaInterface $media, string $filter): void
     {
+        $path = $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getMedia();
+
         $webPConverter = new WebPConverter(
-            $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getMedia(),
+            $path,
             $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getSlug().'.webp',
             $this->webPConverterOptions
         );
-        $webPConverter->doConvert();
+
+        try {
+            $webPConverter->doConvert();
+        } catch (\Exception $e) {
+            $msg = 'Unable to create image for path "%s" and filter "%s". '.'Message was "%s"';
+            throw new \RuntimeException(sprintf($msg, $path, $filter, $e->getMessage()), 0, $e);
+        }
     }
 
     protected function createWebP(MediaInterface $media): void
@@ -80,7 +88,14 @@ trait MediaCacheGeneratorTrait
         $destination = $this->projectDir.'/'.$media->getRelativeDir().'/'.$media->getSlug().'.webp';
         $source = $this->projectDir.'/'.$media->getRelativeDir().'/'.$media->getMedia();
         $webPConverter = new WebPConverter($source, $destination, $this->webPConverterOptions);
-        $webPConverter->doConvert();
+
+        try {
+            $webPConverter->doConvert();
+        } catch (\Exception $e) {
+            $msg = 'Unable to create image for path "%s" and filter "%s". '.'Message was "%s"';
+            throw new \RuntimeException(sprintf($msg, $source, 'importing from img', $e->getMessage()), 0, $e);
+        }
+
         $this->webPConverterOptions = ['converters' => [$webPConverter->getConverterUsed()]];
     }
 }
