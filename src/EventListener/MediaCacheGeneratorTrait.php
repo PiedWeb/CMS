@@ -9,6 +9,7 @@ use Liip\ImagineBundle\Imagine\Filter\FilterManager;
 use PiedWeb\CMSBundle\Entity\MediaInterface;
 use PiedWeb\CMSBundle\Service\WebPConverter;
 //use WebPConvert\Convert\Converters\Stack as WebPConverter;
+use Spatie\Async\Pool;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -32,12 +33,15 @@ trait MediaCacheGeneratorTrait
         $binary = $this->getBinary($path);
         //$pathWebP = '/'.$media->getRelativeDir().'/'.$media->getSlug().'.webp';
 
+        $this->pool = Pool::create();
+
         //todo: get liip conf from parameters (config) ?!
         foreach (['thumb', 'height_300', 'xs', 'sm', 'md', 'lg', 'xl', 'default'] as $filter) {
             $this->storeImageInCache($path, $binary, $filter);
             $this->imgToWebP($media, $filter);
             //$this->storeImageInCache($pathWebP, $binary, $filter); liip not optimized...
         }
+        $this->pool->wait();
     }
 
     protected function getBinary($path)
@@ -65,14 +69,26 @@ trait MediaCacheGeneratorTrait
         }
     }
 
-    protected function imgToWebP(MediaInterface $media, string $filter): void
+    protected static function storeImageInCacheStatic($path, $binary, $filter, $cacheManagerManager): void
     {
-        $path = $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getMedia();
+        try {
+            $cacheManager->store(
+                $filterManager->applyFilter($binary, $filter),
+                $path,
+                $filter
+            );
+        } catch (\RuntimeException $e) {
+            $msg = 'Unable to create image for path "%s" and filter "%s". '.'Message was "%s"';
+            throw new \RuntimeException(sprintf($msg, $path, $filter, $e->getMessage()), 0, $e);
+        }
+    }
 
+    protected static function imgToWebPStatic($path, $webPPath, $webPConverterOptions, string $filter): void
+    {
         $webPConverter = new WebPConverter(
             $path,
-            $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getSlug().'.webp',
-            $this->webPConverterOptions
+            $webPPath,
+            $webPConverterOptions
         );
 
         try {
@@ -81,6 +97,17 @@ trait MediaCacheGeneratorTrait
             $msg = 'Unable to create image for path "%s" and filter "%s". '.'Message was "%s"';
             throw new \RuntimeException(sprintf($msg, $path, $filter, $e->getMessage()), 0, $e);
         }
+    }
+
+    protected function imgToWebP(MediaInterface $media, string $filter): void
+    {
+        $pathJpg = $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getMedia();
+        $pathWebP = $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getSlug().'.webp';
+        $webPConverterOptions = $this->webPConverterOptions;
+
+        $this->pool->add(function () use ($pathJpg, $pathWebP, $webPConverterOptions, $filter) {
+            self::imgToWebPStatic($pathJpg, $pathWebP, $webPConverterOptions, $filter);
+        });
     }
 
     protected function createWebP(MediaInterface $media): void
