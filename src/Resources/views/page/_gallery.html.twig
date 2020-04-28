@@ -1,7 +1,7 @@
 
 {% if page.images is defined and page.images is not empty %}
     <div class="row mimg justify-content-center">
-        {% for image in page.images.slice(galleryFilterFrom|default('0'), galleryFilterTo|default('1000')) %}
+        {% for image in page.images.slice(galleryFilterFrom|default('0'), length|default('1000')) %}
             {{ _self.galleryPart(image, page, loop.index <= 3 or gallery_not_lazy is defined ? false : true) }}
         {% endfor %}
     </div>

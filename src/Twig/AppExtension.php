@@ -124,12 +124,12 @@ class AppExtension extends AbstractExtension
         return $media;
     }
 
-    public function renderGallery(Twig_Environment $env, Page $currentPage, $filterImageFrom = 1, $filterImageTo = 1001)
+    public function renderGallery(Twig_Environment $env, Page $currentPage, $filterImageFrom = 1, $length = 1001)
     {
         return $env->render('@PiedWebCMS/page/_gallery.html.twig', [
             'page' => $currentPage,
             'galleryFilterFrom' => $filterImageFrom - 1,
-            'galleryFilterTo' => $filterImageTo - 1,
+            'length' => $length,
         ]);
     }
 
