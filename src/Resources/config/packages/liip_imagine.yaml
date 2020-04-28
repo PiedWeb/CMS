@@ -18,14 +18,6 @@ liip_imagine:
                 #visibility:         public
 
     filter_sets:
-        small_thumb:
-            quality: 80
-            jpeg_quality:          80
-            filters:
-                thumbnail: { size : [150, 150], mode : outbound }
-            #post_processors:
-             #   jpegoptim: { strip_all: true, max: 70, progressive: true }
-              #  mozjpeg: { quality: 70 }
         thumb:
             quality: 80
             jpeg_quality:          80

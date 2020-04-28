@@ -25,7 +25,7 @@ class PageHasMedia extends AbstractAdmin
         if ($media && $media->getMedia() && false !== strpos($media->getMimeType(), 'image/')) {
             $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
             $help = '<a href="'.$this->liipImage->getBrowserPath($fullPath, 'default').'">';
-            $help .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'small_thumb').'">';
+            $help .= '<img src="'.$this->liipImage->getBrowserPath($fullPath, 'thumb').'">';
             $help .= '</a>';
         }
 
