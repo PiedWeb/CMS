@@ -11,4 +11,8 @@ interface MediaInterface
     public function getRelativeDir();
 
     public function getSlug();
+
+    public function getPath();
+
+    public function setMainColor();
 }

@@ -77,7 +77,7 @@ trait MediaCacheGeneratorTrait
     }
 
     /**
-     * Todo: test the win to generate liip in multithread
+     * Todo: test the win to generate liip in multithread.
      */
     protected static function storeImageInCacheStatic($path, $binary, $filter, $cacheManager, $filterManager): void
     {
@@ -114,13 +114,11 @@ trait MediaCacheGeneratorTrait
      */
     protected function imgToWebP(MediaInterface $media, string $filter): void
     {
-        $path = $media->getPath();
         $pathJpg = $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getMedia();
         $pathWebP = $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getSlug().'.webp';
         $webPConverterOptions = self::$webPConverterOptions;
-        $projectDir = $this->projectDir;
 
-        $this->pool->add(function () use ($projectDir, $path, $pathJpg, $pathWebP, $webPConverterOptions, $filter) {
+        $this->pool->add(function () use ($projectDir, $pathJpg, $pathWebP, $webPConverterOptions, $filter) {
             // took 46s (vs 43s) to add liip generation in async
             //exec($projectDir.'/bin/console liip:imagine:cache:resolve "'.$path.'" --force --filter='.$filter
             //.' >/dev/null 2>&1 &');
@@ -139,7 +137,7 @@ trait MediaCacheGeneratorTrait
         });
     }
 
-    protected function createWebPStatic($destination, $source): void
+    protected static function createWebPStatic($destination, $source): void
     {
         $webPConverter = new WebPConverter($source, $destination, self::$webPConverterOptions);
 

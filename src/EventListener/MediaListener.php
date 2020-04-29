@@ -10,7 +10,6 @@ use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Liip\ImagineBundle\Imagine\Data\DataManager;
 use Liip\ImagineBundle\Imagine\Filter\FilterManager;
 use PiedWeb\CMSBundle\Entity\MediaInterface;
-use Symfony\Component\EventDispatcher\Event as EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Vich\UploaderBundle\Event\Event;
@@ -78,7 +77,6 @@ class MediaListener
     public function onVichUploaderPostUpload(Event $event)
     {
         $media = $event->getObject();
-        $mapping = $event->getMapping();
 
         $absoluteDir = $mapping->getUploadDestination().'/'.$mapping->getUploadDir($media);
         $relativeDir = substr_replace($absoluteDir, '', 0, strlen($this->projectDir) + 1);
@@ -98,7 +96,7 @@ class MediaListener
 
             $this->eventDispatcher->addListener(
                 KernelEvents::TERMINATE,
-                function (EventDispatcher $event) use ($mapping, $media) {
+                function () use ($mapping, $media) {
                     $this->generateCache($media);
                 }
             );
@@ -107,7 +105,7 @@ class MediaListener
 
     protected function updatePaletteColor(MediaInterface $media)
     {
-        $img = $this->projectDir.$media->getFullPath();
+        $img = $this->projectDir.$media->getPath();
         $palette = Palette::fromFilename($img, Color::fromHexToInt('#FFFFFF'));
         $extractor = new ColorExtractor($palette);
         $colors = $extractor->extract();
