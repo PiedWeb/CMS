@@ -66,17 +66,23 @@ class MediaCommand extends Command
         $this
             ->setName('media:cache:generate')
             ->setDescription('Generate all images cache')
-            ->addArgument('media', InputArgument::OPTIONAL,
-                'Image file path for which to generate the cached images.');
+            ->addArgument('media', InputArgument::OPTIONAL, 'Image path (without `/media/`) to (re)generate cache.');
+    }
+
+    protected function getMedias(InputInterface $input)
+    {
+        $repo = $this->em->getRepository($this->params->get('app.entity_media'));
+
+        if ($input->getArgument('media')) {
+            return $repo->findByMedia($input->getArgument('media'));
+        }
+
+        return $repo->findAll();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->getArgument('media')) {
-            $medias = $this->em->getRepository($this->params->get('app.entity_media'))->findByMedia($input->getArgument('media'));
-        } else {
-            $medias = $this->em->getRepository($this->params->get('app.entity_media'))->findAll();
-        }
+        $medias = $this->getMedias($input);
 
         $progressBar = new ProgressBar($output, count($medias));
         $progressBar->start();

@@ -103,7 +103,7 @@ trait MediaCacheGeneratorTrait
     }
 
     /**
-     * Use the liip generated filter to generate the webp equivalent
+     * Use the liip generated filter to generate the webp equivalent.
      */
     protected function imgToWebP(MediaInterface $media, string $filter): void
     {
