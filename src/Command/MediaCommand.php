@@ -10,6 +10,7 @@ use PiedWeb\CMSBundle\EventListener\MediaCacheGeneratorTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -64,28 +65,27 @@ class MediaCommand extends Command
     {
         $this
             ->setName('media:cache:generate')
-            ->setDescription('Generate all images cache');
+            ->setDescription('Generate all images cache')
+            ->addArgument('media', InputArgument::OPTIONAL,
+                'Image file path for which to generate the cached images.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->generate($output);
-    }
+        if ($input->getArgument('media')) {
+            $medias = $this->em->getRepository($this->params->get('app.entity_media'))->findByMedia($input->getArgument('media'));
+        } else {
+            $medias = $this->em->getRepository($this->params->get('app.entity_media'))->findAll();
+        }
 
-    protected function generate(OutputInterface $output): self
-    {
-        $medias = $this->em->getRepository($this->params->get('app.entity_media'))->findAll();
         $progressBar = new ProgressBar($output, count($medias));
         $progressBar->start();
         foreach ($medias as $media) {
             if (false !== strpos($media->getMimeType(), 'image/')) {
-                //$path = '/'.$media->getRelativeDir().'/'.$media->getMedia();
                 $this->generateCache($media);
             }
             $progressBar->advance();
         }
         $progressBar->finish();
-
-        return $this;
     }
 }

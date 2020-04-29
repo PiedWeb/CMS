@@ -195,12 +195,12 @@ trait MediaTrait
 
     public function getRelativeDir(): ?string
     {
-        return $this->relativeDir;
+        return rtrim($this->relativeDir, '/');
     }
 
     public function setRelativeDir($relativeDir): self
     {
-        $this->relativeDir = $relativeDir;
+        $this->relativeDir = rtrim($relativeDir, '/');
 
         return $this;
     }
@@ -313,12 +313,17 @@ trait MediaTrait
         }
     }
 
+    public function getPath(): ?string
+    {
+        return $this->getFullPath();
+
+    }
+
     public function getFullPath(): ?string
     {
         return null !== $this->media
             ? '/'.$this->getRelativeDir().($this->getMedia() ? '/'.$this->getMedia() : '')
             : null;
-        // todo : check if / is needed
     }
 
     public function getFullPathWebP(): ?string
@@ -326,6 +331,5 @@ trait MediaTrait
         return null !== $this->media
             ? '/'.$this->getRelativeDir().($this->getSlug() ? '/'.$this->getSlug().'.webp' : '')
             : null;
-        // todo : check if / is needed
     }
 }

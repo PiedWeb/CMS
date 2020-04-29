@@ -26,6 +26,7 @@ services:
             $cacheManager: '@liip_imagine.cache.manager'
             $dataManager: '@liip_imagine.data.manager'
             $filterManager: '@liip_imagine.filter.manager'
+            $eventDispatcher: '@event_dispatcher'
         tags:
             - { name: kernel.event_listener, event: vich_uploader.pre_upload }
             - { name: kernel.event_listener, event: vich_uploader.post_upload }
