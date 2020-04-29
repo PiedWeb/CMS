@@ -99,15 +99,18 @@ class MediaListener
             $path = '/'.$media->getRelativeDir().'/'.$media->getMedia();
             $this->storeImageInCache($path, $this->getBinary($path), 'default');
 
-            $this->eventDispatcher->addListener(KernelEvents::TERMINATE, function (EventDispatcher $event) use ($mapping, $media) {
-                $this->generateCache($media);
-            });
+            $this->eventDispatcher->addListener(
+                KernelEvents::TERMINATE,
+                function (EventDispatcher $event) use ($mapping, $media) {
+                    $this->generateCache($media);
+                }
+            );
         }
     }
 
     protected function updatePaletteColor(MediaInterface $media)
     {
-        $img = $this->projectDir.$media->getFullPath(); //$mapping->getUploadDestination().'/'.$mapping->getUploadDir($media).'/'.$media->getMedia();
+        $img = $this->projectDir.$media->getFullPath();
         $palette = Palette::fromFilename($img, Color::fromHexToInt('#FFFFFF'));
         $extractor = new ColorExtractor($palette);
         $colors = $extractor->extract();
