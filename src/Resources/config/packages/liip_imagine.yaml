@@ -18,6 +18,14 @@ liip_imagine:
                 #visibility:         public
 
     filter_sets:
+        default:
+            quality: 90
+            jpeg_quality:          90
+            filters:
+                downscale:
+                    max: [1980, 1280]
+                auto_rotate: ~
+                strip: ~
         thumb:
             quality: 80
             jpeg_quality:          80
@@ -70,15 +78,6 @@ liip_imagine:
             filters:
                 relative_resize:
                     widen: 1600
-                auto_rotate: ~
-                strip: ~
-
-        default:
-            quality: 90
-            jpeg_quality:          90
-            filters:
-                downscale:
-                    max: [1980, 1280]
                 auto_rotate: ~
                 strip: ~
 

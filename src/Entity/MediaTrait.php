@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Sluggable\Util\Urlizer;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use InvertColor\Color;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Yaml\Yaml;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -267,6 +268,15 @@ trait MediaTrait
         return $this->mainColor;
     }
 
+    public function getMainColorOpposite()
+    {
+        if (null === $this->getMainColor()) {
+            return;
+        }
+
+        return Color::fromHex($this->getMainColor())->invert(true);
+    }
+
     public function setMainColor(?string $mainColor): self
     {
         $this->mainColor = $mainColor;
@@ -316,7 +326,6 @@ trait MediaTrait
     public function getPath(): ?string
     {
         return $this->getFullPath();
-
     }
 
     public function getFullPath(): ?string

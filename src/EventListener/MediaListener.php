@@ -8,13 +8,12 @@ use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Palette;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Liip\ImagineBundle\Imagine\Data\DataManager;
-use PiedWeb\CMSBundle\Entity\MediaInterface;
 use Liip\ImagineBundle\Imagine\Filter\FilterManager;
-use Vich\UploaderBundle\Event\Event;
+use PiedWeb\CMSBundle\Entity\MediaInterface;
 use Symfony\Component\EventDispatcher\Event as EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Process\Process;
+use Vich\UploaderBundle\Event\Event;
 
 class MediaListener
 {
@@ -90,33 +89,19 @@ class MediaListener
         $media->setRelativeDir($relativeDir);
 
         if (false !== strpos($media->getMimeType(), 'image/')) {
-
             $this->updatePaletteColor($media);
-            //$this->generateCache($media);
 
             $this->cacheManager->remove($media->getFullPath());
 
-            $process = new Process([
-                $this->projectDir.'/bin/console',
-                'media:cache:generate '.$media->getMedia().''
-            ]);
-            //$process->disableOutput();
-            $process->start();
-            //$process->wait();
-            foreach ($process as $type => $data) {
-    if ($process::OUT === $type) {
-        echo "\nRead from stdout: ".$data;
-    } else { // $process::ERR === $type
-        echo "\nRead from stderr: ".$data;
-    }
-}exit;
+            // Quick hack to have correct URI in image previewer
+            // A better way would be to
+            // implement https://github.com/liip/LiipImagineBundle/issues/242#issuecomment-71647135
+            $path = '/'.$media->getRelativeDir().'/'.$media->getMedia();
+            $this->storeImageInCache($path, $this->getBinary($path), 'default');
 
-            /**/
             $this->eventDispatcher->addListener(KernelEvents::TERMINATE, function (EventDispatcher $event) use ($mapping, $media) {
-
                 $this->generateCache($media);
             });
-            /**/
         }
     }
 

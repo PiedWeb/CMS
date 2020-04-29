@@ -10,5 +10,7 @@
          <code>{{ media.fullPath|imagine_filter('default') }}</code>
          <br><br>Markdown:<br>
          <pre>![{{ media.name|replace({'[': '', ']': ''}) }}]({{ media.fullPath|imagine_filter('default') }})</pre>
+         Couleur dominante:<br>
+         <pre style="background-color:{{media.getMainColor}};color:{{media.mainColorOpposite}}">{{media.getMainColor}}</pre>
     </div>
 </div>

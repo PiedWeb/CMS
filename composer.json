@@ -44,7 +44,8 @@
         "symfony/maker-bundle": "^1.14",
         "knplabs/knp-markdown-bundle": "^1.8",
         "rosell-dk/webp-convert": "^2.3",
-        "spatie/async": "^1.4"
+        "spatie/async": "^1.4",
+        "villfa/invert-color": "^0.4.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0",
