@@ -20,6 +20,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 trait MediaCacheGeneratorTrait
 {
     protected $projectDir;
+    protected $pool;
+    protected $cacheManager;
+    protected $filterManager;
+    protected $dataManager;
 
     protected static $webPConverterOptions = [
         'converters' => ['cwebp'],
@@ -72,7 +76,10 @@ trait MediaCacheGeneratorTrait
         }
     }
 
-    protected static function storeImageInCacheStatic($path, $binary, $filter, $cacheManagerManager): void
+    /**
+     * Todo: test the win to generate liip in multithread
+     */
+    protected static function storeImageInCacheStatic($path, $binary, $filter, $cacheManager, $filterManager): void
     {
         try {
             $cacheManager->store(

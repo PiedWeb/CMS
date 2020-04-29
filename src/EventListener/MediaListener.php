@@ -22,9 +22,6 @@ class MediaListener
     protected $projectDir;
     protected $iterate = 1;
     protected $em;
-    protected $cacheManager;
-    protected $dataManager;
-    protected $filterManager;
     protected $eventDispatcher;
 
     public function __construct(

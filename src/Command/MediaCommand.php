@@ -37,10 +37,6 @@ class MediaCommand extends Command
 
     protected $redirections = '';
 
-    private $cacheManager;
-    private $dataManager;
-    private $filterManager;
-
     public function __construct(
         EntityManagerInterface $em,
         ParameterBagInterface $params,
