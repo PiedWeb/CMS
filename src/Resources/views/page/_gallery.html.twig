@@ -1,6 +1,6 @@
 
 {% if page.images is defined and page.images is not empty %}
-    <div class="row mimg justify-content-center">
+    <div class="row mimg ehg">
         {% for image in page.images.slice(galleryFilterFrom|default('0'), length|default('1000')) %}
             {{ _self.galleryPart(image, page, loop.index <= 3 or gallery_not_lazy is defined ? false : true) }}
         {% endfor %}
@@ -20,7 +20,7 @@
             ~' srcset="'
                 ~ image.fullPath|imagine_filter('height_300') ~' 576w'
             ~'"'
-            ~' src="'~ image.fullPath|imagine_filter('default') ~'" loading="lazy" class="m-2" style="height:300px;width:auto"'
+            ~' src="'~ image.fullPath|imagine_filter('default') ~'" loading="lazy" class="ehgi"'
             ~' width="10000" height="10000"'
             ~' alt="' ~ image.name(page is defined ? page.locale : null) ~'">'
     ~'</picture>',

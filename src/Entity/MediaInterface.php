@@ -14,5 +14,5 @@ interface MediaInterface
 
     public function getPath();
 
-    public function setMainColor();
+    public function setMainColor(?string $mainColor): self;
 }
