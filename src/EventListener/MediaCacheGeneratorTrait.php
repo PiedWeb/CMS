@@ -118,7 +118,7 @@ trait MediaCacheGeneratorTrait
         $pathWebP = $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getSlug().'.webp';
         $webPConverterOptions = self::$webPConverterOptions;
 
-        $this->pool->add(function () use ($projectDir, $pathJpg, $pathWebP, $webPConverterOptions, $filter) {
+        $this->pool->add(function () use ($pathJpg, $pathWebP, $webPConverterOptions, $filter) {
             // took 46s (vs 43s) to add liip generation in async
             //exec($projectDir.'/bin/console liip:imagine:cache:resolve "'.$path.'" --force --filter='.$filter
             //.' >/dev/null 2>&1 &');

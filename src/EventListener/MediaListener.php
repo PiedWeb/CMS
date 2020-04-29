@@ -77,6 +77,7 @@ class MediaListener
     public function onVichUploaderPostUpload(Event $event)
     {
         $media = $event->getObject();
+        $mapping = $event->getMapping();
 
         $absoluteDir = $mapping->getUploadDestination().'/'.$mapping->getUploadDir($media);
         $relativeDir = substr_replace($absoluteDir, '', 0, strlen($this->projectDir) + 1);
@@ -96,7 +97,7 @@ class MediaListener
 
             $this->eventDispatcher->addListener(
                 KernelEvents::TERMINATE,
-                function () use ($mapping, $media) {
+                function () use ($media) {
                     $this->generateCache($media);
                 }
             );
