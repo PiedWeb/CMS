@@ -25,6 +25,7 @@
     - [Lien vers une adresse mail (protection spam)](#mail)
     - [Lien vers une partie de page](#fragment)
 - [Listes](#list)
+    - [Liste de pages](#pageslist)
 - [Paragraphes et saut de ligne](#p)
 - [Citation](#quote)
 - [Image et galeries](#img)
@@ -144,6 +145,15 @@ Lien dissimulé pour les moteurs de recherches :
     1. sous-liste ordonnée
 + Ou un plus
 {% endfilter %}
+
+<h3 id="pageslist">Liste de pages</h3>
+
+Pour lister des pages contenant un terme ou un `tag` :
+<pre>{{ list('keyword X') }}</pre>
+
+Autres paramètres :
+<pre>{{ list($filtering_string, $number = 3, $orderBy = 'createdAt', $template = '@PiedWebCMS/page/_pages_list.html.twig') }}</pre>
+
 <hr class="mb-5 mt-5">
 
 <h2 id=p>Paragraphes et saut de ligne</h2>

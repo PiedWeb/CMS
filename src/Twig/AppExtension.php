@@ -3,6 +3,8 @@
 namespace PiedWeb\CMSBundle\Twig;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\Media;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\PageCanonicalService;
@@ -19,9 +21,17 @@ class AppExtension extends AbstractExtension
     /** @var PageCanonicalService */
     protected $pageCanonical;
 
-    public function __construct(PageCanonicalService $pageCanonical)
+    /** @var EntityManagerInterface */
+    private $em;
+
+    /** @var string */
+    private $page_class;
+
+    public function __construct(EntityManager $em, string $page_class, PageCanonicalService $pageCanonical)
     {
+        $this->em = $em;
         $this->pageCanonical = $pageCanonical;
+        $this->page_class = $page_class;
     }
 
     public function getFilters()
@@ -79,12 +89,12 @@ class AppExtension extends AbstractExtension
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
             new TwigFunction(
-                'mail', // = bookmark
+                'mail',
                 [AppExtension::class, 'renderMail'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
             new TwigFunction(
-                'isCurrentPage', // = bookmark
+                'isCurrentPage',
                 [$this, 'isCurrentPage'],
                 ['is_safe' => ['html'], 'needs_environment' => false]
             ),
@@ -93,9 +103,31 @@ class AppExtension extends AbstractExtension
                 [$this, 'renderGallery'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
+            new TwigFunction(
+                'list',
+                [$this, 'renderPagesList'],
+                ['is_safe' => ['html'], 'needs_environment' => true]
+            ),
             new TwigFunction('isInternalImage', [AppExtension::class, 'isInternalImage']),
             new TwigFunction('getImageFrom', [AppExtension::class, 'transformInlineImageToMedia']),
         ];
+    }
+
+    public function renderPagesList(
+        Twig_Environment $env,
+        string $containing = '',
+        int $number = 3,
+        string $orderBy = 'createdAt',
+        string $template = '@PiedWebCMS/page/_pages_list.html.twig'
+    ) {
+        $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
+        $qb->andWhere('p.mainContent LIKE :containing')->setParameter('containing', '%'.$containing.'%');
+        $qb->orderBy('p.'.$orderBy, 'DESC');
+        $qb->setMaxResults($number);
+
+        $pages = $qb->getQuery()->getResult();
+
+        return $env->render($template, ['pages' => $pages]);
     }
 
     public static function isInternalImage(string $media): bool

@@ -76,7 +76,7 @@ services:
         tags:
             - 'twig.extension'
             #- { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-        arguments: [ "@piedweb.page_canonical"]
+        arguments: [ "@doctrine.orm.entity_manager", '%app.entity_page%', "@piedweb.page_canonical"]
 
     piedweb.page_canonical:
         class: PiedWeb\CMSBundle\Service\PageCanonicalService
