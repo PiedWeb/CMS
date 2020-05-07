@@ -5,22 +5,11 @@ liip_imagine:
         default:
             filesystem:
                 data_root: '%kernel.project_dir%'
-    #resolvers:
-       #default:
-          #web_path:
-            #cache_prefix: "media"
-    #resolvers:
-        #default:
-            #flysystem:
-                #filesystem_service: oneup_flysystem.media_filesystem
-                #root_url:           "https://http://127.0.0.1:8000/media/"
-                #cache_prefix:       public/media
-                #visibility:         public
 
     filter_sets:
         default:
-            quality: 90
-            jpeg_quality:          90
+            quality: 82
+            jpeg_quality:          82
             filters:
                 downscale:
                     max: [1980, 1280]
@@ -33,8 +22,8 @@ liip_imagine:
                 thumbnail: { size : [306, 306], mode : outbound }
 
         height_300:
-            quality: 90
-            jpeg_quality:          90
+            quality: 82
+            jpeg_quality:          82
             filters:
                 relative_resize:
                     heighten: 300
@@ -57,24 +46,24 @@ liip_imagine:
                 auto_rotate: ~
                 strip: ~
         md: #992px
-            quality: 90
-            jpeg_quality:          90
+            quality: 82
+            jpeg_quality:          82
             filters:
                 relative_resize:
                     widen: 992
                 auto_rotate: ~
                 strip: ~
         lg: #1200px
-            quality: 90
-            jpeg_quality:          90
+            quality: 82
+            jpeg_quality:          82
             filters:
                 relative_resize:
                     widen: 1200
                 auto_rotate: ~
                 strip: ~
         xl: #1200px+
-            quality: 90
-            jpeg_quality:          90
+            quality: 82
+            jpeg_quality:          82
             filters:
                 relative_resize:
                     widen: 1600
