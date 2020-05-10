@@ -1,6 +1,19 @@
 UPDATE with BC BREAK
 ==================
 
+## Update to ...
+
+- Remove staticBundle (if you use it), it's now part from core
+```
+composer remove piedweb/static-bundle
+```
+
+- Update routes in `config/routes/routes.yaml`
+
+- Move `app.static_domain` from `config/services.yaml` to `config/packages/piedweb_cms.yaml`
+
+- If you were overriding StaticBundle, see commet #... to update your code
+
 ## Update to 0.0.59
 
 - Update database

@@ -99,6 +99,37 @@ services:
         tags: ['console.command']
 
 # --------
+# Static
+# --------
+
+    piedweb.static:
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@twig"
+            - "@parameter_bag"
+            - "@request_stack"
+            - "@piedweb.page_canonical"
+            - "@translator"
+            - '@liip_imagine.cache.manager'
+            - '@liip_imagine.data.manager'
+            - '@liip_imagine.filter.manager'
+            - "%app.dir%"
+        class: PiedWeb\CMSBundle\Service\StaticService
+
+    PiedWeb\CMSBundle\Service\StaticService:
+        alias: piedweb.static
+
+    piedweb.static_controller:
+        arguments: ['@piedweb.static']
+        class: PiedWeb\CMSBundle\Controller\StaticController
+        tags: ['controller.service_arguments']
+
+    piedweb.static_command:
+        arguments: ['@piedweb.static']
+        class: PiedWeb\CMSBundle\Command\StaticCommand
+        tags: ['console.command']
+
+# --------
 # Repository
 # --------
 

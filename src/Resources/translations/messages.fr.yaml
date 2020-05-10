@@ -30,7 +30,6 @@ security:
 # Admin
 #---
 admin:
-
     label:
         page: Page
         media: Media
@@ -154,6 +153,10 @@ admin:
 
     element:
         deleted: Elément supprimé.
+        
+    static:
+        updated: Site actualisé avec succès.
+
 #---
 # Errors Page(s)
 #---

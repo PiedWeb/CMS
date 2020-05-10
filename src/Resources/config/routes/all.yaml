@@ -7,6 +7,9 @@ user:
 admin:
     resource: '@PiedWebCMSBundle/Resources/config/routes/admin.yaml'
 
+static: 
+    resource: '@PiedWebCMSBundle/Resources/config/routes/static.yaml'
+
 piedweb_cms_homepage:
     path:     /
     controller: PiedWeb\CMSBundle\Controller\PageController::show

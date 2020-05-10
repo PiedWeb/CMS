@@ -45,7 +45,8 @@
         "knplabs/knp-markdown-bundle": "^1.8",
         "rosell-dk/webp-convert": "^2.3",
         "spatie/async": "^1.4",
-        "villfa/invert-color": "^0.4.2"
+        "villfa/invert-color": "^0.4.2",
+        "wyrihaximus/html-compress": "^4.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0",
