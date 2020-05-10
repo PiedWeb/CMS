@@ -198,6 +198,7 @@ class PageAdmin extends AbstractAdmin
         $formMapper->add('title', TextType::class, [
             'label' => 'admin.page.title.label',
             'help' => 'admin.page.title.help',
+            'attr' => ['class' => 'titleToMeasure'],
         ]);
 
         // Method existance is checked on each element to permit to use admin without all page Trait.

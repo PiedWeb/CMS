@@ -51,7 +51,7 @@ admin:
             label: Paramètres
         title:
             label: Titre
-            help: ''
+            help: '<small>Titre visible depuis les moteurs de recherches dans la limite de 560px (taille actuelle : <span id="titleWidth"></span>)</small>'
         slug:
             label: Identifiant Url
             help: ' '
