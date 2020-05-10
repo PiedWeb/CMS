@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as Twig;
+use \WyriHaximus\HtmlCompress\Factory as HtmlCompressor;
 
 class StaticService
 {
@@ -94,7 +95,7 @@ class StaticService
         $this->dataManager = $dataManager;
         $this->filterManager = $filterManager;
         $this->staticDir = $this->webDir.'/../static';
-        $this->parser = \WyriHaximus\HtmlCompress\Factory::constructSmallest();
+        $this->parser = HtmlCompressor::construct();
     }
 
     /**

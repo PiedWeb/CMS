@@ -35,23 +35,23 @@
         "symfony/process": "^5.0",
         "symfony/security-bundle": "^4.4",
         "symfony/security-csrf": "^4.4",
-        "symfony/translation":"^4.4",
-        "symfony/twig-bundle":"^4.4",
-        "symfony/validator":"^4.4",
-        "symfony/web-link":"^5.0",
-        "symfony/yaml":"^5.0",
+        "symfony/translation": "^4.4",
+        "symfony/twig-bundle": "^4.4",
+        "symfony/validator": "^4.4",
+        "symfony/web-link": "^5.0",
+        "symfony/yaml": "^5.0",
         "symfony/dotenv": "^5.0",
         "symfony/maker-bundle": "^1.14",
         "knplabs/knp-markdown-bundle": "^1.8",
         "rosell-dk/webp-convert": "^2.3",
         "spatie/async": "^1.4",
         "villfa/invert-color": "^0.4.2",
-        "wyrihaximus/html-compress": "^4.0"
+        "wyrihaximus/html-compress": "^1.4"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.0",
         "symfony/web-server-bundle": "^4.4",
-        "phpunit/phpunit" : "^9",
+        "phpunit/phpunit": "^9",
         "squizlabs/php_codesniffer": "^3.5"
     },
     "config": {
@@ -72,11 +72,9 @@
             "PiedWeb\\CMSBundle\\": "tests"
         }
     },
-    "authors": [
-        {
-            "name": "Robin D.",
-            "email": "contact@robin-d.fr",
-            "homepage": "https://www.robin-d.fr/"
-        }
-    ]
+    "authors": [{
+        "name": "Robin D.",
+        "email": "contact@robin-d.fr",
+        "homepage": "https://www.robin-d.fr/"
+    }]
 }

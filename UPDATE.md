@@ -1,7 +1,7 @@
 UPDATE with BC BREAK
 ==================
 
-## Update to ...
+## Update to 0.0.84
 
 - Remove staticBundle (if you use it), it's now part from core
 ```
@@ -12,7 +12,7 @@ composer remove piedweb/static-bundle
 
 - Move `app.static_domain` from `config/services.yaml` to `config/packages/piedweb_cms.yaml`
 
-- If you were overriding StaticBundle, see commet #... to update your code
+- If you were overriding StaticBundle, see commit #9f96f67 to update your code
 
 ## Update to 0.0.59
 
