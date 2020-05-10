@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="PHP Packages Open Source" />
 </a></p>
 
-# Simple Full Stack Website Manager
+# CMS & Static Website Generator
 
 [![Latest Version](https://img.shields.io/github/tag/piedweb/cms.svg?style=flat&label=release)](https://github.com/PiedWeb/CMS/tags)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
@@ -13,9 +13,15 @@
 
 Yet ! Another CMS :)
 
-PiedWebCMS is a Symfony Bundle built with traits. It permit to get the basic functionalities for a website... to go further or to use as it.
+PiedWebCMS is a Symfony Bundle built with traits. 
+
+It permit to get the basic functionalities for a website... to go further or to use as it.
+
+A Static Website Generator (compatible with Github Pages, Apache Server, ...) is integrated in his core (and could be easily desintegrated).
 
 Build on top on [Symfony 4](https://github.com/symfony/symfony), [VichUploader](https://github.com/dustin10/VichUploaderBundle), [LiipImagine](https://github.com/liip/LiipImagineBundle), [Sonata Admin](https://github.com/sonata-project/SonataAdminBundle), and more (see [composer.json](https://github.com/PiedWeb/CMS/blob/master/composer.json)).
+
+**If you install it, be careful, the first version is not out and the code is not heavily testerd !**
 
 
 ## Installation
@@ -41,14 +47,13 @@ Check [Update.md](https://raw.githubusercontent.com/PiedWeb/CMS/master/UPDATE.md
 
 ## Documentation
 
-Have a look to the [cookbook](https://github.com/PiedWeb/CMS/blob/master/src/doc/Cookbook.md).
+Have a look to the [cookbook](https://github.com/PiedWeb/CMS/blob/master/docs/Cookbook.md).
 
 
 ## Extension
 
 List of Bundles wich extend this one:
 
-* [Static](https://github.com/PiedWeb/StaticBundle)
 <!--
 * [Reservation](https://github.com/PiedWeb/ReservationBundle)
 * [Contact](https://github.com/PiedWeb/ContactBundle)
@@ -68,8 +73,7 @@ List of Bundles wich extend this one:
 ## Credits
 
 - [PiedWeb](https://piedweb.com)
-- [All Contributors](https://github.com/PiedWeb/:package_skake/graphs/contributors)
-- [qwanturank](https://qwanturankseo.com/)
+- [All Contributors](https://github.com/PiedWeb/CMS/graphs/contributors)
 
 ## License
 
