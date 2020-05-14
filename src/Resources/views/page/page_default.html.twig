@@ -60,17 +60,44 @@
 
 
 {% block body %}
-
+    
     {% block content %}
-        {% include '@PiedWebCMS/page/_main_content.html.twig' %}
+        {% block h1 %}
+            <h1>{{ page.h1|default(page.title)|raw|punctuation_beautifer }}</h1>
+        {% endblock %}
+
+        {% block description %}
+            {% if page.chapeau is not null %}
+                {% include(template_from_string(page.chapeau)) %}
+            {% endif %}
+        {% endblock %}
+
+        {% block main_image %}
+            {% if page.mainImage is not null %}
+                {%
+                    include '@PiedWebCMS/component/_inline_image.html.twig' with {
+                        'image_src': page.mainImage.fullPath|imagine_filter('default'),
+                        'image_alt': page.mainImage.name(page.locale, true)|default(page.title),
+                    }
+                %}
+            {% endif %}
+        {% endblock %}
+            
+
+        {% block main_content %}
+            {% apply punctuation_beautifer %}
+                {{ include(template_from_string(page.readableContent)) }}
+            {% endapply %}
+        {% endblock %}
+
+        {% block breadcrumb %}
+            {% include '@PiedWebCMS/page/_breadcrumb.html.twig' %}
+        {% endblock %}
     {% endblock %}
 
     {% block footer %}
         {% include '@PiedWebCMS/page/_footer.html.twig' %}
     {% endblock %}
-
-    {% block navbar %}
-        {% include '@PiedWebCMS/page/_menu.html.twig' with {'logo':logo|default({'alt':logo_alt}) } %}
-    {% endblock %}
-
+    
+    {% block navbar %}{% endblock %}
 {% endblock %}

@@ -89,11 +89,6 @@ class AppExtension extends AbstractExtension
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
             new TwigFunction(
-                'mail',
-                [AppExtension::class, 'renderMail'],
-                ['is_safe' => ['html'], 'needs_environment' => true]
-            ),
-            new TwigFunction(
                 'isCurrentPage',
                 [$this, 'isCurrentPage'],
                 ['is_safe' => ['html'], 'needs_environment' => false]
@@ -181,16 +176,12 @@ class AppExtension extends AbstractExtension
         return $env->render('@PiedWebCMS/component/_txt_anchor.html.twig', ['name' => $name]);
     }
 
-    public static function renderMail(Twig_Environment $env, $mail, $class = '')
+    public static function renderEncodedMail(Twig_Environment $env, $mail, $class = '')
     {
-        $mail = str_rot13($mail);
-
-        return $env->render('@PiedWebCMS/component/_mail.html.twig', ['mail' => $mail, 'class' => $class]);
-    }
-
-    public static function renderEncodedMail(Twig_Environment $env, $mail)
-    {
-        return $env->render('@PiedWebCMS/component/_encoded_mail.html.twig', ['mail' => str_rot13($mail)]);
+        return $env->render('@PiedWebCMS/component/_encoded_mail.html.twig', [
+            'mail' => str_rot13($mail),
+            'class' => $class,
+        ]);
     }
 
     public static function punctuationBeautifer($text)

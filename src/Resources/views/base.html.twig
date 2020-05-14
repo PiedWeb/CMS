@@ -38,7 +38,7 @@
     </head>
 {% endblock %}
 
-    <body class="{{ body_class|default('') }}">
+    <body{% if body_class is defined %} class="{{ body_class|default('') }}"{% endif %}>
 
         {% block body %}{% endblock %}
 

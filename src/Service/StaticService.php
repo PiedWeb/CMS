@@ -241,6 +241,7 @@ class StaticService
 
         foreach ($pages as $page) {
             $this->generatePage($page);
+            $this->generateFeedFor($page);
         }
     }
 
@@ -257,7 +258,7 @@ class StaticService
         $this->redirections .= PHP_EOL;
     }
 
-    protected function generatePage(Page $page)
+    public function generatePage(Page $page)
     {
         // set current locale to avoid twig error
         $request = new Request();
@@ -277,8 +278,16 @@ class StaticService
 
         $dump = $this->render($page);
         $this->filesystem->dumpFile($filepath, $dump);
+    }
 
-        // Render Feed if the page has children pages
+    /**
+     * Generate static file for feed indexing children pages
+     * (only if children pages exists).
+     *
+     * @return void
+     */
+    protected function generateFeedFor(Page $page)
+    {
         if ($page->getChildrenPages()->count() > 0) {
             $dump = $this->renderFeed($page);
             $this->filesystem->dumpFile(preg_replace('/.html$/', '.xml', $filepath), $dump);
