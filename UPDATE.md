@@ -10,7 +10,11 @@ composer remove piedweb/static-bundle
 
 - Update routes in `config/routes/routes.yaml`
 
-- Move `app.static_domain` from `config/services.yaml` to `config/packages/piedweb_cms.yaml`
+- Move `app.static_domain` from `config/services.yaml` to `config/packages/piedweb_cms.yaml` as
+  ```piedweb_cms:
+         static:
+             domain: mydomain.tld
+  ```
 
 - If you were overriding StaticBundle, see commit #9f96f67 to update your code
 

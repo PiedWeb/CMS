@@ -1,4 +1,7 @@
 <?php
+/**
+ * todo: make it cleaner: https://symfony.com/doc/current/bundles/prepend_extension.html.
+ */
 
 namespace PiedWeb\CMSBundle\DependencyInjection;
 
@@ -18,9 +21,8 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
         $config = $this->processConfiguration($configuration, $configs);
 
         // Better idea to get config everywhere ?
-        foreach ($config as $key => $value) {
-            $container->setParameter('app.'.$key, $value);
-        }
+        // not get config every where and load only what's need
+        self::loadConfigHelper($container, $config);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
@@ -28,9 +30,26 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
         // todo : https://symfony.com/doc/current/bundles/extension.html#adding-classes-to-compile
     }
 
+    /**
+     * @param string $prefix must contain the last
+     *
+     * @return void
+     */
+    protected static function loadConfigHelper(ContainerBuilder $container, array $config, $prefix = '')
+    {
+        foreach ($config as $key => $value) {
+            if (is_array($value)) {
+                self::loadConfigHelper($container, $value, $prefix.$key.'.');
+            } else {
+                $container->setParameter('app.'.$prefix.$key, $value); // to deprecate in next release
+                $container->setParameter('pwc.'.$prefix.$key, $value);
+            }
+        }
+    }
+
     public function getAlias()
     {
-        return 'piedweb_cms';
+        return 'piedweb_cms'; // change to pwc todo
     }
 
     /*

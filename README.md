@@ -21,7 +21,7 @@ A Static Website Generator (compatible with Github Pages, Apache Server, ...) is
 
 Build on top on [Symfony 4](https://github.com/symfony/symfony), [VichUploader](https://github.com/dustin10/VichUploaderBundle), [LiipImagine](https://github.com/liip/LiipImagineBundle), [Sonata Admin](https://github.com/sonata-project/SonataAdminBundle), and more (see [composer.json](https://github.com/PiedWeb/CMS/blob/master/composer.json)).
 
-**If you install it, be careful, the first version is not out and the code is not heavily testerd !**
+**If you install it, be careful, the first version is not out and the code is not heavily tested !**
 
 
 ## Installation

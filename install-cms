@@ -73,12 +73,7 @@ yarn encore dev
 sed -i -e "s/mysql:\/\/db_user:db_password@127\.0\.0\.1:3306\/db_name/\"sqlite:\/\/\/%kernel\.project_dir%\/var\/app\.db\"/" .env
 
 ## Install default routes
-cp -f vendor/piedweb/cms-bundle/src/Resources/config/routes/all.yaml config/routes.yaml
-
-## Install static bundle
-composer require piedweb/static-bundle ^0
-sed -i -e "s/admin:/static:\n    resource: '@PiedWebStaticBundle\/Resources\/config\/routes\/static.yaml'\n\nadmin:/" config/routes.yaml
-
+echo "piedweb:\n    resource: '@PiedWebCMSBundle/Resources/config/routes/all.yaml'" >config/routes.yaml
 
 # Create Database:
 php bin/console doctrine:schema:create

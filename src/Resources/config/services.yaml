@@ -110,9 +110,6 @@ services:
             - "@request_stack"
             - "@piedweb.page_canonical"
             - "@translator"
-            - '@liip_imagine.cache.manager'
-            - '@liip_imagine.data.manager'
-            - '@liip_imagine.filter.manager'
             - "%app.dir%"
         class: PiedWeb\CMSBundle\Service\StaticService
 

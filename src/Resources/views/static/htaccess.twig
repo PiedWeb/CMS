@@ -56,9 +56,9 @@ RewriteRule ^/?(.*).(html)$ /$1 [R=301,NC,L,END]
 #---
 # Errors
 #---
-ErrorDocument 403 /_error
-ErrorDocument 404 /_error
-ErrorDocument 500 /_error
+ErrorDocument 403 /404
+ErrorDocument 404 /404
+ErrorDocument 500 /404
 
 #---
 # Cache

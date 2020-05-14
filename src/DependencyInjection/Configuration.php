@@ -46,7 +46,15 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('email_sender_name')->defaultValue('PiedWebCMS')->cannotBeEmpty()->end()
                     ->scalarNode('base_url')->defaultValue('')->end()
                     // For Static Website Generation
-                    ->scalarNode('static_domain')->end()
+                    ->arrayNode('static')
+                        ->children()
+                            ->scalarNode('domain')->end()
+                            ->scalarNode('dir')->defaultValue('%kernel.project_dir%/static')->end()
+                            ->booleanNode('generateForApache')->defaultTrue()->end()
+                            ->booleanNode('generateForGithubPages')->defaultFalse()->end()
+                            ->booleanNode('symlinkMedia')->defaultTrue()->end()
+                        ->end()
+                    ->end()
                 ->end()
         ;
 
