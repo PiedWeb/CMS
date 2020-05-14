@@ -18,6 +18,13 @@ composer remove piedweb/static-bundle
 
 - If you were overriding StaticBundle, see commit #9f96f67 to update your code
 
+- See `main.js` in ThemeComponent, see this [commit](https://github.com/PiedWeb/ThemeComponentBundle/commit/91be82bed6032e30116b8147a7729c8cce9e0de9)
+  And add to your twig config :
+
+  ```
+          "%kernel.projet_dir%/vendor/piedweb/theme-component-bundle/src/Resources/views": PiedWebThemeComponent
+  ```
+
 ## Update to 0.0.59
 
 - Update database
