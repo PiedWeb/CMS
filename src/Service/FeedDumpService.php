@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig_Environment;
+use PiedWeb\CMSBundle\Repository\PageRepository;
 
 /**
  * Inspired by https://github.com/eko/FeedBundle.
@@ -104,9 +105,14 @@ class FeedDumpService
         $this->filesystem->dumpFile($file.'.xml', $this->renderSitemapXml($pages));
     }
 
+    protected function getPageRepository() :PageRepository
+    {
+        return $this->em->getRepository($this->page_class);
+    }
+
     protected function getPages(?string $locale, ?int $limit = null)
     {
-        $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
+        $qb = $this->getPageRepository()->getQueryToFindPublished('p');
         $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi2')
             ->setParameter('noi2', '%noindex%');
         $qb->andWhere('p.mainContent IS NULL OR p.mainContent NOT LIKE :noi')->setParameter('noi', 'Location:%');
@@ -132,8 +138,8 @@ class FeedDumpService
     protected function renderFeed(string $locale, string $feedUri)
     {
         // assuming yoy name it with your locale identifier
-        $LocaleHomepage = $this->em->getRepository($this->page_class)->findOneBySlug($locale);
-        $page = $LocaleHomepage ?? $this->em->getRepository($this->page_class)->findOneBySlug('homepage');
+        $LocaleHomepage = $this->em->getRepository($this->page_class)->findOneBy(['slug'=>$locale]);
+        $page = $LocaleHomepage ?? $this->em->getRepository($this->page_class)->findOneBy(['slug'=>'homepage']);
 
         return $this->twig->render('@PiedWebCMS/page/rss.xml.twig', [
             'pages' => $this->getPages($locale, 5),

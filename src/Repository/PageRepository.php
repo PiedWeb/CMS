@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 
 /**
@@ -22,29 +21,6 @@ class PageRepository extends ServiceEntityRepository
             ->orderBy($p.'.createdAt', 'DESC');
     }
 
-    /**
-    public function findOneBySlug($slug, $language = null)
-    {
-        $q = $this->createQueryBuilder('p')
-            ->andWhere('p.slug = :val')
-            ->setParameter('val', $slug)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
-            ->setHint(
-                \Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE,
-                'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-            );
-        if (null !== $language) {
-            $q->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $language);
-        }
-
-        //var_dump($q->getSql()); exit;
-        $result = $q->getResult();
-
-        return isset($result[0]) ? $result[0] : null;
-    }
-     /**/
     public function getPagesWithoutParent()
     {
         $q = $this->createQueryBuilder('p')
@@ -61,10 +37,8 @@ class PageRepository extends ServiceEntityRepository
             ->andWhere('p.mainContent LIKE :val')
             ->setParameter('val', '%'.$media.'%')
             ->getQuery()
-            //->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, 'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
         ;
 
-        //var_dump($q->getSql()); exit;
         return $q->getResult();
     }
 }

@@ -4,6 +4,7 @@ namespace PiedWeb\CMSBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
+use PiedWeb\CMSBundle\Repository\PageRepository;
 use PiedWeb\CMSBundle\Service\PageCanonicalService as PageCanonical;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -254,8 +255,10 @@ class StaticService
     protected function addRedirection(Page $page)
     {
         $this->redirections .= 'Redirect ';
-        $this->redirections .= $page->getRedirectionCode().' '.$route.' '.$page->getRedirection();
-        $this->redirections .= PHP_EOL;
+        $this->redirections .= $page->getRedirectionCode().' ';
+        $this->redirections .= $this->pageCanonical->generatePathForPage($page->getRealSlug());
+        $this->redirections .= ' '.$page->getRedirection();
+            $this->redirections .= PHP_EOL;
     }
 
     public function generatePage(Page $page)
@@ -263,21 +266,26 @@ class StaticService
         // set current locale to avoid twig error
         $request = new Request();
         $request->setLocale($page->getLocale());
-        $this->requesStack->push($request);
+            $this->requesStack->push($request);
 
-        $this->translator->setLocale($page->getLocale());
+        //$this->translator->setLocale($page->getLocale());
 
         // check if it's a redirection
         if (false !== $page->getRedirection()) {
-            return $this->addRedirection($page);
+            $this->addRedirection($page);
+            return;
         }
 
+        $dump = $this->render($page);
+        $this->filesystem->dumpFile($this->getFilePath($page), $dump);
+    }
+
+    protected function getFilePath(Page $page)
+    {
         $slug = '' == $page->getRealSlug() ? 'index' : $page->getRealSlug();
         $route = $this->pageCanonical->generatePathForPage($slug);
-        $filepath = $this->staticDir.$route.'.html';
 
-        $dump = $this->render($page);
-        $this->filesystem->dumpFile($filepath, $dump);
+        return $this->staticDir.$route.'.html';
     }
 
     /**
@@ -290,7 +298,7 @@ class StaticService
     {
         if ($page->getChildrenPages()->count() > 0) {
             $dump = $this->renderFeed($page);
-            $this->filesystem->dumpFile(preg_replace('/.html$/', '.xml', $filepath), $dump);
+            $this->filesystem->dumpFile(preg_replace('/.html$/', '.xml', $this->getFilePath($page)), $dump);
         }
     }
 
@@ -319,11 +327,16 @@ class StaticService
         $this->filesystem->dumpFile($this->staticDir.(null !== $locale ? '/'.$locale : '').'/'.$uri, $dump);
     }
 
+    protected function getPageRepository() :PageRepository
+    {
+        return $this->em->getRepository($this->params->get('pwc.entity_page'));
+    }
+
     protected function getPages()
     {
-        $qb = $this->em->getRepository($this->params->get('pwc.entity_page'))->getQueryToFindPublished('p');
+        $query = $this->getPageRepository()->getQueryToFindPublished('p');
 
-        return $qb->getQuery()->getResult();
+        return $query->getQuery()->getResult();
     }
 
     protected function render(Page $page): string

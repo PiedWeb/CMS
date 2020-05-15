@@ -21,7 +21,6 @@
         "umpirsky/twig-php-function": "^0.2",
         "vich/uploader-bundle": "^1.13",
         "piedweb/render-html-attributes": "^1.0",
-        "gedmo/doctrine-extensions": "^2.4",
         "league/color-extractor": "^0.3",
         "twig/extensions": "^1.5",
         "sensio/framework-extra-bundle": "^5.5",

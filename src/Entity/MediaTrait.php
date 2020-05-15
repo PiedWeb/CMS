@@ -5,9 +5,6 @@ namespace PiedWeb\CMSBundle\Entity;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Sluggable\Util\Urlizer;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use InvertColor\Color;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Yaml\Yaml;
@@ -15,7 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 trait MediaTrait
 {
-    use TimestampableEntity;
+    use TimestampableTrait;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -135,9 +132,7 @@ trait MediaTrait
     {
         $this->mediaFile = $media;
 
-        if (null !== $media) { //normaly no more need with gedmo traits
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
+        if (null !== $media) {
             $this->updatedAt = new \DateTimeImmutable();
         }
     }
