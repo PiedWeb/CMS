@@ -258,7 +258,7 @@ class StaticService
         $this->redirections .= $page->getRedirectionCode().' ';
         $this->redirections .= $this->pageCanonical->generatePathForPage($page->getRealSlug());
         $this->redirections .= ' '.$page->getRedirection();
-            $this->redirections .= PHP_EOL;
+        $this->redirections .= PHP_EOL;
     }
 
     public function generatePage(Page $page)
@@ -266,13 +266,14 @@ class StaticService
         // set current locale to avoid twig error
         $request = new Request();
         $request->setLocale($page->getLocale());
-            $this->requesStack->push($request);
+        $this->requesStack->push($request);
 
         //$this->translator->setLocale($page->getLocale());
 
         // check if it's a redirection
         if (false !== $page->getRedirection()) {
             $this->addRedirection($page);
+
             return;
         }
 
@@ -327,7 +328,7 @@ class StaticService
         $this->filesystem->dumpFile($this->staticDir.(null !== $locale ? '/'.$locale : '').'/'.$uri, $dump);
     }
 
-    protected function getPageRepository() :PageRepository
+    protected function getPageRepository(): PageRepository
     {
         return $this->em->getRepository($this->params->get('pwc.entity_page'));
     }

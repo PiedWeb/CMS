@@ -16,7 +16,7 @@ trait TimestampableTrait
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
-        protected $updatedAt;
+    protected $updatedAt;
 
     /**
      * Sets createdAt.
