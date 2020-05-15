@@ -8,12 +8,13 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\BlockBundle\Meta\Metadata;
-use Sonata\CoreBundle\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Sonata\Form\Type\DateTimePickerType;
+use Sonata\Form\Type\CollectionType;
 
 class PageAdmin extends AbstractAdmin
 {
@@ -63,7 +64,7 @@ class PageAdmin extends AbstractAdmin
      */
     protected function exists(string $name): bool
     {
-        return method_exists($this->getContainer()->getParameter('app.entity_page'), 'get'.$name);
+        return method_exists($this->getContainer()->getParameter('app.entity_page'), 'get' . $name);
     }
 
     protected function configureFormFieldsBlockDetails(FormMapper $formMapper): FormMapper
@@ -110,22 +111,22 @@ class PageAdmin extends AbstractAdmin
 
         if ($this->exists('template')) {
             $formMapper->add('template', null, [
-                 'label' => 'admin.page.template.label',
-                 'required' => false,
+                'label' => 'admin.page.template.label',
+                'required' => false,
             ]);
         }
 
         if ($this->exists('relatedPages')) {
             $formMapper->add('relatedPages', ModelAutocompleteType::class, [
-                    'required' => false,
-                    'multiple' => true,
-                    'class' => $this->getContainer()->getParameter('app.entity_page'),
-                    'property' => 'title', // or any field in your media entity
-                    'label' => 'admin.page.relatedPage.label',
-                    'btn_add' => false,
-                    'to_string_callback' => function ($entity) {
-                        return $entity->getTitle();
-                    },
+                'required' => false,
+                'multiple' => true,
+                'class' => $this->getContainer()->getParameter('app.entity_page'),
+                'property' => 'title', // or any field in your media entity
+                'label' => 'admin.page.relatedPage.label',
+                'btn_add' => false,
+                'to_string_callback' => function ($entity) {
+                    return $entity->getTitle();
+                },
             ]);
         }
 
@@ -184,10 +185,10 @@ class PageAdmin extends AbstractAdmin
             'btn_add' => false,
             'to_string_callback' => function ($entity) {
                 return $entity->getLocale()
-                    ? $entity->getLocale().' ('.$entity->getSlug().')'
+                    ? $entity->getLocale() . ' (' . $entity->getSlug() . ')'
                     : $entity->getSlug(); // switch for getLocale
-                    // todo : remove it in next release and leave only get locale
-                    // todo : add a clickable link to the other admin
+                // todo : remove it in next release and leave only get locale
+                // todo : add a clickable link to the other admin
             },
         ]);
     }
@@ -250,7 +251,7 @@ class PageAdmin extends AbstractAdmin
                 'choices' => [
                     'admin.page.metaRobots.choice.noIndex' => 'noindex',
                 ],
-                 'label' => 'admin.page.metaRobots.label',
+                'label' => 'admin.page.metaRobots.label',
                 'required' => false,
             ]);
         }
@@ -266,7 +267,7 @@ class PageAdmin extends AbstractAdmin
             $formMapper->with('admin.page.images.label', ['class' => 'col-md-5']);
             $formMapper->add(
                 'pageHasMedias',
-                \Sonata\CoreBundle\Form\Type\CollectionType::class,
+                CollectionType::class,
                 [
                     'by_reference' => false,
                     'required' => false,
@@ -333,9 +334,9 @@ class PageAdmin extends AbstractAdmin
 
         if ($this->exists('author')) {
             $formMapper->add('author', null, [
-                 'label' => 'admin.page.author.label',
-                 'class' => $this->getContainer()->getParameter('app.entity_user'),
-                 'required' => false,
+                'label' => 'admin.page.author.label',
+                'class' => $this->getContainer()->getParameter('app.entity_user'),
+                'required' => false,
             ]);
         }
     }
@@ -379,7 +380,7 @@ class PageAdmin extends AbstractAdmin
     {
         $media = $page->getMainImage();
         if (null !== $media && false !== strpos($media->getMimeType(), 'image/')) {
-            $fullPath = '/'.$media->getRelativeDir().'/'.$media->getMedia();
+            $fullPath = '/' . $media->getRelativeDir() . '/' . $media->getMedia();
             $thumb = $this->liipImage->getBrowserPath($fullPath, 'thumb');
         } else {
             $thumb = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMnB4IiB2ZXJzaW9uP
