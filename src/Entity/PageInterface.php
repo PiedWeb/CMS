@@ -12,7 +12,7 @@ interface PageInterface
 
     public function getLocale();
 
-    public function setLocale();
+    public function setLocale($locale);
 
     public function getChildrenPages();
 }
