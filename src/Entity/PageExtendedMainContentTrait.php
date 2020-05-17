@@ -44,10 +44,10 @@ trait PageExtendedMainContentTrait
 
         if ($this->mainContentIsMarkdown) {
             if ($this->chapeau) {
-                $this->chapeau = '{% filter markdown %}' . $this->chapeau . '{% endfilter %}';
+                $this->chapeau = '{% filter markdown %}'.$this->chapeau.'{% endfilter %}';
             }
             if ($this->readableContent) {
-                $this->readableContent = '{% filter markdown %}' . $this->readableContent . '{% endfilter %}';
+                $this->readableContent = '{% filter markdown %}'.$this->readableContent.'{% endfilter %}';
             }
         }
     }
@@ -159,7 +159,7 @@ trait PageExtendedMainContentTrait
         } else {
             $vars = array_keys(get_object_vars($this));
             if (in_array($method, $vars)) {
-                return call_user_func_array([$this, 'get' . ucfirst($method)], $arguments);
+                return call_user_func_array([$this, 'get'.ucfirst($method)], $arguments);
             }
 
             return $this->getOtherProperty(lcfirst($method)) ?? $this->getEmc($method);
@@ -169,7 +169,7 @@ trait PageExtendedMainContentTrait
     // To remove next release
     public function getEmc($name)
     {
-        if (preg_match('/<!--"' . $name . '"--(.*)--\/-->/sU', $this->getMainContent(), $match)) {
+        if (preg_match('/<!--"'.$name.'"--(.*)--\/-->/sU', $this->getMainContent(), $match)) {
             return $match[1];
         }
     }
