@@ -109,13 +109,6 @@ class PageAdmin extends AbstractAdmin
             ]);
         }
 
-        if ($this->exists('template')) {
-            $formMapper->add('template', null, [
-                'label' => 'admin.page.template.label',
-                'required' => false,
-            ]);
-        }
-
         if ($this->exists('relatedPages')) {
             $formMapper->add('relatedPages', ModelAutocompleteType::class, [
                 'required' => false,

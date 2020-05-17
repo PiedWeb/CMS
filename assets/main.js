@@ -1,33 +1,27 @@
 /**
  * Import CSS
  */
-require("~/assets/main.scss");
+require('~/assets/main.scss');
 
 import {
-  getBlockFromSky,
-  formToSky,
-  convertImgLinkToResponsiveImgLink
-} from "~/node_modules/piedweb-cms-js-helpers/src/helpers.js";
-
-import {
-  convertInLinks,
-  convertInLinksFromRot13,
+  uncloakLinks,
+  readableEmail,
   convertImageLinkToWebPLink,
-  allClickable,
-  readableEmail
-} from "~/node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/js/helpers.js";
+} from 'piedweb-cms-js-helpers/src/helpers';
 
-
-function onDomLoaded() {
-  convertInLinks();
-  convertInLinksFromRot13();
-  getBlockFromSky();
-  readableEmail(".cea");
-  formToSky();
-  convertImgLinkToResponsiveImgLink();
+function onPageLoaded() {
+  uncloakLinks();
+  readableEmail('.cea');
+  //backgroundLazyLoad(function (src) { return responsiveImage(src) }); // see devoluix-theme
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  onDomLoaded();
+function onDomChanged() {
+  baguetteBox.run('.mimg', {});
   convertImageLinkToWebPLink();
-});
+  uncloakLinks();
+  readableEmail('.cea');
+}
+
+document.addEventListener('DOMContentLoaded', onPageLoaded());
+
+document.addEventListener('linksBuilt', onDomChanged);

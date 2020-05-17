@@ -44,10 +44,10 @@ trait PageExtendedMainContentTrait
 
         if ($this->mainContentIsMarkdown) {
             if ($this->chapeau) {
-                $this->chapeau = '{% filter markdown %}'.$this->chapeau.'{% endfilter %}';
+                $this->chapeau = '{% filter markdown %}' . $this->chapeau . '{% endfilter %}';
             }
             if ($this->readableContent) {
-                $this->readableContent = '{% filter markdown %}'.$this->readableContent.'{% endfilter %}';
+                $this->readableContent = '{% filter markdown %}' . $this->readableContent . '{% endfilter %}';
             }
         }
     }
@@ -83,6 +83,11 @@ trait PageExtendedMainContentTrait
         return $this;
     }
 
+    public function getTemplate(): ?string
+    {
+        return $this->getOtherProperty('template');
+    }
+
     public function getOtherProperties()
     {
         return $this->otherProperties;
@@ -113,7 +118,7 @@ trait PageExtendedMainContentTrait
         }
     }
 
-    protected function getOtherPropertiesParsed($name)
+    protected function getOtherProperty($name)
     {
         if (null === $this->otherPropertiesParsed) {
             $this->otherPropertiesParsed = $this->otherProperties ? Yaml::parse($this->otherProperties) : [];
@@ -146,9 +151,7 @@ trait PageExtendedMainContentTrait
         if (preg_match('/^get/', $method)) {
             $property = lcfirst(preg_replace('/^get/', '', $method));
             if (!property_exists(get_class($this), $property)) {
-                dump($this->getOtherPropertiesParsed($property));
-
-                return $this->getOtherPropertiesParsed($property) ?? $this->getEmc($property);
+                return $this->getOtherProperty($property) ?? $this->getEmc($property);
                 // todo remove the else next release
             }
 
@@ -156,17 +159,17 @@ trait PageExtendedMainContentTrait
         } else {
             $vars = array_keys(get_object_vars($this));
             if (in_array($method, $vars)) {
-                return call_user_func_array([$this, 'get'.ucfirst($method)], $arguments);
+                return call_user_func_array([$this, 'get' . ucfirst($method)], $arguments);
             }
 
-            return $this->getOtherPropertiesParsed(lcfirst($method)) ?? $this->getEmc($method);
+            return $this->getOtherProperty(lcfirst($method)) ?? $this->getEmc($method);
         }
     }
 
     // To remove next release
     public function getEmc($name)
     {
-        if (preg_match('/<!--"'.$name.'"--(.*)--\/-->/sU', $this->getMainContent(), $match)) {
+        if (preg_match('/<!--"' . $name . '"--(.*)--\/-->/sU', $this->getMainContent(), $match)) {
             return $match[1];
         }
     }

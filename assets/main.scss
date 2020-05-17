@@ -1,36 +1,15 @@
-
 /**
  * Suggested theme :
  * - https://packagist.org/packages/piedweb/theme-component-bundle
  */
 
 /**
- * For a more opinionated noramlization : 
- * 
+ * For a more opinionated noramlization :
+ *
 @import "bootstrap/scss/_functions.scss";
 @import "bootstrap/scss/_variables.scss";
 @import "bootstrap/scss/_mixins.scss";
 @import "bootstrap/scss/_reboot.scss";
 /**/
 
-body {
-    background-color: rgb(246, 246, 246); 
-    color: rgb(17, 17, 17); 
-    font-family: sans-serif; 
-    font-size: 1.3em; 
-    line-height: 1.5;
-    max-width: 700px; 
-    height: unset;
-    margin: 0 auto;
-    padding: 40px 10px 80px;
-}
-
-.img-fluid {
-    max-width:100%;
-    height:auto;
-}
-
-.a {
-    color: blue;
-    text-decoration: underline;
-}
+@import '140.css/src/140.css';

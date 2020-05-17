@@ -7,13 +7,13 @@
     "glob-all": "^3.1",
     "purgecss-webpack-plugin": "^1.6",
     "@symfony/webpack-encore": "^0",
-    "piedweb-tyrol-free-bootstrap-4-theme": "^0",
     "piedweb-cms-js-helpers": "^0",
     "node-sass": "^4.13",
-    "sass-loader": "^7",
+    "sass-loader": "^8",
     "uglifyjs-webpack-plugin": "^2.2",
     "babel-plugin-root-import": "^6.4",
-    "purgecss": "^1.4"
+    "purgecss": "^1.4",
+    "140.css": "^1"
   },
   "scripts": {
     "encore": "encore"

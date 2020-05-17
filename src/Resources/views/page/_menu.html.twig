@@ -1,0 +1,44 @@
+<header style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: .5rem 2rem;
+            border-bottom: 1px solid var(--color-light);
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1030;
+            ">
+    <span style="display:block;font-size: 2.2em; margin-right:0.5em">
+        <a href="{{ homepage() }}">{{ logo_alt }}</a>
+    </span>
+    <nav class="nav">
+        <ul style="list-style:none; display:flex">
+            <li>
+                <a href="https://github.com/PiedWeb/CMS">Code &amp; docs</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<style>
+    body {
+        margin-top: 4em;
+    }
+
+    .nav ul {
+        padding: 0;
+        margin: 0
+    }
+
+    .nav li+li::before {
+        content: '•';
+        margin: 0 0.75em;
+    }
+
+    @media(max-width: 576px) {
+        header {
+            flex-direction: column;
+        }
+    }
+</style>

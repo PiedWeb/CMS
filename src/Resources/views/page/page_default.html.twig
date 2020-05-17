@@ -3,101 +3,111 @@
 {# ----------- #}
 
 {% block html_opener %}
-    <html lang="{{ page.locale|default(app.request.getLocale()) }}">
-{% endblock %}
+	<html lang="{{ page.locale|default(app.request.getLocale()) }}">
+	{% endblock %}
 
-{% block title %}
-    {{ page.title|striptags }}
-{% endblock %}
+	{% block title %}
+		{{ page.title|striptags }}
+	{% endblock %}
 
-{% block robots %}
-    {% if page.excrept is defined and page.excrept is not null %}
-        <meta name="description" content="{{ page.excrept|escape }}">
-    {% endif %}
+	{% block robots %}
+		{% if page.excrept is defined and page.excrept is not null %}
+			<meta name="description" content="{{ page.excrept|escape }}">
+		{% endif %}
 
-    {% if page.metaRobots is defined and page.metaRobots is not null %}
-        <meta name="robots" content="{{ page.metaRobots }}">
-    {% endif %}
+		{% if page.metaRobots is defined and page.metaRobots is not null %}
+			<meta name="robots" content="{{ page.metaRobots }}">
+		{% endif %}
 
-    <link rel="canonical" href="{{ app_base_url|default('') }}{{ page(page.realSlug) }}" />
-{% endblock %}
-
-
-{% block alternate_language %}
-    {% if page.locale is not null %}
-        <link rel="alternate" hreflang="{{ page.locale }}" href="{{ app_base_url|default('') }}{{ page(page.realSlug) }}" />
-        {% for translation in page.translations %}
-            <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ app_base_url|default('') }}{{ page(translation.realSlug) }}" />
-        {% endfor %}
-    {% endif %}
-{% endblock %}
+		<link rel="canonical" href="{{ app_base_url|default('') }}{{ page(page.realSlug) }}"/>
+	{% endblock %}
 
 
-{% block open_graph %}
-    <meta name="og:title" content="{{ page.h1|default(page.title)|striptags }}">
-    <meta name="og:url" content="{{ app_base_url|default('') }}{{ page(page.realSlug) }}">
-    {% if page.excrept %}
-        <meta name="og:description" content="{{ page.excrept|striptags }}">
-    {% endif %}
-    {% if page.mainImage is defined and page.mainImage is not null %}
-        <meta name="og:image" content="{{ app_base_url|default('') }}{{ (page.mainImage.fullPath)|imagine_filter('default') }}">
-    {% endif %}
-{% endblock %}
-
-{% block feed %}
-    {{ parent() }}
-    {% if page.feeds is defined and page.feeds is not null %}
-        {% for feed in page.feeds %}
-            <link
-                rel="alternate"
-                type="{{ feed.type|default('application/rss+xml') }}"
-                href="{{ app_base_url|default('') }}{{ feed.uri }}"
-                title="{{ logo_alt|default('') }} &raquo; {{ feed.title }}"
-            />
-        {% endfor %}
-    {% endif %}
-{% endblock %}
+	{% block alternate_language %}
+		{% if page.locale is not null %}
+			<link rel="alternate" hreflang="{{ page.locale }}" href="{{ app_base_url|default('') }}{{ page(page.realSlug) }}"/>
+			{% for translation in page.translations %}
+				<link rel="alternate" hreflang="{{ translation.locale }}" href="{{ app_base_url|default('') }}{{ page(translation.realSlug) }}"/>
+			{% endfor %}
+		{% endif %}
+	{% endblock %}
 
 
-{% block body %}
-    
-    {% block content %}
-        {% block h1 %}
-            <h1>{{ page.h1|default(page.title)|raw|punctuation_beautifer }}</h1>
-        {% endblock %}
+	{% block open_graph %}
+		<meta name="og:title" content="{{ page.h1|default(page.title)|striptags }}">
+		<meta name="og:url" content="{{ app_base_url|default('') }}{{ page(page.realSlug) }}">
+		{% if page.excrept %}
+			<meta name="og:description" content="{{ page.excrept|striptags }}">
+		{% endif %}
+		{% if page.mainImage is defined and page.mainImage is not null %}
+			<meta name="og:image" content="{{ app_base_url|default('') }}{{ (page.mainImage.fullPath)|imagine_filter('default') }}">
+		{% endif %}
+	{% endblock %}
 
-        {% block description %}
-            {% if page.chapeau is not null %}
-                {% include(template_from_string(page.chapeau)) %}
-            {% endif %}
-        {% endblock %}
+	{% block feed %}
+		{{ parent() }}
+		{% if page.feeds is defined and page.feeds is not null %}
+			{% for feed in page.feeds %}
+				<link
+					rel="alternate"
+					type="{{ feed.type|default('application/rss+xml') }}"
+					href="{{ app_base_url|default('') }}{{ feed.uri }}"
+					title="{{ logo_alt|default('') }} &raquo; {{ feed.title }}"
+				/>
+			{% endfor %}
+		{% endif %}
+	{% endblock %}
 
-        {% block main_image %}
-            {% if page.mainImage is not null %}
-                {%
-                    include '@PiedWebCMS/component/_inline_image.html.twig' with {
-                        'image_src': page.mainImage.fullPath|imagine_filter('default'),
-                        'image_alt': page.mainImage.name(page.locale, true)|default(page.title),
-                    }
-                %}
-            {% endif %}
-        {% endblock %}
-            
 
-        {% block main_content %}
-            {% apply punctuation_beautifer %}
-                {{ include(template_from_string(page.readableContent)) }}
-            {% endapply %}
-        {% endblock %}
+	{% block body %}
 
-        {% block breadcrumb %}
-            {% include '@PiedWebCMS/page/_breadcrumb.html.twig' %}
-        {% endblock %}
-    {% endblock %}
+		{% block content %}
+			<div class="container">
 
-    {% block footer %}
-        {% include '@PiedWebCMS/page/_footer.html.twig' %}
-    {% endblock %}
-    
-    {% block navbar %}{% endblock %}
+				{% block h1 %}
+					<h1>{{ page.h1|default(page.title)|raw|punctuation_beautifer }}</h1>
+				{% endblock %}
+
+				{% block description %}
+					{% if page.chapeau is not null %}
+						{% include(template_from_string(page.chapeau)) %}
+					{% endif %}
+				{% endblock %}
+
+				{% block main_image %}
+					{% if page.mainImage is not null %}
+						{%
+                            include '@PiedWebCMS/component/_inline_image.html.twig' with {
+                                'image_src': page.mainImage.fullPath|imagine_filter('default'),
+                                'image_alt': page.mainImage.name(page.locale, true)|default(page.title),
+                            }
+                        %}
+					{% endif %}
+				{% endblock %}
+
+
+				{% block main_content %}
+					{% apply punctuation_beautifer %}
+					{{ include(template_from_string(page.readableContent)) }}
+					{% endapply %}
+				{% endblock %}
+
+				{% block breadcrumb %}
+					{% include '@PiedWebCMS/page/_breadcrumb.html.twig' %}
+				{% endblock %}
+
+			</div>
+		{% endblock %}
+
+		{% block footer %}
+			{% include '@PiedWebCMS/page/_footer.html.twig' %}
+		{% endblock %}
+
+		{% block navbar %}
+			{% include '@PiedWebCMS/page/_menu.html.twig' %}
+		{% endblock %}
+	{% endblock %}
+
+	{% block html_closer %}
+	</html>
 {% endblock %}

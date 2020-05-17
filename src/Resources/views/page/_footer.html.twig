@@ -1,9 +1,18 @@
-<footer id="footer" style="margin-top:80px">
-    {% block footer %}
-        {% include '@PiedWebCMS/page/_alternate_links.html.twig' %}
-    {% endblock %}
+<footer style="
+	border-top: 0.5px solid var(--bg-dark);
+	font-size: 0.7em;
+	color: var(--color-light);">
+	<div class="container">
+		{% block footer %}
+			{% include '@PiedWebCMS/page/_alternate_links.html.twig' %}
+		{% endblock %}
 
-    {% block extra_footer %}
-        <p>Design <a href="https://piedweb.com">Pied Web</a>.</p>
-    {% endblock %}
+		{% block extra_footer %}
+			<p>
+				<a href="{{ homepage() }}" style="font-size:2.2em">{{ logo_alt }}</a>
+			</p>
+			<p>Design
+				<a href="https://piedweb.com">Pied Web</a>.</p>
+		{% endblock %}
+	</div>
 </footer>

@@ -44,11 +44,6 @@ trait PageExtendedTrait
      */
     protected $name;
 
-    /**
-     * @ORM\Column(type="string", length=250, nullable=true)
-     */
-    protected $template;
-
     public function __constructExtended()
     {
     }
@@ -114,18 +109,6 @@ trait PageExtendedTrait
     public function setName(?string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getTemplate(): ?string
-    {
-        return $this->template;
-    }
-
-    public function setTemplate(?string $template): self
-    {
-        $this->template = $template;
 
         return $this;
     }

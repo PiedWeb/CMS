@@ -11,15 +11,14 @@
 
 {% block body %}
 <div class="container container-txt mt-5 mb-5">
-    <h1 class=mb-5><small>Markdown Cheatsheet</small> <br>La syntaxe markdown</h1>
-
-
-
+<h1 class="mb-5"><small>Markdown Cheatsheet</small> <br>La syntaxe markdown</h1>
 <div class="mb-5 border rounded p-3" style="max-width:400px">
+<style>html { scroll-behavior: smooth; }</style>
 {% filter markdown %}
 ###### <small style="text-transform:uppercase;">Sommaire</small>
 
 - [Titre, sous-titre et chapeau](#title)
+- [Chapeau](#chapeau)
 - [Style de texte](#style)
 - [Lien hypertexte](#link)
     - [Lien vers une adresse mail (protection spam)](#mail)
@@ -33,12 +32,13 @@
 - [Pages enfants (blog/news/...)](#children)
 - [Redirection](#redirect)
 - [Contenu enrichi](#rich-content)
-
 {% endfilter %}
 </div>
 
 <hr class="mb-5 mt-5">
-<h2 id=title>Titre et sous-titre</h2>
+
+<h2 id="title">Titre et sous-titre</h2>
+
 <pre>
 ## Titre 2 (h2)<br>
 ### Titre 3 (h3)<br>
@@ -46,6 +46,7 @@
 #### Titre 5 (h5)<br>
 #### Titre 6 (h6)
 </pre>
+
 {% filter markdown %}
 ## Titre 2 (h2)
 ### Titre 3 (h3)
@@ -56,7 +57,7 @@
 
 <hr class="mb-5 mt-5">
 
-<h2>Chapeau</h2>
+<h2 id="chapeau">Chapeau</h2>
 
 Un chapeau peut aussi être utilisé (paragraphe sous le titre) :
 
@@ -68,7 +69,7 @@ Ceci est le reste de mon contenu...
 
 <hr class="mb-5 mt-5">
 
-<h2 id=style>Style de Texte</h2>
+<h2 id="style">Style de Texte</h2>
 <pre>
 Italique         : *astérisques* ou _underscores_<br>
 Gras             : **astérisques** ou __underscores__.<br>
@@ -83,7 +84,7 @@ Gras et Italique : **astérisques et _underscore_**.
 {% endfilter %}
 <hr class="mb-5 mt-5">
 
-<h2 id=link>Lien Hypertexte</h2>
+<h2 id="link">Lien Hypertexte</h2>
 <pre>
 [ma page d'accueil](/)
 [un autre site](https://example.tld/)
@@ -98,16 +99,15 @@ Lien dissimulé pour les moteurs de recherches :
 
 <pre>{{ "{{ link('Pied Web', 'https://piedweb.com/') }}" }}</pre>
 
-<h3 id=mail>Lien vers une adresse mail</h3>
-<pre>
-{{ "{{ mail('contact@example.tld') }}" }}
-</pre>
+<h3 id="mail">Lien vers une adresse mail</h3>
+
+<pre>{{ "{{ mail('contact@example.tld') }}" }}</pre>
 
 <p>{{ mail('contact@example.tld') }}</p>
 
 <p>Most robots will see <code>pbagnpg@rknzcyr.gyq</code></p>
 
-<h3 id=fragment>Ajouter un lien vers une partie de page</h3>
+<h3 id="fragment">Ajouter un lien vers une partie de page</h3>
 
 <ol>
     <li>Créer l'ancre repère dans la page, exemple :
@@ -118,7 +118,7 @@ Lien dissimulé pour les moteurs de recherches :
 
 <hr class="mb-5 mt-5">
 
-<h2 id=list>Listes</h2>
+<h2 id="list">Listes</h2>
 <pre>
 1. premier élément d'une liste ordonnée
 2. second
@@ -132,6 +132,7 @@ Lien dissimulé pour les moteurs de recherches :
     1. sous-liste ordonnée
 + Ou un plus
 </pre>
+
 {% filter markdown %}
 1. premier élément d'une liste ordonnée
 2. second
@@ -149,14 +150,14 @@ Lien dissimulé pour les moteurs de recherches :
 <h3 id="pageslist">Liste de pages</h3>
 
 Pour lister des pages contenant un terme ou un `tag` :
-<pre>{{ list('keyword X') }}</pre>
+<pre>\{\{ list('keyword X') \}\}</pre>
 
 Autres paramètres :
-<pre>{{ list($filtering_string, $number = 3, $orderBy = 'createdAt', $template = '@PiedWebCMS/page/_pages_list.html.twig') }}</pre>
+<pre>\{\{ list($filtering_string, $number = 3, $orderBy = 'createdAt', $template = '@PiedWebCMS/page/_pages_list.html.twig') \}\}</pre>
 
 <hr class="mb-5 mt-5">
 
-<h2 id=p>Paragraphes et saut de ligne</h2>
+<h2 id="p">Paragraphes et saut de ligne</h2>
 <pre>
 Sauter deux lignes.
 
@@ -181,7 +182,7 @@ deux espace sont nécessaires.
 {% endfilter %}
 <hr class="mb-5 mt-5">
 
-<h2 id=quote>Citation</h2>
+<h2 id="quote">Citation</h2>
 <pre>
 Ma citation :
 
@@ -200,7 +201,7 @@ Ma citation :
 {% endfilter %}
 <hr class="mb-5 mt-5">
 
-<h2 id=img>Image</h2>
+<h2 id="img">Image</h2>
 
 <p>Exemple (le code suivant est normalement proposé dans le gestionnaire de l'image) : </p>
 <pre>
@@ -225,7 +226,7 @@ Ma citation :
 <hr class="mb-5 mt-5">
 
 
-<h2 id=video>Vidéo</h2>
+<h2 id="video">Vidéo</h2>
 <p>Déconseillé, préférer une image avec une icône lecture renvoyant vers Youtude/Vimeo/...</p>
 
 <hr class="mb-5 mt-5">
@@ -234,20 +235,21 @@ Ma citation :
 <pre>
 {{ "
 <div class=row>
-{% include '@PiedWebCMS/component/_pages_list.html.twig' with {pages: page.childrenPages|reverse} only %}
+    {% include '@PiedWebCMS/component/_pages_list.html.twig' with {pages: page.childrenPages|reverse} only %}
 </div>
 
 // Or children of children (like Blog Index on a two level organizations
 {% set pages = [] %}
 {% for p in page.childrenPages|reverse %}
 {% set pages = pages|merge(p.childrenPages) %}
-{% endfor %}" }}
+{% endfor %}
+" }}
 </pre>
 
 <hr class="mb-5 mt-5">
 
 
-<h2 id=redirect>Redirection</h2>
+<h2 id="redirect">Redirection</h2>
 Votre contenu doit contenir uniquement :
 <pre>
 Location: http://example.eg/
@@ -255,13 +257,20 @@ Location: http://example.eg/
 <hr class="mb-5 mt-5">
 
 
-<h2 id=rich-content>Contenu enrichi</h2>
+<h2 id="rich-content">Contenu enrichi</h2>
 
 {% filter markdown %}
 - `subtitle`
+
 - `container`  <br>
-   Readable content wrapper. Défaut *container container-txt pt-4 mb-5*
+   class pour le contenant du contenu, par défaultéfaut *container container-txt pt-4 mb-5*
+
 - `feeds` array(type, uri, title)
+
+- `template` (default: `@PiedWebCMS/page/page.html.twig`)
+
+### Image d'arrière-plan
+
 - `main_image_pos`  <br>
   Permet de changer la position du background (css).
 - `main_image_size`  <br>
@@ -272,10 +281,9 @@ Location: http://example.eg/
   Default *stick-bottom* <br>
   Text wrapper, défaut : *container container-txt pt-4*.
 - `main_image_multiple` <br>
-  Plusieurs images en fonction d'un hash contenu dans l'url (ex: winter:/media/defaut/winter.jpg;summer:/media/defaut/summer.jpg)
+  Plusieurs images en fonction d'un hash contenu dans l'url (ex: `winter:/media/defaut/winter.jpg;summer:/media/defaut/summer.jpg`)
 - `main_image_bg_transition`       <br>
   Permet de rajouter un calque devant le fond. Peut être `center`, `inverse`, `default` ou directement `radial-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) )`.
-- ...
 
 {% endfilter %}
 
@@ -283,23 +291,23 @@ Location: http://example.eg/
 
 <style>
 pre {
-    padding: 16px;
+  padding: 16px;
 }
 
 code {
-    padding: 5px;
+  padding: 5px;
 }
 
 pre, code {
-    font-size: 85%;
+  font-size: 85%;
   background-color: #f6f8fa;
   border-radius: 3px;
 }
 
 blockquote {
-    padding: 0 1em;
-    color: #6a737d;
-    border-left: .25em solid #dfe2e5;
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
 }
 </style>
 {% endblock %}

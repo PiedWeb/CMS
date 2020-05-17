@@ -22,7 +22,6 @@ class Page implements PageInterface
     use PageImageTrait;
     use PageExtendedMainContentTrait;
     use PageRedirectionTrait;
-    //use TranslatableTrait;
     use PageI18nTrait;
 
     public function __construct()
@@ -32,6 +31,4 @@ class Page implements PageInterface
         $this->__constructImage();
         $this->__constructI18n();
     }
-
-    //abstract public function getTemplate();
 }
