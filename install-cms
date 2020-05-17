@@ -60,6 +60,10 @@ cp vendor/piedweb/cms-bundle/assets/main.js assets/main.js
 cp vendor/piedweb/cms-bundle/assets/main.scss assets/main.scss
 cp -r vendor/piedweb/cms-bundle/assets/icons assets/
 
+# Copy the two files from default theme you will want to personnalize
+cp vendor/piedweb/cms-bundle/src/Resources/views/page/_menu.html.twig templates/bundles/PiedWebCMSBundle/page/_menu.html.twig
+cp vendor/piedweb/cms-bundle/src/Resources/views/page/_footer.html.twig templates/bundles/PiedWebCMSBundle/page/_footer.html.twig
+
 # Create favicon
 convert -background none assets/icons/icon.svg -define icon:auto-resize=16,32,48 assets/icons/favicon.ico
 # Advice
