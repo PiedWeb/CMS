@@ -7,22 +7,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class PageController extends AbstractController
 {
-    protected $translator;
-
     public function show(
         ?string $slug,
         Request $request,
-        TranslatorInterface $translator,
         ParameterBagInterface $params
     ) {
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = $this->getDoctrine()
-            ->getRepository($this->container->getParameter('app.entity_page'))
-            ->findOneBySlug($slug);
+            ->getRepository($params->get('app.entity_page'))
+            ->findOneBy(['slug' => $slug]);
 
         // Check if page exist
         if (null === $page) {
@@ -57,7 +53,7 @@ class PageController extends AbstractController
         return $this->render($params->get('app.default_page_template'), ['page' => $page]);
     }
 
-    protected function checkIfUriIsCanonical($request, $page)
+    protected function checkIfUriIsCanonical(Request $request, Page $page)
     {
         $real = $request->getRequestUri();
 
@@ -74,15 +70,16 @@ class PageController extends AbstractController
 
     public function preview(
         ?string $slug,
-        Request $request
+        Request $request,
+        ParameterBagInterface $params
     ) {
-        $pageEntity = $this->container->getParameter('app.entity_page');
+        $pageEntity = $params->get('app.entity_page');
 
         $page = (null === $slug || '' === $slug) ?
             new $pageEntity()
             : $this->getDoctrine()
             ->getRepository($pageEntity)
-            ->findOneBySlug(rtrim(strtolower($slug), '/'));
+            ->findOneBy(['slug' => rtrim(strtolower($slug), '/')]);
 
         $plainText = \PiedWeb\CMSBundle\Twig\AppExtension::convertMarkdownImage($request->request->get('plaintext'));
 
@@ -90,7 +87,8 @@ class PageController extends AbstractController
     }
 
     public function feed(
-        ?string $slug
+        ?string $slug,
+        ParameterBagInterface $params
     ) {
         if ('homepage' == $slug) {
             return $this->redirect($this->generateUrl('piedweb_cms_page_feed', ['slug' => 'index']), 301);
@@ -99,8 +97,8 @@ class PageController extends AbstractController
         $slug = (null === $slug || 'index' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
 
         $page = $this->getDoctrine()
-            ->getRepository($this->container->getParameter('app.entity_page'))
-            ->findOneBySlug($slug);
+            ->getRepository($params->get('app.entity_page'))
+            ->findOneBy(['slug' => $slug]);
 
         // Check if page exist
         if (null === $page || $page->getChildrenPages()->count() < 1) {

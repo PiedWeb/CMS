@@ -4,6 +4,8 @@ namespace PiedWeb\CMSBundle\Entity;
 
 interface PageInterface
 {
+    public function getSlug();
+
     public function getRedirection();
 
     public function getRedirectionCode();
