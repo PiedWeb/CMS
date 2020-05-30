@@ -2,8 +2,8 @@
 
 namespace PiedWeb\CMSBundle\Mailer;
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment as Twig;
 
 class Mailer
 {
@@ -18,7 +18,7 @@ class Mailer
     protected $router;
 
     /**
-     * @var EngineInterface
+     * @var Twig
      */
     protected $templating;
 
@@ -40,7 +40,7 @@ class Mailer
     public function __construct(
         \Swift_Mailer $mailer,
         UrlGeneratorInterface $router,
-        EngineInterface $templating,
+        Twig $templating,
         string $fromEmail,
         string $fromName
     ) {
