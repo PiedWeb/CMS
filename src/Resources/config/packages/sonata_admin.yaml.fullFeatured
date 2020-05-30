@@ -15,6 +15,7 @@ sonata_admin:
                 items:
                     - piedweb.admin.page
                     - piedweb.admin.media
+                    - piedweb.admin.conversation
             app.admin.group.static:
                 label: admin.label.manage
                 label_catalogue: messages

@@ -1,8 +1,8 @@
+--- #---
 #---
 # Views Component
-#---
 video:
-    play: 'Lecture'
+    play: "Lecture"
 
 relatedPages:
     title: "Ca peut également vous intéresser :"
@@ -41,6 +41,7 @@ admin:
         params: Paramètres
         theme: Thème
         check_content: Vérifier le contenu
+        conversation: Conversation
 
     action: Action
     details: Details
@@ -53,14 +54,14 @@ admin:
             help: '<small>Titre visible depuis les moteurs de recherches dans la limite de 560px (taille actuelle : <span id="titleWidth"></span>)</small>'
         slug:
             label: Identifiant Url
-            help: ' '
+            help: " "
         locale:
             label: Language
             help: "<small>Au format décrit par la norme rfc 5646 (ex: <code>fr</code>, <code>fr-FR</code>, <code>en</code>, <code>en-US</code>...)</small>"
         subTitle:
             label: Sous-titre
         translations:
-            label: 'Traductions'
+            label: "Traductions"
             help: "Utiliser l'url pour trouver la page (ex : en/my-other)."
         excrept:
             label: Courte Description
@@ -102,7 +103,6 @@ admin:
         otherProperties:
             label: Autres paramètres
             help: Au format <em>YAML</em>.
-
 
     user:
         label:
@@ -153,7 +153,7 @@ admin:
 
     element:
         deleted: Elément supprimé.
-        
+
     static:
         updated: Site actualisé avec succès.
 
