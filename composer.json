@@ -1,79 +1,79 @@
 {
-    "name": "piedweb/cms-bundle",
-    "type": "symfony-bundle",
-    "description": "CMS built on top of Symfony (Admin, Front, Page Management, Media Management).",
-    "keywords": [],
-    "homepage": "https://piedweb.com",
-    "license": "MIT",
-    "require": {
-        "php": "^7.3",
-        "cocur/slugify": "^4.0",
-        "dpolac/twig-lambda": "^1.0",
-        "liip/imagine-bundle": "^2.3",
-        "sonata-project/admin-bundle": "^3",
-        "sonata-project/doctrine-orm-admin-bundle": "^3",
-        "doctrine/orm": "^2.7",
-        "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/doctrine-migrations-bundle": "^2.1",
-        "doctrine/annotations": "^1.8",
-        "symfony/swiftmailer-bundle": "^3.4",
-        "symfony/webpack-encore-bundle": "^1",
-        "umpirsky/twig-php-function": "^0.2",
-        "vich/uploader-bundle": "^1.13",
-        "piedweb/render-html-attributes": "^1.0",
-        "league/color-extractor": "^0.3",
-        "twig/extensions": "^1.5",
-        "sensio/framework-extra-bundle": "^5.5",
-        "symfony/finder": "^5.0",
-        "symfony/asset": "^4.4",
-        "symfony/console": "^4.4",
-        "symfony/expression-language": "^4.4",
-        "symfony/form": "^4.4",
-        "symfony/framework-bundle": "^4.4",
-        "symfony/monolog-bundle": "^3.5",
-        "symfony/process": "^5.0",
-        "symfony/security-bundle": "^4.4",
-        "symfony/security-csrf": "^4.4",
-        "symfony/translation": "^4.4",
-        "symfony/twig-bundle": "^4.4",
-        "symfony/validator": "^4.4",
-        "symfony/web-link": "^5.0",
-        "symfony/yaml": "^5.0",
-        "symfony/dotenv": "^5.0",
-        "symfony/maker-bundle": "^1.14",
-        "knplabs/knp-markdown-bundle": "^1.8",
-        "rosell-dk/webp-convert": "^2.3",
-        "spatie/async": "^1.4",
-        "villfa/invert-color": "^0.4.2",
-        "wyrihaximus/html-compress": "^1.4"
-    },
-    "require-dev": {
-        "symfony/phpunit-bridge": "^5.0",
-        "symfony/web-server-bundle": "^4.4",
-        "phpunit/phpunit": "^9",
-        "squizlabs/php_codesniffer": "^3.5"
-    },
-    "config": {
-        "sort-packages": false
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.x-dev"
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "PiedWeb\\CMSBundle\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "PiedWeb\\CMSBundle\\": "tests"
-        }
-    },
-    "authors": [{
-        "name": "Robin D.",
-        "email": "contact@robin-d.fr",
-        "homepage": "https://www.robin-d.fr/"
-    }]
+  "name": "piedweb/cms-bundle",
+  "type": "symfony-bundle",
+  "description": "CMS built on top of Symfony (Admin, Front, Page Management, Media Management).",
+  "keywords": [],
+  "homepage": "https://piedweb.com",
+  "license": "MIT",
+  "require": {
+    "php": "^7.3",
+    "cocur/slugify": "^4.0",
+    "dpolac/twig-lambda": "^1.0",
+    "liip/imagine-bundle": "^2.3",
+    "sonata-project/admin-bundle": "^3",
+    "sonata-project/doctrine-orm-admin-bundle": "^3",
+    "doctrine/orm": "^2.7",
+    "doctrine/doctrine-bundle": "^2.0",
+    "doctrine/doctrine-migrations-bundle": "^2.1",
+    "doctrine/annotations": "^1.8",
+    "symfony/webpack-encore-bundle": "^1",
+    "umpirsky/twig-php-function": "^0.2",
+    "vich/uploader-bundle": "^1.13",
+    "piedweb/render-html-attributes": "^1.0",
+    "league/color-extractor": "^0.3",
+    "twig/extensions": "^1.5",
+    "sensio/framework-extra-bundle": "^5.5",
+    "symfony/finder": "^5.0",
+    "symfony/asset": "^4.4",
+    "symfony/console": "^4.4",
+    "symfony/expression-language": "^4.4",
+    "symfony/form": "^4.4",
+    "symfony/framework-bundle": "^4.4",
+    "symfony/monolog-bundle": "^3.5",
+    "symfony/process": "^5.0",
+    "symfony/security-bundle": "^4.4",
+    "symfony/security-csrf": "^4.4",
+    "symfony/translation": "^4.4",
+    "symfony/twig-bundle": "^4.4",
+    "symfony/validator": "^4.4",
+    "symfony/mailer": "^4.4",
+    "symfony/web-link": "^5.0",
+    "symfony/yaml": "^5.0",
+    "symfony/dotenv": "^5.0",
+    "symfony/maker-bundle": "^1.14",
+    "knplabs/knp-markdown-bundle": "^1.8",
+    "rosell-dk/webp-convert": "^2.3",
+    "spatie/async": "^1.4",
+    "villfa/invert-color": "^0.4.2",
+    "wyrihaximus/html-compress": "^1.4"
+  },
+  "require-dev": {
+    "symfony/phpunit-bridge": "^5.0",
+    "phpunit/phpunit": "^9"
+  },
+  "config": {
+    "sort-packages": false
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.x-dev"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "PiedWeb\\CMSBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PiedWeb\\CMSBundle\\": "tests"
+    }
+  },
+  "authors": [
+    {
+      "name": "Robin D.",
+      "email": "contact@robin-d.fr",
+      "homepage": "https://www.robin-d.fr/"
+    }
+  ]
 }

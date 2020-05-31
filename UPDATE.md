@@ -25,6 +25,8 @@ composer remove piedweb/static-bundle
           "%kernel.projet_dir%/vendor/piedweb/theme-component-bundle/src/Resources/views": PiedWebThemeComponent
   ```
 
+- Moving from SwiftMailer to symfony/mailer, switch to MAILER_DSN in `.env`
+
 ## Update to 0.0.59
 
 - Update database

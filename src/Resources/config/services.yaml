@@ -1,245 +1,280 @@
 services:
+  # --------
+  # Me
+  # --------
 
+  PiedWeb\CMSBundle\PiedWebCMSBundle: ~
 
-# --------
-# Me
-# --------
+  PiedWeb\CMSBundle\:
+    autowire: true
+    resource: '../../../src/*'
+    exclude: '../../../src/{Repository,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    PiedWeb\CMSBundle\PiedWebCMSBundle: ~
+  # controllers are imported separately to make sure services can be injected
+  # as action arguments even if you don't extend any base controller class
+  PiedWeb\CMSBundle\Controller\:
+    autowire: true
+    resource: '../../../src/Controller'
+    tags: ['controller.service_arguments']
 
-    PiedWeb\CMSBundle\:
-        autowire: true
-        resource: '../../../src/*'
-        exclude: '../../../src/{Repository,DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+  PiedWeb\CMSBundle\EventListener\MediaListener:
+    arguments:
+      $projectDir: '%kernel.project_dir%'
+      $em: '@doctrine.orm.entity_manager'
+      $cacheManager: '@liip_imagine.cache.manager'
+      $dataManager: '@liip_imagine.data.manager'
+      $filterManager: '@liip_imagine.filter.manager'
+      $eventDispatcher: '@event_dispatcher'
+    tags:
+      - { name: kernel.event_listener, event: vich_uploader.pre_upload }
+      - { name: kernel.event_listener, event: vich_uploader.post_upload }
+      #- { name: doctrine.orm.entity_listener, entity: PiedWeb\CMSBundle\Entity\Image, event: prePersist }
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    PiedWeb\CMSBundle\Controller\:
-        autowire: true
-        resource: '../../../src/Controller'
-        tags: ['controller.service_arguments']
+  PiedWeb\CMSBundle\EventListener\PageListener:
+    tags:
+      - {
+          name: doctrine.orm.entity_listener,
+          entity: '%app.entity_page%',
+          event: preRemove,
+        }
 
-    PiedWeb\CMSBundle\EventListener\MediaListener:
-        arguments:
-            $projectDir: '%kernel.project_dir%'
-            $em: '@doctrine.orm.entity_manager'
-            $cacheManager: '@liip_imagine.cache.manager'
-            $dataManager: '@liip_imagine.data.manager'
-            $filterManager: '@liip_imagine.filter.manager'
-            $eventDispatcher: '@event_dispatcher'
-        tags:
-            - { name: kernel.event_listener, event: vich_uploader.pre_upload }
-            - { name: kernel.event_listener, event: vich_uploader.post_upload }
-            #- { name: doctrine.orm.entity_listener, entity: PiedWeb\CMSBundle\Entity\Image, event: prePersist }
+  piedweb.feed.dumper:
+    class: PiedWeb\CMSBundle\Service\FeedDumpService
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@twig'
+      - '@piedweb.page_canonical'
+      - '%app.dir%'
+      - '%app.entity_page%'
+      - '%app.locale%'
+      - '%app.locales%'
+    tags:
+      - {
+          name: doctrine.orm.entity_listener,
+          entity: '%app.entity_page%',
+          event: postUpdate,
+        }
 
-    PiedWeb\CMSBundle\EventListener\PageListener:
-        tags:
-            - { name: doctrine.orm.entity_listener, entity: '%app.entity_page%', event: preRemove }
+  piedweb.pageUpdate.emailNotifier:
+    class: PiedWeb\CMSBundle\Service\PageUpdateMailNotifier
+    arguments:
+      [
+        '%app.entity_page%',
+        '@mailer',
+        '%app.email_sender%',
+        '%app.page_update_notification_email%',
+        '%app.name%',
+        '%kernel.root_dir%',
+        '%app.page_update_notification_interval%',
+        '@doctrine.orm.entity_manager',
+        '@translator',
+      ]
+    tags:
+      [
+        {
+          name: doctrine.orm.entity_listener,
+          entity: '%app.entity_page%',
+          event: postUpdate,
+        },
+        {
+          name: doctrine.orm.entity_listener,
+          entity: '%app.entity_page%',
+          event: postPersist,
+        },
+      ]
 
-    piedweb.feed.dumper:
-        class: PiedWeb\CMSBundle\Service\FeedDumpService
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@twig"
-            - "@piedweb.page_canonical"
-            - "%app.dir%"
-            - '%app.entity_page%'
-            - '%app.locale%'
-            - '%app.locales%'
-        tags:
-            - { name: doctrine.orm.entity_listener, entity: '%app.entity_page%', event: postUpdate }
+  PiedWeb\CMSBundle\Service\PageScannerService:
+    class: PiedWeb\CMSBundle\Service\PageScannerService
+    arguments:
+      [
+        '@twig',
+        '@doctrine.orm.entity_manager',
+        '%app.default_page_template%',
+        '%app.dir%',
+      ]
 
-    piedweb.pageUpdate.emailNotifier:
-        class: PiedWeb\CMSBundle\Service\PageUpdateEmailNotifier
-        arguments: ['%app.name%', '%app.email_sender%', '%app.email_to_notify%', "@mailer", "@router", "%kernel.root_dir%"]
-        tags:
-            - { name: doctrine.orm.entity_listener, entity: '%app.entity_page%', event: postUpdate }
+  piedweb.page_rendering.validator:
+    class: PiedWeb\CMSBundle\Validator\Constraints\PageRenderingValidator
+    arguments:
+      - '%app.default_page_template%'
+      - '@twig'
+    tags:
+      - { name: validator.constraint_validator, alias: page_rendering }
 
-    PiedWeb\CMSBundle\Service\PageScannerService:
-        class: PiedWeb\CMSBundle\Service\PageScannerService
-        arguments: ["@twig", "@doctrine.orm.entity_manager", "%app.default_page_template%", "%app.dir%"]
+  PiedWeb\CMSBundle\Twig\AppExtension:
+    tags:
+      - 'twig.extension'
+      #- { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+    arguments:
+      [
+        '@doctrine.orm.entity_manager',
+        '%app.entity_page%',
+        '@piedweb.page_canonical',
+      ]
 
-    #PiedWeb\CMSBundle\Controller\PageController:
-        #autowire: true
-        #tags:
-            #- { name: doctrine.orm.entity_listener, entity: '%app.entity_page%', event: preUpdate }
+  piedweb.page_canonical:
+    class: PiedWeb\CMSBundle\Service\PageCanonicalService
+    arguments:
+      [
+        '@request_stack',
+        '@router',
+        '%app.default_locale_without_prefix%',
+        '%locale%',
+      ]
+    public: true
 
-    piedweb.page_rendering.validator:
-        class: PiedWeb\CMSBundle\Validator\Constraints\PageRenderingValidator
-        arguments:
-            - "%app.default_page_template%"
-            - "@twig"
-        tags:
-            - { name: validator.constraint_validator, alias: page_rendering }
+  PiedWeb\CMSBundle\Service\PageCanonicalService:
+    alias: piedweb.page_canonical
+    public: true
 
-    PiedWeb\CMSBundle\Twig\AppExtension:
-        tags:
-            - 'twig.extension'
-            #- { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-        arguments: [ "@doctrine.orm.entity_manager", '%app.entity_page%', "@piedweb.page_canonical"]
+  piedweb.media_command:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@parameter_bag'
+      - '@liip_imagine.cache.manager'
+      - '@liip_imagine.data.manager'
+      - '@liip_imagine.filter.manager'
+      - '%app.dir%'
+    class: PiedWeb\CMSBundle\Command\MediaCommand
+    tags: ['console.command']
 
-    piedweb.page_canonical:
-        class: PiedWeb\CMSBundle\Service\PageCanonicalService
-        arguments: [ "@request_stack", "@router", '%app.default_locale_without_prefix%', '%locale%']
-        public: true
+  # --------
+  # Static
+  # --------
 
-    PiedWeb\CMSBundle\Service\PageCanonicalService:
-        alias: piedweb.page_canonical
-        public: true
+  piedweb.static:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@twig'
+      - '@parameter_bag'
+      - '@request_stack'
+      - '@piedweb.page_canonical'
+      - '@translator'
+      - '%app.dir%'
+    class: PiedWeb\CMSBundle\Service\StaticService
 
-    piedweb.media_command:
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@parameter_bag"
-            - '@liip_imagine.cache.manager'
-            - '@liip_imagine.data.manager'
-            - '@liip_imagine.filter.manager'
-            - "%app.dir%"
-        class: PiedWeb\CMSBundle\Command\MediaCommand
-        tags: ['console.command']
+  PiedWeb\CMSBundle\Service\StaticService:
+    alias: piedweb.static
 
-# --------
-# Static
-# --------
+  piedweb.static_controller:
+    arguments: ['@piedweb.static']
+    class: PiedWeb\CMSBundle\Controller\StaticController
+    tags: ['controller.service_arguments']
 
-    piedweb.static:
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@twig"
-            - "@parameter_bag"
-            - "@request_stack"
-            - "@piedweb.page_canonical"
-            - "@translator"
-            - "%app.dir%"
-        class: PiedWeb\CMSBundle\Service\StaticService
+  piedweb.static_command:
+    arguments: ['@piedweb.static']
+    class: PiedWeb\CMSBundle\Command\StaticCommand
+    tags: ['console.command']
 
-    PiedWeb\CMSBundle\Service\StaticService:
-        alias: piedweb.static
+  # --------
+  # Repository
+  # --------
 
-    piedweb.static_controller:
-        arguments: ['@piedweb.static']
-        class: PiedWeb\CMSBundle\Controller\StaticController
-        tags: ['controller.service_arguments']
+  PiedWeb\CMSBundle\Repository\PageRepository:
+    arguments: ['@doctrine', '%app.entity_page%']
+    tags:
+      - { name: doctrine.repository_service }
 
-    piedweb.static_command:
-        arguments: ['@piedweb.static']
-        class: PiedWeb\CMSBundle\Command\StaticCommand
-        tags: ['console.command']
+  PiedWeb\CMSBundle\Repository\MediaRepository:
+    arguments: ['@doctrine', '%app.entity_media%']
+    tags:
+      - { name: doctrine.repository_service }
 
-# --------
-# Repository
-# --------
+  # --------
+  # Admin
+  # --------
 
-    PiedWeb\CMSBundle\Repository\PageRepository:
-        arguments: ['@doctrine', '%app.entity_page%']
-        tags:
-            - { name: doctrine.repository_service }
+  piedweb.admin.page:
+    class: PiedWeb\CMSBundle\Admin\PageAdmin
+    arguments:
+      - ~
+      - '%app.entity_page%'
+      - PiedWeb\CMSBundle\Controller\PageAdminController
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: admin.label.page }
+    calls:
+      - [setLiipImage, ['@liip_imagine.cache.manager']]
+      - [setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
+      - [setDefaultLocale, ['%locale%']]
+    public: true
 
-    PiedWeb\CMSBundle\Repository\MediaRepository:
-        arguments: ['@doctrine', '%app.entity_media%']
-        tags:
-            - { name: doctrine.repository_service }
+  piedweb.admin.media:
+    class: PiedWeb\CMSBundle\Admin\MediaAdmin
+    arguments: [~, '%app.entity_media%', ~]
+    calls:
+      - [setLiipImage, ['@liip_imagine.cache.manager']]
+      - [setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: admin.label.media }
 
-# --------
-# Admin
-# --------
+  piedweb.admin.pagehasmedia:
+    class: PiedWeb\CMSBundle\Admin\PageHasMedia
+    arguments: [~, '%app.entity_pagehasmedia%', ~]
+    calls:
+      - [setLiipImage, ['@liip_imagine.cache.manager']]
+    tags:
+      - { name: sonata.admin, manager_type: orm }
 
-    piedweb.admin.page:
-        class: PiedWeb\CMSBundle\Admin\PageAdmin
-        arguments:
-            - ~
-            - '%app.entity_page%'
-            - PiedWeb\CMSBundle\Controller\PageAdminController
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: admin.label.page }
-        calls:
-            - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
-            - [ setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
-            - [ setDefaultLocale, [ '%locale%' ] ]
-        public: true
+  piedweb.admin.user:
+    class: PiedWeb\CMSBundle\Admin\UserAdmin
+    arguments: [~, '%app.entity_user%', ~]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: admin.label.user }
+    public: true
 
-    piedweb.admin.media:
-        class: PiedWeb\CMSBundle\Admin\MediaAdmin
-        arguments: [~, '%app.entity_media%', ~]
-        calls:
-            - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
-            - [ setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
-            - [ setTemplate, [outer_list_rows_mosaic, '@@PiedWebCMS/admin/media_mosaic_body.html.twig']]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: admin.label.media }
+  # --------
+  # TWIG extension
+  # --------
 
-    piedweb.admin.pagehasmedia:
-        class: PiedWeb\CMSBundle\Admin\PageHasMedia
-        arguments: [~, '%app.entity_pagehasmedia%', ~]
-        calls:
-            - [ setLiipImage, [ '@liip_imagine.cache.manager' ] ]
-        tags:
-            - { name: sonata.admin, manager_type: orm }
+  piedweb.app.twig.extension.loader:
+    class: Twig_Extension_StringLoader
+    tags:
+      - { name: 'twig.extension' }
 
-    piedweb.admin.user:
-        class: PiedWeb\CMSBundle\Admin\UserAdmin
-        arguments: [~, '%app.entity_user%', ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: admin.label.user }
-        public: true
+  dpolac.twig_lambda.extension:
+    class: DPolac\TwigLambda\LambdaExtension
+    tags: [{ name: twig.extension }]
 
-# --------
-# TWIG extension
-# --------
+  piedweb.twig.extension.php_function:
+    class: Umpirsky\Twig\Extension\PhpFunctionExtension
+    public: false
+    tags:
+      - { name: twig.extension }
+    calls:
+      - [allowFunction, ['str_rot13']]
 
-    piedweb.app.twig.extension.loader:
-        class:        Twig_Extension_StringLoader
-        tags:
-             - { name: 'twig.extension' }
+  piedweb.twig.extension.render_attributes:
+    class: PiedWeb\RenderAttributes\TwigExtension
+    public: false
+    tags:
+      - { name: twig.extension }
 
-    dpolac.twig_lambda.extension:
-        class: DPolac\TwigLambda\LambdaExtension
-        tags: [ { name: twig.extension } ]
+  piedweb.twig.extension.intl:
+    class: Twig_Extensions_Extension_Intl
+    tags:
+      - { name: twig.extension }
 
-    piedweb.twig.extension.php_function:
-        class: Umpirsky\Twig\Extension\PhpFunctionExtension
-        public: false
-        tags:
-            - { name: twig.extension }
-        calls:
-            - [allowFunction, ["str_rot13"]]
+  # --------
+  # Extending other bundles
+  # --------
 
-    piedweb.twig.extension.render_attributes:
-        class: PiedWeb\RenderAttributes\TwigExtension
-        public: false
-        tags:
-            - { name: twig.extension }
+  imagine.cache.resolver.piedweb:
+    class: PiedWeb\CMSBundle\Service\ImagineWebCacheResolver
+    arguments:
+      - '@filesystem'
+      - '@router.request_context'
+      - '%app.dir%'
+    tags:
+      - {
+          name: 'liip_imagine.cache.resolver',
+          resolver: piedweb_relativeimgcache,
+        }
 
-    piedweb.twig.extension.intl:
-        class: Twig_Extensions_Extension_Intl
-        tags:
-            - { name: twig.extension }
+  vich_uploader.piedweb.namer_property:
+    class: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer
+    public: true
+    arguments: ['@Vich\UploaderBundle\Util\Transliterator']
 
-
-    piedweb_cms.mailer:
-        class: PiedWeb\CMSBundle\Mailer\Mailer
-        arguments: ['@mailer', '@router', '@templating', '%app.email_sender%', '%app.email_sender_name%']
-
-    PiedWeb\CMSBundle\Mailer\Mailer:
-        alias: piedweb_cms.mailer
-# --------
-# Extending other bundles
-# --------
-
-    imagine.cache.resolver.piedweb:
-        class: PiedWeb\CMSBundle\Service\ImagineWebCacheResolver
-        arguments:
-            - "@filesystem"
-            - "@router.request_context"
-            - "%app.dir%"
-        tags:
-            - { name: "liip_imagine.cache.resolver", resolver: piedweb_relativeimgcache }
-
-    vich_uploader.piedweb.namer_property:
-        class: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer
-        public: true
-        arguments: ['@Vich\UploaderBundle\Util\Transliterator']
-
-    PiedWeb\CMSBundle\Service\VichUploadPropertyNamer:
-        alias: vich_uploader.piedweb.namer_property
-        public: true
+  PiedWeb\CMSBundle\Service\VichUploadPropertyNamer:
+    alias: vich_uploader.piedweb.namer_property
+    public: true

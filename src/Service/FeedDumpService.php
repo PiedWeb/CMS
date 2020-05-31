@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Repository\PageRepository;
 use Symfony\Component\Filesystem\Filesystem;
-use Twig_Environment;
+use Twig\Environment as Twig;
 
 /**
  * Inspired by https://github.com/eko/FeedBundle.
@@ -28,9 +28,7 @@ class FeedDumpService
      */
     private $filesystem;
 
-    /**
-     * @var \Twig_Environment
-     */
+    /** @var Twig */
     private $twig;
 
     /**
@@ -48,7 +46,7 @@ class FeedDumpService
 
     public function __construct(
         EntityManager $em,
-        Twig_Environment $twig,
+        Twig $twig,
         PageCanonicalService $pc,
         string $webDir,
         string $page_class,

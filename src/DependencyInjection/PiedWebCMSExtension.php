@@ -17,7 +17,7 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
+        $configuration = new Configuration(); //$configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
 
         // Better idea to get config everywhere ?
