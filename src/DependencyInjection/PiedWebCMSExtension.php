@@ -28,7 +28,6 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
         // todo : https://symfony.com/doc/current/bundles/extension.html#adding-classes-to-compile
     }
 
-
     /**
      * @param string $prefix must contain the last
      *
