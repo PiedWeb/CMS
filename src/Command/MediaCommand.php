@@ -70,7 +70,7 @@ class MediaCommand extends Command
         $repo = $this->em->getRepository($this->params->get('pwc.entity_media'));
 
         if ($input->getArgument('media')) {
-            return $repo->findByMedia($input->getArgument('media'));
+            return $repo->findBy(['media' => $input->getArgument('media')]);
         }
 
         return $repo->findAll();

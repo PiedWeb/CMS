@@ -45,11 +45,11 @@ class PageUpdateMailNotifier
         $this->page = $page;
     }
 
-    protected function getPageUpdatedSince($lastTime)
+    protected function getPageUpdatedSince($datetime)
     {
         $query = $this->em->createQuery(
             'SELECT p FROM '.$this->page.' p WHERE p.createdAt > :lastTime OR p.updatedAt > :lastTime'
-        )->setParameter('lastTime', $lastTime);
+        )->setParameter('lastTime', $datetime);
 
         return $query->getResult();
     }

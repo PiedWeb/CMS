@@ -20,9 +20,7 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
         $configuration = new Configuration(); //$configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
 
-        // Better idea to get config everywhere ?
-        // not get config every where and load only what's need
-        self::loadConfigHelper($container, $config);
+        self::loadConfigToParameters($container, $config);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
@@ -30,16 +28,17 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
         // todo : https://symfony.com/doc/current/bundles/extension.html#adding-classes-to-compile
     }
 
+
     /**
      * @param string $prefix must contain the last
      *
      * @return void
      */
-    protected static function loadConfigHelper(ContainerBuilder $container, array $config, $prefix = '')
+    protected static function loadConfigToParameters(ContainerBuilder $container, array $config, $prefix = '')
     {
         foreach ($config as $key => $value) {
             if (is_array($value)) {
-                self::loadConfigHelper($container, $value, $prefix.$key.'.');
+                self::loadConfigToParameters($container, $value, $prefix.$key.'.');
             } else {
                 $container->setParameter('app.'.$prefix.$key, $value); // to deprecate in next release
                 $container->setParameter('pwc.'.$prefix.$key, $value);
