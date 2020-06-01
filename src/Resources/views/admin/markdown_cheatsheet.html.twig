@@ -12,8 +12,10 @@
 {% block body %}
 <div class="container container-txt mt-5 mb-5">
 <h1 class="mb-5"><small>Markdown Cheatsheet</small> <br>La syntaxe markdown</h1>
-<div class="mb-5 border rounded p-3" style="max-width:400px">
-<style>html { scroll-behavior: smooth; }</style>
+<div class="mb-5 border rounded p-3" style="max-width:700px">
+<style>html { scroll-behavior: smooth; }
+pre { overflow:auto;}
+body {background-color:#fff}</style>
 {% filter markdown %}
 ###### <small style="text-transform:uppercase;">Sommaire</small>
 
@@ -150,10 +152,13 @@ Lien dissimulé pour les moteurs de recherches :
 <h3 id="pageslist">Liste de pages</h3>
 
 Pour lister des pages contenant un terme ou un `tag` :
-<pre>\{\{ list('keyword X') \}\}</pre>
+<pre>{{ "{{" }} list('keyword X') {{ "}}" }} </pre>
+
 
 Autres paramètres :
-<pre>\{\{ list($filtering_string, $number = 3, $orderBy = 'createdAt', $template = '@PiedWebCMS/page/_pages_list.html.twig') \}\}</pre>
+<pre>{{ "{{" }}  list($filtering_string, $number = 3, $orderBy = 'createdAt', $template = '@PiedWebCMS/page/_pages_list.html.twig') {{ "}}" }}</pre>
+
+
 
 <hr class="mb-5 mt-5">
 
