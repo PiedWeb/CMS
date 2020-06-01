@@ -9,10 +9,10 @@ use PiedWeb\CMSBundle\Entity\Media;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\PageCanonicalService;
 use PiedWeb\RenderAttributes\AttributesTrait;
+use Twig\Environment as Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use Twig_Environment;
 
 class AppExtension extends AbstractExtension
 {
@@ -109,7 +109,7 @@ class AppExtension extends AbstractExtension
     }
 
     public function renderPagesList(
-        Twig_Environment $env,
+        Twig $env,
         string $containing = '',
         int $number = 3,
         string $orderBy = 'createdAt',
@@ -151,7 +151,7 @@ class AppExtension extends AbstractExtension
         return $media;
     }
 
-    public function renderGallery(Twig_Environment $env, Page $currentPage, $filterImageFrom = 1, $length = 1001)
+    public function renderGallery(Twig $env, Page $currentPage, $filterImageFrom = 1, $length = 1001)
     {
         return $env->render('@PiedWebCMS/page/_gallery.html.twig', [
             'page' => $currentPage,
@@ -168,7 +168,7 @@ class AppExtension extends AbstractExtension
             : true;
     }
 
-    public static function renderTxtAnchor(Twig_Environment $env, $name)
+    public static function renderTxtAnchor(Twig $env, $name)
     {
         $slugify = new Slugify();
         $name = $slugify->slugify($name);
@@ -176,7 +176,7 @@ class AppExtension extends AbstractExtension
         return $env->render('@PiedWebCMS/component/_txt_anchor.html.twig', ['name' => $name]);
     }
 
-    public static function renderEncodedMail(Twig_Environment $env, $mail, $class = '')
+    public static function renderEncodedMail(Twig $env, $mail, $class = '')
     {
         return $env->render('@PiedWebCMS/component/_encoded_mail.html.twig', [
             'mail' => str_rot13($mail),
@@ -193,7 +193,7 @@ class AppExtension extends AbstractExtension
         );
     }
 
-    public static function renderJavascriptLink(Twig_Environment $env, $anchor, $path, $attr = [])
+    public static function renderJavascriptLink(Twig $env, $anchor, $path, $attr = [])
     {
         if (0 === strpos($path, 'http://')) {
             $path = '-'.substr($path, 7);
