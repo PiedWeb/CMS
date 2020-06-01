@@ -10,42 +10,38 @@ var glob = require("glob-all")
 /**/
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
-    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+  Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
-Encore
-    .setOutputPath('public/assets')
-    .setPublicPath('/assets')
+Encore.setOutputPath('public/assets')
+  .setPublicPath('/assets')
 
-    .addEntry('app', './assets/main.js')
+  .addEntry('app', './assets/main.js')
 
-    //.splitEntryChunks()
-    //.enableSingleRuntimeChunk() normally, don't need by default
+  //.splitEntryChunks()
+  //.enableSingleRuntimeChunk() normally, don't need by default
 
-    .cleanupOutputBeforeBuild()
-    .enableSourceMaps(!Encore.isProduction())
-    .enableSassLoader()
-    .disableSingleRuntimeChunk()
-    .enableVersioning(true)
-    .configureBabel((babelConfig) => {
-            babelConfig.plugins.push('babel-plugin-root-import')
-        }, {
-        useBuiltIns: 'usage',
-        corejs: 3
-    })
-
-    .copyFiles({
-        from: './assets/icon',
-        pattern: /.*/,
-        to: '[path]../[name].[ext]'
-    })
-    .copyFiles({
-        from: './node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/img',
-        pattern: /.*title\.(png|jpg|jpeg)$/,
-        to: '[path][name].[ext]'
-    })
-    .addPlugin(new webpack.ProvidePlugin(new UglifyJSPlugin()))
-    /**
+  .cleanupOutputBeforeBuild()
+  .enableSourceMaps(!Encore.isProduction())
+  .enableSassLoader()
+  .disableSingleRuntimeChunk()
+  .enableVersioning(true)
+  .configureBabel(
+    (babelConfig) => {
+      babelConfig.plugins.push('babel-plugin-root-import');
+    },
+    {
+      useBuiltIns: 'usage',
+      corejs: 3,
+    }
+  )
+  .copyFiles({
+    from: './node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/img',
+    pattern: /.*title\.(png|jpg|jpeg)$/,
+    to: '[path][name].[ext]',
+  })
+  .addPlugin(new webpack.ProvidePlugin(new UglifyJSPlugin()))
+  /**
     .addPlugin(new PurgecssPlugin({
         paths: glob.sync([
             'static/*.html',
@@ -56,12 +52,9 @@ Encore
             /baguette/, /form/, /col/, /pt/, /mt/, ,/pb/, /mb/, /\.p-/, /\.m-/, /fullwidth/, /turbolinks/
         ]
     }))/**/
-    .configureFilenames({
-         js: '[name].js',
-         css: '[name].css',
-         images: 'img/[name].[ext]',
-         fonts: 'fonts/[hash:8].[name].[ext]'
-    })
-;
+  .configureFilenames({
+    images: 'img/[name].[ext]',
+    fonts: 'fonts/[hash:8].[name].[ext]',
+  });
 
 module.exports = Encore.getWebpackConfig();
