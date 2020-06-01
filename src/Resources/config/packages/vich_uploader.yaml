@@ -1,10 +1,10 @@
 vich_uploader:
-    db_driver: orm
+  db_driver: orm
 
-    mappings:
-        media_media:
-            #uri_prefix:
-            upload_destination: '%app.media_dir_absolute%'
-            namer:
-                service: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer #Vich\UploaderBundle\Naming\PropertyNamer
-                options: { property: 'slug'}
+  mappings:
+    media_media:
+      #uri_prefix:
+      upload_destination: '%pwc.media_dir_absolute%'
+      namer:
+        service: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer #Vich\UploaderBundle\Naming\PropertyNamer
+        options: { property: 'slug' }

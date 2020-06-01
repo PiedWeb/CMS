@@ -1,56 +1,56 @@
 security:
-    encoders:
-        '%app.entity_user%':
-            algorithm: auto
+  encoders:
+    '%pwc.entity_user%':
+      algorithm: auto
 
-    role_hierarchy:
-        ROLE_EDITOR:
-            - ROLE_SONATA_ADMIN
-            - ROLE_PIEDWEB_ADMIN
-            - ROLE_PIEDWEB_ADMIN_PAGE_CREATE
-            - ROLE_PIEDWEB_ADMIN_PAGE_DELETE
-            - ROLE_PIEDWEB_ADMIN_PAGE_VIEW
-            - ROLE_PIEDWEB_ADMIN_PAGE_LIST
-            - ROLE_PIEDWEB_ADMIN_PAGE_EDIT
-            - ROLE_PIEDWEB_ADMIN_MEDIA_CREATE
-            - ROLE_PIEDWEB_ADMIN_MEDIA_EDIT
-            - ROLE_PIEDWEB_ADMIN_MEDIA_LIST
-            - ROLE_PIEDWEB_ADMIN_MEDIA_VIEW
-            - ROLE_PIEDWEB_ADMIN_MEDIA_DELETE
-        ROLE_ADMIN:             [ROLE_EDITOR]
-        ROLE_SUPER_ADMIN:       [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-    access_decision_manager:
-        strategy: unanimous
+  role_hierarchy:
+    ROLE_EDITOR:
+      - ROLE_SONATA_ADMIN
+      - ROLE_PIEDWEB_ADMIN
+      - ROLE_PIEDWEB_ADMIN_PAGE_CREATE
+      - ROLE_PIEDWEB_ADMIN_PAGE_DELETE
+      - ROLE_PIEDWEB_ADMIN_PAGE_VIEW
+      - ROLE_PIEDWEB_ADMIN_PAGE_LIST
+      - ROLE_PIEDWEB_ADMIN_PAGE_EDIT
+      - ROLE_PIEDWEB_ADMIN_MEDIA_CREATE
+      - ROLE_PIEDWEB_ADMIN_MEDIA_EDIT
+      - ROLE_PIEDWEB_ADMIN_MEDIA_LIST
+      - ROLE_PIEDWEB_ADMIN_MEDIA_VIEW
+      - ROLE_PIEDWEB_ADMIN_MEDIA_DELETE
+    ROLE_ADMIN: [ROLE_EDITOR]
+    ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+  access_decision_manager:
+    strategy: unanimous
 
-    providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        piedweb_cms_user_provider:
-            entity:
-                class: '%app.entity_user%'
-                property: email
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    piedweb_cms_user_provider:
+      entity:
+        class: '%pwc.entity_user%'
+        property: email
 
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            anonymous: lazy
-            http_basic:
-                realm: Secured Area
-            guard:
-                authenticators:
-                    - PiedWeb\CMSBundle\Security\UserAuthenticator
-            logout:
-                path: piedweb_cms_logout
-                # where to redirect after logout
-                # target: app_any_route
-            remember_me:
-                lifetime: 31536000 # a year
-                always_remember_me: true
-                secret: '%kernel.secret%'
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      anonymous: lazy
+      http_basic:
+        realm: Secured Area
+      guard:
+        authenticators:
+          - PiedWeb\CMSBundle\Security\UserAuthenticator
+      logout:
+        path: piedweb_cms_logout
+        # where to redirect after logout
+        # target: app_any_route
+      remember_me:
+        lifetime: 31536000 # a year
+        always_remember_me: true
+        secret: '%kernel.secret%'
 
-    access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_EDITOR }
+  access_control:
+    - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/admin/, role: ROLE_EDITOR }

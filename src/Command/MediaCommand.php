@@ -67,7 +67,7 @@ class MediaCommand extends Command
 
     protected function getMedias(InputInterface $input)
     {
-        $repo = $this->em->getRepository($this->params->get('app.entity_media'));
+        $repo = $this->em->getRepository($this->params->get('pwc.entity_media'));
 
         if ($input->getArgument('media')) {
             return $repo->findByMedia($input->getArgument('media'));

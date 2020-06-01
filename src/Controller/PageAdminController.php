@@ -24,7 +24,7 @@ class PageAdminController extends CRUDController
     public function treeAction()
     {
         $pages = $this->getDoctrine()
-            ->getRepository($this->container->getParameter('app.entity_page'))
+            ->getRepository($this->container->getParameter('pwc.entity_page'))
             ->getPagesWithoutParent();
 
         return $this->renderWithExtraParams('@PiedWebCMS/admin/page_treeView.html.twig', [

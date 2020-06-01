@@ -20,7 +20,7 @@ class PageScannerController extends AbstractController
     public function scanAction()
     {
         $pages = $this->getDoctrine()
-            ->getRepository($this->container->getParameter('app.entity_page'))
+            ->getRepository($this->container->getParameter('pwc.entity_page'))
             ->findAll();
 
         $errors = [];

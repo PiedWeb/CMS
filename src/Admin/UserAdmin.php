@@ -24,7 +24,7 @@ class UserAdmin extends AbstractAdmin
 
     protected function exists(string $name): bool
     {
-        return method_exists($this->getContainer()->getParameter('app.entity_user'), 'get'.$name);
+        return method_exists($this->getContainer()->getParameter('pwc.entity_user'), 'get'.$name);
     }
 
     protected function configureFormFields(FormMapper $formMapper): void

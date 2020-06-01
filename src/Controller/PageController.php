@@ -17,7 +17,7 @@ class PageController extends AbstractController
     ) {
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = $this->getDoctrine()
-            ->getRepository($params->get('app.entity_page'))
+            ->getRepository($params->get('pwc.entity_page'))
             ->findOneBy(['slug' => $slug]);
 
         // Check if page exist
@@ -46,11 +46,11 @@ class PageController extends AbstractController
             return $this->redirect($page->getRedirection(), $page->getRedirectionCode());
         }
 
-        // method_exists($this->container->getParameter('app.entity_page'), 'getTemplate') &&
-        //$template = null !== $page->getTemplate() ? $page->getTemplate() : $params->get('app.default_page_template');
+        // method_exists($this->container->getParameter('pwc.entity_page'), 'getTemplate') &&
+        //$template = null !== $page->getTemplate() ? $page->getTemplate() : $params->get('pwc.default_page_template');
         // todo remove it, it's now manage directly in the template
 
-        return $this->render($params->get('app.default_page_template'), ['page' => $page]);
+        return $this->render($params->get('pwc.default_page_template'), ['page' => $page]);
     }
 
     protected function checkIfUriIsCanonical(Request $request, Page $page)
@@ -73,7 +73,7 @@ class PageController extends AbstractController
         Request $request,
         ParameterBagInterface $params
     ) {
-        $pageEntity = $params->get('app.entity_page');
+        $pageEntity = $params->get('pwc.entity_page');
 
         $page = (null === $slug || '' === $slug) ?
             new $pageEntity()
@@ -97,7 +97,7 @@ class PageController extends AbstractController
         $slug = (null === $slug || 'index' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
 
         $page = $this->getDoctrine()
-            ->getRepository($params->get('app.entity_page'))
+            ->getRepository($params->get('pwc.entity_page'))
             ->findOneBy(['slug' => $slug]);
 
         // Check if page exist

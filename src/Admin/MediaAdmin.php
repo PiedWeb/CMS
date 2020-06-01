@@ -109,7 +109,7 @@ class MediaAdmin extends AbstractAdmin
         $media = $this->getSubject();
 
         $pages = $this->getConfigurationPool()->getContainer()->get('doctrine')
-            ->getRepository($this->getContainer()->getParameter('app.entity_page'))
+            ->getRepository($this->getContainer()->getParameter('pwc.entity_page'))
             ->getPagesUsingMedia($this->liipImage->getBrowserPath($media->getFullPath(), 'default'));
 
         $this->relatedPages = [

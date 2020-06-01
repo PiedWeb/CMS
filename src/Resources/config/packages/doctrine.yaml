@@ -1,33 +1,33 @@
 parameters:
-    env(DATABASE_URL): 'sqlite:///%kernel.project_dir%/var/app.db'
+  env(DATABASE_URL): 'sqlite:///%kernel.project_dir%/var/app.db'
 
 doctrine:
-    dbal:
-        # configure these for your database server
-        driver: 'pdo_mysql'
-        server_version: '5.7'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
+  dbal:
+    # configure these for your database server
+    driver: 'pdo_mysql'
+    server_version: '5.7'
+    charset: utf8mb4
+    default_table_options:
+      charset: utf8mb4
+      collate: utf8mb4_unicode_ci
 
-        url: '%env(resolve:DATABASE_URL)%'
-    orm:
-        auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        mappings:
-            App:
-                type: annotation
-                prefix: App\Entity
-                dir: '%kernel.root_dir%/../src/Entity'
-                is_bundle: false
-            PiedWebCMSBundle:
-                type: annotation
-                dir: 'Entity'
-                alias: PiedWebCMS
-        resolve_target_entities:
-            PiedWeb\CMSBundle\Entity\PageInterface: '%app.entity_page%'
-            PiedWeb\CMSBundle\Entity\MediaInterface: '%app.entity_media%'
-            PiedWeb\CMSBundle\Entity\UserInterface: '%app.entity_user%'
-            PiedWeb\CMSBundle\Entity\PageHasMediaInterface: '%app.entity_pagehasmedia%'
+    url: '%env(resolve:DATABASE_URL)%'
+  orm:
+    auto_generate_proxy_classes: '%kernel.debug%'
+    naming_strategy: doctrine.orm.naming_strategy.underscore
+    auto_mapping: true
+    mappings:
+      App:
+        type: annotation
+        prefix: App\Entity
+        dir: '%kernel.root_dir%/../src/Entity'
+        is_bundle: false
+      PiedWebCMSBundle:
+        type: annotation
+        dir: 'Entity'
+        alias: PiedWebCMS
+    resolve_target_entities:
+      PiedWeb\CMSBundle\Entity\PageInterface: '%pwc.entity_page%'
+      PiedWeb\CMSBundle\Entity\MediaInterface: '%pwc.entity_media%'
+      PiedWeb\CMSBundle\Entity\UserInterface: '%pwc.entity_user%'
+      PiedWeb\CMSBundle\Entity\PageHasMediaInterface: '%pwc.entity_pagehasmedia%'

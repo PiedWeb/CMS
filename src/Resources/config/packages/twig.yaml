@@ -1,15 +1,15 @@
 twig:
-    default_path: '%kernel.project_dir%/templates'
-    debug: '%kernel.debug%'
-    strict_variables: '%kernel.debug%'
-    paths:
-        "%kernel.root_dir%/../vendor/sonata-project/admin-bundle/src/Resources/views": SonataAdmin
-        "%kernel.root_dir%/../templates": App
-        "%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Resources/views/TwigBundle": Twig
-    form_themes:
-        - 'bootstrap_4_layout.html.twig'
-        - '@SonataCore/Form/datepicker.html.twig'
-    globals:
-        logo_alt: "%app.name%"
-        app_color: "%app.color%"
-        app_base_url: "%app.base_url%"
+  default_path: '%kernel.project_dir%/templates'
+  debug: '%kernel.debug%'
+  strict_variables: '%kernel.debug%'
+  paths:
+    '%kernel.root_dir%/../vendor/sonata-project/admin-bundle/src/Resources/views': SonataAdmin
+    '%kernel.root_dir%/../templates': App
+    '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Resources/views/TwigBundle': Twig
+  form_themes:
+    - 'bootstrap_4_layout.html.twig'
+    - '@SonataCore/Form/datepicker.html.twig'
+  globals:
+    logo_alt: '%pwc.name%'
+    app_color: '%pwc.color%'
+    app_base_url: '%pwc.base_url%'
