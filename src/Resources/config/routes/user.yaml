@@ -1,9 +1,8 @@
-
 piedweb_cms_login:
-    path: /login
-    controller: PiedWeb\CMSBundle\Controller\UserController::login
+  path: /login
+  controller: PiedWeb\CMSBundle\Controller\UserController::login
 
 piedweb_cms_logout:
-    path: /logout
-    controller: PiedWeb\CMSBundle\Controller\UserController::logout
-    methods:    [GET, HEAD, POST]
+  path: /logout
+  controller: PiedWeb\CMSBundle\Controller\UserController::logout
+  methods: [GET, HEAD, POST]
