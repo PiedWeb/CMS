@@ -39,6 +39,7 @@ class AppExtension extends AbstractExtension
         return [
             //new TwigFilter('markdown', [AppExtension::class, 'markdownToHtml'], ['is_safe' => ['all']]),
             new TwigFilter('html_entity_decode', 'html_entity_decode'),
+            new TwigFilter('preg_replace', [AppExtension::class, 'pregReplace']),
             new TwigFilter(
                 'punctuation_beautifer',
                 [AppExtension::class, 'punctuationBeautifer'],
@@ -47,12 +48,18 @@ class AppExtension extends AbstractExtension
         ];
     }
 
+    public static function pregReplace($subject, $pattern, $replacement)
+    {
+        return preg_replace($pattern, $replacement, $subject);
+    }
+
     public static function convertMarkdownImage(string $body)
     {
         return preg_replace(
             '/(?:!\[(.*?)\]\((.*?)\))/',
             '{%'
             .PHP_EOL.'    include "@PiedWebCMS/component/_inline_image.html.twig" with {'
+            .PHP_EOL.'        "image_wrapper_class" : "mimg",'
             .PHP_EOL.'        "image_src" : "$2",'
             .PHP_EOL.'        "image_alt" : "$1"'
             .PHP_EOL.'    } only'
@@ -97,6 +104,11 @@ class AppExtension extends AbstractExtension
                 'gallery',
                 [$this, 'renderGallery'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
+            ),
+            new TwigFunction(
+                'encode',
+                [AppExtension::class, 'encode'],
+                ['is_safe' => ['html']]
             ),
             new TwigFunction(
                 'list',
@@ -210,5 +222,10 @@ class AppExtension extends AbstractExtension
             'anchor' => $anchor,
             ]
         );
+    }
+
+    public static function encode($string)
+    {
+        return str_rot13($string);
     }
 }
