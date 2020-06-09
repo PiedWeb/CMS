@@ -3,7 +3,7 @@
     image_alt
     rounded             boolean
     image_class
-    gallery_class
+    image_wrapper
 
         xs: #576px
         sm: #768px
@@ -13,7 +13,11 @@
 #}
 
 {% if image_src is defined %}
-<p class="{{ gallery_class|default('mimg') }}">
+
+{% if image_wrapper_class is defined %}
+<p class="{{ image_wrapper_class }}">
+{% endif %}
+
     {% if isInternalImage(image_src) %}
         {% set image =  getImageFrom(image_src) %}
         {{ link(''
@@ -51,5 +55,11 @@
             class="{{ (rounded is defined ? 'rounded':'') ~ (image_class is defined ? ' '~image_class : ' img-fluid') }}"
             alt="{{ image_alt }}" />
     {% endif %}
+
+{% if image_wrapper_class is defined %}
+
 </p>
+{% endif %}
+
+
 {% endif %}
