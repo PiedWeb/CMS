@@ -12,7 +12,7 @@ $(function() {
         resultWrapper.innerHTML = input.value;
         var titleWidth = resultWrapper.offsetWidth;
         resultWrapper.innerHTML = titleWidth + "px";
-        resultWrapper.style = titleWidth > 560 ? 'color:#B0413E' : 'color:#4F805D';    
+        resultWrapper.style = titleWidth > 560 ? 'color:#B0413E' : 'color:#4F805D';
     }
     updateTitleWidth();
     input.addEventListener('input', updateTitleWidth);
@@ -71,7 +71,8 @@ $(function() {
             link: ["[", "]()"],
             image: ["![", "](/media/default/...)"],
         },
-        minHeight: "70vh",
+        //minHeight: "70vh",
+        maxHeight: '70vh',
         syncSideBySidePreviewScroll: false,
         previewRender: function(plainText, preview) {
 
@@ -91,6 +92,7 @@ $(function() {
 });
 
 function customPreview(plainText, preview) {
+  var scrollTop = document.getElementById('previewf') ? document.getElementById('previewf').contentWindow.window.scrollY : 0;
   var XHR = new XMLHttpRequest();
   var urlEncodedData = encodeURIComponent('plaintext') + '=' + encodeURIComponent(plainText).replace(/%20/g, '+');
   XHR.addEventListener('load', function(event) {
@@ -99,6 +101,9 @@ function customPreview(plainText, preview) {
         document.getElementById('previewf').srcdoc = XHR.response;
     } else {
          document.getElementById('previewf').srcdoc = XHR.response;
+        document.getElementById('previewf').onload = function() {
+            document.getElementById('previewf').contentWindow.scrollTo(0, scrollTop);
+        }
     }
   });
   XHR.addEventListener('error', function(event) {
