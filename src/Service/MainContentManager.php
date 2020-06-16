@@ -117,7 +117,9 @@ class MainContentManager
 
     public function getToc()
     {
-        return (new TocGenerator())->getHtmlMenu($this->getContent());
+        $menu = (new TocGenerator())->getHtmlMenu($this->getContent().$this->postContent);
+
+        return $menu;
     }
 
     public function getPostContent()
