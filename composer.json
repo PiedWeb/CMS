@@ -14,7 +14,7 @@
     "sonata-project/doctrine-orm-admin-bundle": "^3",
     "doctrine/orm": "^2.7",
     "doctrine/doctrine-bundle": "^2.0",
-    "doctrine/doctrine-migrations-bundle": "^2.1",
+    "doctrine/doctrine-migrations-bundle": "^3.0",
     "doctrine/annotations": "^1.8",
     "symfony/webpack-encore-bundle": "^1",
     "umpirsky/twig-php-function": "^0.2",
