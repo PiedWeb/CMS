@@ -4,9 +4,7 @@
 {{ block("css", "@PiedWebCMS/base.html.twig") }}
 
 <div style="padding:10px" class="container container-txt">
-    {% apply punctuation_beautifer %}
-        {% filter markdown %}{{ include(template_from_string(plainText)) }}{% endfilter %}
-    {% endapply %}
+    {{ extract('full', page) }}
 </div>
 {{ block("script", "@PiedWebCMS/base.html.twig") }}
 

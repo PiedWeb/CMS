@@ -17,4 +17,8 @@ interface PageInterface
     public function setLocale($locale);
 
     public function getChildrenPages();
+
+    public function getMainContent();
+
+    public function mainContentIsMarkdown();
 }

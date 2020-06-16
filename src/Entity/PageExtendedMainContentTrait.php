@@ -2,6 +2,7 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
+use Exception;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -9,10 +10,6 @@ use Symfony\Component\Yaml\Yaml;
 
 trait PageExtendedMainContentTrait
 {
-    protected $chapeau;
-
-    protected $readableContent;
-
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -27,48 +24,14 @@ trait PageExtendedMainContentTrait
 
     abstract public function getMainContent(): ?string;
 
-    public static function removeHtmlComments(string $content)
-    {
-        return preg_replace('/<!--(.|\s)*?-->/', '', $content);
-    }
-
-    protected function manageMainContent()
-    {
-        $content = (string) $this->getMainContent();
-        $content = explode('<!--break-->', $content);
-
-        $this->chapeau = isset($content[1]) ? self::removeHtmlComments($content[0]) : null;
-        $this->readableContent = \PiedWeb\CMSBundle\Twig\AppExtension::convertMarkdownImage(
-            self::removeHtmlComments(isset($content[1]) ? $content[1] : $content[0])
-        );
-
-        if ($this->mainContentIsMarkdown) {
-            if ($this->chapeau) {
-                $this->chapeau = '{% filter markdown %}'.$this->chapeau.'{% endfilter %}';
-            }
-            if ($this->readableContent) {
-                $this->readableContent = '{% filter markdown %}'.$this->readableContent.'{% endfilter %}';
-            }
-        }
-    }
-
     public function getReadableContent()
     {
-        $this->manageMainContent();
-        /* Disable cache because it's generate an error with StaticBundle
-        if (null === $this->readableContent) {
-            $this->manageMainContent();
-        }
-        /**/
-
-        return $this->readableContent;
+        throw new Exception('You should use MainContentManager or twig function extract("mainContent", page)');
     }
 
     public function getChapeau()
     {
-        $this->manageMainContent();
-
-        return $this->chapeau;
+        throw new Exception('You should use MainContentManager or twig function extract("chapeau", page)');
     }
 
     public function mainContentIsMarkdown(): bool

@@ -1,7 +1,7 @@
 {% extends '@PiedWebCMS/base.html.twig' %}
 
 
-{% block title %}Markdown CheatSheet{% endblock %}
+{% block title %}Aide-Mémoire Markdown{% endblock %}
 
 {% block robots %}
     {% if page.metaRobots is defined and page.metaRobots is not null %}
@@ -11,7 +11,7 @@
 
 {% block body %}
 <div class="container container-txt mt-5 mb-5">
-<h1 class="mb-5"><small>Markdown Cheatsheet</small> <br>La syntaxe markdown</h1>
+<h1 class="mb-5"><small>Aide-Mémoire Markdown</small> <br>La syntaxe en détails</h1>
 <div class="mb-5 border rounded p-3" style="max-width:700px">
 <style>html { scroll-behavior: smooth; }
 pre { overflow:auto;}
@@ -21,17 +21,17 @@ body {background-color:#fff}</style>
 
 - [Titre, sous-titre et chapeau](#title)
 - [Chapeau](#chapeau)
-- [Style de texte](#style)
+- [Accentuation](#style)
 - [Lien hypertexte](#link)
     - [Lien vers une adresse mail (protection spam)](#mail)
     - [Lien vers une partie de page](#fragment)
 - [Listes](#list)
-    - [Liste de pages](#pageslist)
 - [Paragraphes et saut de ligne](#p)
 - [Citation](#quote)
 - [Image et galeries](#img)
-- [Video](#video)
-- [Pages enfants (blog/news/...)](#children)
+- [Vidéo](#video)
+- [Liste des pages via un mot clef](#pageslist)
+- [Lister des pages enfants (blog/news/...)](#children)
 - [Redirection](#redirect)
 - [Contenu enrichi](#rich-content)
 {% endfilter %}
@@ -61,7 +61,7 @@ body {background-color:#fff}</style>
 
 <h2 id="chapeau">Chapeau</h2>
 
-Un chapeau peut aussi être utilisé (paragraphe sous le titre) :
+Paragraphe sous le titre :
 
 <pre>
 Ce paragraphe est un chapeau.
@@ -71,7 +71,7 @@ Ceci est le reste de mon contenu...
 
 <hr class="mb-5 mt-5">
 
-<h2 id="style">Style de Texte</h2>
+<h2 id="style">Accentuation</h2>
 <pre>
 Italique         : *astérisques* ou _underscores_<br>
 Gras             : **astérisques** ou __underscores__.<br>
@@ -101,19 +101,19 @@ Lien dissimulé pour les moteurs de recherches :
 
 <pre>{{ "{{ link('Pied Web', 'https://piedweb.com/') }}" }}</pre>
 
-<h3 id="mail">Lien vers une adresse mail</h3>
+<h3 id="mail" class="mt-5">Lien vers une adresse mail</h3>
 
 <pre>{{ "{{ mail('contact@example.tld') }}" }}</pre>
 
 <p>{{ mail('contact@example.tld') }}</p>
 
-<p>Most robots will see <code>pbagnpg@rknzcyr.gyq</code></p>
+<p>La plupart des robots ne verront que <code>pbagnpg@rknzcyr.gyq</code></p>
 
-<h3 id="fragment">Ajouter un lien vers une partie de page</h3>
+<h3 id="fragment" class="mt-5">Ajouter un lien vers une partie de page</h3>
 
 <ol>
     <li>Créer l'ancre repère dans la page, exemple :
-        <pre>## Titre 2 {{ "{{ anchor('titre2') }}"|escape }}</pre>
+        <pre>## Titre 2 {{ "{id=titre2}"|escape }}</pre>
     </li>
     <li>Créer le lien :<code>[ancre de lien vers partie titre 2 de la page](#titre2)</code></li>
 </ol>
@@ -148,17 +148,6 @@ Lien dissimulé pour les moteurs de recherches :
     1. sous-liste ordonnée
 + Ou un plus
 {% endfilter %}
-
-<h3 id="pageslist">Liste de pages</h3>
-
-Pour lister des pages contenant un terme ou un `tag` :
-<pre>{{ "{{" }} list('keyword X') {{ "}}" }} </pre>
-
-
-Autres paramètres :
-<pre>{{ "{{" }}  list($filtering_string, $number = 3, $orderBy = 'createdAt', $template = '@PiedWebCMS/page/_pages_list.html.twig') {{ "}}" }}</pre>
-
-
 
 <hr class="mb-5 mt-5">
 
@@ -232,24 +221,30 @@ Ma citation :
 
 
 <h2 id="video">Vidéo</h2>
-<p>Déconseillé, préférer une image avec une icône lecture renvoyant vers Youtude/Vimeo/...</p>
-
-<hr class="mb-5 mt-5">
-<h2 id=children>Lister les pages enfants (blog/news/...)</h2>
 
 <pre>
-{{ "
-<div class=row>
-    {% include '@PiedWebCMS/component/_pages_list.html.twig' with {pages: page.childrenPages|reverse} only %}
-</div>
-
-// Or children of children (like Blog Index on a two level organizations
-{% set pages = [] %}
-{% for p in page.childrenPages|reverse %}
-{% set pages = pages|merge(p.childrenPages) %}
-{% endfor %}
-" }}
+{{ "{{ video('youtube.com/watch?v=ExEmPle-001', '/media/default/exemple.jpg', 'mon texte descriptif en 3 mots') }}" }}
 </pre>
+
+
+<hr class="mb-5 mt-5">
+
+<h2 id="pageslist">Lister des pages via un mot clef ou un hash</h2>
+
+Pour lister des pages contenant un terme ou un `tag` :
+<pre>{{ "{{" }} list('keyword X or <!--invisible-hash-in-content-->') {{ "}}" }} </pre>
+
+
+Autres paramètres :
+<pre>{{ "{{" }}  list('keyword X', $number = 3, $orderBy = 'createdAt', $template = '@PiedWebCMS/page/_pages_list.html.twig') {{ "}}" }}</pre>
+
+
+
+<h2 id=children class="mt-5">Lister les pages enfants (blog/news/...)</h2>
+
+<pre>{{ "
+&lt;div class=row&gt;{% include '@PiedWebCMS/component/_pages_list.html.twig' with {pages: page.childrenPages|reverse} only %}&lt;/div&gt;
+" }}</pre>
 
 <hr class="mb-5 mt-5">
 
@@ -264,21 +259,22 @@ Location: http://example.eg/
 
 <h2 id="rich-content">Contenu enrichi</h2>
 
+<p class="my-4"><span style="display: inline-block;font-weight:700;padding: .25em .5em;font-size: .75em;color: #fff;text-align: center;white-space: nowrap;vertical-align: baseline; border-radius: .25rem; background-color: #dc3545;">!</span> <span style="color:#dc3545;">Fonctionnalités avancées.</span></p>
+
 {% filter markdown %}
 - `subtitle`
 
 - `container`  <br>
-   class pour le contenant du contenu, par défaultéfaut *container container-txt pt-4 mb-5*
+   class pour le contenant du contenu, par défault *container container-txt pt-4 mb-5*
 
 - `feeds` array(type, uri, title)
 
 - `template` (default: `@PiedWebCMS/page/page.html.twig`)
 
-### Image d'arrière-plan
-
 - `main_image_multiple` <br>
   Plusieurs images en fonction d'un hash contenu dans l'url (ex: `winter:/media/defaut/winter.jpg;summer:/media/defaut/summer.jpg`)
 
+- `video` (`url` or `embed_code`[, `btn_title`, `btn_style`])
 {% endfilter %}
 
 </div>

@@ -69,9 +69,7 @@
 			{% endblock %}
 
 			{% block description %}
-				{% if page.chapeau is not null %}
-					{% include(template_from_string(page.chapeau)) %}
-				{% endif %}
+                {{ extract('chapeau', page) }}
 			{% endblock %}
 
 			{% block main_image %}
@@ -88,9 +86,7 @@
 
 
 			{% block main_content %}
-				{% apply punctuation_beautifer %}
-				{{ include(template_from_string(page.readableContent)) }}
-				{% endapply %}
+                {{ extract('mainContent', page) }}
 			{% endblock %}
 
 

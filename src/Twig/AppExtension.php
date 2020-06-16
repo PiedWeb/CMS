@@ -5,8 +5,10 @@ namespace PiedWeb\CMSBundle\Twig;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use PiedWeb\CMSBundle\Entity\Media;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
+use PiedWeb\CMSBundle\Service\MainContentManager;
 use PiedWeb\CMSBundle\Service\PageCanonicalService;
 use PiedWeb\RenderAttributes\AttributesTrait;
 use Twig\Environment as Twig;
@@ -42,7 +44,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('preg_replace', [AppExtension::class, 'pregReplace']),
             new TwigFilter(
                 'punctuation_beautifer',
-                [AppExtension::class, 'punctuationBeautifer'],
+                [MainContentManager::class, 'punctuationBeautifer'],
                 ['is_safe' => ['html']]
             ),
         ];
@@ -51,21 +53,6 @@ class AppExtension extends AbstractExtension
     public static function pregReplace($subject, $pattern, $replacement)
     {
         return preg_replace($pattern, $replacement, $subject);
-    }
-
-    public static function convertMarkdownImage(string $body)
-    {
-        return preg_replace(
-            '/(?:!\[(.*?)\]\((.*?)\))/',
-            '{%'
-            .PHP_EOL.'    include "@PiedWebCMS/component/_inline_image.html.twig" with {'
-            .PHP_EOL.'        "image_wrapper_class" : "mimg",'
-            .PHP_EOL.'        "image_src" : "$2",'
-            .PHP_EOL.'        "image_alt" : "$1"'
-            .PHP_EOL.'    } only'
-            .PHP_EOL.'%}'.PHP_EOL,
-            $body
-        );
     }
 
     public function getFunctions()
@@ -106,6 +93,11 @@ class AppExtension extends AbstractExtension
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
             new TwigFunction(
+                'video',
+                [$this, 'renderVideo'],
+                ['is_safe' => ['html'], 'needs_environment' => true]
+            ),
+            new TwigFunction(
                 'encode',
                 [AppExtension::class, 'encode'],
                 ['is_safe' => ['html']]
@@ -117,7 +109,66 @@ class AppExtension extends AbstractExtension
             ),
             new TwigFunction('isInternalImage', [AppExtension::class, 'isInternalImage']),
             new TwigFunction('getImageFrom', [AppExtension::class, 'transformInlineImageToMedia']),
+            new TwigFunction('getEmbedCode', [AppExtension::class, 'getEmbedCode']),
+            new TwigFunction('extract', [$this, 'extract'], ['is_safe' => ['html'], 'needs_environment' => true]),
         ];
+    }
+
+    public function extract(Twig $env, string $name, Page $page)
+    {
+        $mainContentManager = new MainContentManager($env, $page); // todo cache it ?!
+
+        $extractorFunction = 'get'.ucfirst($name);
+
+        if (!method_exists($mainContentManager, $extractorFunction)) {
+            throw new Exception('`'.$name.'` does not exist');
+        }
+
+        return $mainContentManager->$extractorFunction();
+    }
+
+    public static function getEmbedCode(
+        $embed_code
+    ) {
+        if ($id = self::getYoutubeVideo($embed_code)) {
+            $embed_code = '<iframe src=https://www.youtube-nocookie.com/embed/'.$id.' frameborder=0'
+                    .' allow=autoplay;encrypted-media allowfullscreen class=w-100></iframe>';
+        }
+
+        return $embed_code;
+    }
+
+    public function renderVideo(
+        Twig $env,
+        $embed_code,
+        $image,
+        $alt,
+        $btn_title = null,
+        $btn_style = null
+    ) {
+        $embed_code = self::getEmbedCode($embed_code);
+
+        $params = [
+            'embed_code' => $embed_code,
+            'image' => $image,
+            'alt' => $alt,
+        ];
+
+        if (null !== $btn_title) {
+            $params['btn_title'] = $btn_title;
+        }
+        if (null !== $btn_style) {
+            $params['btn_style'] = $btn_style;
+        }
+
+        return $env->render('@PiedWebCMS/component/_video.html.twig', $params);
+    }
+
+    protected static function getYoutubeVideo($url)
+    {
+        if (preg_match('~^(?:https?://)?(?:www[.])?(?:youtube[.]com/watch[?]v=|youtu[.]be/)([^&]{11})~', $url, $m)) {
+            return $m[1];
+        }
     }
 
     public function renderPagesList(
@@ -194,15 +245,6 @@ class AppExtension extends AbstractExtension
             'mail' => str_rot13($mail),
             'class' => $class,
         ]);
-    }
-
-    public static function punctuationBeautifer($text)
-    {
-        return str_replace(
-            [' ;', ' :', ' ?', ' !', '« ', ' »', '&laquo; ', ' &raquo;'],
-            ['&nbsp;;', '&nbsp;:', '&nbsp;?', '&nbsp;!', '«&nbsp;', '&nbsp;»', '&laquo;&nbsp;', '&nbsp;&raquo;'],
-            $text
-        );
     }
 
     public static function renderJavascriptLink(Twig $env, $anchor, $path, $attr = [])

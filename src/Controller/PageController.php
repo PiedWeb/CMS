@@ -81,9 +81,9 @@ class PageController extends AbstractController
             ->getRepository($pageEntity)
             ->findOneBy(['slug' => rtrim(strtolower($slug), '/')]);
 
-        $plainText = \PiedWeb\CMSBundle\Twig\AppExtension::convertMarkdownImage($request->request->get('plaintext'));
+        $page->setMainContent($request->request->get('plaintext')); // todo update all fields to avoid errors
 
-        return $this->render('@PiedWebCMS/admin/page_preview.html.twig', ['page' => $page, 'plainText' => $plainText]);
+        return $this->render('@PiedWebCMS/admin/page_preview.html.twig', ['page' => $page]);
     }
 
     public function feed(
