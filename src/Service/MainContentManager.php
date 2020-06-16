@@ -66,7 +66,12 @@ class MainContentManager
 
     protected function render($string)
     {
-        $string = $this->twig->createTemplate($string)->render(['page' => $this->page]); // convert to html
+        if (empty($string)) {
+            return null;
+        }
+
+        $tmpl = $this->twig->createTemplate($string);
+        $string = $tmpl->render(['page' => $this->page]); // convert to html
         $string = self::punctuationBeautifer($string); // small fixes on punctuation to avoid linebreak
         $string = self::removeHtmlComments($string);
 
