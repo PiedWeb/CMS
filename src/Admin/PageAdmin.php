@@ -158,7 +158,7 @@ class PageAdmin extends AbstractAdmin
         return !$this->exists('otherProperties') ? $formMapper : $formMapper->add('otherProperties', null, [
             'required' => false,
             'attr' => [
-                'style' => 'min-height: 10vh;font-size:125%;',
+                'style' => 'min-height:15vh',
                 'data-editor' => 'yaml',
             ],
             'label' => 'admin.page.otherProperties.label',

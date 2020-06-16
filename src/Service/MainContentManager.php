@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Service;
 
 use PiedWeb\CMSBundle\Entity\PageInterface;
+use PiedWeb\CMSBundle\Service\toc\MarkupFixer;
 use Twig\Environment as Twig;
 
 class MainContentManager
@@ -85,18 +86,28 @@ class MainContentManager
         return $this->render($this->mainContent);
     }
 
-    public function getContent()
-    {
-        return $this->render($this->mainContent);
-    }
-
+    /**
+     * Return main content until we met a title (h2, h3, ....).
+     */
     public function getIntro()
     {
-        // return text without chapeau before first <h
+        $parsedContent = explode('<h', $this->getMainContent(), 2);
+
+        return $parsedContent[1] ? $parsedContent[0] : null;
     }
 
-    public function getContentWithoutIntro()
+    /**
+     * Return Main Content without Intro.
+     */
+    public function getContent()
     {
+        $parsedContent = explode('<h', $this->getMainContent(), 2);
+
+        $content = $parsedContent[1] ? '<h'.$parsedContent[1] : $this->getMainContent();
+
+        $content = (new MarkupFixer())->fix($content);
+
+        return $content;
     }
 
     public function getToc()
