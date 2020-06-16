@@ -10,7 +10,7 @@
     "cocur/slugify": "^3.0|^4.0",
     "dpolac/twig-lambda": "^1.0",
     "liip/imagine-bundle": "^2.3",
-    "sonata-project/admin-bundle": "^3",
+    "sonata-project/admin-bundle": "3.68",
     "sonata-project/doctrine-orm-admin-bundle": "^3",
     "doctrine/orm": "^2.7",
     "doctrine/doctrine-bundle": "^2.0",

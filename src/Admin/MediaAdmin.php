@@ -131,12 +131,6 @@ class MediaAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        /*
-         * todo: implémente datepicker for orm_date in sonata
-        $datagridMapper->add('createdAt', null, [
-            'label' => 'admin.media.createdAt.label',
-        ]);
-        */
         $datagridMapper->add('name', null, [
             'label' => 'admin.media.name.label',
         ]);
