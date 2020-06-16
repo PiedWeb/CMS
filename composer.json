@@ -7,7 +7,7 @@
   "license": "MIT",
   "require": {
     "php": "^7.3",
-    "cocur/slugify": "^4.0",
+    "cocur/slugify": "^3.0|^4.0",
     "dpolac/twig-lambda": "^1.0",
     "liip/imagine-bundle": "^2.3",
     "sonata-project/admin-bundle": "^3",
@@ -46,7 +46,8 @@
     "spatie/async": "^1.4",
     "villfa/invert-color": "^0.4",
     "wyrihaximus/html-compress": "^3.0",
-    "masterminds/html5": "^2.7"
+    "masterminds/html5": "^2.7",
+    "caseyamcl/toc": "^2.0.1"
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^5.0",

@@ -3,7 +3,8 @@
 namespace PiedWeb\CMSBundle\Service;
 
 use PiedWeb\CMSBundle\Entity\PageInterface;
-use PiedWeb\CMSBundle\Service\toc\MarkupFixer;
+use TOC\MarkupFixer;
+use TOC\TocGenerator;
 use Twig\Environment as Twig;
 
 class MainContentManager
@@ -11,6 +12,7 @@ class MainContentManager
     protected $page;
     protected $chapeau;
     protected $mainContent;
+    protected $postContent;
 
     public function __construct(Twig $twig, PageInterface $page)
     {
@@ -102,15 +104,26 @@ class MainContentManager
     public function getContent()
     {
         $parsedContent = explode('<h', $this->getMainContent(), 2);
-
         $content = $parsedContent[1] ? '<h'.$parsedContent[1] : $this->getMainContent();
 
         $content = (new MarkupFixer())->fix($content);
+
+        $parsedContent = explode('<div class="fullwidth', $content, 2);
+        $content = $parsedContent[1] ? $parsedContent[0] : $content;
+        $this->postContent = '<div class="fullwidth'.$parsedContent[1];
 
         return $content;
     }
 
     public function getToc()
     {
+        return (new TocGenerator())->getHtmlMenu($this->getContent());
+    }
+
+    public function getPostContent()
+    {
+        $this->getContent();
+
+        return $this->postContent;
     }
 }
