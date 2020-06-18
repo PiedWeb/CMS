@@ -34,12 +34,6 @@ trait PageTrait
      */
     protected $updatedAt;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Version
-     */
-    protected $version;
-
     public function __toString()
     {
         return trim($this->slug.' ');

@@ -12,7 +12,8 @@
     "uglifyjs-webpack-plugin": "^2.2",
     "babel-plugin-root-import": "^6.4",
     "purgecss": "^1.4",
-    "140.css": "^1"
+    "140.css": "^1",
+    "@piedweb/bootstrap5-extended"
   },
   "scripts": {
     "encore": "encore"

@@ -36,8 +36,8 @@ Encore.setOutputPath('public/assets')
     }
   )
   .copyFiles({
-    from: './node_modules/piedweb-tyrol-free-bootstrap-4-theme/src/img',
-    pattern: /.*title\.(png|jpg|jpeg)$/,
+    from: './node_modules/@piedweb/bootstrap5-extended/src/img',
+    pattern: /.*title\.(png|jpg|jpeg|svg)$/,
     to: '[path][name].[ext]',
   })
   .addPlugin(new webpack.ProvidePlugin(new UglifyJSPlugin()))
