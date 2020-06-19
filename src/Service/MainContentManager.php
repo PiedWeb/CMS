@@ -114,8 +114,10 @@ class MainContentManager
         $content = (new MarkupFixer())->fix($content);
 
         $parsedContent = explode('<div class="fullwidth', $content, 2);
-        $content = $parsedContent[1] ? $parsedContent[0] : $content;
-        $this->postContent = '<div class="fullwidth'.$parsedContent[1];
+        if (isset($parsedContent[1])) {
+            $content = $parsedContent[0];
+            $this->postContent = '<div class="fullwidth'.$parsedContent[1];
+        }
 
         return $content;
     }
