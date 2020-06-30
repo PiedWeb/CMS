@@ -8,7 +8,7 @@ twig:
     '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Resources/views/TwigBundle': Twig
   form_themes:
     - 'bootstrap_4_layout.html.twig'
-    - '@SonataCore/Form/datepicker.html.twig'
+    - '@SonataForm/Form/datepicker.html.twig'
   globals:
     logo_alt: '%pwc.name%'
     app_color: '%pwc.color%'

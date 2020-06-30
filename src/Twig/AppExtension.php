@@ -42,12 +42,18 @@ class AppExtension extends AbstractExtension
             //new TwigFilter('markdown', [AppExtension::class, 'markdownToHtml'], ['is_safe' => ['all']]),
             new TwigFilter('html_entity_decode', 'html_entity_decode'),
             new TwigFilter('preg_replace', [AppExtension::class, 'pregReplace']),
+            new TwigFilter('slugify', [AppExtension::class, 'slugify']),
             new TwigFilter(
                 'punctuation_beautifer',
                 [MainContentManager::class, 'punctuationBeautifer'],
                 ['is_safe' => ['html']]
             ),
         ];
+    }
+
+    public static function slugify($string)
+    {
+        return (new Slugify())->slugify($string);
     }
 
     public static function pregReplace($subject, $pattern, $replacement)
