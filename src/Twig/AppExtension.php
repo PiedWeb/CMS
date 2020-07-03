@@ -247,12 +247,12 @@ class AppExtension extends AbstractExtension
 
     public static function renderEncodedMail(Twig $env, $mail, $class = '')
     {
-        return $env->render('@PiedWebCMS/component/_encoded_mail.html.twig', [
+        return trim($env->render('@PiedWebCMS/component/_encoded_mail.html.twig', [
             'mail_readable' => self::readableEncodedMail($mail),
             'mail_encoded' => str_rot13($mail),
             'mail' => $mail,
             'class' => $class,
-        ]);
+        ]));
     }
 
     public static function readableEncodedMail($mail)
