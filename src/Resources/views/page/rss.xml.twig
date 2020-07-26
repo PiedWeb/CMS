@@ -11,7 +11,7 @@
             type="application/rss+xml"
         />
         {% endblock %}
-        {% set pages = page is defined ? (page.childrenPages|reverse )|slice(0,5): pages %}
+        {% set pages = pages is defined ? pages : (page.childrenPages|reverse )|slice(0,5) %}
         {% for page in pages %}
         {% block item %}
             {% if page.metaRobots != 'noindex' %}
@@ -27,4 +27,3 @@
 
     </channel>
 </rss>
-
