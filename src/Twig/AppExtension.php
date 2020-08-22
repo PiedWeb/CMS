@@ -78,6 +78,10 @@ class AppExtension extends AbstractExtension
                 'is_safe' => ['html'],
                 'needs_environment' => true,
             ]),
+            new TwigFunction('tel', [AppExtension::class, 'renderPhoneNumber'], [
+                'is_safe' => ['html'],
+                'needs_environment' => true,
+            ]),
             new TwigFunction(
                 'bookmark', // = anchor
                 [AppExtension::class, 'renderTxtAnchor'],
@@ -251,6 +255,15 @@ class AppExtension extends AbstractExtension
             'mail_readable' => self::readableEncodedMail($mail),
             'mail_encoded' => str_rot13($mail),
             'mail' => $mail,
+            'class' => $class,
+        ]));
+    }
+
+    public static function renderPhoneNumber(Twig $env, $number, $class = '')
+    {
+        return trim($env->render('@PiedWebCMS/component/_phone_number.html.twig', [
+            'number' => str_replace([' ', '&nbsp;', '.'], '', $number),
+            'number_readable' => str_replace(' ', '&nbsp;', preg_replace('#^\+33#', '0', $number)),
             'class' => $class,
         ]));
     }

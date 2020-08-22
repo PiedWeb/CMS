@@ -23,8 +23,9 @@ body {background-color:#fff}</style>
 - [Chapeau](#chapeau)
 - [Accentuation](#style)
 - [Lien hypertexte](#link)
-    - [Lien vers une adresse mail (protection spam)](#mail)
-    - [Lien vers une partie de page](#fragment)
+    - [Vers une adresse mail (protection spam)](#mail)
+    - [Vers un numéro de téléphone](#tel)
+    - [Vers une partie de page](#fragment)
 - [Listes](#list)
 - [Paragraphes et saut de ligne](#p)
 - [Citation](#quote)
@@ -108,6 +109,10 @@ Lien dissimulé pour les moteurs de recherches :
 <p>{{ mail('contact@example.tld') }}</p>
 
 <p>La plupart des robots ne verront que <code>pbagnpg@rknzcyr.gyq</code></p>
+
+<h3 id="tel" class="mt-5">Lien vers un numéro de téléphone</h3>
+
+<pre>{{ "{{ tel('+33 7 68 68 68 68') }}" }}</pre>
 
 <h3 id="fragment" class="mt-5">Ajouter un lien vers une partie de page</h3>
 
