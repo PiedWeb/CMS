@@ -263,7 +263,7 @@ class AppExtension extends AbstractExtension
     {
         return trim($env->render('@PiedWebCMS/component/_phone_number.html.twig', [
             'number' => str_replace([' ', '&nbsp;', '.'], '', $number),
-            'number_readable' => str_replace(' ', '&nbsp;', preg_replace('#^\+33#', '0', $number)),
+            'number_readable' => str_replace(' ', '&nbsp;', preg_replace('#^\+33 ?#', '0', $number)),
             'class' => $class,
         ]));
     }
