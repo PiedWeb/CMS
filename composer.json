@@ -47,7 +47,7 @@
     "villfa/invert-color": "^0.4",
     "wyrihaximus/html-compress": "^3.0",
     "masterminds/html5": "^2.7",
-    "caseyamcl/toc": "^2.0.1"
+    "caseyamcl/toc": "^3.0"
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^5.0",
