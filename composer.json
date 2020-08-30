@@ -26,7 +26,7 @@
     "symfony/finder": "^5.0",
     "symfony/asset": "^4.4",
     "symfony/console": "^4.4",
-    "symfony/expression-language": "^4.4",
+    "symfony/expression-language": "^5.1",
     "symfony/form": "^4.4",
     "symfony/framework-bundle": "^4.4",
     "symfony/monolog-bundle": "^3.5",
@@ -47,7 +47,7 @@
     "villfa/invert-color": "^0.4",
     "wyrihaximus/html-compress": "^3.0",
     "masterminds/html5": "^2.7",
-    "caseyamcl/toc": "^2.0.1"
+    "caseyamcl/toc": "^3.0"
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^5.0",
