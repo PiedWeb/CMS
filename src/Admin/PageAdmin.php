@@ -97,6 +97,7 @@ class PageAdmin extends AbstractAdmin
             $formMapper->add('name', TextType::class, [
                 'label' => 'admin.page.name.label',
                 'required' => false,
+                'help_html' => true,
                 'help' => 'admin.page.name.help',
             ]);
         }
@@ -105,6 +106,7 @@ class PageAdmin extends AbstractAdmin
             $formMapper->add('excrept', TextareaType::class, [
                 'required' => false,
                 'label' => 'admin.page.excrept.label',
+                'help_html' => true,
                 'help' => 'admin.page.excrept.help',
             ]);
         }
@@ -141,11 +143,13 @@ class PageAdmin extends AbstractAdmin
             ],
             'required' => false,
             'label' => ' ',
+            'help_html' => true,
             'help' => 'admin.page.mainContent.help',
         ]);
         $formMapper->add('mainContentIsMarkdown', null, [
             'required' => false,
             'label' => 'admin.page.markdown.label',
+            'help_html' => true,
             'help' => 'admin.page.markdown.help',
         ]);
         $formMapper->end();
@@ -162,6 +166,7 @@ class PageAdmin extends AbstractAdmin
                 'data-editor' => 'yaml',
             ],
             'label' => 'admin.page.otherProperties.label',
+            'help_html' => true,
             'help' => 'admin.page.otherProperties.help',
         ]);
     }
@@ -174,6 +179,7 @@ class PageAdmin extends AbstractAdmin
             'class' => $this->getContainer()->getParameter('pwc.entity_page'),
             'property' => 'slug',
             'label' => 'admin.page.translations.label',
+            'help_html' => true,
             'help' => 'admin.page.translations.help',
             'btn_add' => false,
             'to_string_callback' => function ($entity) {
@@ -191,6 +197,7 @@ class PageAdmin extends AbstractAdmin
         $formMapper->with('admin.page.title.label', ['class' => 'col-md-7']);
         $formMapper->add('title', TextType::class, [
             'label' => 'admin.page.title.label',
+            'help_html' => true,
             'help' => 'admin.page.title.help',
             'attr' => ['class' => 'titleToMeasure'],
         ]);
@@ -201,6 +208,7 @@ class PageAdmin extends AbstractAdmin
                 'required' => false,
                 'attr' => ['class' => 'input-lg'],
                 'label' => 'admin.page.h1.label',
+                'help_html' => true,
                 'help' => 'admin.page.h1.help',
             ]);
         }
@@ -218,6 +226,7 @@ class PageAdmin extends AbstractAdmin
         $formMapper->with('admin.page.params.label', ['class' => 'col-md-5']);
         $formMapper->add('slug', TextType::class, [
             'label' => 'admin.page.slug.label',
+            'help_html' => true,
             'help' => $this->getSubject() && $this->getSubject()->getSlug()
                 ? '<span class="btn btn-link" onclick="toggleDisabled()" id="disabledLinkSlug">
                     <i class="fa fa-unlock"></i></span>
@@ -235,6 +244,7 @@ class PageAdmin extends AbstractAdmin
         if ($this->exists('Locale')) {
             $formMapper->add('locale', TextType::class, [
                 'label' => 'admin.page.locale.label',
+                'help_html' => true,
                 'help' => 'admin.page.locale.help',
             ]);
         }

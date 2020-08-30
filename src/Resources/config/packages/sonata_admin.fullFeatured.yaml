@@ -36,9 +36,9 @@ sonata_admin:
             label: admin.label.theme
   options:
     lock_protection: true
-  assets:
-    extra_stylesheets:
-      - bundles/sonatatranslation/css/sonata-translation.css
+#  assets:
+#    extra_stylesheets:
+#      - bundles/sonatatranslation/css/sonata-translation.css
 
 sonata_doctrine_orm_admin:
   templates:
