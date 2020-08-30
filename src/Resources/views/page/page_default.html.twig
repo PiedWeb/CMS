@@ -20,6 +20,8 @@
 	{% endif %}
 
 	<link rel="canonical" href="{{ app_base_url|default('') }}{{ page(page.realSlug) }}"/>
+
+	<script>document.head.insertAdjacentHTML('beforeend', '<style>.nojs{display:none}</style>');</script>
 {% endblock %}
 
 
