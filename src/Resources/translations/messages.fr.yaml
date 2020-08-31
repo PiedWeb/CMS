@@ -45,6 +45,8 @@ admin:
   edition: Edition # not good
 
   page:
+    host:
+      label: Domaine
     update_notification:
       title: '[%appName%] Edition en cours'
     params:

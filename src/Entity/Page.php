@@ -23,6 +23,7 @@ class Page implements PageInterface
     use PageExtendedMainContentTrait;
     use PageRedirectionTrait;
     use PageI18nTrait;
+    use PageMultiHostTrait;
 
     public function __construct()
     {

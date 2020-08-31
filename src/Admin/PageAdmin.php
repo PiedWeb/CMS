@@ -171,6 +171,25 @@ class PageAdmin extends AbstractAdmin
         ]);
     }
 
+    protected function getHosts()
+    {
+        return array_keys($this->getContainer()->getParameter('pwc.apps'));
+    }
+
+    public function configureFormFieldHost(FormMapper $formMapper): FormMapper
+    {
+        if (null === $this->getSubject()->getHost()) {
+            $this->getSubject()->setHost($this->getHosts()[0]);
+        }
+
+        return $formMapper->add('host', ChoiceType::class, [
+            'choices' => array_combine($this->getHosts(), $this->getHosts()),
+            'required' => false,
+            'label' => 'admin.page.host.label',
+            'empty_data' => $this->getHosts()[0],
+        ]);
+    }
+
     public function configueFormFieldTranslations(FormMapper $formMapper): FormMapper
     {
         return $formMapper->add('translations', ModelAutocompleteType::class, [
@@ -241,6 +260,11 @@ class PageAdmin extends AbstractAdmin
                 ($this->getSubject() ? ($this->getSubject()->getSlug() ? 'disabled' : 't') : 't') => '',
             ],
         ]);
+
+        if ($this->exists('Host') && count($this->getHosts()) > 1) {
+            $this->configureFormFieldHost($formMapper);
+        }
+
         if ($this->exists('Locale')) {
             $formMapper->add('locale', TextType::class, [
                 'label' => 'admin.page.locale.label',

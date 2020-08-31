@@ -4,7 +4,7 @@ namespace PiedWeb\CMSBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
-use Twig_Environment;
+use Twig\Environment as Twig_Environment;
 
 /**
  * Permit to find error in image or link.
@@ -99,7 +99,11 @@ class PageScannerService
         $page = true !== $checkDatabase ? null : $this->em->getRepository(get_class($this->currentPage))
             ->findOneBySlug('' == $slug ? 'homepage' : $slug);
 
-        $this->everChecked[$slug] = (null === $page && !file_exists($this->webDir.'/'.$slug)) ? false : true;
+        $this->everChecked[$slug] = (
+                null === $page
+                && !file_exists($this->webDir.'/'.$slug)
+                && 'feed.xml' !== $slug
+            ) ? false : true;
 
         return $this->everChecked[$slug];
     }

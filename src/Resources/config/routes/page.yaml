@@ -1,15 +1,44 @@
+piedweb_cms_page_sitemap:
+  path: /sitemap.{_locale}.{_format}
+  controller: PiedWeb\CMSBundle\Controller\SitemapController::showSitemap
+  methods: [GET, HEAD]
+  requirements:
+    _locale: '[a-zA-Z]*'
+    _format: 'xml|txt'
+
+piedweb_cms_page_sitemap_localized:
+  path: /sitemap.{_format}
+  controller: PiedWeb\CMSBundle\Controller\SitemapController::showSitemap
+  methods: [GET, HEAD]
+  requirements:
+    _format: 'xml|txt'
+
+piedweb_cms_page_feed_global:
+  path: /feed.{_format}
+  controller: PiedWeb\CMSBundle\Controller\SitemapController::showFeed
+  methods: [GET, HEAD]
+  requirements:
+    _format: 'xml'
+
+piedweb_cms_page_feed_global_localized:
+  path: /feed.{_locale}.{_format}
+  controller: PiedWeb\CMSBundle\Controller\SitemapController::showFeed
+  methods: [GET, HEAD]
+  requirements:
+    _locale: '[a-zA-Z]*'
+    _format: 'xml'
 
 piedweb_cms_page_feed:
-    path: /{slug}.xml
-    controller: PiedWeb\CMSBundle\Controller\PageController::feed
-    methods:    [GET, HEAD]
-    requirements:
-        slug: '[a-zA-Z0-9\-/]*'
+  path: /{slug}.{_format}
+  controller: PiedWeb\CMSBundle\Controller\PageController::feed
+  methods: [GET, HEAD]
+  requirements:
+    slug: '[a-zA-Z0-9\-/]*'
+    _format: 'xml'
 
 piedweb_cms_page:
-    path:     /{slug}
-    controller: PiedWeb\CMSBundle\Controller\PageController::show
-    methods:    [GET, HEAD]
-    requirements:
-        slug: '[a-zA-Z0-9\-/]*'
-
+  path: /{slug}
+  controller: PiedWeb\CMSBundle\Controller\PageController::show
+  methods: [GET, HEAD]
+  requirements:
+    slug: '[a-zA-Z0-9\-/]*'

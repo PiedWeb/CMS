@@ -28,7 +28,7 @@
                 rel="alternate"
                 type="application/rss+xml"
                 href="{{ app_base_url|default('') }}/feed.xml"
-                title="{{ logo_alt|default('') }} &raquo; {{ 'feed.alternate_title'|trans }}"
+                title="{{ app_name|default('') }} &raquo; {{ 'feed.alternate_title'|trans }}"
              />
         {% endblock %}
 

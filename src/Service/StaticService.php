@@ -5,6 +5,7 @@ namespace PiedWeb\CMSBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Repository\PageRepository;
+use PiedWeb\CMSBundle\Service\ConfigHelper as Helper;
 use PiedWeb\CMSBundle\Service\PageCanonicalService as PageCanonical;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -50,8 +51,14 @@ class StaticService
     protected $webDir;
 
     /**
-     * @var string
+     * @var array
      */
+    protected $apps;
+    protected $app;
+    protected $staticDomain;
+    protected $isFirst = true;
+
+    /** var @string */
     protected $staticDir;
 
     /**
@@ -103,8 +110,21 @@ class StaticService
         $this->webDir = $webDir;
         $this->pageCanonical = $pageCanonical;
         $this->translator = $translator;
-        $this->staticDir = $this->params->get('pwc.static.dir');
+        $this->apps = $this->params->get('pwc.apps');
         $this->parser = HtmlCompressor::construct();
+    }
+
+    public function dump()
+    {
+        if (!method_exists($this->filesystem, 'dumpFile')) {
+            throw new \RuntimeException('Method dumpFile() is not available. Upgrade your Filesystem.');
+        }
+
+        foreach ($this->apps as $app) {
+            $this->generateStaticApp($app);
+
+            $this->isFirst = false;
+        }
     }
 
     /**
@@ -113,15 +133,16 @@ class StaticService
      * @throws \RuntimeException
      * @throws \LogicException
      */
-    public function dump()
+    protected function generateStaticApp($app)
     {
-        if (!method_exists($this->filesystem, 'dumpFile')) {
-            throw new \RuntimeException('Method dumpFile() is not available. Upgrade your Filesystem.');
-        }
+        $this->app = $app;
+        $this->staticDir = $app['static_dir'];
+        $this->staticDomain = $app['hosts'][0];
 
         $this->filesystem->remove($this->staticDir);
 
         $this->generatePages();
+        $this->generateSitemaps();
         $this->generateErrorPages();
         $this->copyRobotsFiles();
         $this->generateServerManagerFile();
@@ -134,8 +155,7 @@ class StaticService
      */
     protected function mustSymlink()
     {
-        return $this->params->get('pwc.static.generateForApache') ?
-            $this->params->get('pwc.static.symlinkMedia') : false;
+        return $this->app['static_generateForApache'] ? $this->app['static_symlinkMedia'] : false;
     }
 
     /**
@@ -144,9 +164,9 @@ class StaticService
      */
     protected function generateServerManagerFile()
     {
-        if ($this->params->get('pwc.static.generateForApache')) {
+        if ($this->app['static_generateForApache']) {
             $this->generateHtaccess();
-        } else { //if ($this->params->has('pwc.static.generateForGithubPages')) {
+        } else { //if ($this->app['static_generateForGithubPages'])) {
             $this->generateCname();
         }
     }
@@ -164,17 +184,13 @@ class StaticService
     // https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site
     protected function generateCname()
     {
-        $this->filesystem->dumpFile($this->staticDir.'/CNAME', $this->params->get('pwc.static.domain'));
+        $this->filesystem->dumpFile($this->staticDir.'/CNAME', $this->staticDomain);
     }
 
     protected function generateHtaccess()
     {
-        if (!$this->params->has('pwc.static.domain')) {
-            throw new \Exception('Before, you need to configure (in config/packages/piedweb_cms.yaml) static_domain.');
-        }
-
         $htaccess = $this->twig->render('@PiedWebCMS/static/htaccess.twig', [
-            'domain' => $this->params->get('pwc.static.domain'),
+            'domain' => $this->staticDomain,
             'redirections' => $this->redirections,
         ]);
         $this->filesystem->dumpFile($this->staticDir.'/.htaccess', $htaccess);
@@ -262,6 +278,77 @@ class StaticService
             $this->generatePage($page);
             $this->generateFeedFor($page);
         }
+    }
+
+    protected function generateSitemaps(): void
+    {
+        foreach (explode('|', $this->params->get('pwc.locales')) as $locale) {
+            $request = new Request();
+            $request->setLocale($locale);
+
+            $this->requesStack->push($request);
+
+            foreach (['txt', 'xml'] as $format) {
+                $this->generateSitemap($locale, $format);
+            }
+
+            $this->generateFeed($locale);
+        }
+    }
+
+    protected function generateSitemap($locale, $format)
+    {
+        $pages = $this->getPageRepository()->getIndexablePages(
+            $this->app['hosts'][0],
+            $this->isFirst,
+            $locale,
+            $this->params->get('locale')
+        )->getQuery()->getResult();
+
+        if (!$pages) {
+            return;
+        }
+
+        $dump = $this->twig->render('@PiedWebCMS/page/sitemap.'.$format.'.twig', [
+            'pages' => $pages,
+            'app_base_url' => $this->app['base_url'],
+        ]);
+
+        $this->filesystem->dumpFile(
+            $this->staticDir.'/sitemap'.($this->params->get('locale') == $locale ? '' : '.'.$locale).'.'.$format,
+            $dump
+        );
+    }
+
+    protected function generateFeed($locale)
+    {
+        $pages = $this->getPageRepository()->getIndexablePages(
+            $this->app['hosts'][0],
+            $this->isFirst,
+            $locale,
+            $this->params->get('locale'),
+            3
+        )->getQuery()->getResult();
+
+        // Retrieve info from homepage, for i18n, assuming it's named with locale
+        $helper = Helper::get($this->requesStack->getCurrentRequest(), $this->params);
+        $LocaleHomepage = $this->getPageRepository()
+            ->getPage($locale, $this->app['hosts'][0], $this->app['hosts'][0] === $helper->getFirstHost());
+        $page = $LocaleHomepage ?? $this->getPageRepository()
+            ->getPage('homepage', $this->app['hosts'][0], $this->app['hosts'][0] === $helper->getFirstHost());
+
+        $dump = $this->twig->render('@PiedWebCMS/page/rss.xml.twig', [
+            'pages' => $pages,
+            'page' => $page,
+            'feedUri' => 'feed'.($this->params->get('locale') == $locale ? '' : '.'.$locale).'.xml',
+            'app_name' => $this->app['name'],
+            'app_base_url' => $this->app['base_url'],
+        ]);
+
+        $this->filesystem->dumpFile(
+            $this->staticDir.'/feed'.($this->params->get('locale') == $locale ? '' : '.'.$locale).'.xml',
+            $dump
+        );
     }
 
     /**
@@ -353,16 +440,24 @@ class StaticService
 
     protected function getPages()
     {
-        $query = $this->getPageRepository()->getQueryToFindPublished('p');
+        $query = $this->getPageRepository()->getQueryToFindPublished('p')
+            ->andWhere('(p.host = :h'.($this->isFirst ? ' OR p.host IS NULL' : '').')')
+            ->setParameter('h', $this->staticDomain)
+        ;
 
         return $query->getQuery()->getResult();
     }
 
     protected function render(Page $page): string
     {
-        $template = $this->params->get('pwc.default_page_template');
+        $template = $this->app['default_page_template'] ?? $this->params->get('pwc.default_page_template');
 
-        return $this->parser->compress($this->twig->render($template, ['page' => $page]));
+        return $this->parser->compress($this->twig->render($template, [
+            'page' => $page,
+            'app_base_url' => $this->app['base_url'],
+            'app_name' => $this->app['name'],
+            'app_color' => $this->app['color'],
+        ]));
     }
 
     // todo i18n feed ...
@@ -370,6 +465,11 @@ class StaticService
     {
         $template = '@PiedWebCMS/page/rss.xml.twig';
 
-        return $this->parser->compress($this->twig->render($template, ['page' => $page]));
+        return $this->parser->compress($this->twig->render($template, [
+            'page' => $page,
+            'app_base_url' => $this->app['base_url'],
+            'app_name' => $this->app['name'],
+            'app_color' => $this->app['color'],
+        ]));
     }
 }

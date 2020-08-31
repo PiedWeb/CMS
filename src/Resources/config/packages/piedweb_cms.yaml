@@ -1,16 +1,17 @@
 piedweb_cms:
-    #media_dir_absolute:   '%kernel.project_dir%/media'
-    #locale:               '%locale%'
-    #locales:              fr|en
-    #dir:                  '%kernel.project_dir%/public'
-    #name:                 'Pied Web CMS'
-    #color:                '#1fa67a'
-    #default_locale_without_prefix: false # Permit to have default locale accessed by /slug moreover than /locale/slug
-    #default_page_template: '@PiedWebCMS/page/page.html.twig'
-    #entity_page:          App\Entity\Page
-    #entity_pagehasmedia:  App\Entity\PageHasMedia
-    #entity_media:         App\Entity\Media
-    #entity_user:          App\Entity\User
-    #email_sender:         me@tld.com
-    #email_sender_name:    'Pied Web CMS'
-    #base_url:             'http://mydomain.tld'
+  #media_dir_absolute:   '%kernel.project_dir%/media'
+  #locale:               '%locale%'
+  #locales:              fr|en
+  #dir:                  '%kernel.project_dir%/public'
+  #name:                 'Pied Web CMS'
+  #color:                '#1fa67a'
+  #default_locale_without_prefix: false # Permit to have default locale accessed by /slug moreover than /locale/slug
+  #default_page_template: '@PiedWebCMS/page/page.html.twig'
+  #entity_page:          App\Entity\Page
+  #entity_pagehasmedia:  App\Entity\PageHasMedia
+  #entity_media:         App\Entity\Media
+  #entity_user:          App\Entity\User
+  #email_sender:         me@tld.com
+  #email_sender_name:    'Pied Web CMS'
+  #apps:
+  #- {hosts:[...], base_url:...}
