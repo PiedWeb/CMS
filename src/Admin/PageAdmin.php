@@ -213,7 +213,9 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureFormFieldsBlockTitle(FormMapper $formMapper): FormMapper
     {
-        $formMapper->with('admin.page.title.label', ['class' => 'col-md-7']);
+        $formMapper
+            ->with('admin.page.title.label', ['class' => 'col-md-7']);
+
         $formMapper->add('title', TextType::class, [
             'label' => 'admin.page.title.label',
             'help_html' => true,
@@ -242,7 +244,13 @@ class PageAdmin extends AbstractAdmin
         }
         $formMapper->end();
 
+        return $formMapper;
+    }
+
+    protected function configureFormFieldBlockParams(FormMapper $formMapper)
+    {
         $formMapper->with('admin.page.params.label', ['class' => 'col-md-5']);
+
         $formMapper->add('slug', TextType::class, [
             'label' => 'admin.page.slug.label',
             'help_html' => true,
@@ -324,6 +332,7 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $this->configureFormFieldsBlockTitle($formMapper);
+        $this->configureFormFieldBlockParams($formMapper);
         $this->configureFormFieldsBlockContent($formMapper);
         $this->configureFormFieldsBlockDetails($formMapper);
         $this->configureFormFieldsBlockImages($formMapper);
