@@ -23,4 +23,6 @@ interface PageInterface
     public function mainContentIsMarkdown();
 
     public function getCreatedAt();
+
+    public function getHost();
 }

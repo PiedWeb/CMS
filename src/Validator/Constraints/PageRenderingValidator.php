@@ -2,19 +2,20 @@
 
 namespace PiedWeb\CMSBundle\Validator\Constraints;
 
+use PiedWeb\CMSBundle\Service\AppConfigHelper;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PageRenderingValidator extends ConstraintValidator
 {
-    private $defaultPageTemplate;
+    private $apps;
     private $twig;
 
-    public function __construct(string $defaultPageTemplate, $twig)
+    public function __construct(array $apps, $twig)
     {
         $this->twig = $twig;
-        $this->defaultPageTemplate = $defaultPageTemplate;
+        $this->apps = $apps;
     }
 
     public function validate($page, Constraint $constraint)
@@ -27,7 +28,7 @@ class PageRenderingValidator extends ConstraintValidator
             return;
         }
 
-        $template = null !== $page->getTemplate() ? $page->getTemplate() : $this->defaultPageTemplate;
+        $template = AppConfigHelper::get($page->getHost(), $this->apps);
 
         try {
             $this->twig->render($template, ['page' => $page]);

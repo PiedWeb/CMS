@@ -6,7 +6,6 @@ piedweb_cms:
   #name:                 'Pied Web CMS'
   #color:                '#1fa67a'
   #default_locale_without_prefix: false # Permit to have default locale accessed by /slug moreover than /locale/slug
-  #default_page_template: '@PiedWebCMS/page/page.html.twig'
   #entity_page:          App\Entity\Page
   #entity_pagehasmedia:  App\Entity\PageHasMedia
   #entity_media:         App\Entity\Media
@@ -14,4 +13,4 @@ piedweb_cms:
   #email_sender:         me@tld.com
   #email_sender_name:    'Pied Web CMS'
   #apps:
-  #- {hosts:[...], base_url:...}
+  #- {hosts:[...], base_url:..., default_page_template: '@PiedWebCMS/page/page.html.twig'}

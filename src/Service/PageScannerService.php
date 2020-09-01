@@ -4,6 +4,7 @@ namespace PiedWeb\CMSBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
+use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use Twig\Environment as Twig_Environment;
 
 /**
@@ -14,22 +15,22 @@ class PageScannerService
     protected $em;
     protected $pageHtml;
     protected $twig;
-    protected $defaultTemplate;
     protected $currentPage;
     protected $webDir;
+    protected $apps;
     protected $errors = [];
     protected $everChecked = [];
 
     public function __construct(
         Twig_Environment $twig,
         EntityManagerInterface $em,
-        string $defaultTemplate,
-        string $webDir
+        string $webDir,
+        array $apps
     ) {
         $this->twig = $twig;
         $this->em = $em;
-        $this->defaultTemplate = $defaultTemplate;
         $this->webDir = $webDir;
+        $this->apps = $apps;
     }
 
     public function scan(Page $page)
@@ -44,8 +45,8 @@ class PageScannerService
             return true; // or status code
         }
 
-        //$template = null !== $page->getTemplate() ? $page->getTemplate() : $this->defaultTemplate;
-        $this->pageHtml = $this->twig->render($this->defaultTemplate, ['page' => $page]);
+        $template = App::get($page->getHost(), $this->apps)->getDefaultTemplate();
+        $this->pageHtml = $this->twig->render($template, ['page' => $page]);
 
         // 2. Je récupère tout les liens et je les check
         // href="", data-rot="" data-img="", src="", data-bg
@@ -97,7 +98,7 @@ class PageScannerService
 
         $checkDatabase = 0 !== strpos($slug, 'media/'); // we avoid to check in db the media, file exists is enough
         $page = true !== $checkDatabase ? null : $this->em->getRepository(get_class($this->currentPage))
-            ->findOneBy(['slug' => '' == $slug ? 'homepage' : $slug]);
+            ->findOneBy(['slug' => '' == $slug ? 'homepage' : $slug]); // todo add domain check (currentPage domain)
 
         $this->everChecked[$slug] = (
                 null === $page

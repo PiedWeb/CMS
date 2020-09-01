@@ -5,7 +5,7 @@ namespace PiedWeb\CMSBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Repository\PageRepository;
-use PiedWeb\CMSBundle\Service\ConfigHelper as Helper;
+use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use PiedWeb\CMSBundle\Service\PageCanonicalService as PageCanonical;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -332,11 +332,11 @@ class StaticService
         )->getQuery()->getResult();
 
         // Retrieve info from homepage, for i18n, assuming it's named with locale
-        $helper = Helper::get($this->requesStack->getCurrentRequest(), $this->params);
+        $app = App::get($this->requesStack->getCurrentRequest(), $this->params);
         $LocaleHomepage = $this->getPageRepository()
-            ->getPage($locale, $this->app['hosts'][0], $this->app['hosts'][0] === $helper->getFirstHost());
+            ->getPage($locale, $this->app['hosts'][0], $this->app['hosts'][0] === $app->getFirstHost());
         $page = $LocaleHomepage ?? $this->getPageRepository()
-            ->getPage('homepage', $this->app['hosts'][0], $this->app['hosts'][0] === $helper->getFirstHost());
+            ->getPage('homepage', $this->app['hosts'][0], $this->app['hosts'][0] === $app->getFirstHost());
 
         $dump = $this->twig->render('@PiedWebCMS/page/rss.xml.twig', [
             'pages' => $pages,
@@ -439,9 +439,7 @@ class StaticService
 
     protected function render(Page $page): string
     {
-        $template = $this->app['default_page_template'] ?? $this->params->get('pwc.default_page_template');
-
-        return $this->parser->compress($this->twig->render($template, [
+        return $this->parser->compress($this->twig->render($this->app['default_page_template'], [
             'page' => $page,
             'app_base_url' => $this->app['base_url'],
             'app_name' => $this->app['name'],

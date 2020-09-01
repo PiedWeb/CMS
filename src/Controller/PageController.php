@@ -3,7 +3,7 @@
 namespace PiedWeb\CMSBundle\Controller;
 
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
-use PiedWeb\CMSBundle\Service\ConfigHelper as Helper;
+use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use PiedWeb\CMSBundle\Service\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -17,9 +17,10 @@ class PageController extends AbstractController
         Request $request,
         ParameterBagInterface $params
     ) {
+        $app = App::get($request, $params);
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
-            ->getPage($slug, Helper::get($request, $params)->getHost(), Helper::get($request, $params)->isFirstApp());
+            ->getPage($slug, $app->getHost(), $app->isFirstApp());
 
         // Check if page exist
         if (null === $page) {
@@ -47,13 +48,13 @@ class PageController extends AbstractController
             return $this->redirect($page->getRedirection(), $page->getRedirectionCode());
         }
 
-        $template = Helper::get($request, $params)->getDefaultTemplate();
+        $template = $app->getDefaultTemplate();
 
         return $this->render($template, [
             'page' => $page,
-            'app_base_url' => Helper::get($request, $params)->getBaseUrl(),
-            'app_name' => Helper::get($request, $params)->getApp('name'),
-            'app_color' => Helper::get($request, $params)->getApp('color'),
+            'app_base_url' => $app->getBaseUrl(),
+            'app_name' => $app->getApp('name'),
+            'app_color' => $app->getApp('color'),
         ]);
     }
 
@@ -77,6 +78,7 @@ class PageController extends AbstractController
         Request $request,
         ParameterBagInterface $params
     ) {
+        $app = App::get($request, $params);
         $pageEntity = $params->get('pwc.entity_page');
 
         $page = (null === $slug || '' === $slug) ?
@@ -89,9 +91,9 @@ class PageController extends AbstractController
 
         return $this->render('@PiedWebCMS/admin/page_preview.html.twig', [
             'page' => $page,
-            'app_base_url' => Helper::get($request, $params)->getBaseUrl(),
-            'app_name' => Helper::get($request, $params)->getApp('name'),
-            'app_color' => Helper::get($request, $params)->getApp('color'),
+            'app_base_url' => $app->getBaseUrl(),
+            'app_name' => $app->getApp('name'),
+            'app_color' => $app->getApp('color'),
         ]);
     }
 
@@ -104,9 +106,10 @@ class PageController extends AbstractController
             return $this->redirect($this->generateUrl('piedweb_cms_page_feed', ['slug' => 'index']), 301);
         }
 
+        $app = App::get($request, $params);
         $slug = (null === $slug || 'index' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
-            ->getPage($slug, Helper::get($request, $params)->getHost(), Helper::get($request, $params)->isFirstApp());
+            ->getPage($slug, $app->getHost(), $app->isFirstApp());
 
         // Check if page exist
         if (null === $page || $page->getChildrenPages()->count() < 1) {
@@ -123,8 +126,8 @@ class PageController extends AbstractController
 
         return $this->render('@PiedWebCMS/page/rss.xml.twig', [
             'page' => $page,
-            'app_base_url' => Helper::get($request, $params)->getBaseUrl(),
-            'app_name' => Helper::get($request, $params)->getApp('name'),
+            'app_base_url' => $app->getBaseUrl(),
+            'app_name' => $app->getApp('name'),
         ], $response);
     }
 }

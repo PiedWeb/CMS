@@ -2,7 +2,7 @@
 
 namespace PiedWeb\CMSBundle\Controller;
 
-use PiedWeb\CMSBundle\Service\ConfigHelper as Helper;
+use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use PiedWeb\CMSBundle\Service\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -14,19 +14,20 @@ class SitemapController extends AbstractController
         Request $request,
         ParameterBagInterface $params
     ) {
+        $app = App::get($request, $params);
         // Retrieve info from homepage, for i18n, assuming it's named with locale
         $locale = $request->getLocale() ?? $params->get('locale');
         $LocaleHomepage = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
-            ->getPage($locale, Helper::get($request, $params)->getHost(), Helper::get($request, $params)->isFirstApp());
+            ->getPage($locale, $app->getHost(), $app->isFirstApp());
         $page = $LocaleHomepage ?? Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
-            ->getPage('homepage', Helper::get($request, $params)->getHost(), Helper::get($request, $params)->isFirstApp());
+            ->getPage('homepage', $app->getHost(), $app->isFirstApp());
 
         return $this->render('@PiedWebCMS/page/rss.xml.twig', [
             'pages' => $this->getPages(5, $request, $params),
             'page' => $page,
             'feedUri' => 'feed'.($params->get('locale') == $locale ? '' : '.'.$locale).'.xml',
-            'app_base_url' => Helper::get($request, $params)->getBaseUrl(),
-            'app_name' => Helper::get($request, $params)->getApp('name'),
+            'app_base_url' => $app->getBaseUrl(),
+            'app_name' => $app->getApp('name'),
         ]);
     }
 
@@ -34,6 +35,7 @@ class SitemapController extends AbstractController
         Request $request,
         ParameterBagInterface $params
     ) {
+        $app = App::get($request, $params);
         $pages = $this->getPages(null, $request, $params);
 
         if (!$pages) {
@@ -42,16 +44,17 @@ class SitemapController extends AbstractController
 
         return $this->render('@PiedWebCMS/page/sitemap.'.$request->getRequestFormat().'.twig', [
             'pages' => $pages,
-            'app_base_url' => Helper::get($request, $params)->getBaseUrl(),
+            'app_base_url' => $app->getBaseUrl(),
         ]);
     }
 
     protected function getPages(?int $limit = null, Request $request, ParameterBagInterface $params)
     {
+        $app = App::get($request, $params);
         $pages = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
             ->getIndexablePages(
-                Helper::get($request, $params)->getHost(),
-                Helper::get($request, $params)->isFirstApp(),
+                $app->getHost(),
+                $app->isFirstApp(),
                 $request->getLocale(),
                 $params->get('locale'),
                 $limit
