@@ -26,6 +26,8 @@ security:
 #---
 # Admin
 #---
+Page List: Liste des pages
+
 admin:
   label:
     page: Page

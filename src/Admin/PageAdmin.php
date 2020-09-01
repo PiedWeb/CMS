@@ -401,9 +401,6 @@ class PageAdmin extends AbstractAdmin
             'format' => 'd/m/y',
             'label' => 'admin.page.createdAt.label',
         ]);
-        $listMapper->add('metaRobots', null, [
-            'label' => 'admin.page.metaRobots.label',
-        ]);
         $listMapper->add('_action', null, [
             'actions' => [
                 'show' => [],
