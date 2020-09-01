@@ -91,8 +91,7 @@ class MediaAdmin extends AbstractAdmin
     {
         $relatedPages = $this->getRelatedPages();
 
-        if (
-            !empty($relatedPages['content'])
+        if (!empty($relatedPages['content'])
             || $relatedPages['gallery']->count() > 0
             || $relatedPages['mainImage']->count() > 0
         ) {

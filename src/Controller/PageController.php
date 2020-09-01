@@ -39,8 +39,7 @@ class PageController extends AbstractController
         }
 
         // SEO redirection if we are not on the good URI (for exemple /fr/tagada instead of /tagada)
-        if (
-            (null === $host || $host == $request->getHost())
+        if ((null === $host || $host == $request->getHost())
             && false !== $redirect = $this->checkIfUriIsCanonical($request, $page)) {
             return $this->redirect($redirect[0], $redirect[1]);
         }
