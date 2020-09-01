@@ -36,7 +36,7 @@ trait PageTrait
 
     public function __toString()
     {
-        return trim($this->slug.' ');
+        return trim($this->host.'/'.$this->slug.' ');
     }
 
     public function __constructPage()

@@ -59,6 +59,7 @@ List of Bundles wich extend this one:
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
 - [ ] revoir l'installation auto (debug : installation de 0.0.58... will be resolved when bumping to sf5 else keep only framework bundle + flex and relaunch composer update)
 - [ ] search for all "todo" in the code, clean and test the code
+- [ ] reduce duplicate code between StaticService and Controllers
 
 ## Credits
 

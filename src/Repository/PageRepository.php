@@ -44,7 +44,7 @@ class PageRepository extends ServiceEntityRepository
             ->setParameter('noi2', '%noindex%');
     }
 
-    protected function andHost(QueryBuilder $qb, $host, $hostCanBeNull = false): QueryBuilder
+    public function andHost(QueryBuilder $qb, $host, $hostCanBeNull = false): QueryBuilder
     {
         return $qb->andWhere('(p.host = :h '.($hostCanBeNull ? ' OR p.host IS NULL' : '').')')
             ->setParameter('h', $host);

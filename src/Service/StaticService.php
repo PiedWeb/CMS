@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as Twig;
 use WyriHaximus\HtmlCompress\Factory as HtmlCompressor;
-use WyriHaximus\HtmlCompress\Parser as HtmlCompressorParser;
 
 class StaticService
 {
@@ -77,7 +76,7 @@ class StaticService
     protected $translator;
 
     /**
-     * @var HtmlCompressorParser
+     * @var HtmlCompressor
      */
     protected $parser;
 
@@ -272,7 +271,9 @@ class StaticService
 
     protected function generatePages(): void
     {
-        $pages = $this->getPages();
+        $qb = $this->getPageRepository()->getQueryToFindPublished('p');
+        $qb = $this->getPageRepository()->andHost($qb, $this->staticDomain, $this->isFirst);
+        $pages = $qb->getQuery()->getResult();
 
         foreach ($pages as $page) {
             $this->generatePage($page);
@@ -373,8 +374,6 @@ class StaticService
         $request->setLocale($page->getLocale());
         $this->requesStack->push($request);
 
-        //$this->translator->setLocale($page->getLocale());
-
         // check if it's a redirection
         if (false !== $page->getRedirection()) {
             $this->addRedirection($page);
@@ -438,16 +437,6 @@ class StaticService
         return $this->em->getRepository($this->params->get('pwc.entity_page'));
     }
 
-    protected function getPages()
-    {
-        $query = $this->getPageRepository()->getQueryToFindPublished('p')
-            ->andWhere('(p.host = :h'.($this->isFirst ? ' OR p.host IS NULL' : '').')')
-            ->setParameter('h', $this->staticDomain)
-        ;
-
-        return $query->getQuery()->getResult();
-    }
-
     protected function render(Page $page): string
     {
         $template = $this->app['default_page_template'] ?? $this->params->get('pwc.default_page_template');
@@ -460,7 +449,6 @@ class StaticService
         ]));
     }
 
-    // todo i18n feed ...
     protected function renderFeed(Page $page): string
     {
         $template = '@PiedWebCMS/page/rss.xml.twig';
@@ -469,7 +457,6 @@ class StaticService
             'page' => $page,
             'app_base_url' => $this->app['base_url'],
             'app_name' => $this->app['name'],
-            'app_color' => $this->app['color'],
         ]));
     }
 }
