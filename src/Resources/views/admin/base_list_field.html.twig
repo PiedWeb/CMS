@@ -1,0 +1,7 @@
+{% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
+
+{% block field %}
+
+<small style="color:#333; font-weight:400">{{ object.host ? object.host ~ ' › ' : '' }}{{ object.slug }}</small><br>
+{{ object.title }}
+{% endblock %}

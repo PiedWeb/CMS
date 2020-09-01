@@ -332,6 +332,11 @@ class PageAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $formMapper)
     {
         $formMapper->add('locale', null, ['label' => 'admin.page.locale.label']);
+
+        if (count($this->getHosts()) > 1) {
+            $formMapper->add('host', null, ['label' => 'admin.page.host.label']);
+        }
+
         $formMapper->add('slug', null, ['label' => 'admin.page.slug.label']);
 
         $formMapper->add('title', null, ['label' => 'admin.page.title.label']);
@@ -375,11 +380,9 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->add('slug', null, [
-            'label' => 'admin.page.slug.label',
-        ]);
         $listMapper->addIdentifier('title', 'html', [
             'label' => 'admin.page.title.label',
+            'template' => '@PiedWebCMS/admin/base_list_field.html.twig',
         ]);
         $listMapper->add('updatedAt', null, [
             'format' => 'd/m à H:m',

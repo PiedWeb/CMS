@@ -14,13 +14,14 @@ class PageController extends AbstractController
 {
     public function show(
         ?string $slug,
+        ?string $host,
         Request $request,
         ParameterBagInterface $params
     ) {
         $app = App::get($request, $params);
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
-            ->getPage($slug, $app->getHost(), $app->isFirstApp());
+            ->getPage($slug, $host ?? $app->getHost(), $app->isFirstApp());
 
         // Check if page exist
         if (null === $page) {
@@ -39,7 +40,9 @@ class PageController extends AbstractController
 
         // SEO redirection if we are not on the good URI (for exemple /fr/tagada instead of /tagada)
         $redirect = $this->checkIfUriIsCanonical($request, $page);
-        if (false !== $redirect) {
+        if (
+            (null === $host || $host == $request->getHost())
+            && false !== $redirect = $this->checkIfUriIsCanonical($request, $page)) {
             return $this->redirect($redirect[0], $redirect[1]);
         }
 

@@ -36,6 +36,14 @@ piedweb_cms_page_feed:
     slug: '[a-zA-Z0-9\-/]*'
     _format: 'xml'
 
+piedweb_cms_page_custom_host:
+  path: /{host}/{slug}
+  controller: PiedWeb\CMSBundle\Controller\PageController::show
+  methods: [GET, HEAD]
+  requirements:
+    slug: '[a-zA-Z0-9\-/]*'
+    host: '[a-zA-Z0-9\-/\.]*'
+
 piedweb_cms_page:
   path: /{slug}
   controller: PiedWeb\CMSBundle\Controller\PageController::show
