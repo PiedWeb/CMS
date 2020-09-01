@@ -4,6 +4,7 @@ namespace PiedWeb\CMSBundle\Controller;
 
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\ConfigHelper as Helper;
+use PiedWeb\CMSBundle\Service\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +18,7 @@ class PageController extends AbstractController
         ParameterBagInterface $params
     ) {
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
-        $page = $this->getDoctrine()
-            ->getRepository($params->get('pwc.entity_page'))
+        $page = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
             ->getPage($slug, Helper::get($request, $params)->getHost(), Helper::get($request, $params)->isFirstApp());
 
         // Check if page exist
@@ -105,8 +105,7 @@ class PageController extends AbstractController
         }
 
         $slug = (null === $slug || 'index' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
-        $page = $this->getDoctrine()
-            ->getRepository($params->get('pwc.entity_page'))
+        $page = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
             ->getPage($slug, Helper::get($request, $params)->getHost(), Helper::get($request, $params)->isFirstApp());
 
         // Check if page exist

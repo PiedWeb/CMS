@@ -34,38 +34,38 @@ class MediaAdmin extends AbstractAdmin
 
         $formMapper->with('Media', ['class' => 'col-md-6'])
             ->add('name', TextType::class, [
-                    'required' => false,
-                    'help_html' => true,
-                    'help' => 'admin.media.name.help',
-                    'label' => 'admin.media.name.label',
-                    'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
+                'required' => false,
+                'help_html' => true,
+                'help' => 'admin.media.name.help',
+                'label' => 'admin.media.name.label',
+                'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
             ])
             ->add('mediaFile', FileType::class, [
-                    'label' => 'admin.media.mediaFile.label',
-                ])
+                'label' => 'admin.media.mediaFile.label',
+            ])
             ->end();
 
         $formMapper->with('i18n', ['class' => 'col-md-6'])
             ->add('names', null, [
-                    'required' => false,
-                     'help_html' => true, 'help' => 'admin.media.names.help',
-                    'label' => 'admin.media.names.label',
-                    'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
+                'required' => false,
+                'help_html' => true, 'help' => 'admin.media.names.help',
+                'label' => 'admin.media.names.label',
+                'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
             ])
             ->end();
 
         if ($media && $media->getMedia()) {
             $formMapper->with('admin.media.preview.label', [
-                    'class' => 'col-md-12',
-                    'description' => $this->showMediaPreview(),
-                    //'empty_message' => false, // to uncomment when sonataAdmin 3.62 is released
-                ])->end();
+                'class' => 'col-md-12',
+                'description' => $this->showMediaPreview(),
+                //'empty_message' => false, // to uncomment when sonataAdmin 3.62 is released
+            ])->end();
 
             if ($this->issetRelatedPages()) {
                 $formMapper->with('admin.media.related.label', [
-                        'class' => 'col-md-12',
-                        'description' => $this->showRelatedPages(),
-                        //'empty_message' => false, /// to uncomment when sonataAdmin 3.62 is released
+                    'class' => 'col-md-12',
+                    'description' => $this->showRelatedPages(),
+                    //'empty_message' => false, /// to uncomment when sonataAdmin 3.62 is released
                 ])->end();
             }
         }
@@ -91,7 +91,8 @@ class MediaAdmin extends AbstractAdmin
     {
         $relatedPages = $this->getRelatedPages();
 
-        if (!empty($relatedPages['content'])
+        if (
+            !empty($relatedPages['content'])
             || $relatedPages['gallery']->count() > 0
             || $relatedPages['mainImage']->count() > 0
         ) {

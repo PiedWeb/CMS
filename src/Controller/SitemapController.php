@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Controller;
 
 use PiedWeb\CMSBundle\Service\ConfigHelper as Helper;
+use PiedWeb\CMSBundle\Service\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +16,9 @@ class SitemapController extends AbstractController
     ) {
         // Retrieve info from homepage, for i18n, assuming it's named with locale
         $locale = $request->getLocale() ?? $params->get('locale');
-        $LocaleHomepage = $this->getDoctrine()
-            ->getRepository($params->get('pwc.entity_page'))
+        $LocaleHomepage = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
             ->getPage($locale, Helper::get($request, $params)->getHost(), Helper::get($request, $params)->isFirstApp());
-        $page = $LocaleHomepage ?? $this->getDoctrine()
-            ->getRepository($params->get('pwc.entity_page'))
+        $page = $LocaleHomepage ?? Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
             ->getPage('homepage', Helper::get($request, $params)->getHost(), Helper::get($request, $params)->isFirstApp());
 
         return $this->render('@PiedWebCMS/page/rss.xml.twig', [
@@ -49,13 +48,14 @@ class SitemapController extends AbstractController
 
     protected function getPages(?int $limit = null, Request $request, ParameterBagInterface $params)
     {
-        $pages = $this->getDoctrine()->getRepository($params->get('pwc.entity_page'))->getIndexablePages(
-            Helper::get($request, $params)->getHost(),
-            Helper::get($request, $params)->isFirstApp(),
-            $request->getLocale(),
-            $params->get('locale'),
-            $limit
-        )->getQuery()->getResult();
+        $pages = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
+            ->getIndexablePages(
+                Helper::get($request, $params)->getHost(),
+                Helper::get($request, $params)->isFirstApp(),
+                $request->getLocale(),
+                $params->get('locale'),
+                $limit
+            )->getQuery()->getResult();
 
         //foreach ($pages as $page) echo $page->getMetaRobots().' '.$page->getTitle().'<br>';
         //exit('feed updated');
