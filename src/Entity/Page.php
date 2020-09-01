@@ -9,7 +9,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity("slug",
+ * @UniqueEntity(
+ *     fields={"host", "slug"},
+ *     errorPath="slug",
  *     message="page.slug.already_used"
  * )
  * @PageRendering()
