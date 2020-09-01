@@ -22,7 +22,7 @@ class StaticService
      *
      * @var array
      */
-    protected $robotsFiles = ['robots.txt', 'feed.xml', 'sitemap.xml', 'sitemap.txt'];
+    protected $robotsFiles = ['robots.txt'];
 
     /**
      * @var array

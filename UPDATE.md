@@ -9,11 +9,14 @@
   ```
 
 - Update config by moving static under apps where first host is static.domain.
+
   ```
   ...
    apps:
      - {hosts: [mywebsite.com, edit.mywebsite.com], base_url: https://mywebsite.com}
   ```
+
+- Delete `feed*.xml` and `sitemap*` files.
 
 /!\ Maybe twig config file throw an error, read & fix
 
