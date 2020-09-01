@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 
 /**
@@ -13,12 +14,70 @@ use PiedWeb\CMSBundle\Entity\PageInterface as Page;
  */
 class PageRepository extends ServiceEntityRepository
 {
-    public function getQueryToFindPublished($p)
+    public function getQueryToFindPublished($p): QueryBuilder
     {
         return $this->createQueryBuilder($p)
             ->andWhere($p.'.createdAt <=  :nwo')
             ->setParameter('nwo', new \DateTime())
             ->orderBy($p.'.createdAt', 'DESC');
+    }
+
+    public function getPage($slug, $host, $hostCanBeNull): ?Page
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->andWhere('p.slug =  :slug')->setParameter('slug', $slug);
+
+        $qb = $this->andHost($qb, $host, $hostCanBeNull);
+
+        return $qb->getQuery()->getResult()[0] ?? null;
+    }
+
+    protected function andNotRedirection(QueryBuilder $qb): QueryBuilder
+    {
+        return $qb->andWhere('p.mainContent IS NULL OR p.mainContent NOT LIKE :noi')
+            ->setParameter('noi', 'Location:%');
+    }
+
+    protected function andIndexable(QueryBuilder $qb): QueryBuilder
+    {
+        return $qb->andWhere('p.metaRobots IS NULL OR p.metaRobots NOT LIKE :noi2')
+            ->setParameter('noi2', '%noindex%');
+    }
+
+    protected function andHost(QueryBuilder $qb, $host, $hostCanBeNull = false): QueryBuilder
+    {
+        return $qb->andWhere('(p.host = :h '.($hostCanBeNull ? ' OR p.host IS NULL' : '').')')
+            ->setParameter('h', $host);
+    }
+
+    protected function andLocale(QueryBuilder $qb, $locale, $defaultLocale): QueryBuilder
+    {
+        return $qb->andWhere(($defaultLocale == $locale ? 'p.locale IS NULL OR ' : '').'p.locale LIKE :locale')
+                ->setParameter('locale', $locale);
+    }
+
+    /**
+     * Return page for sitemap
+     * $qb->getQuery()->getResult();.
+     */
+    public function getIndexablePages(
+        $host,
+        $hostCanBeNull,
+        $locale,
+        $defaultLocale,
+        ?int $limit = null
+    ): QueryBuilder {
+        $qb = $this->getQueryToFindPublished('p');
+        $qb = $this->andIndexable($qb);
+        $qb = $this->andNotRedirection($qb);
+        $qb = $this->andHost($qb, $host, $hostCanBeNull);
+        $qb = $this->andLocale($qb, $locale, $defaultLocale);
+
+        if (null !== $limit) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb;
     }
 
     public function getPagesWithoutParent()

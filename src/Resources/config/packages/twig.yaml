@@ -9,7 +9,3 @@ twig:
   form_themes:
     - 'bootstrap_4_layout.html.twig'
     - '@SonataForm/Form/datepicker.html.twig'
-  globals:
-    logo_alt: '%pwc.name%'
-    app_color: '%pwc.color%'
-    app_base_url: '%pwc.base_url%'

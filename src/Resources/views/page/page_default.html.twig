@@ -54,7 +54,7 @@
 				rel="alternate"
 				type="{{ feed.type|default('application/rss+xml') }}"
 				href="{{ app_base_url|default('') }}{{ feed.uri }}"
-				title="{{ logo_alt|default('') }} &raquo; {{ feed.title }}"
+				title="{{ app_name|default('') }} &raquo; {{ feed.title }}"
 			/>
 		{% endfor %}
 	{% endif %}

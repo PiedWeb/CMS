@@ -35,14 +35,28 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
      */
     protected static function loadConfigToParameters(ContainerBuilder $container, array $config, $prefix = '')
     {
+        $container->setParameter('pwc', $config);
+
         foreach ($config as $key => $value) {
-            if (is_array($value)) {
+            if ('apps' === $key) {
+                $container->setParameter('pwc.apps', self::parsAppsConfig($value));
+            } elseif (is_array($value)) {
                 self::loadConfigToParameters($container, $value, $prefix.$key.'.');
             } else {
                 $container->setParameter('app.'.$prefix.$key, $value); // to deprecate in next release
                 $container->setParameter('pwc.'.$prefix.$key, $value);
             }
         }
+    }
+
+    protected static function parsAppsConfig($apps)
+    {
+        $result = [];
+        foreach ($apps as $app) {
+            $result[$app['hosts'][0]] = $app;
+        }
+
+        return $result;
     }
 
     public function getAlias()

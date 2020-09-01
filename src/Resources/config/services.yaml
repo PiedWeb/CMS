@@ -38,23 +38,6 @@ services:
           event: preRemove,
         }
 
-  piedweb.feed.dumper:
-    class: PiedWeb\CMSBundle\Service\FeedDumpService
-    arguments:
-      - '@doctrine.orm.entity_manager'
-      - '@twig'
-      - '@piedweb.page_canonical'
-      - '%pwc.dir%'
-      - '%pwc.entity_page%'
-      - '%pwc.locale%'
-      - '%pwc.locales%'
-    tags:
-      - {
-          name: doctrine.orm.entity_listener,
-          entity: '%pwc.entity_page%',
-          event: postUpdate,
-        }
-
   piedweb.pageUpdate.emailNotifier:
     class: PiedWeb\CMSBundle\Service\PageUpdateMailNotifier
     arguments:

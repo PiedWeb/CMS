@@ -13,7 +13,7 @@
 
 Yet ! Another CMS :)
 
-PiedWebCMS is a Symfony Bundle built with traits. 
+PiedWebCMS is a Symfony Bundle built with traits.
 
 It permit to get the basic functionalities for a website... to go further or to use as it.
 
@@ -23,10 +23,10 @@ Build on top on [Symfony 4](https://github.com/symfony/symfony), [VichUploader](
 
 **If you install it, be careful, the first version is not out and the code is not heavily tested !**
 
-
 ## Installation
 
 Supposing composer is installed globally
+
 ```
 curl https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms >> install-cms && chmod +x install-cms && ./install-cms ./my-folder
 # Valid 'a' to install all recipes !
@@ -44,31 +44,21 @@ Check [Update.md](https://raw.githubusercontent.com/PiedWeb/CMS/master/UPDATE.md
 
 ... todo
 
-
 ## Documentation
 
 Have a look to the [cookbook](https://github.com/PiedWeb/CMS/blob/master/docs/Cookbook.md).
-
 
 ## Extension
 
 List of Bundles wich extend this one:
 
-<!--
-* [Reservation](https://github.com/PiedWeb/ReservationBundle)
-* [Contact](https://github.com/PiedWeb/ContactBundle)
-* [Faq](https://github.com/PiedWeb/FaqBundle)
-* ...
--->
+- [Conversation](https://packagist.org/packages/piedweb/conversation)
 
 ## TODO
 
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
-- [ ] multi-site (and international compatibility = manage domain for Page)
 - [ ] revoir l'installation auto (debug : installation de 0.0.58... will be resolved when bumping to sf5 else keep only framework bundle + flex and relaunch composer update)
-- [ ] sf5 : développer l'admin via easyadminv3 ?
 - [ ] search for all "todo" in the code, clean and test the code
-- [ ] Extension: load block via ajax (like [Contact](https://github.com/PiedWeb/ContactBundle)) (and manage some dynamics)
 
 ## Credits
 
@@ -78,7 +68,6 @@ List of Bundles wich extend this one:
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
-
 
 [![Latest Version](https://img.shields.io/github/tag/piedweb/cms.svg?style=flat&label=release)](https://github.com/PiedWeb/CMS/tags)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)

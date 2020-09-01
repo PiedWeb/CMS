@@ -10,6 +10,7 @@ use PiedWeb\CMSBundle\Entity\Media;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\MainContentManager;
 use PiedWeb\CMSBundle\Service\PageCanonicalService;
+use PiedWeb\CMSBundle\Service\Repository;
 use PiedWeb\RenderAttributes\AttributesTrait;
 use Twig\Environment as Twig;
 use Twig\Extension\AbstractExtension;
@@ -188,7 +189,7 @@ class AppExtension extends AbstractExtension
         string $orderBy = 'createdAt',
         string $template = '@PiedWebCMS/page/_pages_list.html.twig'
     ) {
-        $qb = $this->em->getRepository($this->page_class)->getQueryToFindPublished('p');
+        $qb = Repository::getPageRepository($this->em, $this->page_class)->getQueryToFindPublished('p');
         $qb->andWhere('p.mainContent LIKE :containing')->setParameter('containing', '%'.$containing.'%');
         $qb->orderBy('p.'.$orderBy, 'DESC');
         $qb->setMaxResults($number);
@@ -304,7 +305,7 @@ class AppExtension extends AbstractExtension
         );
     }
 
-    protected function loadClassForJSLink($attr): array
+    protected static function loadClassForJSLink($attr): array
     {
         if (isset($attr['class']) && false !== strpos($attr['class'], 'btn')) {
             return [];

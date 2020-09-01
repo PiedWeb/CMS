@@ -21,4 +21,6 @@ interface PageInterface
     public function getMainContent();
 
     public function mainContentIsMarkdown();
+
+    public function getCreatedAt();
 }
