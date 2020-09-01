@@ -56,7 +56,7 @@ List of Bundles wich extend this one:
 
 ## TODO
 
-- [ ] Extend [Easy Markdown](https://github.com/Ionaru/easy-markdown-editor) to highlight twig (or at least `{""}`)
+- [ ] Extend [Easy Markdown](https://github.com/Ionaru/easy-markdown-editor) to highlight twig (or at least `{""}`, see [ace](https://github.com/heygrady/ace-mode-twig/blob/master/twig_highlight_rules.js))
 - [ ] revoir l'installation auto (debug : installation de 0.0.58... will be resolved when bumping to sf5 else keep only framework bundle + flex and relaunch composer update)
 - [ ] search for all "todo" in the code, clean and test the code
 - [ ] reduce duplicate code between StaticService and Controllers
