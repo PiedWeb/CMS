@@ -18,7 +18,7 @@ class PageController extends AbstractController
         Request $request,
         ParameterBagInterface $params
     ) {
-        $app = App::get($request, $params);
+        $app = App::get($host ?? $request, $params);
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
         $page = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
             ->getPage($slug, $host ?? $app->getHost(), $app->isFirstApp());
@@ -39,7 +39,6 @@ class PageController extends AbstractController
         }
 
         // SEO redirection if we are not on the good URI (for exemple /fr/tagada instead of /tagada)
-        $redirect = $this->checkIfUriIsCanonical($request, $page);
         if (
             (null === $host || $host == $request->getHost())
             && false !== $redirect = $this->checkIfUriIsCanonical($request, $page)) {
