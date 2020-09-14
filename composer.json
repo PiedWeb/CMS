@@ -44,7 +44,7 @@
     "knplabs/knp-markdown-bundle": "^1.8",
     "rosell-dk/webp-convert": "^2.3",
     "spatie/async": "^1.4",
-    "villfa/invert-color": "^0.4",
+    "villfa/invert-color": "^0.5",
     "wyrihaximus/html-compress": "^3.0",
     "masterminds/html5": "^2.7",
     "caseyamcl/toc": "^3.0"
