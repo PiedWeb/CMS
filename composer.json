@@ -24,7 +24,7 @@
     "twig/extensions": "^1.5",
     "sensio/framework-extra-bundle": "^5.5",
     "symfony/finder": "^5.0",
-    "symfony/asset": "^4.4",
+    "symfony/asset": "^5.2",
     "symfony/console": "^4.4",
     "symfony/expression-language": "^5.1",
     "symfony/form": "^4.4",
