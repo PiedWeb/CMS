@@ -179,6 +179,8 @@ services:
     calls:
       - [setLiipImage, ['@liip_imagine.cache.manager']]
       - [setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
+      - [setTemplate, [show, '@@PiedWebCMS/admin/page_show.html.twig']]
+      - [setTemplate, [edit, '@@PiedWebCMS/admin/page_edit.html.twig']]
       - [setDefaultLocale, ['%locale%']]
     public: true
 

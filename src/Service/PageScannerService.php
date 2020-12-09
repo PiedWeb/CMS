@@ -103,10 +103,10 @@ class PageScannerService
             ->findOneBy(['slug' => '' == $slug ? 'homepage' : $slug]); // todo add domain check (currentPage domain)
 
         $this->everChecked[$slug] = (
-                null === $page
+            null === $page
                 && !file_exists($this->webDir.'/'.$slug)
                 && 'feed.xml' !== $slug
-            ) ? false : true;
+        ) ? false : true;
 
         return $this->everChecked[$slug];
     }

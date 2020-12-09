@@ -53,12 +53,6 @@ class PageAdmin extends AbstractAdmin
         $this->liipImage = $liipImage;
     }
 
-    public function configure()
-    {
-        $this->setTemplate('edit', '@PiedWebCMS/admin/page_edit.html.twig');
-        $this->setTemplate('show', '@PiedWebCMS/admin/page_show.html.twig');
-    }
-
     /**
      * Check if page entity's item $name exist.
      */
