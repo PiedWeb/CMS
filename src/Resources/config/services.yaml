@@ -2,6 +2,12 @@ services:
   # --------
   # Me
   # --------
+  Twig\Extension\StringLoaderExtension: ~
+
+  twig.extension.stringloader:
+    class: Twig_Extension_StringLoader
+    tags:
+      - { name: twig.extension }
 
   PiedWeb\CMSBundle\PiedWebCMSBundle: ~
 

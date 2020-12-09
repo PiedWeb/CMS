@@ -24,17 +24,23 @@ class PageScannerController extends AbstractController
             ->findAll();
 
         $errors = [];
+        $errorNbr = 0;
 
         foreach ($pages as $page) {
             // todo import scanner via setScanner + services.yaml
             $scan = $this->scanner->scan($page);
             if (true !== $scan) {
-                $errors = array_merge($errors, $scan);
+                $errors[$page->getId()] = $scan;
+                $errorNbr = $errorNbr + count($errors[$page->getId()]);
+            }
+
+            if ($errorNbr > 100) {
+                break;
             }
         }
 
         return $this->render('@PiedWebCMS/admin/page_scanView.html.twig', [
-            'errors' => $errors,
+            'errorsByPages' => $errors,
         ]);
     }
 }

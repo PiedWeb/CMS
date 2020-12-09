@@ -335,8 +335,13 @@ class StaticService
         $app = App::get($this->requesStack->getCurrentRequest(), $this->params);
         $LocaleHomepage = $this->getPageRepository()
             ->getPage($locale, $this->app['hosts'][0], $this->app['hosts'][0] === $app->getFirstHost());
+
         $page = $LocaleHomepage ?? $this->getPageRepository()
             ->getPage('homepage', $this->app['hosts'][0], $this->app['hosts'][0] === $app->getFirstHost());
+
+        if (!$page) {
+            return;
+        }
 
         $dump = $this->twig->render('@PiedWebCMS/page/rss.xml.twig', [
             'pages' => $pages,

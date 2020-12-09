@@ -52,6 +52,8 @@ class PageScannerService
         // href="", data-rot="" data-img="", src="", data-bg
         $this->checkLinkedDocs($this->getLinkedDocs());
 
+        // todo, add check external ressource
+
         return empty($this->errors) ? true : $this->errors;
     }
 
