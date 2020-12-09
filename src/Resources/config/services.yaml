@@ -31,9 +31,13 @@ services:
       $dataManager: '@liip_imagine.data.manager'
       $filterManager: '@liip_imagine.filter.manager'
       $eventDispatcher: '@event_dispatcher'
+      $filesystem: '@filesystem'
+      $rootDir:  '%kernel.root_dir%'
     tags:
       - { name: kernel.event_listener, event: vich_uploader.pre_upload }
       - { name: kernel.event_listener, event: vich_uploader.post_upload }
+      - { name: doctrine.orm.entity_listener, entity: '%pwc.entity_media%', event: preUpdate },
+      - { name: doctrine.orm.entity_listener, entity: '%pwc.entity_media%', event: preRemove },
       #- { name: doctrine.orm.entity_listener, entity: PiedWeb\CMSBundle\Entity\Image, event: prePersist }
 
   PiedWeb\CMSBundle\EventListener\PageListener:

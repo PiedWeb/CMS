@@ -33,26 +33,50 @@ class MediaAdmin extends AbstractAdmin
         $media = $this->getSubject();
 
         $formMapper->with('Media', ['class' => 'col-md-6'])
+
+            ->add('mediaFile', FileType::class, [
+                'label' => 'admin.media.mediaFile.label',
+                'required' => $this->getSubject() && $this->getSubject()->getMedia() ? false : true,
+            ])
             ->add('name', TextType::class, [
-                'required' => false,
+                'required' => $this->getSubject() && $this->getSubject()->getMedia() ? true : false,
                 'help_html' => true,
                 'help' => 'admin.media.name.help',
                 'label' => 'admin.media.name.label',
                 'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
             ])
-            ->add('mediaFile', FileType::class, [
-                'label' => 'admin.media.mediaFile.label',
+            ->add('slug', TextType::class, [
+                'label' => 'admin.page.slug.label',
+                'help_html' => true,
+                'required' => false,
+                'help' => $this->getSubject() && $this->getSubject()->getSlug()
+                    ? '<span class="btn btn-link" onclick="toggleDisabled()" id="disabledLinkSlug">
+                        <i class="fa fa-unlock"></i></span>
+                        <script>function toggleDisabled() {
+                            $(".slug_disabled").first().removeAttr("disabled");
+                            $(".slug_disabled").first().focus();
+                            $("#disabledLinkSlug").first().remove();
+                        }</script>'
+                        .'<small>Changer le slug change l\'URL de l\'image et peut créer des erreurs.</small>'
+                    : 'admin.page.slug.help',
+                'attr' => [
+                    'class' => 'slug_disabled',
+                    ($this->getSubject() ? ($this->getSubject()->getSlug() ? 'disabled' : 't') : 't') => '',
+                ],
             ])
             ->end();
 
-        $formMapper->with('i18n', ['class' => 'col-md-6'])
-            ->add('names', null, [
-                'required' => false,
-                'help_html' => true, 'help' => 'admin.media.names.help',
-                'label' => 'admin.media.names.label',
-                'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
-            ])
-            ->end();
+        $formMapper->with('i18n', ['class' => 'col-md-6']);
+
+
+        $formMapper->add('names', null, [
+            'required' => false,
+            'help_html' => true, 'help' => 'admin.media.names.help',
+            'label' => 'admin.media.names.label',
+            'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
+        ]);
+
+        $formMapper->end();
 
         if ($media && $media->getMedia()) {
             $formMapper->with('admin.media.preview.label', [

@@ -50,6 +50,13 @@ trait MediaTrait
     protected $media;
 
     /**
+     * NOTE : this is used only for media renaming
+     *
+     * @var string
+     */
+    protected $mediaBeforeUpdate;
+
+    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(
@@ -101,13 +108,19 @@ trait MediaTrait
 
     public function setSlug($slug, $force = false)
     {
+        if (!$slug)
+            return $this;
+
+
+        $slug = (new Slugify())->slugify($slug);
+
         if (true === $force) {
             $this->slug = $slug;
 
             return $this;
         }
 
-        $this->setMedia($slug);
+        $this->setMedia($slug.($this->media ? preg_replace('/.*(\\.[^.\\s]{3,4})$/', '$1', $this->media) : ''));
 
         return $this;
     }
@@ -122,8 +135,7 @@ trait MediaTrait
             return $this->slug = preg_replace('/\\.[^.\\s]{3,4}$/', '', $this->media);
         }
 
-        $slugify = new Slugify();
-        $this->slug = $slugify->slugify($this->getName()); //Urlizer::urlize($this->getName());
+        $this->slug = (new Slugify())->slugify($this->getName()); //Urlizer::urlize($this->getName());
 
         return $this->slug;
     }
@@ -149,6 +161,13 @@ trait MediaTrait
 
     public function setMedia($media): self
     {
+        if (!$media)
+            return $this;
+
+        if ($this->media!==null) {
+            $this->setMediaBeforeUpdate($this->media);
+            // TODO must rename media (via service ?!) var_dump($this->media); exit;
+        }
         $this->media = $media;
 
         return $this;
@@ -335,5 +354,29 @@ trait MediaTrait
         return null !== $this->media
             ? '/'.$this->getRelativeDir().($this->getSlug() ? '/'.$this->getSlug().'.webp' : '')
             : null;
+    }
+
+    /**
+     * Get nOTE : this is used only for media renaming
+     *
+     * @return  string
+     */
+    public function getMediaBeforeUpdate()
+    {
+        return $this->mediaBeforeUpdate;
+    }
+
+    /**
+     * Set nOTE : this is used only for media renaming
+     *
+     * @param  string  $mediaBeforeUpdate  NOTE : this is used only for media renaming
+     *
+     * @return  self
+     */
+    public function setMediaBeforeUpdate(string $mediaBeforeUpdate)
+    {
+        $this->mediaBeforeUpdate = $mediaBeforeUpdate;
+
+        return $this;
     }
 }

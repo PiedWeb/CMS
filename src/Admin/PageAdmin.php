@@ -255,7 +255,7 @@ class PageAdmin extends AbstractAdmin
                         $(".slug_disabled").first().removeAttr("disabled");
                         $(".slug_disabled").first().focus();
                         $("#disabledLinkSlug").first().remove();
-                    }</script>'
+                    }</script><small>Changer le slug change l\'URL et peut créer des erreurs.</small>'
                 : 'admin.page.slug.help',
             'attr' => [
                 'class' => 'slug_disabled',

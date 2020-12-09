@@ -8,6 +8,8 @@ interface MediaInterface
 
     public function getMedia();
 
+    public function getMediaBeforeUpdate();
+
     public function getRelativeDir();
 
     public function getSlug();
