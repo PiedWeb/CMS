@@ -3,7 +3,6 @@ language: php
 
 php:
   - 7.4snapshot
-  - 7.3
 
 sudo: false
 
