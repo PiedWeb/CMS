@@ -15,7 +15,7 @@ Yet ! Another CMS :)
 
 PiedWebCMS is a Symfony Bundle built with traits.
 
-It permit to get the basic functionalities for a website... to go further or to use as it.
+It permit to get the basic functionalities for **a website focus on content for the Web**... to go further or to use as it.
 
 A Static Website Generator (compatible with Github Pages, Apache Server, ...) is integrated in his core (and could be easily desintegrated).
 

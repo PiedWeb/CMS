@@ -17,7 +17,7 @@ trait UserTrait
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email(
      *     message = "user.email.invalid",
-     *     checkMX = true
+     *     mode = "strict"
      * )
      */
     protected $email;

@@ -204,11 +204,6 @@ services:
   # TWIG extension
   # --------
 
-  piedweb.app.twig.extension.loader:
-    class: Twig_Extension_StringLoader
-    tags:
-      - { name: 'twig.extension' }
-
   dpolac.twig_lambda.extension:
     class: DPolac\TwigLambda\LambdaExtension
     tags: [{ name: twig.extension }]
@@ -224,11 +219,6 @@ services:
   piedweb.twig.extension.render_attributes:
     class: PiedWeb\RenderAttributes\TwigExtension
     public: false
-    tags:
-      - { name: twig.extension }
-
-  piedweb.twig.extension.intl:
-    class: Twig_Extensions_Extension_Intl
     tags:
       - { name: twig.extension }
 
