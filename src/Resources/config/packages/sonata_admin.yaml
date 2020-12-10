@@ -35,6 +35,9 @@ sonata_admin:
             label: admin.label.theme
   options:
     lock_protection: true
+  templates:
+    knp_menu_template: '@PiedWebCMS/admin/menu.html.twig'
+
 #  assets:
 #    extra_stylesheets:
 #      - bundles/sonatatranslation/css/sonata-translation.css
