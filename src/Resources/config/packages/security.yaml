@@ -5,6 +5,7 @@ security:
 
   role_hierarchy:
     ROLE_EDITOR:
+      - ROLE_USER
       - ROLE_SONATA_ADMIN
       - ROLE_PIEDWEB_ADMIN
       - ROLE_PIEDWEB_ADMIN_PAGE_CREATE

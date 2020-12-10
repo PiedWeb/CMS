@@ -37,6 +37,7 @@ sonata_admin:
     lock_protection: true
   templates:
     knp_menu_template: '@PiedWebCMS/admin/menu.html.twig'
+    user_block: '@PiedWebCMS/admin/user_block.html.twig'
 
 #  assets:
 #    extra_stylesheets:
