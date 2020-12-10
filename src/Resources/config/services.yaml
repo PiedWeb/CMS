@@ -186,6 +186,12 @@ services:
       - [setTemplate, [show, '@@PiedWebCMS/admin/page_show.html.twig']]
       - [setTemplate, [edit, '@@PiedWebCMS/admin/page_edit.html.twig']]
       - [setDefaultLocale, ['%locale%']]
+      - [setSecurityTokenStorage, ['@security.token_storage']]
+      - [setTwig, ['@twig']]
+      - [setApps, ['%pwc.apps%']]
+      - [setMediaClass, ['%pwc.entity_media%']]
+      - [setUserClass, ['%pwc.entity_user%']]
+      - [setPageClass, ['%pwc.entity_page%']]
     public: true
 
   piedweb.admin.media:
@@ -194,6 +200,9 @@ services:
     calls:
       - [setLiipImage, ['@liip_imagine.cache.manager']]
       - [setTemplate, [list, '@@PiedWebCMS/admin/media_mosaic.html.twig']]
+      - [setEntityManager, ['@doctrine.orm.default_entity_manager']]
+      - [setTwig, ['@twig']]
+      - [setPageClass, ['%pwc.entity_page%']]
     tags:
       - { name: sonata.admin, manager_type: orm, label: admin.label.media }
 
@@ -211,6 +220,8 @@ services:
     tags:
       - { name: sonata.admin, manager_type: orm, label: admin.label.user }
     public: true
+    calls:
+      - [setUserClass, ['%pwc.entity_user%']]
 
   # --------
   # TWIG extension

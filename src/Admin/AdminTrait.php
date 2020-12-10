@@ -5,6 +5,11 @@ namespace PiedWeb\CMSBundle\Admin;
 trait AdminTrait
 {
 
+    protected $apps;
+    protected $pageClass;
+    protected $mediaClass;
+    protected $userClass;
+    protected $twig;
     protected $em;
     protected $securityTokenStorage;
 
@@ -56,13 +61,6 @@ trait AdminTrait
         return $this;
     }
 
-    abstract public function getConfigurationPool();
-
-    protected function getContainer()
-    {
-        return $this->getConfigurationPool()->getContainer();
-    }
-
     protected function getUser()
     {
         return $this->getContainer()->get('security.token_storage')->getToken()->getUser();
@@ -77,6 +75,31 @@ trait AdminTrait
     public function setEntityManager($em)
     {
         $this->em = $em;
+    }
+
+    public function setTwig($twig)
+    {
+        $this->twig = $twig;
+    }
+
+    public function setPageClass($pageClass)
+    {
+        $this->pageClass = $pageClass;
+    }
+
+    public function setApps($apps)
+    {
+        $this->apps = $apps;
+    }
+
+    public function setMediaClass($mediaClass)
+    {
+        $this->mediaClass = $mediaClass;
+    }
+
+    public function setUserClass($userClass)
+    {
+        $this->userClass = $userClass;
     }
 
 }

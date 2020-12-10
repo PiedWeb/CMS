@@ -103,7 +103,7 @@ class MediaAdmin extends AbstractAdmin
             '@PiedWebCMS/admin/media_show.preview_image.html.twig'
             : '@PiedWebCMS/admin/media_show.preview.html.twig';
 
-        return $this->getContainer()->get('twig')->render(
+        return $this->twig->render(
             $template,
             [
                 'media' => $media,
@@ -133,8 +133,8 @@ class MediaAdmin extends AbstractAdmin
 
         $media = $this->getSubject();
 
-        $pages = $this->getConfigurationPool()->getContainer()->get('doctrine')
-            ->getRepository($this->getContainer()->getParameter('pwc.entity_page'))
+        $pages = $this->em
+            ->getRepository($this->pageClass)
             ->getPagesUsingMedia($this->liipImage->getBrowserPath($media->getFullPath(), 'default'));
 
         $this->relatedPages = [
@@ -148,7 +148,7 @@ class MediaAdmin extends AbstractAdmin
 
     protected function showRelatedPages(): string
     {
-        return $this->getContainer()->get('twig')->render(
+        return $this->twig->render(
             '@PiedWebCMS/admin/media_show.relatedPages.html.twig',
             $this->getRelatedPages()
         );

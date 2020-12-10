@@ -58,7 +58,7 @@ class PageAdmin extends AbstractAdmin
      */
     protected function exists(string $name): bool
     {
-        return method_exists($this->getContainer()->getParameter('pwc.entity_page'), 'get'.$name);
+        return method_exists($this->pageClass, 'get'.$name);
     }
 
     protected function configureFormFieldsBlockDetails(FormMapper $formMapper): FormMapper
@@ -67,7 +67,7 @@ class PageAdmin extends AbstractAdmin
 
         if ($this->exists('parentPage')) {
             $formMapper->add('parentPage', EntityType::class, [
-                'class' => $this->getContainer()->getParameter('pwc.entity_page'),
+                'class' => $this->pageClass,
                 'label' => 'admin.page.parentPage.label',
                 'required' => false,
             ]);
@@ -109,7 +109,7 @@ class PageAdmin extends AbstractAdmin
             $formMapper->add('relatedPages', ModelAutocompleteType::class, [
                 'required' => false,
                 'multiple' => true,
-                'class' => $this->getContainer()->getParameter('pwc.entity_page'),
+                'class' => $this->pageClass,
                 'property' => 'title', // or any field in your media entity
                 'label' => 'admin.page.relatedPage.label',
                 'btn_add' => false,
@@ -167,7 +167,7 @@ class PageAdmin extends AbstractAdmin
 
     protected function getHosts()
     {
-        return array_keys($this->getContainer()->getParameter('pwc.apps'));
+        return array_keys($this->apps);
     }
 
     public function configureFormFieldHost(FormMapper $formMapper): FormMapper
@@ -189,7 +189,7 @@ class PageAdmin extends AbstractAdmin
         return $formMapper->add('translations', ModelAutocompleteType::class, [
             'required' => false,
             'multiple' => true,
-            'class' => $this->getContainer()->getParameter('pwc.entity_page'),
+            'class' => $this->pageClass,
             'property' => 'slug',
             'label' => 'admin.page.translations.label',
             'help_html' => true,
@@ -231,7 +231,7 @@ class PageAdmin extends AbstractAdmin
         if ($this->exists('MainImage')) {
             $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
                 'required' => false,
-                'class' => $this->getContainer()->getParameter('pwc.entity_media'),
+                'class' => $this->mediaClass,
                 'label' => 'admin.page.mainImage.label',
                 'btn_edit' => false,
             ]);
@@ -370,7 +370,7 @@ class PageAdmin extends AbstractAdmin
         if ($this->exists('author')) {
             $formMapper->add('author', null, [
                 'label' => 'admin.page.author.label',
-                'class' => $this->getContainer()->getParameter('pwc.entity_user'),
+                'class' => $this->userClass,
                 'required' => false,
             ]);
         }
