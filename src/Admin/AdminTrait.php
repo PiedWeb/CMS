@@ -63,7 +63,7 @@ trait AdminTrait
 
     protected function getUser()
     {
-        return $this->getContainer()->get('security.token_storage')->getToken()->getUser();
+        return $this->securityTokenStorage->getToken()->getUser();
     }
 
 
