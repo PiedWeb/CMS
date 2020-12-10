@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as Twig;
 use WyriHaximus\HtmlCompress\Factory as HtmlCompressor;
+use WyriHaximus\HtmlCompress\HtmlCompressorInterface;
 
 class StaticService
 {
@@ -76,7 +77,7 @@ class StaticService
     protected $translator;
 
     /**
-     * @var HtmlCompressor
+     * @var HtmlCompressorInterface
      */
     protected $parser;
 
