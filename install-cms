@@ -15,9 +15,6 @@ rm -rf ${folder}
 composer create-project symfony/skeleton ${folder} ^4.4
 cd ${folder}
 
-# Install web server to test
-composer require symfony/web-server-bundle --dev
-
 # Install Pied Web CMS
 composer require piedweb/cms-bundle ^0
 
@@ -39,8 +36,7 @@ ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/sonata_tr
 ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/translation.yaml config/packages/translation.yaml
 ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/twig.yaml config/packages/twig.yaml
 ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/vich_uploader.yaml config/packages/vich_uploader.yaml
-ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/fos_user.yaml config/packages/fos_user.yaml
-#   We copu piedweb_cms config to easily edit it later manually
+#   We copy piedweb_cms config to easily edit it later manually
 cp vendor/piedweb/cms-bundle/src/Resources/config/packages/piedweb_cms.yaml config/packages/piedweb_cms.yaml
 
 php bin/console cache:clear
@@ -56,8 +52,18 @@ mkdir -p assets
 cp vendor/piedweb/cms-bundle/assets/.babelrc .babelrc
 cp vendor/piedweb/cms-bundle/assets/package.json package.json
 cp vendor/piedweb/cms-bundle/assets/webpack.config.js webpack.config.js
-cp vendor/piedweb/cms-bundle/assets/main.js assets/main.js
-cp vendor/piedweb/cms-bundle/assets/main.scss assets/main.scss
+
+read -p "Install full featured template (else simple) ? [Y/n] " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    #todo !!!
+    cp vendor/piedweb/cms-bundle/assets/main.js assets/main.js
+    cp vendor/piedweb/cms-bundle/assets/main.scss assets/main.scss
+else
+    cp vendor/piedweb/cms-bundle/assets/main.js assets/main.js
+    cp vendor/piedweb/cms-bundle/assets/main.scss assets/main.scss
+fi
+
 cp -r vendor/piedweb/cms-bundle/assets/icons assets/
 
 # Copy the two files from default theme you will want to personnalize
@@ -74,10 +80,11 @@ yarn
 yarn encore dev
 
 # Install sqlite by default
-sed -i -e "s/mysql:\/\/db_user:db_password@127\.0\.0\.1:3306\/db_name/\"sqlite:\/\/\/%kernel\.project_dir%\/var\/app\.db\"/" .env
+
+sed -i -e "s/DATABASE_URL=\".*\"/DATABASE_URL=\"sqlite:\/\/\/%kernel\.project_dir%\/var\/app\.db\"/" .env
 
 ## Install default routes
-echo "piedweb:\n    resource: '@PiedWebCMSBundle/Resources/config/routes/all.yaml'" >config/routes.yaml
+echo -e "piedweb:\n    resource: '@PiedWebCMSBundle/Resources/config/routes/all.yaml'" >config/routes.yaml
 
 # Create Database:
 php bin/console doctrine:schema:create
@@ -85,8 +92,7 @@ php bin/console doctrine:schema:create
 # Add an admin user :
 read -p 'Email: ' emailvar
 read -sp 'Password: ' passvar
-php bin/console fos:user:create $emailvar $emailvar $passvar
-php bin/console fos:user:promote $emailvar ROLE_SUPER_ADMIN
+php bin/console user:create $emailvar $passvar ROLE_SUPER_ADMIN
 
 # Install Sonata Front-End Assets
 php bin/console assets:install
@@ -95,4 +101,8 @@ php bin/console assets:install
 echo '' >public/robots.txt
 
 # Launch Server and Play
-php bin/console server:run
+read -p "Launch Server and play? [Y/n] " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    symfony server:start -d
+fi

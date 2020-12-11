@@ -23,6 +23,12 @@ services:
     resource: '../../../src/Controller'
     tags: ['controller.service_arguments']
 
+  PiedWeb\CMSBundle\EventListener\UserListener:
+    arguments:
+      $passwordEncoder: '@security.password_encoder'
+    tags:
+      - { name: doctrine.orm.entity_listener, entity: '%pwc.entity_user%', event: preUpdate }
+
   PiedWeb\CMSBundle\EventListener\MediaListener:
     arguments:
       $projectDir: '%kernel.project_dir%'
@@ -126,6 +132,29 @@ services:
     class: PiedWeb\CMSBundle\Command\MediaCommand
     tags: ['console.command']
 
+
+  piedweb.user_command:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@security.password_encoder'
+      - '%pwc.entity_user%'
+    class: PiedWeb\CMSBundle\Command\UserCommand
+    tags: ['console.command']
+
+  # --------
+  # Repository
+  # --------
+
+  PiedWeb\CMSBundle\Repository\PageRepository:
+    arguments: ['@doctrine', '%pwc.entity_page%']
+    tags:
+      - { name: doctrine.repository_service }
+
+  PiedWeb\CMSBundle\Repository\MediaRepository:
+    arguments: ['@doctrine', '%pwc.entity_media%']
+    tags:
+      - { name: doctrine.repository_service }
+
   # --------
   # Static
   # --------
@@ -153,20 +182,6 @@ services:
     arguments: ['@piedweb.static']
     class: PiedWeb\CMSBundle\Command\StaticCommand
     tags: ['console.command']
-
-  # --------
-  # Repository
-  # --------
-
-  PiedWeb\CMSBundle\Repository\PageRepository:
-    arguments: ['@doctrine', '%pwc.entity_page%']
-    tags:
-      - { name: doctrine.repository_service }
-
-  PiedWeb\CMSBundle\Repository\MediaRepository:
-    arguments: ['@doctrine', '%pwc.entity_media%']
-    tags:
-      - { name: doctrine.repository_service }
 
   # --------
   # Admin
@@ -222,6 +237,7 @@ services:
     public: true
     calls:
       - [setUserClass, ['%pwc.entity_user%']]
+      - [setSecurityTokenStorage, ['@security.token_storage']]
 
   # --------
   # TWIG extension
@@ -249,6 +265,9 @@ services:
   # Extending other bundles
   # --------
 
+  # Liip
+  # --------
+
   imagine.cache.resolver.piedweb:
     class: PiedWeb\CMSBundle\Service\ImagineWebCacheResolver
     arguments:
@@ -260,6 +279,9 @@ services:
           name: 'liip_imagine.cache.resolver',
           resolver: piedweb_relativeimgcache,
         }
+
+  # Vich
+  # --------
 
   vich_uploader.piedweb.namer_property:
     class: PiedWeb\CMSBundle\Service\VichUploadPropertyNamer

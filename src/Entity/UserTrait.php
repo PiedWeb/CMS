@@ -69,6 +69,7 @@ trait UserTrait
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
+        $this->password = '';
 
         return $this;
     }
