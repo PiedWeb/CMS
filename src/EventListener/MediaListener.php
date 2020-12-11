@@ -71,15 +71,14 @@ class MediaListener
             $this->filesystem->rename(
                 $this->rootDir.'/../'.$media->getRelativeDir().'/'.$media->getMediaBeforeUpdate(),
                 $this->rootDir.'/../'.$media->getRelativeDir().'/'.$media->getMedia()
-                );
-                $this->cacheManager->remove('/'.$media->getRelativeDir().'/'.$media->getMediaBeforeUpdate());
-
+            );
+            $this->cacheManager->remove('/'.$media->getRelativeDir().'/'.$media->getMediaBeforeUpdate());
         }
     }
 
     public function preRemove(MediaInterface $media)
     {
-        $this->filesystem->remove( $this->rootDir.'/../'.$media->getRelativeDir().'/'.$media->getMedia() );
+        $this->filesystem->remove($this->rootDir.'/../'.$media->getRelativeDir().'/'.$media->getMedia());
         $this->cacheManager->remove('/'.$media->getRelativeDir().'/'.$media->getMediaBeforeUpdate());
     }
     /**

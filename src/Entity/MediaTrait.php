@@ -108,8 +108,9 @@ trait MediaTrait
 
     public function setSlug($slug, $force = false)
     {
-        if (!$slug)
+        if (!$slug) {
             return $this;
+        }
 
 
         $slug = (new Slugify())->slugify($slug);
@@ -161,8 +162,9 @@ trait MediaTrait
 
     public function setMedia($media): self
     {
-        if (!$media)
+        if (!$media) {
             return $this;
+        }
 
         if ($this->media!==null) {
             $this->setMediaBeforeUpdate($this->media);

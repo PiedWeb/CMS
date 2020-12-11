@@ -8,10 +8,10 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class UserListener
 {
-
     protected $passwordEncoder;
 
-    public function __construct(UserPasswordEncoder $passwordEncoder) {
+    public function __construct(UserPasswordEncoder $passwordEncoder)
+    {
         $this->passwordEncoder = $passwordEncoder;
     }
 

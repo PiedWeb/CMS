@@ -59,7 +59,8 @@ class UserCommand extends Command
         return $repo->findAll();
     }
 
-    protected function createUser($email, $password, $role) {
+    protected function createUser($email, $password, $role)
+    {
         $userClass = $this->userClass;
         $user = new $userClass();
         $user->setEmail($email);

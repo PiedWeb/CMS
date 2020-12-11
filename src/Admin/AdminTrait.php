@@ -4,7 +4,6 @@ namespace PiedWeb\CMSBundle\Admin;
 
 trait AdminTrait
 {
-
     protected $apps;
     protected $pageClass;
     protected $mediaClass;
@@ -101,5 +100,4 @@ trait AdminTrait
     {
         $this->userClass = $userClass;
     }
-
 }
