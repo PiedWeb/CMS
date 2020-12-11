@@ -106,6 +106,7 @@ trait PageExtendedTrait
         if ($firstOnly) {
             return trim(explode(',', $this->name)[0]) ?? $this->name ?? $this->h1 ?? $this->title;
         }
+
         return $this->name;
     }
 

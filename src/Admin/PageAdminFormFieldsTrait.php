@@ -165,7 +165,6 @@ trait PageAdminFormFieldsTrait
                 'required' => false,
                 'attr' => ['class' => 'input-lg', 'placeholder' => 'admin.page.title.label'],
                 'label' => ' ',
-
             ]);
     }
 
@@ -194,6 +193,7 @@ trait PageAdminFormFieldsTrait
                     .'<br><small>URL actuelle&nbsp: <a href="'.$url.'">'.$url.'</a></small>'
                 : 'admin.page.slug.help';
     }
+
     protected function configureFormFieldSlug(FormMapper $formMapper): FormMapper
     {
         return $formMapper->add('slug', TextType::class, [
@@ -243,4 +243,8 @@ trait PageAdminFormFieldsTrait
                 ]
             );
     }
+
+    abstract protected function exists(string $name): bool;
+
+    abstract protected function getSubject();
 }

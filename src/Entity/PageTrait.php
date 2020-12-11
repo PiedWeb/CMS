@@ -5,7 +5,6 @@ namespace PiedWeb\CMSBundle\Entity;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use PiedWeb\CMSBundle\Service\ShortCodeConverter;
-use Symfony\Component\Validator\Constraints as Assert;
 
 trait PageTrait
 {
@@ -64,7 +63,9 @@ trait PageTrait
 
     public function getSlug(): ?string
     {
-        if (!$this->slug) return $this->id;
+        if (!$this->slug) {
+            return $this->id;
+        }
 
         return $this->slug;
     }

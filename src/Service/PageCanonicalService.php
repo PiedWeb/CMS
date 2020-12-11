@@ -36,7 +36,7 @@ class PageCanonicalService
      */
     public function generatePathForPage(?string $slug)
     {
-        if ($slug === null) {
+        if (null === $slug) {
             return;
         }
 

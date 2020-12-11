@@ -107,7 +107,8 @@ trait AdminTrait
         $this->userClass = $userClass;
     }
 
-    public function setPageCanonicalService($pageCanonicalService) {
-     $this->pageCanonicalService = $pageCanonicalService;
+    public function setPageCanonicalService($pageCanonicalService)
+    {
+        $this->pageCanonicalService = $pageCanonicalService;
     }
 }

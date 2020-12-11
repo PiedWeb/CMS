@@ -59,12 +59,12 @@ class PageAdmin extends AbstractAdmin
         // Next : load this from configuration
         $mainFields = ['h1', 'mainContent', 'mainContentIsMarkdown'];
         $columnFields = [
-            'admin.page.state.label' => ['createdAt', 'metaRobots',],
-            'admin.page.permanlien.label' => ['host', 'slug', 'parentPage',],
-            'admin.page.extended.label' => ['expand' => true, 'fields' => ['mainImage', 'name', 'title',  'excrept',]],
-            'admin.page.translations.label' => [ 'locale', 'translations',],
-            'admin.page.otherProperties.label' => ['expand' => true, 'fields' => ['otherProperties',]],
-            'admin.page.images.label' => ['images',],
+            'admin.page.state.label' => ['createdAt', 'metaRobots'],
+            'admin.page.permanlien.label' => ['host', 'slug', 'parentPage'],
+            'admin.page.extended.label' => ['expand' => true, 'fields' => ['mainImage', 'name', 'title',  'excrept']],
+            'admin.page.translations.label' => ['locale', 'translations'],
+            'admin.page.otherProperties.label' => ['expand' => true, 'fields' => ['otherProperties']],
+            'admin.page.images.label' => ['images'],
         ];
 
         $formMapper->with('admin.page.mainContent.label', ['class' => 'col-md-9 mainFields']);
@@ -77,8 +77,8 @@ class PageAdmin extends AbstractAdmin
         foreach ($columnFields as $k => $block) {
             $fields = $block['fields'] ?? $block;
             $class = isset($block['expand']) ? 'expand' : '';
-            $formMapper->with($k, ["class" => "col-md-3 columnFields ".$class]);
-            foreach($fields as $field) {
+            $formMapper->with($k, ['class' => 'col-md-3 columnFields '.$class]);
+            foreach ($fields as $field) {
                 $func = 'configureFormField'.ucfirst($field);
                 $this->$func($formMapper);
             }
