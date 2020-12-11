@@ -33,6 +33,9 @@ sonata_admin:
           - piedweb.admin.user
           - route: piedweb_cms_template_editor_list
             label: admin.label.theme
+            roles:
+              - ROLE_PIEDWEB_ADMIN_THEME
+
   options:
     lock_protection: true
   templates:

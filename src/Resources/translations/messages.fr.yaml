@@ -35,10 +35,11 @@ admin:
     content: Contenu
     list: Liste
     user: Utilisateur
+    users: Utilisateurs
     manage: Mettre en ligne
     update: Actualiser
-    params: Paramètres
-    theme: Thème
+    params: Thème
+    theme: Éditeur de thème
     check_content: Vérifier le contenu
     conversation: Conversation
 
