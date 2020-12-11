@@ -6,19 +6,12 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\BlockBundle\Meta\Metadata;
-use Sonata\Form\Type\CollectionType;
-use Sonata\Form\Type\DateTimePickerType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PageAdmin extends AbstractAdmin
 {
     use AdminTrait;
+    use PageAdminFormFieldsTrait;
 
     protected $datagridValues = [
         '_page' => 1,
@@ -61,275 +54,45 @@ class PageAdmin extends AbstractAdmin
         return method_exists($this->pageClass, 'get'.$name);
     }
 
-    protected function configureFormFieldsBlockDetails(FormMapper $formMapper): FormMapper
-    {
-        $formMapper->with('admin.details', ['class' => 'col-md-5']);
-
-        if ($this->exists('parentPage')) {
-            $formMapper->add('parentPage', EntityType::class, [
-                'class' => $this->pageClass,
-                'label' => 'admin.page.parentPage.label',
-                'required' => false,
-            ]);
-        }
-
-        $this->configueFormFieldTranslations($formMapper);
-
-        $formMapper->add('createdAt', DateTimePickerType::class, [
-            'format' => DateTimeType::HTML5_FORMAT,
-            'dp_side_by_side' => true,
-            'dp_use_current' => true,
-            'dp_use_seconds' => false,
-            'dp_collapse' => true,
-            'dp_calendar_weeks' => false,
-            'dp_view_mode' => 'days',
-            'dp_min_view_mode' => 'days',
-            'label' => 'admin.page.createdAt.label',
-        ]);
-
-        if ($this->exists('name')) {
-            $formMapper->add('name', TextType::class, [
-                'label' => 'admin.page.name.label',
-                'required' => false,
-                'help_html' => true,
-                'help' => 'admin.page.name.help',
-            ]);
-        }
-
-        if ($this->exists('excrept')) {
-            $formMapper->add('excrept', TextareaType::class, [
-                'required' => false,
-                'label' => 'admin.page.excrept.label',
-                'help_html' => true,
-                'help' => 'admin.page.excrept.help',
-            ]);
-        }
-
-        if ($this->exists('relatedPages')) {
-            $formMapper->add('relatedPages', ModelAutocompleteType::class, [
-                'required' => false,
-                'multiple' => true,
-                'class' => $this->pageClass,
-                'property' => 'title', // or any field in your media entity
-                'label' => 'admin.page.relatedPage.label',
-                'btn_add' => false,
-                'to_string_callback' => function ($entity) {
-                    return $entity->getTitle();
-                },
-            ]);
-        }
-
-        $this->configureFormFieldOtherProperties($formMapper);
-
-        $formMapper->end();
-
-        return $formMapper;
-    }
-
-    protected function configureFormFieldsBlockContent(FormMapper $formMapper): FormMapper
-    {
-        $formMapper->with('admin.page.mainContent.label', ['class' => 'col-md-7']);
-        $formMapper->add('mainContent', TextareaType::class, [
-            'attr' => [
-                'style' => 'min-height: 80vh;font-size:125%; max-width:900px',
-                'data-editor' => 'markdown',
-                'data-gutter' => 0,
-            ],
-            'required' => false,
-            'label' => ' ',
-            'help_html' => true,
-            'help' => 'admin.page.mainContent.help',
-        ]);
-        $formMapper->add('mainContentIsMarkdown', null, [
-            'required' => false,
-            'label' => 'admin.page.markdown.label',
-            'help_html' => true,
-            'help' => 'admin.page.markdown.help',
-        ]);
-        $formMapper->end();
-
-        return $formMapper;
-    }
-
-    public function configureFormFieldOtherProperties(FormMapper $formMapper): FormMapper
-    {
-        return !$this->exists('otherProperties') ? $formMapper : $formMapper->add('otherProperties', null, [
-            'required' => false,
-            'attr' => [
-                'style' => 'min-height:15vh',
-                'data-editor' => 'yaml',
-            ],
-            'label' => 'admin.page.otherProperties.label',
-            'help_html' => true,
-            'help' => 'admin.page.otherProperties.help',
-        ]);
-    }
-
-    protected function getHosts()
-    {
-        return array_keys($this->apps);
-    }
-
-    public function configureFormFieldHost(FormMapper $formMapper): FormMapper
-    {
-        if (null === $this->getSubject()->getHost()) {
-            $this->getSubject()->setHost($this->getHosts()[0]);
-        }
-
-        return $formMapper->add('host', ChoiceType::class, [
-            'choices' => array_combine($this->getHosts(), $this->getHosts()),
-            'required' => false,
-            'label' => 'admin.page.host.label',
-            'empty_data' => $this->getHosts()[0],
-        ]);
-    }
-
-    public function configueFormFieldTranslations(FormMapper $formMapper): FormMapper
-    {
-        return $formMapper->add('translations', ModelAutocompleteType::class, [
-            'required' => false,
-            'multiple' => true,
-            'class' => $this->pageClass,
-            'property' => 'slug',
-            'label' => 'admin.page.translations.label',
-            'help_html' => true,
-            'help' => 'admin.page.translations.help',
-            'btn_add' => false,
-            'to_string_callback' => function ($entity) {
-                return $entity->getLocale()
-                    ? $entity->getLocale().' ('.$entity->getSlug().')'
-                    : $entity->getSlug(); // switch for getLocale
-                // todo : remove it in next release and leave only get locale
-                // todo : add a clickable link to the other admin
-            },
-        ]);
-    }
-
-    protected function configureFormFieldsBlockTitle(FormMapper $formMapper): FormMapper
-    {
-        $formMapper
-            ->with('admin.page.title.label', ['class' => 'col-md-7']);
-
-        $formMapper->add('title', TextType::class, [
-            'label' => 'admin.page.title.label',
-            'help_html' => true,
-            'help' => 'admin.page.title.help',
-            'attr' => ['class' => 'titleToMeasure'],
-        ]);
-
-        // Method existance is checked on each element to permit to use admin without all page Trait.
-        if ($this->exists('H1')) {
-            $formMapper->add('h1', TextType::class, [
-                'required' => false,
-                'attr' => ['class' => 'input-lg'],
-                'label' => 'admin.page.h1.label',
-                'help_html' => true,
-                'help' => 'admin.page.h1.help',
-            ]);
-        }
-
-        if ($this->exists('MainImage')) {
-            $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
-                'required' => false,
-                'class' => $this->mediaClass,
-                'label' => 'admin.page.mainImage.label',
-                'btn_edit' => false,
-            ]);
-        }
-        $formMapper->end();
-
-        return $formMapper;
-    }
-
-    protected function configureFormFieldBlockParams(FormMapper $formMapper)
-    {
-        $formMapper->with('admin.page.params.label', ['class' => 'col-md-5']);
-
-        $formMapper->add('slug', TextType::class, [
-            'label' => 'admin.page.slug.label',
-            'help_html' => true,
-            'help' => $this->getSubject() && $this->getSubject()->getSlug()
-                ? '<span class="btn btn-link" onclick="toggleDisabled()" id="disabledLinkSlug">
-                    <i class="fa fa-unlock"></i></span>
-                    <script>function toggleDisabled() {
-                        $(".slug_disabled").first().removeAttr("disabled");
-                        $(".slug_disabled").first().focus();
-                        $("#disabledLinkSlug").first().remove();
-                    }</script><small>Changer le slug change l\'URL et peut créer des erreurs.</small>'
-                : 'admin.page.slug.help',
-            'attr' => [
-                'class' => 'slug_disabled',
-                ($this->getSubject() ? ($this->getSubject()->getSlug() ? 'disabled' : 't') : 't') => '',
-            ],
-        ]);
-
-        if ($this->exists('Host') && count($this->getHosts()) > 1) {
-            $this->configureFormFieldHost($formMapper);
-        }
-
-        if ($this->exists('Locale')) {
-            $formMapper->add('locale', TextType::class, [
-                'label' => 'admin.page.locale.label',
-                'help_html' => true,
-                'help' => 'admin.page.locale.help',
-            ]);
-        }
-
-        if ($this->exists('metaRobots')) {
-            $formMapper->add('metaRobots', ChoiceType::class, [
-                'choices' => [
-                    'admin.page.metaRobots.choice.noIndex' => 'noindex',
-                ],
-                'label' => 'admin.page.metaRobots.label',
-                'required' => false,
-            ]);
-        }
-
-        $formMapper->end();
-
-        return $formMapper;
-    }
-
-    protected function configureFormFieldsBlockImages(FormMapper $formMapper): FormMapper
-    {
-        if ($this->exists('images')) {
-            $formMapper->with('admin.page.images.label', ['class' => 'col-md-5']);
-            $formMapper->add(
-                'pageHasMedias',
-                CollectionType::class,
-                [
-                    'by_reference' => false,
-                    'required' => false,
-                    'label' => ' ',
-                    'type_options' => [
-                        'delete' => true,
-                    ],
-                ],
-                [
-                    'allow_add' => false,
-                    'allow_delete' => true,
-                    'btn_add' => false,
-                    'btn_catalogue' => false,
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                    'sortable' => 'position',
-                    //'link_parameters' => ['context' => $context],
-                    'admin_code' => 'piedweb.admin.pagehasmedia',
-                ]
-            );
-            $formMapper->end();
-        }
-
-        return $formMapper;
-    }
-
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $this->configureFormFieldsBlockTitle($formMapper);
-        $this->configureFormFieldBlockParams($formMapper);
-        $this->configureFormFieldsBlockContent($formMapper);
-        $this->configureFormFieldsBlockDetails($formMapper);
-        $this->configureFormFieldsBlockImages($formMapper);
+        // Next : load this from configuration
+        $mainFields = ['h1', 'mainContent', 'mainContentIsMarkdown'];
+        $columnFields = [
+            'admin.page.state.label' => ['createdAt', 'metaRobots',],
+            'admin.page.permanlien.label' => ['host', 'slug', 'parentPage',],
+            'admin.page.extended.label' => ['expand' => true, 'fields' => ['mainImage', 'name', 'title',  'excrept',]],
+            'admin.page.translations.label' => [ 'locale', 'translations',],
+            'admin.page.otherProperties.label' => ['expand' => true, 'fields' => ['otherProperties',]],
+            'admin.page.images.label' => ['images',],
+        ];
+
+        $formMapper->with('admin.page.mainContent.label', ['class' => 'col-md-9 mainFields']);
+        foreach ($mainFields as $field) {
+            $func = 'configureFormField'.ucfirst($field);
+            $this->$func($formMapper);
+        }
+        $formMapper->end();
+
+        foreach ($columnFields as $k => $block) {
+            $fields = $block['fields'] ?? $block;
+            $class = isset($block['expand']) ? 'expand' : '';
+            $formMapper->with($k, ["class" => "col-md-3 columnFields ".$class]);
+            foreach($fields as $field) {
+                $func = 'configureFormField'.ucfirst($field);
+                $this->$func($formMapper);
+            }
+
+            $formMapper->end();
+        }
+    }
+
+    public function getNewInstance()
+    {
+        $instance = parent::getNewInstance();
+        $instance->setLocale($this->defaultLocale);
+
+        return $instance;
     }
 
     protected function configureDatagridFilters(DatagridMapper $formMapper)
@@ -340,15 +103,13 @@ class PageAdmin extends AbstractAdmin
             $formMapper->add('host', null, ['label' => 'admin.page.host.label']);
         }
 
+        $formMapper->add('h1', null, ['label' => 'admin.page.h1.label']);
+
+        $formMapper->add('mainContent', null, ['label' => 'admin.page.mainContent.label']);
+
         $formMapper->add('slug', null, ['label' => 'admin.page.slug.label']);
 
         $formMapper->add('title', null, ['label' => 'admin.page.title.label']);
-
-        if ($this->exists('H1')) {
-            $formMapper->add('h1', null, ['label' => 'admin.page.h1.label']);
-        }
-
-        $formMapper->add('mainContent', null, ['label' => 'admin.page.mainContent.label']);
 
         if ($this->exists('name')) {
             $formMapper->add('name', null, ['label' => 'admin.page.name.label']);
@@ -366,14 +127,6 @@ class PageAdmin extends AbstractAdmin
                 'label' => 'admin.page.metaRobots.label',
             ]);
         }
-
-        if ($this->exists('author')) {
-            $formMapper->add('author', null, [
-                'label' => 'admin.page.author.label',
-                'class' => $this->userClass,
-                'required' => false,
-            ]);
-        }
     }
 
     public function preUpdate($page)
@@ -383,17 +136,13 @@ class PageAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('title', 'html', [
+        $listMapper->addIdentifier('h1', 'html', [
             'label' => 'admin.page.title.label',
-            'template' => '@PiedWebCMS/admin/base_list_field.html.twig',
+            'template' => '@PiedWebCMS/admin/page_list_titleField.html.twig',
         ]);
         $listMapper->add('updatedAt', null, [
             'format' => 'd/m à H:m',
             'label' => 'admin.page.updatedAt.label',
-        ]);
-        $listMapper->add('createdAt', null, [
-            'format' => 'd/m/y',
-            'label' => 'admin.page.createdAt.label',
         ]);
         $listMapper->add('_action', null, [
             'actions' => [

@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use League\ColorExtractor\Color;
 use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Palette;
@@ -11,10 +12,9 @@ use Liip\ImagineBundle\Imagine\Data\DataManager;
 use Liip\ImagineBundle\Imagine\Filter\FilterManager;
 use PiedWeb\CMSBundle\Entity\MediaInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Vich\UploaderBundle\Event\Event;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Symfony\Component\Filesystem\Filesystem;
 
 class MediaListener
 {
@@ -60,9 +60,7 @@ class MediaListener
     }
 
     /**
-     * renameMediaOnMediaNameUpdate
-     *
-     * @param PreUpdateEventArgs $event
+     * renameMediaOnMediaNameUpdate.
      */
     public function preUpdate(MediaInterface $media, PreUpdateEventArgs $event)
     {
@@ -81,6 +79,7 @@ class MediaListener
         $this->filesystem->remove($this->rootDir.'/../'.$media->getRelativeDir().'/'.$media->getMedia());
         $this->cacheManager->remove('/'.$media->getRelativeDir().'/'.$media->getMediaBeforeUpdate());
     }
+
     /**
      * Si l'utilisateur ne propose pas de nom pour l'image,
      * on récupère celui d'origine duquel on enlève son extension.

@@ -5,7 +5,7 @@
             <nav aria-label="breadcrumb">
                 <ul>
                     {{ _self.breadcrumbPart(page.parentPage) }}
-                    <li aria-current="page">{{ (page.name is not null ? page.name : page.title) }}</li>
+                    <li aria-current="page">{{ page.getName(true) }}</li>
                 </ul>
             </nav>
         {% endif %}
@@ -16,6 +16,6 @@
         {{ _self.breadcrumbPart(page.parentPage) }}
     {% endif %}
     <li>
-        <a href="{{ (page.slug == 'homepage' ? homepage() : page(page.slug)) }}">{{ (page.name is not null ? page.name : page.title) }}</a>
+        <a href="{{ (page.slug == 'homepage' ? homepage() : page(page.slug)) }}">{{ page.getName(true) }}</a>
     </li>
 {% endmacro %}

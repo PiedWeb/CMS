@@ -35,14 +35,26 @@ trait PageExtendedTrait
     protected $childrenPages;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $h1;
-
-    /**
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     protected $name;
+
+    /**
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    protected $title;
+
+    public function getTitle($elseReturnH1 = false): ?string
+    {
+        return $this->title ?? (true === $elseReturnH1 ? $this->h1 : null);
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
 
     public function __constructExtended()
     {
@@ -89,20 +101,11 @@ trait PageExtendedTrait
         return $this->childrenPages;
     }
 
-    public function getH1($elseReturnTitle = false): ?string
+    public function getName($firstOnly = false): ?string
     {
-        return $this->h1 ?? (true === $elseReturnTitle ? $this->title : null);
-    }
-
-    public function setH1(?string $h1): self
-    {
-        $this->h1 = $h1;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
+        if ($firstOnly) {
+            return trim(explode(',', $this->name)[0]) ?? $this->name ?? $this->h1 ?? $this->title;
+        }
         return $this->name;
     }
 

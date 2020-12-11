@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block title %}
-	{{ page.title|striptags }}
+	{{ page.getTitle(true)|striptags }}
 {% endblock %}
 
 {% block robots %}
@@ -36,7 +36,7 @@
 
 
 {% block open_graph %}
-	<meta name="og:title" content="{{ page.h1|default(page.title)|striptags }}">
+	<meta name="og:title" content="{{ page.getTitle(true)|striptags }}">
 	<meta name="og:url" content="{{ app_base_url|default('') }}{{ page(page.realSlug) }}">
 	{% if page.excrept %}
 		<meta name="og:description" content="{{ page.excrept|striptags }}">
@@ -67,7 +67,7 @@
 		<div class="{{ container|default('container') }}">
 
 			{% block h1 %}
-				<h1>{{ page.h1|default(page.title)|raw|punctuation_beautifer }}</h1>
+				<h1>{{ page.getH1(true)|raw|punctuation_beautifer }}</h1>
 			{% endblock %}
 
 			{% block description %}
@@ -79,7 +79,7 @@
 					{%
 						include '@PiedWebCMS/component/_inline_image.html.twig' with {
 							'image_src': page.mainImage.fullPath|imagine_filter('default'),
-							'image_alt': page.mainImage.name(page.locale, true)|default(page.title),
+							'image_alt': page.mainImage.name(page.locale, true)|default(page.getTitle(true)|striptags),
 							'image_wrapper_class': ' ',
 						}
 					%}

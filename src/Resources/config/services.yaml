@@ -207,6 +207,8 @@ services:
       - [setMediaClass, ['%pwc.entity_media%']]
       - [setUserClass, ['%pwc.entity_user%']]
       - [setPageClass, ['%pwc.entity_page%']]
+      - [setDefaultLocale, ['%pwc.locale%']]
+      - [setPageCanonicalService, ['@piedweb.page_canonical']]
     public: true
 
   piedweb.admin.media:

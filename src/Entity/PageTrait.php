@@ -4,20 +4,36 @@ namespace PiedWeb\CMSBundle\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Service\ShortCodeConverter;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait PageTrait
 {
     /**
      * @ORM\Column(type="string", length=150)
-     * @Assert\NotBlank
      */
     protected $slug;
 
     /**
-     * @ORM\Column(type="string", length=200, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $title;
+    protected $h1;
+
+    public function getH1($elseTitle = false): ?string
+    {
+        if ($elseTitle) {
+            return ShortCodeConverter::do($this->h1 ?? $this->title ?? '', $this->getLocale());
+        }
+
+        return $this->h1;
+    }
+
+    public function setH1(?string $h1): self
+    {
+        $this->h1 = $h1;
+
+        return $this;
+    }
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -43,10 +59,13 @@ trait PageTrait
     {
         $this->updatedAt = null !== $this->updatedAt ? $this->updatedAt : new \DateTime();
         $this->createdAt = null !== $this->createdAt ? $this->createdAt : new \DateTime();
+        $this->slug = '';
     }
 
     public function getSlug(): ?string
     {
+        if (!$this->slug) return $this->id;
+
         return $this->slug;
     }
 
@@ -73,18 +92,6 @@ trait PageTrait
             $slug = trim($slug, '/');
             $this->slug = $slug; //$this->setSlug(trim($slug, '/'), true);
         }
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(?string $title): self
-    {
-        $this->title = $title;
 
         return $this;
     }

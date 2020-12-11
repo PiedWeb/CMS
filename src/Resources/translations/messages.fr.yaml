@@ -48,6 +48,12 @@ admin:
   edition: Edition # not good
 
   page:
+    state:
+      label: État
+    extended:
+      label: Contenu +
+    permanlien:
+      label: Permanlien
     host:
       label: Domaine
     update_notification:
@@ -72,7 +78,7 @@ admin:
       label: Courte Description
       help: Visible depuis les pages de résultats des moteurs de recherches (meta description)
     h1:
-      label: H1 - Titre imprimé
+      label: Titre
       help: <small>Le <em>H1</em> est visible sur vos pages tandis que le <code>Titre</code> de votre document s'affichera dans la barre du navigateur et sur les moteurs de recherches.</small>
     name:
       label: Nom court

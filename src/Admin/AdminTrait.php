@@ -5,7 +5,9 @@ namespace PiedWeb\CMSBundle\Admin;
 trait AdminTrait
 {
     protected $apps;
+    protected $pageCanonicalService;
     protected $pageClass;
+    protected $defaultLocale;
     protected $mediaClass;
     protected $userClass;
     protected $twig;
@@ -65,7 +67,6 @@ trait AdminTrait
         return $this->securityTokenStorage->getToken()->getUser();
     }
 
-
     public function setSecurityTokenStorage($securityTokenStorage)
     {
         $this->securityTokenStorage = $securityTokenStorage;
@@ -74,6 +75,11 @@ trait AdminTrait
     public function setEntityManager($em)
     {
         $this->em = $em;
+    }
+
+    public function setDefaultLocale($locale)
+    {
+        $this->defaultLocale = $locale;
     }
 
     public function setTwig($twig)
@@ -99,5 +105,9 @@ trait AdminTrait
     public function setUserClass($userClass)
     {
         $this->userClass = $userClass;
+    }
+
+    public function setPageCanonicalService($pageCanonicalService) {
+     $this->pageCanonicalService = $pageCanonicalService;
     }
 }

@@ -16,7 +16,7 @@
         {% block item %}
             {% if page.metaRobots != 'noindex' %}
                 <item>
-                    <title><![CDATA[{{ (page.h1 is defined and page.h1 is not null ? page.h1 : page.title)|striptags|html_entity_decode }}]]></title>
+                    <title><![CDATA[{{ page.getH1(true)|striptags|html_entity_decode }}]]></title>
                     <link>{{ base ~ page(page.getRealSlug) }}</link>
                     <guid>{{ base ~ page(page.getRealSlug) }}</guid>
                     <pubDate>{{ page.createdAt|date('D, d M Y H:i:s O') }}</pubDate>

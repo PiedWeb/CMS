@@ -3,7 +3,7 @@
 {% for page in pages %}
     <li>
         <code>{{ page.slug }}</code><br>
-        <a href="{{ url('piedweb_cms_page', {'slug': page.slug}) }}">{{ page.title }}</a><br>
+        <a href="{{ url('piedweb_cms_page', {'slug': page.slug}) }}">{{ page.getH1(true) }}</a><br>
         Page mise à jour le {{ page.updatedAt|date("d/m/Y à H:i") }} <br>
         <a href="{{ url('admin_app_page_edit', {'id': page.id}) }}">Editer</a>
     </li>

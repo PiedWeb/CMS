@@ -57,12 +57,8 @@ List of Bundles wich extend this one:
 ## TODO
 
 - [ ] Move media to var (and create a link ?!)
-- [ ] Simplifier l'admin par quelques options supplémentaires (désactiver/activer i18n)
-- [ ] Transformer "Nom Court" alias Name en Names (multiple anchor possible séparé d'une virgule, le premier sera utilisé dans le breadcrumb sauf si vide)
 - [ ] Intégrer LinksImprover (+ UX), après précédent
-- [ ] Ajouter la visualisation en direct de la "SERP"
 - [ ] PageScannerService : check external ressource (see todo)
-- [ ] revoir l'installation auto (debug : installation de 0.0.58... will be resolved when bumping to sf5 else keep only framework bundle + flex and relaunch composer update)
 - [ ] search for all "todo" in the code, refactor and test the code (see `composer require illuminate/collections`)
 - [ ] reduce duplicate code between StaticService and Controllers
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)

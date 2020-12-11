@@ -2,9 +2,9 @@
 
 namespace PiedWeb\CMSBundle\EventListener;
 
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use PiedWeb\CMSBundle\Entity\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class UserListener
 {

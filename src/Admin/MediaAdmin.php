@@ -68,7 +68,6 @@ class MediaAdmin extends AbstractAdmin
 
         $formMapper->with('i18n', ['class' => 'col-md-6']);
 
-
         $formMapper->add('names', null, [
             'required' => false,
             'help_html' => true, 'help' => 'admin.media.names.help',

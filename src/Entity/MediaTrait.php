@@ -50,7 +50,7 @@ trait MediaTrait
     protected $media;
 
     /**
-     * NOTE : this is used only for media renaming
+     * NOTE : this is used only for media renaming.
      *
      * @var string
      */
@@ -112,7 +112,6 @@ trait MediaTrait
             return $this;
         }
 
-
         $slug = (new Slugify())->slugify($slug);
 
         if (true === $force) {
@@ -166,7 +165,7 @@ trait MediaTrait
             return $this;
         }
 
-        if ($this->media!==null) {
+        if (null !== $this->media) {
             $this->setMediaBeforeUpdate($this->media);
             // TODO must rename media (via service ?!) var_dump($this->media); exit;
         }
@@ -359,9 +358,9 @@ trait MediaTrait
     }
 
     /**
-     * Get nOTE : this is used only for media renaming
+     * Get nOTE : this is used only for media renaming.
      *
-     * @return  string
+     * @return string
      */
     public function getMediaBeforeUpdate()
     {
@@ -369,11 +368,11 @@ trait MediaTrait
     }
 
     /**
-     * Set nOTE : this is used only for media renaming
+     * Set nOTE : this is used only for media renaming.
      *
-     * @param  string  $mediaBeforeUpdate  NOTE : this is used only for media renaming
+     * @param string $mediaBeforeUpdate NOTE : this is used only for media renaming
      *
-     * @return  self
+     * @return self
      */
     public function setMediaBeforeUpdate(string $mediaBeforeUpdate)
     {
