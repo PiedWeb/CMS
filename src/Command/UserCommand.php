@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PiedWeb\CMSBundle\EventListener\MediaCacheGeneratorTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,8 +11,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class UserCommand extends Command
 {
-    use MediaCacheGeneratorTrait;
-
     /**
      * @var EntityManagerInterface
      */

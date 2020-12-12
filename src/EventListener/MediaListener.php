@@ -2,15 +2,14 @@
 
 namespace PiedWeb\CMSBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use League\ColorExtractor\Color;
 use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Palette;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use Liip\ImagineBundle\Imagine\Data\DataManager;
-use Liip\ImagineBundle\Imagine\Filter\FilterManager;
 use PiedWeb\CMSBundle\Entity\MediaInterface;
+use PiedWeb\CMSBundle\Service\MediaCacheGeneratorService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -18,8 +17,6 @@ use Vich\UploaderBundle\Event\Event;
 
 class MediaListener
 {
-    use MediaCacheGeneratorTrait;
-
     protected $projectDir;
     protected $iterate = 1;
     protected $em;
@@ -27,25 +24,24 @@ class MediaListener
     protected $filesystem;
     protected $rootDir;
     protected $cacheManager;
+    protected $cacheGenerator;
 
     public function __construct(
         string $projectDir,
-        EntityManager $em,
+        string $rootDir,
+        EntityManagerInterface $em,
         CacheManager $cacheManager,
-        DataManager $dataManager,
-        FilterManager $filterManager,
         EventDispatcherInterface $eventDispatcher,
         FileSystem $filesystem,
-        string $rootDir
+        MediaCacheGeneratorService $cacheGenerator
     ) {
         $this->projectDir = $projectDir;
         $this->em = $em;
         $this->cacheManager = $cacheManager;
-        $this->dataManager = $dataManager;
-        $this->filterManager = $filterManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->filesystem = $filesystem;
         $this->rootDir = $rootDir;
+        $this->cacheGenerator = $cacheGenerator;
     }
 
     /**
@@ -123,12 +119,12 @@ class MediaListener
             // A better way would be to
             // implement https://github.com/liip/LiipImagineBundle/issues/242#issuecomment-71647135
             $path = '/'.$media->getRelativeDir().'/'.$media->getMedia();
-            $this->storeImageInCache($path, $this->getBinary($path), 'default');
+            $this->cacheGenerator->storeImageInCache($path, $this->cacheGenerator->getBinary($path), 'default');
 
             $this->eventDispatcher->addListener(
                 KernelEvents::TERMINATE,
                 function () use ($media) {
-                    $this->generateCache($media);
+                    $this->cacheGenerator->generateCache($media);
                 }
             );
         }

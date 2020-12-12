@@ -29,23 +29,6 @@ services:
     tags:
       - { name: doctrine.orm.entity_listener, entity: '%pwc.entity_user%', event: preUpdate }
 
-  PiedWeb\CMSBundle\EventListener\MediaListener:
-    arguments:
-      $projectDir: '%kernel.project_dir%'
-      $em: '@doctrine.orm.entity_manager'
-      $cacheManager: '@liip_imagine.cache.manager'
-      $dataManager: '@liip_imagine.data.manager'
-      $filterManager: '@liip_imagine.filter.manager'
-      $eventDispatcher: '@event_dispatcher'
-      $filesystem: '@filesystem'
-      $rootDir:  '%kernel.root_dir%'
-    tags:
-      - { name: kernel.event_listener, event: vich_uploader.pre_upload }
-      - { name: kernel.event_listener, event: vich_uploader.post_upload }
-      - { name: doctrine.orm.entity_listener, entity: '%pwc.entity_media%', event: preUpdate },
-      - { name: doctrine.orm.entity_listener, entity: '%pwc.entity_media%', event: preRemove },
-      #- { name: doctrine.orm.entity_listener, entity: PiedWeb\CMSBundle\Entity\Image, event: prePersist }
-
   PiedWeb\CMSBundle\EventListener\PageListener:
     tags:
       - {
@@ -121,17 +104,6 @@ services:
     alias: piedweb.page_canonical
     public: true
 
-  piedweb.media_command:
-    arguments:
-      - '@doctrine.orm.entity_manager'
-      - '@parameter_bag'
-      - '@liip_imagine.cache.manager'
-      - '@liip_imagine.data.manager'
-      - '@liip_imagine.filter.manager'
-      - '%pwc.dir%'
-    class: PiedWeb\CMSBundle\Command\MediaCommand
-    tags: ['console.command']
-
 
   piedweb.user_command:
     arguments:
@@ -140,6 +112,41 @@ services:
       - '%pwc.entity_user%'
     class: PiedWeb\CMSBundle\Command\UserCommand
     tags: ['console.command']
+
+  # --------
+  # Media
+  # --------
+
+  PiedWeb\CMSBundle\Service\MediaCacheGeneratorService:
+    alias : piedweb.media.cache_generator
+
+  piedweb.media.cache_generator:
+    class: PiedWeb\CMSBundle\Service\MediaCacheGeneratorService
+    autowire: true
+    arguments:
+      $projectDir: '%kernel.project_dir%'
+
+  piedweb.media_command:
+    class: PiedWeb\CMSBundle\Command\MediaCommand
+    autowire: true
+    arguments:
+      $mediaClass: '%pwc.entity_media%'
+    tags: ['console.command']
+
+  piedweb.media_listener:
+    class: PiedWeb\CMSBundle\EventListener\MediaListener
+    autowire: true
+    arguments:
+      $projectDir: '%kernel.project_dir%'
+      $rootDir:  '%kernel.root_dir%'
+    tags:
+      - { name: kernel.event_listener, event: vich_uploader.pre_upload }
+      - { name: kernel.event_listener, event: vich_uploader.post_upload }
+      - { name: doctrine.orm.entity_listener, entity: '%pwc.entity_media%', event: preUpdate },
+      - { name: doctrine.orm.entity_listener, entity: '%pwc.entity_media%', event: preRemove },
+      #- { name: doctrine.orm.entity_listener, entity: PiedWeb\CMSBundle\Entity\Image, event: prePersist }
+
+
 
   # --------
   # Repository
@@ -160,6 +167,7 @@ services:
   # --------
 
   piedweb.static:
+    class: PiedWeb\CMSBundle\Service\StaticService
     arguments:
       - '@doctrine.orm.entity_manager'
       - '@twig'
@@ -168,20 +176,20 @@ services:
       - '@piedweb.page_canonical'
       - '@translator'
       - '%pwc.dir%'
-    class: PiedWeb\CMSBundle\Service\StaticService
 
   PiedWeb\CMSBundle\Service\StaticService:
     alias: piedweb.static
 
   piedweb.static_controller:
-    arguments: ['@piedweb.static']
     class: PiedWeb\CMSBundle\Controller\StaticController
+    arguments: ['@piedweb.static']
     tags: ['controller.service_arguments']
 
   piedweb.static_command:
-    arguments: ['@piedweb.static']
     class: PiedWeb\CMSBundle\Command\StaticCommand
+    arguments: ['@piedweb.static']
     tags: ['console.command']
+
 
   # --------
   # Admin
@@ -192,7 +200,7 @@ services:
     arguments:
       - ~
       - '%pwc.entity_page%'
-      - PiedWeb\CMSBundle\Controller\PageAdminController
+      - PiedWeb\CMSBundle\Admin\PageAdminCRUDController
     tags:
       - { name: sonata.admin, manager_type: orm, label: admin.label.page }
     calls:

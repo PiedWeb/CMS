@@ -1,23 +1,17 @@
 <?php
 
-namespace PiedWeb\CMSBundle\EventListener;
+namespace PiedWeb\CMSBundle\Service;
 
 use Liip\ImagineBundle\Exception\Binary\Loader\NotLoadableException;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Liip\ImagineBundle\Imagine\Data\DataManager;
 use Liip\ImagineBundle\Imagine\Filter\FilterManager;
 use PiedWeb\CMSBundle\Entity\MediaInterface;
-use PiedWeb\CMSBundle\Service\WebPConverter;
 //use WebPConvert\Convert\Converters\Stack as WebPConverter;
 use Spatie\Async\Pool;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * @require dataManager
- * cacheManager
- * filterManager
- */
-trait MediaCacheGeneratorTrait
+class MediaCacheGeneratorService
 {
     protected $projectDir;
     protected $pool;
@@ -31,7 +25,19 @@ trait MediaCacheGeneratorTrait
         //'converters' => ['cwebp', 'gd', 'vips', 'imagick', 'gmagick', 'imagemagick', 'graphicsmagick', 'wpc', 'ewww'],
     ];
 
-    protected function generateCache(MediaInterface $media)
+    public function __construct(
+        string $projectDir,
+        CacheManager $cacheManager,
+        DataManager $dataManager,
+        FilterManager $filterManager
+    ) {
+        $this->projectDir = $projectDir;
+        $this->cacheManager = $cacheManager;
+        $this->dataManager = $dataManager;
+        $this->filterManager = $filterManager;
+    }
+
+    public function generateCache(MediaInterface $media)
     {
         $this->pool = Pool::create();
 
@@ -51,7 +57,7 @@ trait MediaCacheGeneratorTrait
         $this->pool->wait();
     }
 
-    protected function getBinary($path)
+    public function getBinary($path)
     {
         try {
             $binary = $this->dataManager->find('default', $path);
@@ -62,7 +68,7 @@ trait MediaCacheGeneratorTrait
         return $binary;
     }
 
-    protected function storeImageInCache($path, $binary, $filter): void
+    public function storeImageInCache($path, $binary, $filter): void
     {
         try {
             $this->cacheManager->store(
@@ -79,7 +85,7 @@ trait MediaCacheGeneratorTrait
     /**
      * Todo: test the win to generate liip in multithread.
      */
-    protected static function storeImageInCacheStatic($path, $binary, $filter, $cacheManager, $filterManager): void
+    public static function storeImageInCacheStatic($path, $binary, $filter, $cacheManager, $filterManager): void
     {
         try {
             $cacheManager->store(
@@ -93,7 +99,7 @@ trait MediaCacheGeneratorTrait
         }
     }
 
-    protected static function imgToWebPStatic($path, $webPPath, $webPConverterOptions, string $filter): void
+    public static function imgToWebPStatic($path, $webPPath, $webPConverterOptions, string $filter): void
     {
         $webPConverter = new WebPConverter(
             $path,
@@ -112,7 +118,7 @@ trait MediaCacheGeneratorTrait
     /**
      * Use the liip generated filter to generate the webp equivalent.
      */
-    protected function imgToWebP(MediaInterface $media, string $filter): void
+    public function imgToWebP(MediaInterface $media, string $filter): void
     {
         $pathJpg = $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getMedia();
         $pathWebP = $this->projectDir.'/public/'.$media->getRelativeDir().'/'.$filter.'/'.$media->getSlug().'.webp';
@@ -126,7 +132,7 @@ trait MediaCacheGeneratorTrait
         });
     }
 
-    protected function createWebP(MediaInterface $media): void
+    public function createWebP(MediaInterface $media): void
     {
         $destination = $this->projectDir.'/'.$media->getRelativeDir().'/'.$media->getSlug().'.webp';
         $source = $this->projectDir.$media->getPath();
@@ -137,7 +143,7 @@ trait MediaCacheGeneratorTrait
         });
     }
 
-    protected static function createWebPStatic($destination, $source): void
+    public static function createWebPStatic($destination, $source): void
     {
         $webPConverter = new WebPConverter($source, $destination, self::$webPConverterOptions);
 

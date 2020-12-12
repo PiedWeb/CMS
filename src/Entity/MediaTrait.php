@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use InvertColor\Color;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Yaml\Yaml;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -106,23 +108,82 @@ trait MediaTrait
         return $this->name.' ';
     }
 
-    public function setSlug($slug, $force = false)
+    protected function getExtension($string)
+    {
+        return preg_replace('/.*(\\.[^.\\s]{3,4})$/', '$1', $string);
+    }
+
+    protected function slugifyPreservingExtension($string)
+    {
+        $extension = $this->getExtension($string);
+        $stringSlugify = (new Slugify())->slugify($this->removeExtension($string));
+
+        return $stringSlugify.$extension;
+    }
+
+    public function getSlugForce()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Used by MediaAdmin.
+     */
+    public function setSlugForce($slug)
     {
         if (!$slug) {
             return $this;
         }
 
-        $slug = (new Slugify())->slugify($slug);
+        $this->slug = (new Slugify(['regexp' => '/([^A-Za-z0-9\.]|-)+/']))->slugify($slug);
 
-        if (true === $force) {
-            $this->slug = $slug;
+        if ($this->media) {
+            $this->setMedia($this->slug.$this->getExtension($this->media));
+        }
 
+        return $this;
+    }
+
+    /**
+     * Used by VichUploader.
+     */
+    public function setSlug($slug)
+    {
+        if (!$slug) {
             return $this;
         }
 
-        $this->setMedia($slug.($this->media ? preg_replace('/.*(\\.[^.\\s]{3,4})$/', '$1', $this->media) : ''));
+        $slugSlugify = $this->slugifyPreservingExtension($slug);
+
+        if ($this->getExtension($this->media) != $this->getExtension($slugSlugify)) { // 1;
+            // TODO manage problem URL move... quick validation impossible before file upload, and impossible after from
+            // here
+
+            //$this->media ? $this->removeExtension($slugSlugify).$this->getExtension($this->media) :
+            $this->setMedia($slugSlugify);
+        }
 
         return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getMimeType() && $this->mediaFile && $this->mediaFile->getMimeType() != $this->getMimeType()) {
+            $context
+                ->buildViolation('Attention ! Vous essayez de remplacer un fichier d\'un type ('
+                    .$this->getMimeType().') par un fichier d\'une autre type ('.$this->mediaFile->getMimeType().')')
+                ->atPath('fileName')
+                ->addViolation()
+            ;
+        }
+    }
+
+    protected function removeExtension($string)
+    {
+        return preg_replace('/\\.[^.\\s]{3,4}$/', '', $string);
     }
 
     public function getSlug(): string
@@ -132,7 +193,7 @@ trait MediaTrait
         }
 
         if ($this->media) {
-            return $this->slug = preg_replace('/\\.[^.\\s]{3,4}$/', '', $this->media);
+            return $this->slug = $this->removeExtension($this->media);
         }
 
         $this->slug = (new Slugify())->slugify($this->getName()); //Urlizer::urlize($this->getName());
@@ -167,8 +228,9 @@ trait MediaTrait
 
         if (null !== $this->media) {
             $this->setMediaBeforeUpdate($this->media);
-            // TODO must rename media (via service ?!) var_dump($this->media); exit;
-        }
+            //$this->media = $this->removeExtension($media).$this->getExtension($this->media);
+        } //else
+
         $this->media = $media;
 
         return $this;
@@ -224,6 +286,11 @@ trait MediaTrait
     public function getMimeType(): ?string
     {
         return $this->mimeType;
+    }
+
+    protected function getPreviousMimeType()
+    {
+        return $this->previousMimeType ?? null;
     }
 
     public function setMimeType($mimeType): self

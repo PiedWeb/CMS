@@ -1,10 +1,10 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Controller;
+namespace PiedWeb\CMSBundle\Admin;
 
 use Sonata\AdminBundle\Controller\CRUDController;
 
-class PageAdminController extends CRUDController
+class PageAdminCRUDController extends CRUDController
 {
     public function listAction()
     {

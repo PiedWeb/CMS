@@ -45,7 +45,7 @@ class MediaAdmin extends AbstractAdmin
                 'label' => 'admin.media.name.label',
                 'attr' => ['ismedia' => 1, 'class' => 'col-md-6'],
             ])
-            ->add('slug', TextType::class, [
+            ->add('slugForce', TextType::class, [
                 'label' => 'admin.page.slug.label',
                 'help_html' => true,
                 'required' => false,
