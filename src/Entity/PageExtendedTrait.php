@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Page extended: // I may cut this in multiple traits
  * - meta no-index
- * - Rich Content (meta desc, parentPage, h1, name [to do short link] )
+ * - Rich Content (meta desc, parentPage, h1, name [to do short link] )
  * - author (link)
  * - template.
  */

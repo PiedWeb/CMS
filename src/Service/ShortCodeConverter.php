@@ -11,8 +11,8 @@ class ShortCodeConverter
             setlocale(LC_TIME, self::convertLocale($locale));
         }
 
-        //var_dump(self::convertLocale($locale)); exit;
-        //$string = preg_replace('/date\([\'"]?([a-z% ]+)[\'"]?\)/i', strftime(strpos('\1', '%') ? '\1': '%\1'), $string);
+        //$string = preg_replace('/date\([\'"]?([a-z% ]+)[\'"]?\)/i',
+        //  strftime(strpos('\1', '%') ? '\1': '%\1'), $string);
         $string = preg_replace('/date\([\'"]?%?Y[\'"]?\)/i', strftime('%Y'), $string);
         $string = preg_replace('/date\([\'"]?%?(B|M)[\'"]?\)/i', strftime('%B'), $string);
         $string = preg_replace('/date\([\'"]?%?A[\'"]?\)/i', strftime('%A'), $string);

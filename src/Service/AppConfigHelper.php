@@ -37,7 +37,7 @@ class AppConfigHelper
     protected function loadCurrentApp()
     {
         foreach ($this->apps as $app) {
-            if (in_array($this->host, $app['hosts']) || null === $this->host) {
+            if (\in_array($this->host, $app['hosts']) || null === $this->host) {
                 $this->app = $app;
                 break;
             }
@@ -57,7 +57,7 @@ class AppConfigHelper
     public function getHost(): string
     {
         foreach ($this->apps as $app) {
-            if (in_array($this->host, $app['hosts']) || null === $this->host) {
+            if (\in_array($this->host, $app['hosts']) || null === $this->host) {
                 return $app['hosts'][0];
             }
         }

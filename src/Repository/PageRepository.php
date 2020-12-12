@@ -27,7 +27,7 @@ class PageRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p')
             ->andWhere('p.slug =  :slug')->setParameter('slug', $slug);
 
-        if (intval($slug) > 0) {
+        if ((int) $slug > 0) {
             $qb->orWhere('p.id =  :slug')->setParameter('slug', $slug);
         }
 

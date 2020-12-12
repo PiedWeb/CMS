@@ -63,7 +63,7 @@ List of Bundles wich extend this one:
 - [ ] reduce duplicate code between StaticService and Controllers
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
 - [ ] Release V1
-- [ ] Look for a better writer experience (https://github.com/front/g-editor)
+- [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io)
 - [ ] Create a page from a Media (media edit)
 - [ ] Multi upload
 - [ ] Intégrer Schema.org dans le backend d'une page

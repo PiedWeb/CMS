@@ -80,7 +80,7 @@ class MainContentManager
 
     public function getFull()
     {
-        return $this->render($this->chapeau.chr(10).chr(10).$this->mainContent);
+        return $this->render($this->chapeau.\chr(10).\chr(10).$this->mainContent);
     }
 
     public function getChapeau()

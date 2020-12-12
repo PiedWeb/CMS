@@ -30,7 +30,7 @@ class Element
     public function __construct($templateDir, $path = null)
     {
         $this->templateDir = realpath($templateDir);
-        $this->path = substr($path, strlen($this->templateDir));
+        $this->path = substr($path, \strlen($this->templateDir));
         $this->code = $this->loadCode();
     }
 

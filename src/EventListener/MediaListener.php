@@ -93,7 +93,7 @@ class MediaListener
 
     protected function checkIfNameEverExistInDatabase($media)
     {
-        $same = $this->em->getRepository(get_class($media))->findOneBy(['name' => $media->getName()]);
+        $same = $this->em->getRepository(\get_class($media))->findOneBy(['name' => $media->getName()]);
         if ($same && (null == $media->getId() || $media->getId() != $same->getId())) {
             $media->setName(preg_replace('/\([0-9]+\)$/', '', $media->getName()).' ('.$this->iterate.')');
             ++$this->iterate;
@@ -110,7 +110,7 @@ class MediaListener
         $mapping = $event->getMapping();
 
         $absoluteDir = $mapping->getUploadDestination().'/'.$mapping->getUploadDir($media);
-        $relativeDir = substr_replace($absoluteDir, '', 0, strlen($this->projectDir) + 1);
+        $relativeDir = substr_replace($absoluteDir, '', 0, \strlen($this->projectDir) + 1);
 
         $media->setRelativeDir($relativeDir);
 

@@ -180,7 +180,8 @@ trait PageAdminFormFieldsTrait
 
     protected function getSlugHelp()
     {
-        $url = !$this->getSubject() ? null : $this->pageCanonicalService->generatePathForPage($this->getSubject()->getSlug());
+        $url = !$this->getSubject() ? null
+            : $this->pageCanonicalService->generatePathForPage($this->getSubject()->getSlug());
 
         return $this->getSubject() && $this->getSubject()->getSlug()
                 ? '<span class="btn btn-link" onclick="toggleDisabled()" id="disabledLinkSlug">
@@ -211,37 +212,37 @@ trait PageAdminFormFieldsTrait
     protected function configureFormFieldLocale(FormMapper $formMapper): FormMapper
     {
         return $formMapper->add('locale', TextType::class, [
-                'label' => 'admin.page.locale.label',
-                'help_html' => true,
-                'help' => 'admin.page.locale.help',
-            ]);
+            'label' => 'admin.page.locale.label',
+            'help_html' => true,
+            'help' => 'admin.page.locale.help',
+        ]);
     }
 
     protected function configureFormFieldImages(FormMapper $formMapper): FormMapper
     {
         return $formMapper->add(
-                'pageHasMedias',
-                CollectionType::class,
-                [
-                    'by_reference' => false,
-                    'required' => false,
-                    'label' => ' ',
-                    'type_options' => [
-                        'delete' => true,
-                    ],
+            'pageHasMedias',
+            CollectionType::class,
+            [
+                'by_reference' => false,
+                'required' => false,
+                'label' => ' ',
+                'type_options' => [
+                    'delete' => true,
                 ],
-                [
-                    'allow_add' => false,
-                    'allow_delete' => true,
-                    'btn_add' => false,
-                    'btn_catalogue' => false,
-                    'edit' => 'inline',
-                    'inline' => 'table',
-                    'sortable' => 'position',
-                    //'link_parameters' => ['context' => $context],
-                    'admin_code' => 'piedweb.admin.pagehasmedia',
-                ]
-            );
+            ],
+            [
+                'allow_add' => false,
+                'allow_delete' => true,
+                'btn_add' => false,
+                'btn_catalogue' => false,
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'position',
+                //'link_parameters' => ['context' => $context],
+                'admin_code' => 'piedweb.admin.pagehasmedia',
+            ]
+        );
     }
 
     abstract protected function exists(string $name): bool;

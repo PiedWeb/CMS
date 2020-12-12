@@ -13,7 +13,7 @@ class MediaController extends AbstractController
     public function download(string $path)
     {
         $projectDir = $this->get('kernel')->getProjectDir();
-        $pathToFile = $projectDir.'/media/'.substr(str_replace('..', '', $path), strlen('media/'));
+        $pathToFile = $projectDir.'/media/'.substr(str_replace('..', '', $path), \strlen('media/'));
 
         if (!file_exists($pathToFile)) {
             throw $this->createNotFoundException('The media does not exist...');

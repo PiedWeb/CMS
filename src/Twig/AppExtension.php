@@ -42,8 +42,8 @@ class AppExtension extends AbstractExtension
         return [
             //new TwigFilter('markdown', [AppExtension::class, 'markdownToHtml'], ['is_safe' => ['all']]),
             new TwigFilter('html_entity_decode', 'html_entity_decode'),
-            new TwigFilter('preg_replace', [AppExtension::class, 'pregReplace']),
-            new TwigFilter('slugify', [AppExtension::class, 'slugify']),
+            new TwigFilter('preg_replace', [self::class, 'pregReplace']),
+            new TwigFilter('slugify', [self::class, 'slugify']),
             new TwigFilter(
                 'punctuation_beautifer',
                 [MainContentManager::class, 'punctuationBeautifer'],
@@ -67,30 +67,30 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('homepage', [$this->pageCanonical, 'generatePathForHomepage']),
             new TwigFunction('page', [$this->pageCanonical, 'generatePathForPage']),
-            new TwigFunction('jslink', [AppExtension::class, 'renderJavascriptLink'], [
+            new TwigFunction('jslink', [self::class, 'renderJavascriptLink'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
             ]),
-            new TwigFunction('link', [AppExtension::class, 'renderJavascriptLink'], [
+            new TwigFunction('link', [self::class, 'renderJavascriptLink'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
             ]),
-            new TwigFunction('mail', [AppExtension::class, 'renderEncodedMail'], [
+            new TwigFunction('mail', [self::class, 'renderEncodedMail'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
             ]),
-            new TwigFunction('tel', [AppExtension::class, 'renderPhoneNumber'], [
+            new TwigFunction('tel', [self::class, 'renderPhoneNumber'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
             ]),
             new TwigFunction(
                 'bookmark', // = anchor
-                [AppExtension::class, 'renderTxtAnchor'],
+                [self::class, 'renderTxtAnchor'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
             new TwigFunction(
                 'anchor', // = bookmark
-                [AppExtension::class, 'renderTxtAnchor'],
+                [self::class, 'renderTxtAnchor'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
             new TwigFunction(
@@ -110,7 +110,7 @@ class AppExtension extends AbstractExtension
             ),
             new TwigFunction(
                 'encode',
-                [AppExtension::class, 'encode'],
+                [self::class, 'encode'],
                 ['is_safe' => ['html']]
             ),
             new TwigFunction(
@@ -118,9 +118,9 @@ class AppExtension extends AbstractExtension
                 [$this, 'renderPagesList'],
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
-            new TwigFunction('isInternalImage', [AppExtension::class, 'isInternalImage']),
-            new TwigFunction('getImageFrom', [AppExtension::class, 'transformInlineImageToMedia']),
-            new TwigFunction('getEmbedCode', [AppExtension::class, 'getEmbedCode']),
+            new TwigFunction('isInternalImage', [self::class, 'isInternalImage']),
+            new TwigFunction('getImageFrom', [self::class, 'transformInlineImageToMedia']),
+            new TwigFunction('getEmbedCode', [self::class, 'getEmbedCode']),
             new TwigFunction('extract', [$this, 'extract'], ['is_safe' => ['html'], 'needs_environment' => true]),
         ];
     }
@@ -207,7 +207,7 @@ class AppExtension extends AbstractExtension
     public static function transformInlineImageToMedia(string $src)
     {
         if (self::isInternalImage($src)) {
-            $src = substr($src, strlen('/media/default/'));
+            $src = substr($src, \strlen('/media/default/'));
 
             $media = new Media();
             $media->setRelativeDir('/media');

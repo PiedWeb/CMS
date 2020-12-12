@@ -40,7 +40,7 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
         foreach ($config as $key => $value) {
             if ('apps' === $key) {
                 $container->setParameter('pwc.apps', self::parsAppsConfig($value));
-            } elseif (is_array($value)) {
+            } elseif (\is_array($value)) {
                 self::loadConfigToParameters($container, $value, $prefix.$key.'.');
             } else {
                 $container->setParameter('app.'.$prefix.$key, $value); // to deprecate in next release

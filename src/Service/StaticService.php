@@ -219,7 +219,7 @@ class StaticService
             if ('.' == $entry || '..' == $entry) {
                 continue;
             }
-            if (!in_array($entry, $this->robotsFiles) && !in_array($entry, $this->dontCopy)) {
+            if (!\in_array($entry, $this->robotsFiles) && !\in_array($entry, $this->dontCopy)) {
                 //$this->symlink(
                 if (true === $symlink) {
                     $this->filesystem->symlink(

@@ -80,7 +80,7 @@ class MediaCommand extends Command
     {
         $medias = $this->getMedias($input);
 
-        $progressBar = new ProgressBar($output, count($medias));
+        $progressBar = new ProgressBar($output, \count($medias));
         $progressBar->start();
         foreach ($medias as $media) {
             if (false !== strpos($media->getMimeType(), 'image/')) {

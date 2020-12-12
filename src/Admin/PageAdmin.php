@@ -99,7 +99,7 @@ class PageAdmin extends AbstractAdmin
     {
         $formMapper->add('locale', null, ['label' => 'admin.page.locale.label']);
 
-        if (count($this->getHosts()) > 1) {
+        if (\count($this->getHosts()) > 1) {
             $formMapper->add('host', null, ['label' => 'admin.page.host.label']);
         }
 

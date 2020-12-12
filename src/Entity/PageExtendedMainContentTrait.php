@@ -113,7 +113,7 @@ trait PageExtendedMainContentTrait
 
         if (preg_match('/^get/', $method)) {
             $property = lcfirst(preg_replace('/^get/', '', $method));
-            if (!property_exists(get_class($this), $property)) {
+            if (!property_exists(static::class, $property)) {
                 return $this->getOtherProperty($property) ?? $this->getEmc($property);
                 // todo remove the else next release
             }
@@ -121,8 +121,8 @@ trait PageExtendedMainContentTrait
             return $this->$property;
         } else {
             $vars = array_keys(get_object_vars($this));
-            if (in_array($method, $vars)) {
-                return call_user_func_array([$this, 'get'.ucfirst($method)], $arguments);
+            if (\in_array($method, $vars)) {
+                return \call_user_func_array([$this, 'get'.ucfirst($method)], $arguments);
             }
 
             return $this->getOtherProperty(lcfirst($method)) ?? $this->getEmc($method);

@@ -27,7 +27,7 @@ class WebPConverter extends Stack
         $anyRuntimeErrors = false;
 
         $converters = $options['converters'];
-        if (count($options['extra-converters']) > 0) {
+        if (\count($options['extra-converters']) > 0) {
             $converters = array_merge($converters, $options['extra-converters']);
             /*foreach ($options['extra-converters'] as $extra) {
                 $converters[] = $extra;
@@ -35,10 +35,10 @@ class WebPConverter extends Stack
         }
 
         // preferred-converters
-        if (count($options['preferred-converters']) > 0) {
+        if (\count($options['preferred-converters']) > 0) {
             foreach (array_reverse($options['preferred-converters']) as $prioritizedConverter) {
                 foreach ($converters as $i => $converter) {
-                    if (is_array($converter)) {
+                    if (\is_array($converter)) {
                         $converterId = $converter['converter'];
                     } else {
                         $converterId = $converter;
@@ -84,7 +84,7 @@ class WebPConverter extends Stack
 
         //return;
         foreach ($converters as $converter) {
-            if (is_array($converter)) {
+            if (\is_array($converter)) {
                 $converterId = $converter['converter'];
                 $converterOptions = isset($converter['options']) ? $converter['options'] : [];
             } else {
@@ -136,7 +136,7 @@ class WebPConverter extends Stack
             } catch (ConversionFailedException $e) {
                 $this->logLn($e->getMessage(), 'italic');
                 $prev = $e->getPrevious();
-                if (!is_null($prev)) {
+                if (null !== $prev) {
                     $this->logLn($prev->getMessage(), 'italic');
                     $this->logLn(' in '.$prev->getFile().', line '.$prev->getLine(), 'italic');
                     $this->ln();
