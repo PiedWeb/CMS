@@ -5,6 +5,7 @@ namespace PiedWeb\CMSBundle\Controller;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use PiedWeb\CMSBundle\Service\Repository;
+use Sonata\AdminBundle\Datagrid\PagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -143,13 +144,14 @@ class PageController extends AbstractController
         $page = $LocaleHomepage ?? Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
             ->getPage('homepage', $app->getHost(), $app->isFirstApp());
 
-        return $this->render('@PiedWebCMS/page/rss.xml.twig', [
+        if (!$page) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('@PiedWebCMS/page/rss.xml.twig', array_merge([
             'pages' => $this->getPages(5, $request, $params),
             'page' => $page,
-            'feedUri' => 'feed'.($params->get('locale') == $locale ? '' : '.'.$locale).'.xml',
-            'app_base_url' => $app->getBaseUrl(),
-            'app_name' => $app->getApp('name'),
-        ]);
+            'feedUri' => 'feed'.($params->get('locale') == $locale ? '' : '.'.$locale).'.xml',], $app->getParamsForRendering()));
     }
 
     public function showSitemap(

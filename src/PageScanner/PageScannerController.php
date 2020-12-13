@@ -1,9 +1,9 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Controller;
+namespace PiedWeb\CMSBundle\PageScanner;
 
-use PiedWeb\CMSBundle\Service\PageScannerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Container;
 
 class PageScannerController extends AbstractController
 {
@@ -11,6 +11,11 @@ class PageScannerController extends AbstractController
      * @var PageScannerService
      */
     protected $scanner;
+
+    /**
+     * @var Container
+     */
+    protected $container;
 
     public function __construct(PageScannerService $scanner)
     {

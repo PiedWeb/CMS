@@ -9,11 +9,14 @@ use PiedWeb\CMSBundle\Repository\PageRepository;
 use PiedWeb\CMSBundle\Service\AppConfigHelper;
 use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use PiedWeb\CMSBundle\Service\PageCanonicalService as PageCanonical;
+use PiedWeb\CMSBundle\Utils\KernelTrait;
+use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -26,6 +29,8 @@ use WyriHaximus\HtmlCompress\HtmlCompressorInterface;
  */
 class StaticAppGenerator
 {
+    use KernelTrait, GenerateLivePathForTrait;
+
     /**
      * Contain files relative to SEO wich will be hard copied.
      *
@@ -64,7 +69,7 @@ class StaticAppGenerator
     protected $apps;
     protected $app;
     protected $staticDomain;
-    protected $mustGetPagesWithoutHost;
+    protected $mustGetPagesWithoutHost = true;
 
     /** var @string */
     protected $staticDir;
@@ -93,10 +98,9 @@ class StaticAppGenerator
      * @var ParameterBagInterface
      */
     protected $params;
-    public static $appKernel;
 
     /**
-     * @var Router
+     * @var RouterInterface
      */
     protected $router;
 
@@ -116,7 +120,7 @@ class StaticAppGenerator
         TranslatorInterface $translator,
         RouterInterface $router,
         string $webDir,
-        $kernel
+        KernelInterface $kernel
     ) {
         $this->em = $em;
         $this->filesystem = new Filesystem();
@@ -134,13 +138,8 @@ class StaticAppGenerator
             throw new \RuntimeException('Method dumpFile() is not available. Upgrade your Filesystem.');
         }
 
-        if (null === static::$appKernel) {
-            $kernelClass = \get_class($kernel);
-            static::$appKernel = new $kernelClass('prod', false);
-            //static::$appKernel = clone $kernel;
-            // NOTE: If we clone, it's take too much time in dev mod
-            static::$appKernel->boot();
-        }
+        static::loadKernel($kernel);
+        $this->kernel = $kernel;
     }
 
     public function generateAll($filter = null)
@@ -181,25 +180,6 @@ class StaticAppGenerator
         $this->generateServerManagerFile();
         $this->copyAssets();
         $this->copyMediaToDownload();
-    }
-
-    protected function generateLivePathFor($host, $route = 'piedweb_cms_page', $params = [])
-    {
-        if ($host instanceof PageInterface) {
-            $page = $host;
-            $host = $page->getHost();
-        }
-
-        if (isset($page)) {
-            $params['slug'] = $page->getRealSlug();
-        }
-
-        if ($host) {
-            $params['host'] = $host;
-            $route = 'custom_host_'.$route;
-        }
-
-        return $this->router->generate($route, $params);
     }
 
     /**
@@ -322,18 +302,6 @@ class StaticAppGenerator
         //$this->filesystem->$action($this->webDir.'/../media', $this->app->getStaticDir().'/download/media');
     }
 
-    protected function generatePages(): void
-    {
-        $qb = $this->getPageRepository()->getQueryToFindPublished('p');
-        $qb = $this->getPageRepository()->andHost($qb, $this->app->getMainHost(), $this->mustGetPagesWithoutHost);
-        $pages = $qb->getQuery()->getResult();
-
-        foreach ($pages as $page) {
-            $this->generatePage($page);
-            $this->generateFeedFor($page);
-        }
-    }
-
     protected function generateSitemaps(): void
     {
         foreach (explode('|', $this->params->get('pwc.locales')) as $locale) {
@@ -385,6 +353,19 @@ class StaticAppGenerator
         $this->redirections .= PHP_EOL;
     }
 
+    protected function generatePages(): void
+    {
+        $qb = $this->getPageRepository()->getQueryToFindPublished('p');
+        $qb = $this->getPageRepository()->andHost($qb, $this->app->getMainHost(), $this->mustGetPagesWithoutHost);
+        $pages = $qb->getQuery()->getResult();
+
+        foreach ($pages as $page) {
+            $this->generatePage($page);
+            //if ($page->getRealSlug()) $this->generateFeedFor($page);
+        }
+
+    }
+
     protected function generatePage(Page $page)
     {
         /**/
@@ -411,7 +392,10 @@ class StaticAppGenerator
             return;
         }
         elseif (200 != $response->getStatusCode()) {
-            // todo log context
+            //$this->kernel = static::$appKernel;
+            if ($response->getStatusCode() === 500 && $this->kernel->getEnvironment() == 'dev')
+                exit($this->kernel->handle($request));
+
             return;
         }
 

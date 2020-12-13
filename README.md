@@ -56,6 +56,7 @@ List of Bundles wich extend this one:
 
 ## TODO
 
+- [ ] Move route to annotation (less extendable but more pratical with priority)
 - [ ] Move media to var (and create a link ?!)
 - [ ] Intégrer LinksImprover (+ UX), après précédent
 - [ ] PageScannerService : check external ressource (see todo)

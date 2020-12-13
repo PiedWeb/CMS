@@ -39,9 +39,11 @@ class AppConfigHelper
         foreach ($this->apps as $app) {
             if (\in_array($this->host, $app['hosts']) || null === $this->host) {
                 $this->app = $app;
-                break;
+                return;
             }
         }
+
+        throw new Exception('Unconfigured host `'.$this->host.'`. See config/packages/piedweb_cms.yaml');
     }
 
     public function isFirstApp(): bool

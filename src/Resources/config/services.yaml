@@ -2,3 +2,4 @@ imports:
   - { resource: '../../../src/Resources/config/services/all.yaml' }
   - { resource: '../../../src/Admin/AdminServices.yaml' }
   - { resource: '../../../src/StaticGenerator/StaticServices.yaml' }
+  - { resource: '../../../src/PageScanner/PageScannerServices.yaml' }

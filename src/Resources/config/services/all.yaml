@@ -60,11 +60,6 @@ services:
         },
       ]
 
-  PiedWeb\CMSBundle\Service\PageScannerService:
-    class: PiedWeb\CMSBundle\Service\PageScannerService
-    arguments:
-      ['@twig', '@doctrine.orm.entity_manager', '%pwc.dir%', '%pwc.apps%']
-
   piedweb.page_rendering.validator:
     class: PiedWeb\CMSBundle\Validator\Constraints\PageRenderingValidator
     arguments:
