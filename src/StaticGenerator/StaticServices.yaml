@@ -1,0 +1,19 @@
+services:
+  PiedWeb\CMSBundle\StaticGenerator\StaticAppGenerator:
+    alias: piedweb.static_app_generator
+
+  piedweb.static_app_generator:
+    class: PiedWeb\CMSBundle\StaticGenerator\StaticAppGenerator
+    autowire: true
+    arguments:
+      $kernel: '@kernel'
+      $webDir: '%pwc.dir%'
+
+  PiedWeb\CMSBundle\StaticGenerator\StaticController:
+    tags: ['controller.service_arguments']
+    arguments: ['@piedweb.static_app_generator']
+
+  piedweb.static_command:
+    class: PiedWeb\CMSBundle\StaticGenerator\StaticCommand
+    arguments: ['@piedweb.static_app_generator']
+    tags: ['console.command']

@@ -1,20 +1,20 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Command;
+namespace PiedWeb\CMSBundle\StaticGenerator;
 
-use PiedWeb\CMSBundle\Service\StaticService;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class StaticCommand extends Command
 {
-    private $static;
+    private $staticAppGenerator;
 
-    public function __construct(StaticService $static)
+    public function __construct(StaticAppGenerator $staticAppGenerator)
     {
         parent::__construct();
-        $this->static = $static;
+        $this->static = $staticAppGenerator;
     }
 
     protected function configure()
@@ -22,12 +22,17 @@ class StaticCommand extends Command
         $this
             ->setName('static:generate')
             ->setDescription('Generate static version  for your website')
+            ->addArgument('host', InputArgument::OPTIONAL);
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->static->dump();
+        if ($input->getArgument('host')) {
+            $this->staticAppGenerator->generateFromHost($input->getArgument('host'));
+        } else
+            $this->staticAppGenerator->generateAll();
+
         $output->writeln('Static version generation succeeded.');
     }
 }

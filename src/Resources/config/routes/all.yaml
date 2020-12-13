@@ -1,22 +1,39 @@
-liip:
-    resource: '@PiedWebCMSBundle/Resources/config/routes/liip_imagine.yaml'
+admin:
+  resource: '@PiedWebCMSBundle/Admin/AdminRoutes.yaml'
+
+static:
+  resource: '@PiedWebCMSBundle/StaticGenerator/StaticRoutes.yaml'
 
 user:
-    resource: '@PiedWebCMSBundle/Resources/config/routes/user.yaml'
-
-admin:
-    resource: '@PiedWebCMSBundle/Resources/config/routes/admin.yaml'
-
-static: 
-    resource: '@PiedWebCMSBundle/Resources/config/routes/static.yaml'
-
-piedweb_cms_homepage:
-    path:     /
-    controller: PiedWeb\CMSBundle\Controller\PageController::show
-    methods:    [GET, HEAD]
+  resource: '@PiedWebCMSBundle/Resources/config/routes/user.yaml'
 
 media:
-    resource: '@PiedWebCMSBundle/Resources/config/routes/media.yaml'
+  resource: '@PiedWebCMSBundle/Resources/config/routes/media.yaml'
+
+## Page
+## ----
 
 page:
-    resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'
+  resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'
+
+custom_host_routes:
+  resource: '@PiedWebCMSBundle/Resources/config/routes/page.yaml'
+  prefix: '/{host}/'
+  name_prefix: 'custom_host_'
+  requirements:
+    host: '[a-zA-Z0-9\-/\.]*'
+
+custom_host_piedweb_cms_page:
+  path: /{host}/{slug}
+  controller: PiedWeb\CMSBundle\Controller\PageController::show
+  methods: [GET, HEAD]
+  requirements:
+    slug: '[a-zA-Z0-9\-/]*'
+    host: '[a-zA-Z0-9\-/\.]*'
+
+piedweb_cms_page:
+  path: /{slug}
+  controller: PiedWeb\CMSBundle\Controller\PageController::show
+  methods: [GET, HEAD]
+  requirements:
+    slug: '[a-zA-Z0-9\-/]*'

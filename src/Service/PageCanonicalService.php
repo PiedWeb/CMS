@@ -2,12 +2,10 @@
 
 namespace PiedWeb\CMSBundle\Service;
 
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Router;
 
 class PageCanonicalService
 {
-    protected $request;
     protected $router;
     protected $defaultLocaleWithoutPrefix;
     protected $defaultLocale;
@@ -15,12 +13,10 @@ class PageCanonicalService
     protected $params;
 
     public function __construct(
-        RequestStack $request,
         Router $router,
         bool $defaultLocaleWithoutPrefix = false,
         ?string $defaultLocale = null
     ) {
-        $this->request = $request;
         $this->router = $router;
         $this->defaultLocaleWithoutPrefix = $defaultLocaleWithoutPrefix;
         $this->defaultLocale = $defaultLocale;
@@ -28,7 +24,7 @@ class PageCanonicalService
 
     public function generatePathForHomepage()
     {
-        return $this->router->generate('piedweb_cms_homepage');
+        return $this->router->generate('piedweb_cms_page', ['slug' => '']);
     }
 
     /**

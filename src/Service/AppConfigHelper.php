@@ -18,7 +18,7 @@ class AppConfigHelper
      * @param mixed $request could be Reqest or a string with the current host
      * @param mixed
      */
-    public static function get($host, $apps): self
+    public static function load($host, $apps): self
     {
         return new self(
             $host instanceof Request ? $host->getHost() : $host,
@@ -65,14 +65,42 @@ class AppConfigHelper
         throw new Exception('Unconfigured host `'.$this->host.'`. See piedweb_cms.yaml');
     }
 
+    public function getMainHost(): string
+    {
+        return $this->app['hosts'][0];
+    }
+
+    public function getHosts() {
+        return $this->app['hosts'];
+    }
+
     public function getBaseUrl(): string
     {
         return $this->app['base_url'];
     }
 
+    public function getStaticDir(): string
+    {
+        return $this->app['static_dir'];
+    }
+
+    public function get($key)
+    {
+        return $this->app[$key];
+    }
+
     public function getApp($key)
     {
         return $this->app[$key];
+    }
+
+    public function getParamsForRendering()
+    {
+        return [
+            'app_base_url' => $this->getBaseUrl(),
+            'app_name' => $this->getApp('name'),
+            'app_color' => $this->getApp('color'),
+        ];
     }
 
     public function getDefaultTemplate()

@@ -1,22 +1,30 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Service;
+namespace PiedWeb\CMSBundle\StaticGenerator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use PiedWeb\CMSBundle\Entity\PageInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Repository\PageRepository;
+use PiedWeb\CMSBundle\Service\AppConfigHelper;
 use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use PiedWeb\CMSBundle\Service\PageCanonicalService as PageCanonical;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as Twig;
 use WyriHaximus\HtmlCompress\Factory as HtmlCompressor;
 use WyriHaximus\HtmlCompress\HtmlCompressorInterface;
 
-class StaticService
+/**
+ * Generate 1 App.
+ */
+class StaticAppGenerator
 {
     /**
      * Contain files relative to SEO wich will be hard copied.
@@ -56,7 +64,7 @@ class StaticService
     protected $apps;
     protected $app;
     protected $staticDomain;
-    protected $isFirst = true;
+    protected $mustGetPagesWithoutHost;
 
     /** var @string */
     protected $staticDir;
@@ -85,6 +93,12 @@ class StaticService
      * @var ParameterBagInterface
      */
     protected $params;
+    public static $appKernel;
+
+    /**
+     * @var Router
+     */
+    protected $router;
 
     /**
      * Used in .htaccess generation.
@@ -100,7 +114,9 @@ class StaticService
         RequestStack $requesStack,
         PageCanonical $pageCanonical,
         TranslatorInterface $translator,
-        string $webDir
+        RouterInterface $router,
+        string $webDir,
+        $kernel
     ) {
         $this->em = $em;
         $this->filesystem = new Filesystem();
@@ -110,21 +126,40 @@ class StaticService
         $this->webDir = $webDir;
         $this->pageCanonical = $pageCanonical;
         $this->translator = $translator;
+        $this->router = $router;
         $this->apps = $this->params->get('pwc.apps');
         $this->parser = HtmlCompressor::construct();
-    }
 
-    public function dump()
-    {
         if (!method_exists($this->filesystem, 'dumpFile')) {
             throw new \RuntimeException('Method dumpFile() is not available. Upgrade your Filesystem.');
         }
 
-        foreach ($this->apps as $app) {
-            $this->generateStaticApp($app);
-
-            $this->isFirst = false;
+        if (null === static::$appKernel) {
+            $kernelClass = \get_class($kernel);
+            static::$appKernel = new $kernelClass('prod', false);
+            //static::$appKernel = clone $kernel;
+            // NOTE: If we clone, it's take too much time in dev mod
+            static::$appKernel->boot();
         }
+    }
+
+    public function generateAll($filter = null)
+    {
+
+        foreach ($this->apps as $app) {
+            if ($filter && !in_array($filter, $app->getHost())) {
+                    continue;
+            }
+            $this->generate($app, $this->mustGetPagesWithoutHost);
+            //$this->generateStaticApp($app);
+
+            $this->mustGetPagesWithoutHost = false;
+        }
+    }
+
+    public function generateFromHost($host)
+    {
+        return $this->generateAll($host);
     }
 
     /**
@@ -133,14 +168,12 @@ class StaticService
      * @throws \RuntimeException
      * @throws \LogicException
      */
-    protected function generateStaticApp($app)
+    public function generate($app, $mustGetPagesWithoutHost = false)
     {
-        $this->app = $app;
-        $this->staticDir = $app['static_dir'];
-        $this->staticDomain = $app['hosts'][0];
+        $this->app = new App($app['hosts'][0], [$app]);
+        $this->mustGetPagesWithoutHost = $mustGetPagesWithoutHost;
 
-        $this->filesystem->remove($this->staticDir);
-
+        $this->filesystem->remove($this->app->getStaticDir());
         $this->generatePages();
         $this->generateSitemaps();
         $this->generateErrorPages();
@@ -150,12 +183,31 @@ class StaticService
         $this->copyMediaToDownload();
     }
 
+    protected function generateLivePathFor($host, $route = 'piedweb_cms_page', $params = [])
+    {
+        if ($host instanceof PageInterface) {
+            $page = $host;
+            $host = $page->getHost();
+        }
+
+        if (isset($page)) {
+            $params['slug'] = $page->getRealSlug();
+        }
+
+        if ($host) {
+            $params['host'] = $host;
+            $route = 'custom_host_'.$route;
+        }
+
+        return $this->router->generate($route, $params);
+    }
+
     /**
      * Symlink doesn't work on github page, symlink only for apache if conf say OK to symlink.
      */
     protected function mustSymlink()
     {
-        return $this->app['static_generateForApache'] ? $this->app['static_symlinkMedia'] : false;
+        return $this->app->get('static_generateForApache') ? $this->app->get('static_symlinkMedia') : false;
     }
 
     /**
@@ -164,7 +216,7 @@ class StaticService
      */
     protected function generateServerManagerFile()
     {
-        if ($this->app['static_generateForApache']) {
+        if ($this->app->get('static_generateForApache')) {
             $this->generateHtaccess();
         } else { //if ($this->app['static_generateForGithubPages'])) {
             $this->generateCname();
@@ -184,16 +236,16 @@ class StaticService
     // https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site
     protected function generateCname()
     {
-        $this->filesystem->dumpFile($this->staticDir.'/CNAME', $this->staticDomain);
+        $this->filesystem->dumpFile($this->app->getStaticDir().'/CNAME', $this->app->getMainHost());
     }
 
     protected function generateHtaccess()
     {
         $htaccess = $this->twig->render('@PiedWebCMS/static/htaccess.twig', [
-            'domain' => $this->staticDomain,
+            'domain' => $this->app->getMainHost(),
             'redirections' => $this->redirections,
         ]);
-        $this->filesystem->dumpFile($this->staticDir.'/.htaccess', $htaccess);
+        $this->filesystem->dumpFile($this->app->getStaticDir().'/.htaccess', $htaccess);
     }
 
     protected function copy(string $file): void
@@ -201,7 +253,7 @@ class StaticService
         if (file_exists($file)) {
             copy(
                 str_replace($this->params->get('kernel.project_dir').'/', '../', $this->webDir.'/'.$file),
-                $this->staticDir.'/'.$file
+                $this->app->getStaticDir().'/'.$file
             );
         }
     }
@@ -224,11 +276,11 @@ class StaticService
                 if (true === $symlink) {
                     $this->filesystem->symlink(
                         str_replace($this->params->get('kernel.project_dir').'/', '../', $this->webDir.'/'.$entry),
-                        $this->staticDir.'/'.$entry
+                        $this->app->getStaticDir().'/'.$entry
                     );
                 } else {
                     $action = is_file($this->webDir.'/'.$entry) ? 'copy' : 'mirror';
-                    $this->filesystem->$action($this->webDir.'/'.$entry, $this->staticDir.'/'.$entry);
+                    $this->filesystem->$action($this->webDir.'/'.$entry, $this->app->getStaticDir().'/'.$entry);
                 }
             }
         }
@@ -244,9 +296,9 @@ class StaticService
     {
         $symlink = $this->mustSymlink();
 
-        if (!file_exists($this->staticDir.'/download')) {
-            $this->filesystem->mkdir($this->staticDir.'/download/');
-            $this->filesystem->mkdir($this->staticDir.'/download/media');
+        if (!file_exists($this->app->getStaticDir().'/download')) {
+            $this->filesystem->mkdir($this->app->getStaticDir().'/download/');
+            $this->filesystem->mkdir($this->app->getStaticDir().'/download/media');
         }
 
         $dir = dir($this->webDir.'/../media');
@@ -257,23 +309,23 @@ class StaticService
             // if the file is an image, it's ever exist (maybe it's slow to check every files)
             if (!file_exists($this->webDir.'/media/default/'.$entry)) {
                 if (true === $symlink) {
-                    $this->filesystem->symlink('../../../media/'.$entry, $this->staticDir.'/download/media/'.$entry);
+                    $this->filesystem->symlink('../../../media/'.$entry, $this->app->getStaticDir().'/download/media/'.$entry);
                 } else {
                     $this->filesystem->copy(
                         $this->webDir.'/../media/'.$entry,
-                        $this->staticDir.'/download/media/'.$entry
+                        $this->app->getStaticDir().'/download/media/'.$entry
                     );
                 }
             }
         }
 
-        //$this->filesystem->$action($this->webDir.'/../media', $this->staticDir.'/download/media');
+        //$this->filesystem->$action($this->webDir.'/../media', $this->app->getStaticDir().'/download/media');
     }
 
     protected function generatePages(): void
     {
         $qb = $this->getPageRepository()->getQueryToFindPublished('p');
-        $qb = $this->getPageRepository()->andHost($qb, $this->staticDomain, $this->isFirst);
+        $qb = $this->getPageRepository()->andHost($qb, $this->app->getMainHost(), $this->mustGetPagesWithoutHost);
         $pages = $qb->getQuery()->getResult();
 
         foreach ($pages as $page) {
@@ -285,10 +337,6 @@ class StaticService
     protected function generateSitemaps(): void
     {
         foreach (explode('|', $this->params->get('pwc.locales')) as $locale) {
-            $request = new Request();
-            $request->setLocale($locale);
-
-            $this->requesStack->push($request);
 
             foreach (['txt', 'xml'] as $format) {
                 $this->generateSitemap($locale, $format);
@@ -300,62 +348,26 @@ class StaticService
 
     protected function generateSitemap($locale, $format)
     {
-        $pages = $this->getPageRepository()->getIndexablePages(
-            $this->app['hosts'][0],
-            $this->isFirst,
-            $locale,
-            $this->params->get('locale')
-        )->getQuery()->getResult();
+        $liveUri = $this->generateLivePathFor($this->app->getMainHost(), 'piedweb_cms_page_sitemap', ['locale'=>$locale, '_format'=>$format]);
+        $staticFile = $this->app->getStaticDir().'/sitemap'.$locale.'.'.$format; // todo get it from URI removing host
+        $this->saveAsStatic($liveUri, $staticFile);
 
-        if (!$pages) {
-            return;
+        if ($this->params->get('locale') == $locale ? '' : '.'.$locale) {
+            $staticFile = $this->app->getStaticDir().'/sitemap.'.$format;
+            $this->saveAsStatic($liveUri, $staticFile);
         }
-
-        $dump = $this->twig->render('@PiedWebCMS/page/sitemap.'.$format.'.twig', [
-            'pages' => $pages,
-            'app_base_url' => $this->app['base_url'],
-        ]);
-
-        $this->filesystem->dumpFile(
-            $this->staticDir.'/sitemap'.($this->params->get('locale') == $locale ? '' : '.'.$locale).'.'.$format,
-            $dump
-        );
     }
 
     protected function generateFeed($locale)
     {
-        $pages = $this->getPageRepository()->getIndexablePages(
-            $this->app['hosts'][0],
-            $this->isFirst,
-            $locale,
-            $this->params->get('locale'),
-            3
-        )->getQuery()->getResult();
+        $liveUri = $this->generateLivePathFor($this->app->getMainHost(), 'piedweb_cms_page_main_feed', ['locale'=>$locale]);
+        $staticFile = $this->app->getStaticDir().'/feed'.$locale.'.xml';
+        $this->saveAsStatic($liveUri, $staticFile);
 
-        // Retrieve info from homepage, for i18n, assuming it's named with locale
-        $app = App::get($this->requesStack->getCurrentRequest(), $this->params);
-        $LocaleHomepage = $this->getPageRepository()
-            ->getPage($locale, $this->app['hosts'][0], $this->app['hosts'][0] === $app->getFirstHost());
-
-        $page = $LocaleHomepage ?? $this->getPageRepository()
-            ->getPage('homepage', $this->app['hosts'][0], $this->app['hosts'][0] === $app->getFirstHost());
-
-        if (!$page) {
-            return;
+        if ($this->params->get('locale') == $locale ? '' : '.'.$locale) {
+            $staticFile = $this->app->getStaticDir().'/feed.xml';
+            $this->saveAsStatic($liveUri, $staticFile);
         }
-
-        $dump = $this->twig->render('@PiedWebCMS/page/rss.xml.twig', [
-            'pages' => $pages,
-            'page' => $page,
-            'feedUri' => 'feed'.($this->params->get('locale') == $locale ? '' : '.'.$locale).'.xml',
-            'app_name' => $this->app['name'],
-            'app_base_url' => $this->app['base_url'],
-        ]);
-
-        $this->filesystem->dumpFile(
-            $this->staticDir.'/feed'.($this->params->get('locale') == $locale ? '' : '.'.$locale).'.xml',
-            $dump
-        );
     }
 
     /**
@@ -373,30 +385,51 @@ class StaticService
         $this->redirections .= PHP_EOL;
     }
 
-    public function generatePage(Page $page)
+    protected function generatePage(Page $page)
     {
-        // set current locale to avoid twig error
-        $request = new Request();
-        $request->setLocale($page->getLocale());
-        $this->requesStack->push($request);
-
+        /**/
         // check if it's a redirection
         if (false !== $page->getRedirection()) {
             $this->addRedirection($page);
 
             return;
         }
+        /**/
 
-        $dump = $this->render($page);
-        $this->filesystem->dumpFile($this->getFilePath($page), $dump);
+        $this->saveAsStatic($this->generateLivePathFor($page), $this->generateFilePath($page));
     }
 
-    protected function getFilePath(Page $page)
+    protected function saveAsStatic($liveUri, $destination)
+    {
+        $request = Request::create($liveUri);
+
+        $response = static::$appKernel->handle($request);
+
+        if ($response->isRedirect()) {
+            // todo
+            //$this->addRedirection($liveUri, getRedirectUri)
+            return;
+        }
+        elseif (200 != $response->getStatusCode()) {
+            // todo log context
+            return;
+        }
+
+        $content = $this->compress($response->getContent());
+        $this->filesystem->dumpFile($destination, $content);
+    }
+
+    protected function compress($html)
+    {
+        return $this->parser->compress($html);
+    }
+
+    protected function generateFilePath(Page $page)
     {
         $slug = '' == $page->getRealSlug() ? 'index' : $page->getRealSlug();
         $route = $this->pageCanonical->generatePathForPage($slug);
 
-        return $this->staticDir.$route.'.html';
+        return $this->app->getStaticDir().$route.'.html';
     }
 
     /**
@@ -407,10 +440,9 @@ class StaticService
      */
     protected function generateFeedFor(Page $page)
     {
-        if ($page->getChildrenPages()->count() > 0) {
-            $dump = $this->renderFeed($page);
-            $this->filesystem->dumpFile(preg_replace('/.html$/', '.xml', $this->getFilePath($page)), $dump);
-        }
+        $liveUri = $this->generateLivePathFor($page, 'piedweb_cms_page_feed');
+        $staticFile = preg_replace('/.html$/', '.xml', $this->generateFilePath($page));
+        $this->saveAsStatic($liveUri, $staticFile);
     }
 
     protected function generateErrorPages(): void
@@ -421,7 +453,7 @@ class StaticService
         $locales = explode('|', $this->params->get('pwc.locales'));
 
         foreach ($locales as $locale) {
-            $this->filesystem->mkdir($this->staticDir.'/'.$locale);
+            $this->filesystem->mkdir($this->app->getStaticDir().'/'.$locale);
             $this->generateErrorPage($locale);
         }
     }
@@ -435,32 +467,11 @@ class StaticService
         }
 
         $dump = $this->parser->compress($this->twig->render('@Twig/Exception/error.html.twig'));
-        $this->filesystem->dumpFile($this->staticDir.(null !== $locale ? '/'.$locale : '').'/'.$uri, $dump);
+        $this->filesystem->dumpFile($this->app->getStaticDir().(null !== $locale ? '/'.$locale : '').'/'.$uri, $dump);
     }
 
     protected function getPageRepository(): PageRepository
     {
         return $this->em->getRepository($this->params->get('pwc.entity_page'));
-    }
-
-    protected function render(Page $page): string
-    {
-        return $this->parser->compress($this->twig->render($this->app['default_page_template'], [
-            'page' => $page,
-            'app_base_url' => $this->app['base_url'],
-            'app_name' => $this->app['name'],
-            'app_color' => $this->app['color'],
-        ]));
-    }
-
-    protected function renderFeed(Page $page): string
-    {
-        $template = '@PiedWebCMS/page/rss.xml.twig';
-
-        return $this->parser->compress($this->twig->render($template, [
-            'page' => $page,
-            'app_base_url' => $this->app['base_url'],
-            'app_name' => $this->app['name'],
-        ]));
     }
 }

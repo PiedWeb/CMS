@@ -45,7 +45,7 @@ class PageScannerService
             return true; // or status code
         }
 
-        $template = App::get($page->getHost(), $this->apps)->getDefaultTemplate();
+        $template = App::load($page->getHost(), $this->apps)->getDefaultTemplate();
         $this->pageHtml = $this->twig->render($template, ['page' => $page]);
 
         // 2. Je récupère tout les liens et je les check

@@ -8,13 +8,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class SitemapController extends AbstractController
+/**
+ * Related to the app.
+ */
+class AppController extends AbstractController
 {
     public function showFeed(
         Request $request,
         ParameterBagInterface $params
     ) {
-        $app = App::get($request, $params);
+        $app = App::load($request, $params);
         // Retrieve info from homepage, for i18n, assuming it's named with locale
         $locale = $request->getLocale() ?? $params->get('locale');
         $LocaleHomepage = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
@@ -35,7 +38,7 @@ class SitemapController extends AbstractController
         Request $request,
         ParameterBagInterface $params
     ) {
-        $app = App::get($request, $params);
+        $app = App::load($request, $params);
         $pages = $this->getPages(null, $request, $params);
 
         if (!$pages) {
@@ -50,7 +53,7 @@ class SitemapController extends AbstractController
 
     protected function getPages(?int $limit = null, Request $request, ParameterBagInterface $params)
     {
-        $app = App::get($request, $params);
+        $app = App::load($request, $params);
         $pages = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
             ->getIndexablePages(
                 $app->getHost(),
