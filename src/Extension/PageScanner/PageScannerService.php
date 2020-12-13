@@ -7,11 +7,11 @@ use PiedWeb\CMSBundle\Entity\PageInterface;
 use PiedWeb\CMSBundle\Service\AppConfigHelper;
 use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
 use PiedWeb\CMSBundle\Utils\KernelTrait;
+use PiedWeb\UrlHarvester\Harvest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment as Twig_Environment;
-use PiedWeb\UrlHarvester\Harvest;
 
 /**
  * Permit to find error in image or link.
@@ -178,9 +178,10 @@ class PageScannerService
     }
 
     /**
-     * this is really slow on big website
+     * this is really slow on big website.
      *
      * @param string $uri
+     *
      * @return bool
      */
     protected function urlExist($uri)
@@ -192,8 +193,9 @@ class PageScannerService
             $this->previousRequest
         );
 
-        if (is_int($harvest) || $harvest->getResponse()->getStatusCode() !== 200)
+        if (\is_int($harvest) || 200 !== $harvest->getResponse()->getStatusCode()) {
             return false;
+        }
 
         $this->previousRequest = $harvest->getResponse()->getRequest();
 

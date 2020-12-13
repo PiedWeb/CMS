@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserCommand extends Command
 {
@@ -25,13 +25,13 @@ class UserCommand extends Command
     private $params;
 
     /**
-     * @var UserPasswordEncoder
+     * @var UserPasswordEncoderInterface
      */
     private $passwordEncoder;
 
     public function __construct(
         EntityManagerInterface $em,
-        UserPasswordEncoder $passwordEncoder,
+        UserPasswordEncoderInterface $passwordEncoder,
         ParameterBagInterface $params,
         $userClass
     ) {

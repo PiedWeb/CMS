@@ -10,6 +10,16 @@ services:
       $apps: '%pwc.apps%'
       $kernel: '@kernel'
 
+  PiedWeb\CMSBundle\Extension\PageScanner\PageScannerCommand:
+    autowire: true
+    arguments:
+      $pageClass: '%pwc.entity_page%'
+      $varDir: '%kernel.root_dir%/../var'
+    tags: ['console.command']
+
   PiedWeb\CMSBundle\Extension\PageScanner\PageScannerController:
     autowire: true
-    tags: ['controller.service_arguments']
+    arguments:
+      $varDir: '%kernel.root_dir%/../var'
+    tags:
+      - { name: 'controller.service_arguments' }

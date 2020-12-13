@@ -13,9 +13,15 @@
                 <h3 class="box-title">Scan du site</h3>
             </div>
             <div class="box-body">
-                {% if errorsByPages is empty %}
-                    Le scan a été complété avec succès : le contenu ne semble comporter aucune erreur.
-                {% else %}
+
+                {% if errorsByPages is empty and lastEdit != 0 %}
+                    <p class="alert alert-success">Le précédent scan a été complété avec succès : le contenu ne semble comporter aucune erreur. Un nouveau scan vient d'être lancé, revenez dans un instant.</p>
+                {% elseif lastEdit == 0 %}
+                    <p class="alert alert-success">Premier scan juste lancé. Revenez dans un instant (rafraichissement automatique).</p>
+                    <script>$(document).ready(function() { setTimeout(function () { location.reload(1); }, 3000); });</script>
+                {% else  %}
+                    <p class="alert alert-warning">Résultat du scan du {{ lastEdit|date('d/m/Y à H:i') }} (nouveau scan en cours).</p>
+
                     <table class="table table-bordered table-striped table-hover sonata-ba-list">
                         <thead>
                             <tr>

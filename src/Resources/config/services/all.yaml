@@ -4,6 +4,7 @@ services:
   # Me
   # --------
   Twig\Extension\StringLoaderExtension: ~
+  Twig\Extensions\IntlExtension: null
 
   twig.extension.stringloader:
     class: Twig_Extension_StringLoader
@@ -65,10 +66,9 @@ services:
 
 
   piedweb.user_command:
+    autowire: true
     arguments:
-      - '@doctrine.orm.entity_manager'
-      - '@security.password_encoder'
-      - '%pwc.entity_user%'
+      $userClass: '%pwc.entity_user%'
     class: PiedWeb\CMSBundle\Command\UserCommand
     tags: ['console.command']
 
