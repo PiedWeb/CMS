@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment as Twig_Environment;
+use PiedWeb\UrlHarvester\Harvest;
 
 /**
  * Permit to find error in image or link.
@@ -30,6 +31,7 @@ class PageScannerService
     protected $twig;
     protected $currentPage;
     protected $webDir;
+    protected $previousRequest;
     protected $apps;
     protected $linksCheckedCounter = 0;
     protected $errors = [];
@@ -175,9 +177,26 @@ class PageScannerService
         }
     }
 
+    /**
+     * this is really slow on big website
+     *
+     * @param string $uri
+     * @return bool
+     */
     protected function urlExist($uri)
     {
-        // todo check external resource
+        $harvest = Harvest::fromUrl(
+            $uri,
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.107 Safari/537.36',
+            'en,en-US;q=0.5',
+            $this->previousRequest
+        );
+
+        if (is_int($harvest) || $harvest->getResponse()->getStatusCode() !== 200)
+            return false;
+
+        $this->previousRequest = $harvest->getResponse()->getRequest();
+
         return true;
     }
 

@@ -67,8 +67,7 @@ List of Bundles wich extend this one:
 - [ ] Move route to annotation (less extendable but more pratical with priority)
 - [ ] Move media to var (and create a link ?!)
 - [ ] Intégrer LinksImprover (+ UX), après précédent
-- [ ] PageScannerService : check external ressource (see todo)
-- [ ] search for all "todo" in the code, refactor and test the code (see `composer require illuminate/collections`)
+- [ ] search for all "todo" in the code, refactor and test the code
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
 - [ ] Release V1
 - [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io)

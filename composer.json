@@ -46,7 +46,9 @@
     "villfa/invert-color": "^0.5",
     "wyrihaximus/html-compress": "^4.0",
     "masterminds/html5": "^2.7",
-    "caseyamcl/toc": "^3.0"
+    "caseyamcl/toc": "^3.0",
+    "piedweb/url-harvester": "^0.0.24",
+    "piedweb/linksimprover": "^0.0.7"
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^5.0",
