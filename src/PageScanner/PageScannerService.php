@@ -17,8 +17,8 @@ use Twig\Environment as Twig_Environment;
  */
 class PageScannerService
 {
-    use KernelTrait;
     use GenerateLivePathForTrait;
+    use KernelTrait;
 
     /**
      * @var AppConfigHelper

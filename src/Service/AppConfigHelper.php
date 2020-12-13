@@ -109,6 +109,6 @@ class AppConfigHelper
 
     public function getDefaultTemplate()
     {
-        return  $this->app['default_page_template'];
+        return $this->app['default_page_template'];
     }
 }

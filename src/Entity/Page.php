@@ -19,13 +19,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Page implements PageInterface
 {
     use IdTrait;
-    use PageTrait;
-    use PageExtendedTrait;
-    use PageImageTrait;
     use PageExtendedMainContentTrait;
-    use PageRedirectionTrait;
+    use PageExtendedTrait;
     use PageI18nTrait;
+    use PageImageTrait;
     use PageMultiHostTrait;
+    use PageRedirectionTrait;
+    use PageTrait;
 
     public function __construct()
     {

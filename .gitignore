@@ -16,3 +16,4 @@ composer.lock
 /build/
 /symfony.lock
 yarn.lock
+.phpunit.result*

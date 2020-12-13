@@ -25,8 +25,8 @@ use WyriHaximus\HtmlCompress\HtmlCompressorInterface;
  */
 class StaticAppGenerator
 {
-    use KernelTrait;
     use GenerateLivePathForTrait;
+    use KernelTrait;
 
     /**
      * Contain files relative to SEO wich will be hard copied.
