@@ -133,7 +133,8 @@ class PageScannerService
         preg_match_all($regex, $this->pageHtml, $matches);
 
         $linkedDocs = [];
-        for ($k = 0; $k < \count($matches[0]); ++$k) {
+        $matchesCount = \count($matches[0]);
+        for ($k = 0; $k < $matchesCount; ++$k) {
             $uri = isset($matches[4][$k]) ? $matches[4][$k] : $matches[5][$k];
             $uri = 'data-rot' == $matches[1][$k] ? str_rot13($uri) : $uri;
             $uri = strtok($uri, '#');

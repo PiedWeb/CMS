@@ -150,6 +150,8 @@ class StaticAppGenerator
 
             $this->mustGetPagesWithoutHost = false;
         }
+
+        return true;
     }
 
     public function generateFromHost($host)
