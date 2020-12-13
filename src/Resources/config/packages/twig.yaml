@@ -11,8 +11,10 @@ twig:
     '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Extension/TemplateEditor/views': pwcTemplateEditor
     '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Extension/UpdateNotification/views': pwUpdateNotification
     '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Resources/views/TwigBundle': Twig
+    '%kernel.root_dir%/../templates/bundles/PiedWebCMSBundle/': PiedWebCMS
     '%kernel.root_dir%/../vendor/piedweb/theme-component-bundle/src/Resources/views': PiedWebCMS
     '%kernel.root_dir%/../vendor/piedweb/../piedweb/theme-component-bundle/src/Resources/views': PiedWebThemeComponent
+
   form_themes:
     - 'bootstrap_4_layout.html.twig'
     - '@SonataForm/Form/datepicker.html.twig'

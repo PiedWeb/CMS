@@ -21,8 +21,11 @@ services:
       - [setPageClass, ['%pwc.entity_page%']]
       - [setDefaultLocale, ['%pwc.locale%']]
       - [setPageCanonicalService, ['@piedweb.page_canonical']]
-      - [setParams, ['@parameter_bag']]
     public: true
+
+  PiedWeb\CMSBundle\Extension\Admin\PageAdminCRUDController:
+    autowire: true
+      - [setParams, ['@parameter_bag']]
 
   piedweb.admin.media:
     class: PiedWeb\CMSBundle\Extension\Admin\MediaAdmin
