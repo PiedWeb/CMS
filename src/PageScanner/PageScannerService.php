@@ -120,7 +120,7 @@ class PageScannerService
         return '('.implode('|', $var).')';
     }
 
-    public static function isWebLink(string $url)
+    protected static function isWebLink(string $url)
     {
         return preg_match('@^((?:(http:|https:)//([\w\d-]+\.)+[\w\d-]+){0,1}(/?[\w~,;\-\./?%&+#=]*))$@', $url);
     }

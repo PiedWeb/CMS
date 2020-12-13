@@ -156,11 +156,11 @@ services:
   piedweb.media_repository:
     class: PiedWeb\CMSBundle\Repository\MediaRepository
     arguments: ['@doctrine', '%pwc.entity_media%']
-    tags:
-      - { name: doctrine.repository_service }
+    tags: ['doctrine.repository_service']
 
   PiedWeb\CMSBundle\Repository\MediaRepository:
-    alias: piedweb.media_repository
+    arguments: ['@doctrine', '%pwc.entity_media%']
+    tags: ['doctrine.repository_service']
 
 
 
