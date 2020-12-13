@@ -285,7 +285,10 @@ class StaticAppGenerator
             // if the file is an image, it's ever exist (maybe it's slow to check every files)
             if (!file_exists($this->webDir.'/media/default/'.$entry)) {
                 if (true === $symlink) {
-                    $this->filesystem->symlink('../../../media/'.$entry, $this->app->getStaticDir().'/download/media/'.$entry);
+                    $this->filesystem->symlink(
+                        '../../../media/'.$entry,
+                        $this->app->getStaticDir().'/download/media/'.$entry
+                    );
                 } else {
                     $this->filesystem->copy(
                         $this->webDir.'/../media/'.$entry,
@@ -311,7 +314,11 @@ class StaticAppGenerator
 
     protected function generateSitemap($locale, $format)
     {
-        $liveUri = $this->generateLivePathFor($this->app->getMainHost(), 'piedweb_cms_page_sitemap', ['locale' => $locale, '_format' => $format]);
+        $liveUri = $this->generateLivePathFor(
+            $this->app->getMainHost(),
+            'piedweb_cms_page_sitemap',
+            ['locale' => $locale, '_format' => $format]
+        );
         $staticFile = $this->app->getStaticDir().'/sitemap'.$locale.'.'.$format; // todo get it from URI removing host
         $this->saveAsStatic($liveUri, $staticFile);
 
@@ -323,7 +330,11 @@ class StaticAppGenerator
 
     protected function generateFeed($locale)
     {
-        $liveUri = $this->generateLivePathFor($this->app->getMainHost(), 'piedweb_cms_page_main_feed', ['locale' => $locale]);
+        $liveUri = $this->generateLivePathFor(
+            $this->app->getMainHost(),
+            'piedweb_cms_page_main_feed',
+            ['locale' => $locale]
+        );
         $staticFile = $this->app->getStaticDir().'/feed'.$locale.'.xml';
         $this->saveAsStatic($liveUri, $staticFile);
 

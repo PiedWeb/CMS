@@ -89,7 +89,8 @@ class PageController extends AbstractController
 
         return $this->render(
             '@PiedWebCMS/admin/page_preview.html.twig',
-            array_merge(['page' => $page], $app->getParamsForRendering()));
+            array_merge(['page' => $page], $app->getParamsForRendering())
+        );
     }
 
     public function showFeed(
@@ -147,10 +148,13 @@ class PageController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render('@PiedWebCMS/page/rss.xml.twig', array_merge([
+        $params = [
             'pages' => $this->getPages(5, $request, $params),
             'page' => $page,
-            'feedUri' => 'feed'.($params->get('locale') == $locale ? '' : '.'.$locale).'.xml', ], $app->getParamsForRendering()));
+            'feedUri' => ($params->get('locale') == $locale ? '' : $locale.'/').'feed.xml',
+        ];
+
+        return $this->render('@PiedWebCMS/page/rss.xml.twig', array_merge($params, $app->getParamsForRendering()));
     }
 
     public function showSitemap(
