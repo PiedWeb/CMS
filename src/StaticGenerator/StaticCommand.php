@@ -23,15 +23,15 @@ class StaticCommand extends Command
             ->setName('static:generate')
             ->setDescription('Generate static version  for your website')
             ->addArgument('host', InputArgument::OPTIONAL);
-        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getArgument('host')) {
             $this->staticAppGenerator->generateFromHost($input->getArgument('host'));
-        } else
+        } else {
             $this->staticAppGenerator->generateAll();
+        }
 
         $output->writeln('Static version generation succeeded.');
     }

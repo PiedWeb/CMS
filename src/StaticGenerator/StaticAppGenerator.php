@@ -3,21 +3,17 @@
 namespace PiedWeb\CMSBundle\StaticGenerator;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PiedWeb\CMSBundle\Entity\PageInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Repository\PageRepository;
-use PiedWeb\CMSBundle\Service\AppConfigHelper;
 use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use PiedWeb\CMSBundle\Service\PageCanonicalService as PageCanonical;
-use PiedWeb\CMSBundle\Utils\KernelTrait;
 use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
+use PiedWeb\CMSBundle\Utils\KernelTrait;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as Twig;
@@ -29,7 +25,8 @@ use WyriHaximus\HtmlCompress\HtmlCompressorInterface;
  */
 class StaticAppGenerator
 {
-    use KernelTrait, GenerateLivePathForTrait;
+    use KernelTrait;
+    use GenerateLivePathForTrait;
 
     /**
      * Contain files relative to SEO wich will be hard copied.
@@ -144,10 +141,9 @@ class StaticAppGenerator
 
     public function generateAll($filter = null)
     {
-
         foreach ($this->apps as $app) {
-            if ($filter && !in_array($filter, $app->getHost())) {
-                    continue;
+            if ($filter && !\in_array($filter, $app->getHost())) {
+                continue;
             }
             $this->generate($app, $this->mustGetPagesWithoutHost);
             //$this->generateStaticApp($app);
@@ -305,7 +301,6 @@ class StaticAppGenerator
     protected function generateSitemaps(): void
     {
         foreach (explode('|', $this->params->get('pwc.locales')) as $locale) {
-
             foreach (['txt', 'xml'] as $format) {
                 $this->generateSitemap($locale, $format);
             }
@@ -316,7 +311,7 @@ class StaticAppGenerator
 
     protected function generateSitemap($locale, $format)
     {
-        $liveUri = $this->generateLivePathFor($this->app->getMainHost(), 'piedweb_cms_page_sitemap', ['locale'=>$locale, '_format'=>$format]);
+        $liveUri = $this->generateLivePathFor($this->app->getMainHost(), 'piedweb_cms_page_sitemap', ['locale' => $locale, '_format' => $format]);
         $staticFile = $this->app->getStaticDir().'/sitemap'.$locale.'.'.$format; // todo get it from URI removing host
         $this->saveAsStatic($liveUri, $staticFile);
 
@@ -328,7 +323,7 @@ class StaticAppGenerator
 
     protected function generateFeed($locale)
     {
-        $liveUri = $this->generateLivePathFor($this->app->getMainHost(), 'piedweb_cms_page_main_feed', ['locale'=>$locale]);
+        $liveUri = $this->generateLivePathFor($this->app->getMainHost(), 'piedweb_cms_page_main_feed', ['locale' => $locale]);
         $staticFile = $this->app->getStaticDir().'/feed'.$locale.'.xml';
         $this->saveAsStatic($liveUri, $staticFile);
 
@@ -363,19 +358,16 @@ class StaticAppGenerator
             $this->generatePage($page);
             //if ($page->getRealSlug()) $this->generateFeedFor($page);
         }
-
     }
 
     protected function generatePage(Page $page)
     {
-        /**/
         // check if it's a redirection
         if (false !== $page->getRedirection()) {
             $this->addRedirection($page);
 
             return;
         }
-        /**/
 
         $this->saveAsStatic($this->generateLivePathFor($page), $this->generateFilePath($page));
     }
@@ -390,11 +382,11 @@ class StaticAppGenerator
             // todo
             //$this->addRedirection($liveUri, getRedirectUri)
             return;
-        }
-        elseif (200 != $response->getStatusCode()) {
+        } elseif (200 != $response->getStatusCode()) {
             //$this->kernel = static::$appKernel;
-            if ($response->getStatusCode() === 500 && $this->kernel->getEnvironment() == 'dev')
+            if (500 === $response->getStatusCode() && 'dev' == $this->kernel->getEnvironment()) {
                 exit($this->kernel->handle($request));
+            }
 
             return;
         }

@@ -4,14 +4,11 @@ namespace PiedWeb\CMSBundle\PageScanner;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface;
-use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use PiedWeb\CMSBundle\Service\AppConfigHelper;
 use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
 use PiedWeb\CMSBundle\Utils\KernelTrait;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment as Twig_Environment;
 
@@ -20,7 +17,8 @@ use Twig\Environment as Twig_Environment;
  */
 class PageScannerService
 {
-    use KernelTrait, GenerateLivePathForTrait;
+    use KernelTrait;
+    use GenerateLivePathForTrait;
 
     /**
      * @var AppConfigHelper
@@ -77,11 +75,8 @@ class PageScannerService
             $this->checkLinkedDocs($this->getLinkedDocs());
         }
 
-
         return empty($this->errors) ? true : $this->errors;
     }
-
-
 
     protected function getHtml($liveUri)
     {
@@ -90,11 +85,12 @@ class PageScannerService
 
         if ($response->isRedirect()) {
             $linkedDocs[] = $response->headers->get('location');
+
             return;
-        }
-        elseif (200 != $response->getStatusCode()) {
+        } elseif (200 != $response->getStatusCode()) {
             $this->addError('error on generating the page ('.$response->getStatusCode().')');
             exit;
+
             return;
         }
 
@@ -109,9 +105,9 @@ class PageScannerService
         ];
     }
 
-    protected static function prepareForRegex ($var)
+    protected static function prepareForRegex($var)
     {
-        if (is_string($var)) {
+        if (\is_string($var)) {
             return preg_quote($var, '/');
         }
 
@@ -129,7 +125,7 @@ class PageScannerService
     {
         $urlInAttributes = ' '.self::prepareForRegex(['href', 'data-rot', 'src', 'data-img', 'data-bg']);
         $regex = '/'.$urlInAttributes.'=((["\'])([^\3]+)\3|([^\s>]+)[\s>])/iU';
-        preg_match_all(            $regex,            $this->pageHtml,            $matches        );
+        preg_match_all($regex, $this->pageHtml, $matches);
 
         $linkedDocs = [];
         foreach ($matches[0] as $k => $match) {
@@ -138,7 +134,6 @@ class PageScannerService
             $uri = strtok($uri, '#');
             $uri = $this->removeBase($uri);
             if ('' !== $uri && self::isWebLink($uri)) {
-
                 $linkedDocs[] = $uri;
             }
         }
@@ -146,10 +141,12 @@ class PageScannerService
         return array_unique($linkedDocs);
     }
 
-    protected function removeBase($url) {
-        if (strpos($url, 'https://'.$this->app->getMainHost()) === 0) {
-            return substr($url, strlen('https://'.$this->app->getMainHost()));
+    protected function removeBase($url)
+    {
+        if (0 === strpos($url, 'https://'.$this->app->getMainHost())) {
+            return substr($url, \strlen('https://'.$this->app->getMainHost()));
         }
+
         return $url;
     }
 
@@ -161,17 +158,19 @@ class PageScannerService
     protected function checkLinkedDocs(array $linkedDocs)
     {
         foreach ($linkedDocs as $uri) {
-            $this->linksCheckedCounter++;
-            if (!is_string($uri))
+            ++$this->linksCheckedCounter;
+            if (!\is_string($uri)) {
                 continue;
-            if (($uri[0] == '/' && !$this->uriExist($uri) )
-                || (strpos($uri, 'http') === 0 && !$this->urlExist($uri))) {
+            }
+            if (('/' == $uri[0] && !$this->uriExist($uri))
+                || (0 === strpos($uri, 'http') && !$this->urlExist($uri))) {
                 $this->addError('<code>'.$uri.'</code> introuvable');
             }
         }
     }
 
-    protected function urlExist($uri) {
+    protected function urlExist($uri)
+    {
         // todo check external resource
         return true;
     }

@@ -39,6 +39,7 @@ class AppConfigHelper
         foreach ($this->apps as $app) {
             if (\in_array($this->host, $app['hosts']) || null === $this->host) {
                 $this->app = $app;
+
                 return;
             }
         }
@@ -72,7 +73,8 @@ class AppConfigHelper
         return $this->app['hosts'][0];
     }
 
-    public function getHosts() {
+    public function getHosts()
+    {
         return $this->app['hosts'];
     }
 

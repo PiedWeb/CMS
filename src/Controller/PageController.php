@@ -5,7 +5,6 @@ namespace PiedWeb\CMSBundle\Controller;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
 use PiedWeb\CMSBundle\Service\Repository;
-use Sonata\AdminBundle\Datagrid\PagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -151,7 +150,7 @@ class PageController extends AbstractController
         return $this->render('@PiedWebCMS/page/rss.xml.twig', array_merge([
             'pages' => $this->getPages(5, $request, $params),
             'page' => $page,
-            'feedUri' => 'feed'.($params->get('locale') == $locale ? '' : '.'.$locale).'.xml',], $app->getParamsForRendering()));
+            'feedUri' => 'feed'.($params->get('locale') == $locale ? '' : '.'.$locale).'.xml', ], $app->getParamsForRendering()));
     }
 
     public function showSitemap(
@@ -174,7 +173,7 @@ class PageController extends AbstractController
 
     protected function getPages(?int $limit = null, Request $request, ParameterBagInterface $params)
     {
-        $requestedLocale = rtrim($request->getLocale(),'/');
+        $requestedLocale = rtrim($request->getLocale(), '/');
 
         $app = App::load($request, $params);
         $pages = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))

@@ -35,4 +35,4 @@ trait GenerateLivePathForTrait
 
         return $this->router->generate($route, $params);
     }
-    }
+}
