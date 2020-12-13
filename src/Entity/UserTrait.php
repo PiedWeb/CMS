@@ -16,8 +16,8 @@ trait UserTrait
      * @var string
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email(
-     *     message = "user.email.invalid",
-     *     mode = "strict"
+     *     message="user.email.invalid",
+     *     mode="strict"
      * )
      */
     protected $email;
@@ -92,7 +92,7 @@ trait UserTrait
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER

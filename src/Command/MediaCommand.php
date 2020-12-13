@@ -17,7 +17,15 @@ class MediaCommand extends Command
      */
     private $em;
 
+    /**
+     * @var string
+     */
     private $mediaClass;
+
+    /**
+     * @var MediaCacheGeneratorService
+     */
+    private $mediaCacheGenerator;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -58,10 +66,12 @@ class MediaCommand extends Command
         $progressBar->start();
         foreach ($medias as $media) {
             if (false !== strpos($media->getMimeType(), 'image/')) {
-                $this->mediaGenerator->generateCache($media);
+                $this->mediaCacheGenerator->generateCache($media);
             }
             $progressBar->advance();
         }
         $progressBar->finish();
+
+        return 0;
     }
 }

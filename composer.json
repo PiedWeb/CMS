@@ -52,7 +52,8 @@
     "symfony/phpunit-bridge": "^5.0",
     "phpunit/phpunit": "^9",
     "squizlabs/php_codesniffer": "^3.5",
-    "friendsofphp/php-cs-fixer": "^2.16"
+    "friendsofphp/php-cs-fixer": "^2.16",
+    "vimeo/psalm": "^3.11"
   },
   "config": {
     "sort-packages": false
@@ -80,8 +81,9 @@
     }
   ],
   "scripts": {
+    "psalm": "vendor/bin/psalm",
     "test": "vendor/bin/phpunit",
     "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-    "format": "vendor/bin/php-cs-fixer fix src --rules='{\"@Symfony\":true,\"@Symfony:risky\":true, \"@PSR2\":true, \"array_syntax\": {\"syntax\": \"short\"}}' --verbose --allow-risky=yes"
+    "format": "vendor/bin/php-cs-fixer fix src --rules='{\"@DoctrineAnnotation\":true, \"@Symfony\":true,\"@Symfony:risky\":true, \"@PSR2\":true, \"array_syntax\": {\"syntax\": \"short\"}}' --verbose --allow-risky=yes"
   }
 }

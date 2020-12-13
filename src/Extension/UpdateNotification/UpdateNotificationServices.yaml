@@ -1,0 +1,24 @@
+services:
+  piedweb.update_notification.email_notifier:
+    class: PiedWeb\CMSBundle\Extension\UpdateNotification\PageUpdateMailNotifier
+    autowire: true
+    arguments:
+      $pageClass: '%pwc.entity_page%'
+      $emailFrom: '%pwc.email_sender%'
+      $emailTo: '%pwc.page_update_notification_email%'
+      $appName: '%pwc.name%'
+      $rootDir: '%kernel.root_dir%'
+      $interval: '%pwc.page_update_notification_interval%'
+    tags:
+      [
+        {
+          name: doctrine.orm.entity_listener,
+          entity: '%pwc.entity_page%',
+          event: postUpdate,
+        },
+        {
+          name: doctrine.orm.entity_listener,
+          entity: '%pwc.entity_page%',
+          event: postPersist,
+        },
+      ]

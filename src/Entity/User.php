@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface as sfUserInterface;
 
 /**
  * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  * @UniqueEntity("email",
  *     message="user.email.already_used"
  * )

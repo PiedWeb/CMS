@@ -18,20 +18,20 @@ class PageRenderingValidator extends ConstraintValidator
         $this->apps = $apps;
     }
 
-    public function validate($page, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof PageRendering) {
             throw new UnexpectedTypeException($constraint, PageRendering::class);
         }
 
-        if (false !== $page->getRedirection()) { // si c'est une redir, on check rien
+        if (false !== $value->getRedirection()) { // si c'est une redir, on check rien
             return;
         }
 
-        $template = AppConfigHelper::get($page->getHost(), $this->apps)->getDefaultTemplate();
+        $template = AppConfigHelper::load($value->getHost(), $this->apps)->getDefaultTemplate();
 
         try {
-            $this->twig->render($template, ['page' => $page]);
+            $this->twig->render($template, ['page' => $value]);
         } catch (\Exception $exception) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();

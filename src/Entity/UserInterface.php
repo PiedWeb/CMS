@@ -2,7 +2,9 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-interface UserInterface
+use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
+
+interface UserInterface extends BaseUserInterface
 {
     const ROLE_DEFAULT = 'ROLE_USER';
 
@@ -11,8 +13,4 @@ interface UserInterface
     public function getPlainPassword();
 
     public function setPassword(string $password);
-
-    public function getSalt();
-
-    public function eraseCredentials();
 }

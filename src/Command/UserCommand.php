@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class UserCommand extends Command
@@ -15,15 +16,28 @@ class UserCommand extends Command
      * @var EntityManagerInterface
      */
     private $em;
+
     private $userClass;
+
+    /**
+     * @var ParameterBagInterface
+     */
+    private $params;
+
+    /**
+     * @var UserPasswordEncoder
+     */
+    private $passwordEncoder;
 
     public function __construct(
         EntityManagerInterface $em,
         UserPasswordEncoder $passwordEncoder,
+        ParameterBagInterface $params,
         $userClass
     ) {
         $this->em = $em;
         $this->passwordEncoder = $passwordEncoder;
+        $this->params = $params;
         $this->userClass = $userClass;
 
         parent::__construct();
@@ -67,5 +81,7 @@ class UserCommand extends Command
         $this->createUser($input->getArgument('email'), $input->getArgument('password'), $input->getArgument('role'));
 
         $output->writeln('<info>done...</info>');
+
+        return 0;
     }
 }

@@ -30,36 +30,6 @@ services:
     tags:
       - { name: doctrine.orm.entity_listener, entity: '%pwc.entity_user%', event: preUpdate }
 
-
-
-  piedweb.pageUpdate.emailNotifier:
-    class: PiedWeb\CMSBundle\Service\PageUpdateMailNotifier
-    arguments:
-      [
-        '%pwc.entity_page%',
-        '@mailer',
-        '%pwc.email_sender%',
-        '%pwc.page_update_notification_email%',
-        '%pwc.name%',
-        '%kernel.root_dir%',
-        '%pwc.page_update_notification_interval%',
-        '@doctrine.orm.entity_manager',
-        '@translator',
-      ]
-    tags:
-      [
-        {
-          name: doctrine.orm.entity_listener,
-          entity: '%pwc.entity_page%',
-          event: postUpdate,
-        },
-        {
-          name: doctrine.orm.entity_listener,
-          entity: '%pwc.entity_page%',
-          event: postPersist,
-        },
-      ]
-
   piedweb.page_rendering.validator:
     class: PiedWeb\CMSBundle\Validator\Constraints\PageRenderingValidator
     arguments:

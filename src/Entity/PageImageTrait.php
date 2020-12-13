@@ -10,9 +10,9 @@ trait PageImageTrait
 {
     /**
      * @ORM\ManyToOne(
-     *      targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface",
-     *      cascade={"all"},
-     *      inversedBy="mainImagePages"
+     *     targetEntity="PiedWeb\CMSBundle\Entity\MediaInterface",
+     *     cascade={"all"},
+     *     inversedBy="mainImagePages"
      * )
      */
     protected $mainImage;
@@ -29,7 +29,7 @@ trait PageImageTrait
      *     cascade={"all"},
      *     orphanRemoval=true
      * )
-     * @ORM\OrderBy({"position":"ASC"})
+     * @ORM\OrderBy({"position": "ASC"})
      */
     protected $pageHasMedias;
 
@@ -79,9 +79,6 @@ trait PageImageTrait
         return $this;
     }
 
-    /**
-     * @return Collection|Image[]
-     */
     public function getImages(): Collection
     {
         if (!$this->images) {

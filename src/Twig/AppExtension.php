@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use PiedWeb\CMSBundle\Entity\Media;
+use PiedWeb\CMSBundle\Entity\MediaExternal;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\MainContentManager;
 use PiedWeb\CMSBundle\Service\PageCanonicalService;
@@ -206,23 +207,7 @@ class AppExtension extends AbstractExtension
 
     public static function transformInlineImageToMedia(string $src)
     {
-        if (self::isInternalImage($src)) {
-            $src = substr($src, \strlen('/media/default/'));
-
-            $media = new Media();
-            $media->setRelativeDir('/media');
-            $media->setMedia($src);
-            $media->setSlug(preg_replace('@(\.jpg|\.jpeg|\.png|\.gif)$@', '', $src), true);
-
-            return $media;
-        }
-
-        $media = new Media();
-        $media->setRelativeDir($src);
-        $media->setMedia('');
-        $media->setSlug('', true);
-
-        return $media;
+        return self::isInternalImage($src) ? Media::loadFromSrc($src) : MediaExternal::load($src);
     }
 
     public function renderGallery(Twig $env, Page $currentPage, $filterImageFrom = 1, $length = 1001)

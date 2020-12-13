@@ -46,6 +46,14 @@ Check [Update.md](https://raw.githubusercontent.com/PiedWeb/CMS/master/UPDATE.md
 
 ## Documentation
 
+### Dev
+
+**core** correspond to basic functionnalities for _page_, _media_ and _user_.
+
+Else are **extension** (wich can be disabled or move to another bundle).
+
+The code for the core follow the [symfony's default directory structure](https://symfony.com/doc/current/best_practices.html#use-the-default-directory-structure) for the **core**. For **extension**, liberty is taken to simplify the directory structure.
+
 Have a look to the [cookbook](https://github.com/PiedWeb/CMS/blob/master/docs/Cookbook.md).
 
 ## Extension

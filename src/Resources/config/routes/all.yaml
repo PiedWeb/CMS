@@ -3,13 +3,16 @@
 ## ----
 
 admin:
-  resource: '@PiedWebCMSBundle/Admin/AdminRoutes.yaml'
+  resource: '@PiedWebCMSBundle/Extension/Admin/AdminRoutes.yaml'
 
 static:
-  resource: '@PiedWebCMSBundle/StaticGenerator/StaticRoutes.yaml'
+  resource: '@PiedWebCMSBundle/Extension/StaticGenerator/StaticRoutes.yaml'
 
 page_scanner:
-  resource: '@PiedWebCMSBundle/PageScanner/PageScannerRoutes.yaml'
+  resource: '@PiedWebCMSBundle/Extension/PageScanner/PageScannerRoutes.yaml'
+
+template_editor:
+  resource: '@PiedWebCMSBundle/Extension/TemplateEditor/TemplateEditorRoutes.yaml'
 
 ## ----
 ## Core

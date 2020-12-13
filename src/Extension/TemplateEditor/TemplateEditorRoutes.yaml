@@ -1,0 +1,15 @@
+piedweb_cms_template_editor_list:
+  path: /admin/template/list
+  controller: PiedWeb\CMSBundle\Extension\TemplateEditor\ElementAdmin::listElement
+
+piedweb_cms_template_editor_edit:
+  path: /admin/template/edit/{encodedPath}
+  controller: PiedWeb\CMSBundle\Extension\TemplateEditor\ElementAdmin::editElement
+
+piedweb_cms_template_editor_create:
+  path: /admin/template/create
+  controller: PiedWeb\CMSBundle\Extension\TemplateEditor\ElementAdmin::editElement
+
+piedweb_cms_template_editor_delete:
+  path: /admin/template/delete/{encodedPath}
+  controller: PiedWeb\CMSBundle\Extension\TemplateEditor\ElementAdmin::deleteElement

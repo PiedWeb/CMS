@@ -30,7 +30,7 @@ trait PageExtendedTrait
 
     /**
      * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", mappedBy="parentPage")
-     * @ORM\OrderBy({"id"                                                    = "ASC"})
+     * @ORM\OrderBy({"id": "ASC"})
      */
     protected $childrenPages;
 
@@ -104,7 +104,7 @@ trait PageExtendedTrait
     public function getName($firstOnly = false): ?string
     {
         if ($firstOnly) {
-            return trim(explode(',', $this->name)[0]) ?? $this->name ?? $this->h1 ?? $this->title;
+            return trim(explode(',', $this->name)[0] ?? $this->name ?? $this->h1 ?? $this->title);
         }
 
         return $this->name;

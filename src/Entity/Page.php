@@ -8,13 +8,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(
  *     fields={"host", "slug"},
  *     errorPath="slug",
  *     message="page.slug.already_used"
  * )
- * @PageRendering()
+ * @PageRendering
  */
 class Page implements PageInterface
 {

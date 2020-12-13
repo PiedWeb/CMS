@@ -15,8 +15,8 @@ class AppConfigHelper
     /**
      * static loader.
      *
-     * @param mixed $request could be Reqest or a string with the current host
-     * @param mixed
+     * @param mixed $host could be Reqest or a string with the current host
+     * @param mixed $apps
      */
     public static function load($host, $apps): self
     {

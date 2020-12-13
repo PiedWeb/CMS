@@ -32,7 +32,6 @@ ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/framework
 ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/liip_imagine.yaml config/packages/liip_imagine.yaml
 ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/security.yaml config/packages/security.yaml
 ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/sonata_admin.yaml config/packages/sonata_admin.yaml
-ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/sonata_translation.yaml config/packages/sonata_translation.yaml
 ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/translation.yaml config/packages/translation.yaml
 ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/twig.yaml config/packages/twig.yaml
 ln -s -f ../../vendor/piedweb/cms-bundle/src/Resources/config/packages/vich_uploader.yaml config/packages/vich_uploader.yaml

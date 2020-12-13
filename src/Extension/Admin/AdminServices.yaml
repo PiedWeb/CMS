@@ -1,0 +1,55 @@
+services:
+  piedweb.admin.page:
+    class: PiedWeb\CMSBundle\Extension\Admin\PageAdmin
+    arguments:
+      - ~
+      - '%pwc.entity_page%'
+      - PiedWeb\CMSBundle\Extension\Admin\PageAdminCRUDController
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: admin.label.page }
+    calls:
+      - [setLiipImage, ['@liip_imagine.cache.manager']]
+      - [setTemplate, [list, '@@pwcAdmin/media_mosaic.html.twig']]
+      - [setTemplate, [show, '@@pwcAdmin/page_show.html.twig']]
+      - [setTemplate, [edit, '@@pwcAdmin/page_edit.html.twig']]
+      - [setDefaultLocale, ['%locale%']]
+      - [setSecurityTokenStorage, ['@security.token_storage']]
+      - [setTwig, ['@twig']]
+      - [setApps, ['%pwc.apps%']]
+      - [setMediaClass, ['%pwc.entity_media%']]
+      - [setUserClass, ['%pwc.entity_user%']]
+      - [setPageClass, ['%pwc.entity_page%']]
+      - [setDefaultLocale, ['%pwc.locale%']]
+      - [setPageCanonicalService, ['@piedweb.page_canonical']]
+      - [setParams, ['@parameter_bag']]
+    public: true
+
+  piedweb.admin.media:
+    class: PiedWeb\CMSBundle\Extension\Admin\MediaAdmin
+    arguments: [~, '%pwc.entity_media%', ~]
+    calls:
+      - [setLiipImage, ['@liip_imagine.cache.manager']]
+      - [setTemplate, [list, '@@pwcAdmin/media_mosaic.html.twig']]
+      - [setEntityManager, ['@doctrine.orm.default_entity_manager']]
+      - [setTwig, ['@twig']]
+      - [setPageClass, ['%pwc.entity_page%']]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: admin.label.media }
+
+  piedweb.admin.pagehasmedia:
+    class: PiedWeb\CMSBundle\Extension\Admin\PageHasMedia
+    arguments: [~, '%pwc.entity_pagehasmedia%', ~]
+    calls:
+      - [setLiipImage, ['@liip_imagine.cache.manager']]
+    tags:
+      - { name: sonata.admin, manager_type: orm }
+
+  piedweb.admin.user:
+    class: PiedWeb\CMSBundle\Extension\Admin\UserAdmin
+    arguments: [~, '%pwc.entity_user%', ~]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: admin.label.user }
+    public: true
+    calls:
+      - [setUserClass, ['%pwc.entity_user%']]
+      - [setSecurityTokenStorage, ['@security.token_storage']]

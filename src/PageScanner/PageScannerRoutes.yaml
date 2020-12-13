@@ -1,3 +1,0 @@
-piedweb_cms_page_scanner:
-  path: /admin/page/scan
-  controller: PiedWeb\CMSBundle\PageScanner\PageScannerController::scanAction

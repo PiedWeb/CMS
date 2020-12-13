@@ -14,6 +14,11 @@ class MainContentManager
     protected $mainContent;
     protected $postContent;
 
+    /**
+     * @var Twig
+     */
+    protected $twig;
+
     public function __construct(Twig $twig, PageInterface $page)
     {
         $this->page = $page;

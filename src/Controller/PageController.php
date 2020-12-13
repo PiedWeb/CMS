@@ -88,7 +88,7 @@ class PageController extends AbstractController
         $page->setMainContent($request->request->get('plaintext')); // todo update all fields to avoid errors
 
         return $this->render(
-            '@PiedWebCMS/admin/page_preview.html.twig',
+            '@PiedWebCMS/page/preview.html.twig',
             array_merge(['page' => $page], $app->getParamsForRendering())
         );
     }

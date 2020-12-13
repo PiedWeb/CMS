@@ -39,8 +39,8 @@ sonata_admin:
   options:
     lock_protection: true
   templates:
-    knp_menu_template: '@PiedWebCMS/admin/menu.html.twig'
-    user_block: '@PiedWebCMS/admin/user_block.html.twig'
+    knp_menu_template: '@pwcAdmin/menu.html.twig'
+    user_block: '@pwcAdmin/user_block.html.twig'
 
 #  assets:
 #    extra_stylesheets:
@@ -49,7 +49,7 @@ sonata_admin:
 sonata_doctrine_orm_admin:
   templates:
     form:
-      - '@PiedWebCMS/admin/Form/sd_form_admin_fields.html.twig'
+      - '@pwcAdmin/override/Form/sd_form_admin_fields.html.twig'
 
 sonata_block:
   blocks:

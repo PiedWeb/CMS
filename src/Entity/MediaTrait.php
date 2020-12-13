@@ -97,8 +97,8 @@ trait MediaTrait
 
     /**
      * @ORM\OneToMany(
-     *      targetEntity="PiedWeb\CMSBundle\Entity\PageInterface",
-     *      mappedBy="mainImage"
+     *     targetEntity="PiedWeb\CMSBundle\Entity\PageInterface",
+     *     mappedBy="mainImage"
      * )
      */
     protected $mainImagePages;
@@ -142,6 +142,21 @@ trait MediaTrait
         }
 
         return $this;
+    }
+
+    /**
+     * Useed in twig AppExtension transformInlineImageToMedia.
+     */
+    public static function loadFromSrc($src)
+    {
+        $src = substr($src, \strlen('/media/default/'));
+
+        $media = new self();
+        $media->setRelativeDir('/media');
+        $media->setMedia($src);
+        $media->slug = $media->removeExtension($src);
+
+        return $media;
     }
 
     /**

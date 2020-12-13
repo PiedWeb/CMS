@@ -37,9 +37,6 @@ trait PageI18nTrait
         return $this;
     }
 
-    /**
-     * @return Collection|self[]
-     */
     public function getTranslations(): Collection
     {
         return $this->translations;

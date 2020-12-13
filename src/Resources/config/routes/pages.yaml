@@ -9,6 +9,14 @@ custom_host_routes:
     host: '^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$'
     #'[a-zA-Z0-9\-\.]*'
 
+# admin or not admin
+piedweb_cms_markdown_preview:
+  path: /admin/preview/{slug}
+  methods: [POST, GET]
+  controller: PiedWeb\CMSBundle\Controller\PageController::preview
+  requirements:
+    slug: '[a-zA-Z0-9\-/]*'
+
 ## Catch-all
 
 custom_host_piedweb_cms_page:
