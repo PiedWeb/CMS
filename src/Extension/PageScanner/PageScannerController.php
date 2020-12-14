@@ -2,6 +2,8 @@
 
 namespace PiedWeb\CMSBundle\Extension\PageScanner;
 
+use DateInterval;
+use PiedWeb\CMSBundle\Utils\LastTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBag;
@@ -46,9 +48,15 @@ class PageScannerController extends AbstractController
             $errors = [];
         }
 
-        exec('cd ../ && php bin/console page:scan > /dev/null 2>/dev/null &');
+        $lastTime = new LastTime(self::$fileCache);
+        if (false === $lastTime->wasRunSince(new DateInterval('PT5M'))) { // todo config
+            exec('cd ../ && php bin/console page:scan > /dev/null 2>/dev/null &');
+            $newRunLaunched = true;
+            $lastTime->setWasRun('now', false);
+        }
 
         return $this->render('@pwcPageScanner/results.html.twig', [
+            'newRun' => $newRunLaunched ?? false,
             'lastEdit' => $lastEdit,
             'errorsByPages' => $errors,
         ]);

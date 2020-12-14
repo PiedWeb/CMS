@@ -15,15 +15,14 @@ class LastTime
 
     public function __construct(string $filePath)
     {
-        $this->filePath = $filePath; //$rootDir.'/../var/last/'.$actionName;
+        $this->filePath = $filePath;
     }
 
     public function wasRunSince(DateInterval $interval): bool
     {
         $previous = $this->get();
 
-        if (false !== $previous
-            && $previous->add($interval) > new DateTime('now')) {
+        if (false === $previous || $previous->add($interval) < new DateTime('now')) {
             return false;
         }
 
@@ -32,6 +31,7 @@ class LastTime
 
     /**
      * Return false if never runned else last datetime it was runned.
+     * If $default is set, return $default time if never runned.
      */
     public function get($default = false)
     {
@@ -39,11 +39,26 @@ class LastTime
             return false === $default ? false : new DateTime($default);
         }
 
-        return new DateTime(file_get_contents($this->filePath));
+        return new DateTime('@'.filemtime($this->filePath));
     }
 
+    public function setWasRun($datetime = 'now', $setIfNotExist = true): void
+    {
+        if (!file_exists($this->filePath)) {
+            if (false === $setIfNotExist) {
+                return;
+            }
+            file_put_contents($this->filePath, '');
+        }
+
+        touch($this->filePath, (new DateTime($datetime))->getTimestamp());
+    }
+
+    /**
+     * alias for set was run.
+     */
     public function set($datetime = 'now')
     {
-        file_put_contents($this->filePath, (new DateTime($datetime))->format('Y-m-d H:i:s'));
+        $this->setWasRun($datetime);
     }
 }
