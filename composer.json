@@ -58,7 +58,7 @@
     "phpunit/phpunit": "^9",
     "squizlabs/php_codesniffer": "^3.5",
     "friendsofphp/php-cs-fixer": "^2.16",
-    "vimeo/psalm": "^3.11"
+    "vimeo/psalm": "^4.3"
   },
   "config": {
     "sort-packages": false
