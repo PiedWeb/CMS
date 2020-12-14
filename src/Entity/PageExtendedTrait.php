@@ -104,7 +104,9 @@ trait PageExtendedTrait
     public function getName($firstOnly = false): ?string
     {
         if ($firstOnly) {
-            return trim(explode(',', $this->name)[0] ?? $this->name ?? $this->h1 ?? $this->title);
+            $names = explode(',', $this->name);
+
+            return $names[0] ? trim($names[0]) : ($this->name ?: ($this->h1 ?: $this->title));
         }
 
         return $this->name;

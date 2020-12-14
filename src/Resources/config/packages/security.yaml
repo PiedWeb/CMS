@@ -43,13 +43,14 @@ security:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
-    main:
+    default:
       anonymous: lazy
       http_basic:
         realm: Secured Area
       guard:
         authenticators:
           - PiedWeb\CMSBundle\Security\UserAuthenticator
+        entry_point: PiedWeb\CMSBundle\Security\UserAuthenticator
       logout:
         path: piedweb_cms_logout
         # where to redirect after logout
@@ -58,9 +59,3 @@ security:
         lifetime: 31536000 # a year
         always_remember_me: true
         secret: '%kernel.secret%'
-
-  access_control:
-    - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/admin/, role: ROLE_EDITOR }

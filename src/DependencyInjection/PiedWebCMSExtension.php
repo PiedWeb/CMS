@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Parser;
 
-class PiedWebCMSExtension extends Extension //implements PrependExtensionInterface
+class PiedWebCMSExtension extends Extension implements PrependExtensionInterface
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -64,7 +64,6 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
         return 'piedweb_cms'; // change to pwc todo
     }
 
-    /*
     public function prepend(ContainerBuilder $container)
     {
         // Load configurations for other package
@@ -72,10 +71,18 @@ class PiedWebCMSExtension extends Extension //implements PrependExtensionInterfa
         $finder = Finder::create()->files()->name('*.yaml')->in(__DIR__.'/../Resources/config/packages/');
         foreach ($finder as $file) {
             $configs = $parser->parse(file_get_contents($file->getRealPath()));
+            if ('sonata_admin_blob' == substr($file->getRealPath(), 0, -5)) {
+                // check if extension is loaded
+            }
             foreach ($configs as $name => $config) {
+                if (
+                    'piedweb_cms' == $name
+                    //|| 'security' == $name
+                ) { // this file is just for doc purpose
+                    continue;
+                }
                 $container->prependExtensionConfig($name, $config);
             }
         }
     }
-    /**/
 }

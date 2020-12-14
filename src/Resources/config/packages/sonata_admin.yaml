@@ -42,10 +42,6 @@ sonata_admin:
     knp_menu_template: '@pwcAdmin/menu.html.twig'
     user_block: '@pwcAdmin/user_block.html.twig'
 
-#  assets:
-#    extra_stylesheets:
-#      - bundles/sonatatranslation/css/sonata-translation.css
-
 sonata_doctrine_orm_admin:
   templates:
     form:

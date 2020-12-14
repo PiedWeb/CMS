@@ -4,13 +4,13 @@ namespace PiedWeb\CMSBundle\EventListener;
 
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use PiedWeb\CMSBundle\Entity\UserInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserListener
 {
     protected $passwordEncoder;
 
-    public function __construct(UserPasswordEncoder $passwordEncoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
     }

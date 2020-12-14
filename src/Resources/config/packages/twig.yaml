@@ -3,17 +3,15 @@ twig:
   debug: '%kernel.debug%'
   strict_variables: '%kernel.debug%'
   paths:
-    '%kernel.root_dir%/../vendor/sonata-project/admin-bundle/src/Resources/views': SonataAdmin
+    '%vendor_dir%/sonata-project/admin-bundle/src/Resources/views': SonataAdmin
     '%kernel.root_dir%/../templates': App
-    '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Extension/Admin/views': pwcAdmin
-    '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Extension/PageScanner/views': pwcPageScanner
-    '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Extension/StaticGenerator/views': pwcStaticGenerator
-    '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Extension/TemplateEditor/views': pwcTemplateEditor
-    '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Extension/UpdateNotification/views': pwUpdateNotification
-    '%kernel.root_dir%/../vendor/piedweb/cms-bundle/src/Resources/views/TwigBundle': Twig
+    '%pwc.root%/Extension/Admin/views': pwcAdmin
+    '%pwc.root%/Extension/PageScanner/views': pwcPageScanner
+    '%pwc.root%/Extension/StaticGenerator/views': pwcStaticGenerator
+    '%pwc.root%/Extension/TemplateEditor/views': pwcTemplateEditor
+    '%pwc.root%/Extension/UpdateNotification/views': pwUpdateNotification
+    '%pwc.root%/Resources/views/TwigBundle': Twig
     '%kernel.root_dir%/../templates/bundles/PiedWebCMSBundle/': PiedWebCMS
-    '%kernel.root_dir%/../vendor/piedweb/theme-component-bundle/src/Resources/views': PiedWebCMS
-    '%kernel.root_dir%/../vendor/piedweb/../piedweb/theme-component-bundle/src/Resources/views': PiedWebThemeComponent
 
   form_themes:
     - 'bootstrap_4_layout.html.twig'

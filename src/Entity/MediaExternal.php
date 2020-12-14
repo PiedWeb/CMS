@@ -24,4 +24,9 @@ class MediaExternal extends Media
 
         return $media;
     }
+
+    public function getFullPath(): ?string
+    {
+        return $this->relativeDir;
+    }
 }

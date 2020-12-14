@@ -166,6 +166,6 @@ class PageAdmin extends AbstractAdmin
             $thumb = self::$thumb;
         }
 
-        return new Metadata($page->getTitle(), null, $thumb);
+        return new Metadata(strip_tags($page->getName(true)), null, $thumb);
     }
 }

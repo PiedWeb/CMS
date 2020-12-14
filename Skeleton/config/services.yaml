@@ -1,0 +1,19 @@
+parameters:
+  locale: 'fr'
+  database: 'sqlite:///%kernel.cache_dir%/test_database.sqlite'
+  secret: 'myS3cretKey' #'%env(APP_SECRET)%'
+  pwc.root: '%kernel.project_dir%/../src' #'%kernel.root_dir%/../vendor/piedweb/cms-bundle/src'
+  vendor_dir: '%kernel.project_dir%/../vendor' #'%kernel.root_dir%/../vendor'
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\:
+    resource: '../src/*'
+    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+  App\Controller\:
+    resource: '../src/Controller'
+    tags: ['controller.service_arguments']

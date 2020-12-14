@@ -40,6 +40,8 @@ trait PageTrait
     protected $mainContent;
 
     /**
+     * In fact, createdAt is more a publishedAt.
+     *
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;

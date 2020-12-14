@@ -1,6 +1,3 @@
-parameters:
-  env(DATABASE_URL): 'sqlite:///%kernel.project_dir%/var/app.db'
-
 doctrine:
   dbal:
     # configure these for your database server
@@ -11,7 +8,7 @@ doctrine:
       charset: utf8mb4
       collate: utf8mb4_unicode_ci
 
-    url: '%env(resolve:DATABASE_URL)%'
+    url: '%database%'
   orm:
     auto_generate_proxy_classes: '%kernel.debug%'
     naming_strategy: doctrine.orm.naming_strategy.underscore

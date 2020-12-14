@@ -12,15 +12,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PageController extends AbstractController
 {
+    protected $params;
+
+    public function __construct(
+        ParameterBagInterface $params
+    ) {
+        $this->params = $params;
+    }
+
     public function show(
         ?string $slug,
         ?string $host,
-        Request $request,
-        ParameterBagInterface $params
+        Request $request
     ) {
-        $app = App::load($host ?? $request, $params);
+        $app = App::load($host ?? $request, $this->params);
         $slug = (null === $slug || '' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
-        $page = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
+        $page = Repository::getPageRepository($this->getDoctrine(), $this->params->get('pwc.entity_page'))
             ->getPage($slug, $host ?? $app->getHost(), $app->isFirstApp());
 
         // Check if page exist
@@ -28,8 +35,8 @@ class PageController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if (null !== $page->getLocale()) { // avoid bc break
-            $page->setLocale($params->get('pwc.locale'));
+        if (!$page->getLocale()) { // avoid bc break
+            $page->setLocale($this->params->get('pwc.locale'));
         }
 
         $request->setLocale($page->getLocale());
@@ -73,11 +80,10 @@ class PageController extends AbstractController
 
     public function preview(
         ?string $slug,
-        Request $request,
-        ParameterBagInterface $params
+        Request $request
     ) {
-        $app = App::load($request, $params);
-        $pageEntity = $params->get('pwc.entity_page');
+        $app = App::load($request, $this->params);
+        $pageEntity = $this->params->get('pwc.entity_page');
 
         $page = (null === $slug || '' === $slug) ?
             new $pageEntity()
@@ -96,16 +102,15 @@ class PageController extends AbstractController
     public function showFeed(
         ?string $slug,
         ?string $host,
-        Request $request,
-        ParameterBagInterface $params
+        Request $request
     ) {
         if ('homepage' == $slug) {
             return $this->redirect($this->generateUrl('piedweb_cms_page_feed', ['slug' => 'index']), 301);
         }
 
-        $app = App::load($host ?? $request, $params);
+        $app = App::load($host ?? $request, $this->params);
         $slug = (null === $slug || 'index' === $slug) ? 'homepage' : rtrim(strtolower($slug), '/');
-        $page = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
+        $page = Repository::getPageRepository($this->getDoctrine(), $this->params->get('pwc.entity_page'))
             ->getPage($slug, $app->getHost(), $app->isFirstApp());
 
         // Check if page exist
@@ -133,37 +138,38 @@ class PageController extends AbstractController
      */
     public function showMainFeed(
         ?string $host,
-        Request $request,
-        ParameterBagInterface $params
+        Request $request
     ) {
-        $app = App::load($host ?? $request, $params);
+        $app = App::load($host ?? $request, $this->params);
         // Retrieve info from homepage, for i18n, assuming it's named with locale
-        $locale = $request->getLocale() ? rtrim($request->getLocale(), '/') : $params->get('locale');
-        $LocaleHomepage = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
+        $locale = $request->getLocale() ? rtrim($request->getLocale(), '/') : $this->params->get('locale');
+        $LocaleHomepage = Repository::getPageRepository($this->getDoctrine(), $this->params->get('pwc.entity_page'))
             ->getPage($locale, $app->getHost(), $app->isFirstApp());
-        $page = $LocaleHomepage ?? Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
+        $page = $LocaleHomepage ?? Repository::getPageRepository(
+            $this->getDoctrine(),
+            $this->params->get('pwc.entity_page')
+        )
             ->getPage('homepage', $app->getHost(), $app->isFirstApp());
 
         if (!$page) {
             throw $this->createNotFoundException();
         }
 
-        $params = [
-            'pages' => $this->getPages(5, $request, $params),
+        $this->params = [
+            'pages' => $this->getPages(5, $request),
             'page' => $page,
-            'feedUri' => ($params->get('locale') == $locale ? '' : $locale.'/').'feed.xml',
+            'feedUri' => ($this->params->get('locale') == $locale ? '' : $locale.'/').'feed.xml',
         ];
 
-        return $this->render('@PiedWebCMS/page/rss.xml.twig', array_merge($params, $app->getParamsForRendering()));
+        return $this->render('@PiedWebCMS/page/rss.xml.twig', array_merge($this->params, $app->getParamsForRendering()));
     }
 
     public function showSitemap(
         ?string $host,
-        Request $request,
-        ParameterBagInterface $params
+        Request $request
     ) {
-        $app = App::load($host ?? $request, $params);
-        $pages = $this->getPages(null, $request, $params);
+        $app = App::load($host ?? $request, $this->params);
+        $pages = $this->getPages(null, $request);
 
         if (!$pages) {
             throw $this->createNotFoundException();
@@ -175,17 +181,17 @@ class PageController extends AbstractController
         ]);
     }
 
-    protected function getPages(?int $limit = null, Request $request, ParameterBagInterface $params)
+    protected function getPages(?int $limit = null, Request $request)
     {
         $requestedLocale = rtrim($request->getLocale(), '/');
 
-        $app = App::load($request, $params);
-        $pages = Repository::getPageRepository($this->getDoctrine(), $params->get('pwc.entity_page'))
+        $app = App::load($request, $this->params);
+        $pages = Repository::getPageRepository($this->getDoctrine(), $this->params->get('pwc.entity_page'))
             ->getIndexablePages(
                 $app->getHost(),
                 $app->isFirstApp(),
                 $requestedLocale,
-                $params->get('locale'),
+                $this->params->get('locale'),
                 $limit
             )->getQuery()->getResult();
 

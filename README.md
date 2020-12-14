@@ -64,10 +64,8 @@ List of Bundles wich extend this one:
 
 ## TODO
 
-- [ ] Move route to annotation (less extendable but more pratical with priority)
-- [ ] Move media to var (and create a link ?!)
 - [ ] Intégrer LinksImprover (+ UX), après précédent
-- [ ] search for all "todo" in the code, refactor and test the code
+- [ ] Test the code, search for all "todo" in the code,
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
 - [ ] Release V1
 - [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io)
@@ -78,6 +76,12 @@ List of Bundles wich extend this one:
 - [ ] Scan : scanner une page en direct + scanner plus de choses (liens externes, texte alternative manquant, etc.)
 - [ ] Gérer un système d'extension viable pour l'admin : à l'install, créer les fichiers Admin qui étendent l'admin de base
       L'ajout d'un plugin modifie automatiquement ce nouveau fichier en ajoutant le code nécessaire (ajout d'une trait + édition d'une fonction)
+
+### To plan
+
+- [ ] Add https://github.com/nan-guo/Sonata-Menu-Bundle
+- [ ] Move route to annotation (less extendable but more pratical with priority)
+- [ ] Move media to var (and create a link ?!)
 
 ## Credits
 

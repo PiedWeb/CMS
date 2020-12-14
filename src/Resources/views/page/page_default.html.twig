@@ -3,7 +3,7 @@
 {# ----------- #}
 
 {% block html_opener %}
-	<html lang="{{ page.locale|default(app.request.getLocale()) }}"{% if page.htmlOpenerAttr is not null %} {{ page.htmlOpenerAttr|raw }}{% endif %}>
+	<html lang="{{ page.locale|default(app.request ? app.request.getLocale() : '') }}"{% if page.htmlOpenerAttr is not null %} {{ page.htmlOpenerAttr|raw }}{% endif %}>
 {% endblock %}
 
 {% block title %}

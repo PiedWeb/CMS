@@ -1,18 +1,18 @@
 framework:
-    secret: '%env(APP_SECRET)%'
-    translator: { fallbacks: ["%locale%"] }
+  secret: '%secret%'
+  translator: { fallbacks: ['%locale%'] }
 
-    session:
-        handler_id: ~
-        cookie_lifetime: 0
+  session:
+    handler_id: ~
+    cookie_lifetime: 0
 
-    php_errors:
-        log: true
+  php_errors:
+    log: true
 
-    default_locale: "%locale%"
+  default_locale: '%locale%'
 
-    templating:
-        engines: ['twig', 'php']
+  templating:
+    engines: ['twig', 'php']
 
-    assets:
-        json_manifest_path: '%kernel.project_dir%/public/assets/manifest.json'
+  assets:
+    json_manifest_path: '%kernel.project_dir%/public/assets/manifest.json'
