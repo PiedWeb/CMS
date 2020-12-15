@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="PHP Packages Open Source" />
 </a></p>
 
-# CMS & Static Website Generator
+# CMS Extendable to make peace between User, Editor, Developer, Designer and SEO
 
 [![Latest Version](https://img.shields.io/github/tag/piedweb/cms.svg?style=flat&label=release)](https://github.com/PiedWeb/CMS/tags)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
@@ -11,17 +11,24 @@
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/PiedWeb/CMS.svg?style=flat)](https://scrutinizer-ci.com/g/PiedWeb/CMS/code-structure)
 [![Total Downloads](https://img.shields.io/packagist/dt/piedweb/cms-bundle.svg?style=flat)](https://packagist.org/packages/piedweb/cms-bundle)
 
-Yet ! Another CMS :)
+**Main Features** :
 
-PiedWebCMS is a Symfony Bundle built with traits.
+- **Editor**
+  - Old School, simple, functionnable default Admin
+  - Write as you prefer in **a rich Text editor**, in **Markdown** or directly in **html** (with **Twig** possibilities !!)
+  - Easily extendable ([extensions repository](#extension)) or ask a developper what you wish
+- **Developer**
+  - Build on top on Symfony/Twig and other [fantastic well maintained packages](./composer.json)
+  - Build as a symfony bundle, **extendable** with symfony bundle
+  - **Tested** / **Traits** / **Command**
+- **SEO**
+  _ Title/H1/Description
+  _ Url Rewriting
+  _ Links Watcher (dead links, redirection, etc.)
+  _ Links Improver (links suggestion on writing, or automatic adding)
+  _ Blazing Fast (static website with dynamic possibilities_)
 
-It permit to get the basic functionalities for **a website focus on content for the Web**... to go further or to use as it.
-
-A Static Website Generator (compatible with Github Pages, Apache Server, ...) is integrated in his core (and could be easily desintegrated).
-
-Build on top on [Symfony 4](https://github.com/symfony/symfony), [VichUploader](https://github.com/dustin10/VichUploaderBundle), [LiipImagine](https://github.com/liip/LiipImagineBundle), [Sonata Admin](https://github.com/sonata-project/SonataAdminBundle), and more (see [composer.json](https://github.com/PiedWeb/CMS/blob/master/composer.json)).
-
-**If you install it, be careful, the first version is not out and the code is not heavily tested !**
+... and more to discover, just install it in a few seconds !
 
 ## Installation
 
@@ -34,52 +41,74 @@ curl https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms >> install
 
 Else, look at [`install-cms`](https://raw.githubusercontent.com/PiedWeb/CMS/master/install-cms) where each step is describe.
 
-Then edit `config/packages/piedweb_cms.yaml` and files in `assets` to configure your web app. Default web app is stored in sqlite.
+## Options
+
+...todo describe configuration
 
 ## Update
 
-Check [Update.md](https://raw.githubusercontent.com/PiedWeb/CMS/master/UPDATE.md)
+Run `composer update`.
+
+If you install before v1 check [Update.md](https://raw.githubusercontent.com/PiedWeb/CMS/master/UPDATE.md).
 
 ## Test
 
-... todo
+Run `phpunit`
 
 ## Documentation
 
-### Dev
+### Editor
 
-**core** correspond to basic functionnalities for _page_, _media_ and _user_.
+If you use the default admin, everything is documented directly inside the admin for _daily editing_.
+
+- Advanced configuration, look at [options](#otions).
+- [Extend your app with existing extension](#extension) ?
+- [Customize your design with theme](#theme)
+
+### <a name="theme"></a> Designer : Extend or Create a Theme
+
+... todo ...
+
+### Developer : Extend
+
+### Developper : Understand the logic
+
+The **core** correspond to basic functionnalities for _page_, _media_ and _user_.
 
 Else are **extension** (wich can be disabled or move to another bundle).
 
 The code for the core follow the [symfony's default directory structure](https://symfony.com/doc/current/best_practices.html#use-the-default-directory-structure) for the **core**. For **extension**, liberty is taken to simplify the directory structure.
 
-Have a look to the [cookbook](https://github.com/PiedWeb/CMS/blob/master/docs/Cookbook.md).
-
 ## Extension
 
-List of Bundles wich extend this one:
+List of existing extension wich are not in the **core** :
 
 - [Conversation](https://packagist.org/packages/piedweb/conversation)
 
 ## TODO
 
+- [ ] Gérer un système d'extension viable pour l'admin : à l'install, créer les fichiers Admin qui étendent l'admin de base
+      L'ajout d'un plugin modifie automatiquement ce nouveau fichier en ajoutant le code nécessaire (ajout d'une trait + édition d'une fonction)
+      Retro-compatibilité : créer le fichier admin + le services (autowire) si il n'existe pas
+- [ ] Better management assets
+- [ ] Installation without composer (download composer if not installed)
+- [ ] ...
+- [ ] Default bootstrap 5, default Tailwind in core
 - [ ] Intégrer LinksImprover (+ UX), après précédent
 - [ ] Test the code, search for all "todo" in the code,
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
 - [ ] Release V1
 - [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io)
-- [ ] Create a page from a Media (media edit)
+- [ ] Create a page from a Media (media edit) => button to create a new page with title = name and mainImage = Media
 - [ ] Multi upload
 - [ ] Intégrer Schema.org dans le backend d'une page
 - [ ] Better management for social network from backend (plugin ?!)
 - [ ] Scan : scanner une page en direct + scanner plus de choses (liens externes, texte alternative manquant, etc.)
-- [ ] Gérer un système d'extension viable pour l'admin : à l'install, créer les fichiers Admin qui étendent l'admin de base
-      L'ajout d'un plugin modifie automatiquement ce nouveau fichier en ajoutant le code nécessaire (ajout d'une trait + édition d'une fonction)
 
 - [ ] Documenter : extend your cms (short: it's like writing a symfony app, open vs code, navigate in the code)
 - [ ] Documenter : create a extension (short: create a symfony bundle)
 - [ ] Documenter : create a template (short: create a new extension, prepenting twig with pat..to..view..folder: @TemplateName)
+- [ ] Do something with the [cookbook](https://github.com/PiedWeb/CMS/blob/master/docs/Cookbook.md)
 
 - [ ] Settings Manager (simple textarea permitting to edit piedweb_cms config and parameters ? and rebooting cache)
 
