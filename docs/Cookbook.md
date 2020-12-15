@@ -1,5 +1,4 @@
-Cookbook
-============
+# Cookbook
 
 ## Installation and Personalization
 
@@ -39,7 +38,7 @@ Activate purge css commented code in `webpack.config.js`
 Command line
 
 ```
-bin/console media:cache:generate
+bin/console piedweb:media:cache
 ```
 
 ## Editor Tips

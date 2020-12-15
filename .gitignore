@@ -17,3 +17,5 @@ composer.lock
 /symfony.lock
 yarn.lock
 .phpunit.result*
+/Skeleton/public/media/*
+/Skeleton/media/*.webp

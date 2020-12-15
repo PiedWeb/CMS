@@ -98,7 +98,7 @@ services:
       $projectDir: '%kernel.project_dir%'
 
   piedweb.media_command:
-    class: PiedWeb\CMSBundle\Command\MediaCommand
+    class: PiedWeb\CMSBundle\Command\MediaCacheGeneratorCommand
     autowire: true
     arguments:
       $mediaClass: '%pwc.entity_media%'

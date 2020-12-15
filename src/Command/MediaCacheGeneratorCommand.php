@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MediaCommand extends Command
+class MediaCacheGeneratorCommand extends Command
 {
     /**
      * @var EntityManagerInterface
@@ -42,7 +42,7 @@ class MediaCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('media:cache:generate')
+            ->setName('piedweb:media:cache')
             ->setDescription('Generate all images cache')
             ->addArgument('media', InputArgument::OPTIONAL, 'Image path (without `/media/`) to (re)generate cache.');
     }

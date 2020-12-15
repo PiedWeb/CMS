@@ -64,7 +64,7 @@ class UserCreateCommand extends Command
     {
         $this->createUser($input->getArgument('email'), $input->getArgument('password'), $input->getArgument('role'));
 
-        $output->writeln('<info>done...</info>');
+        $output->writeln('<info>User `'.$input->getArgument('email').'` created with success.</info>');
 
         return 0;
     }

@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class UserCommandTest  extends KernelTestCase
+class MediaCacheGeneratorCommandTest  extends KernelTestCase
 {
 
     public function testExecute()
@@ -14,16 +14,18 @@ class UserCommandTest  extends KernelTestCase
         $kernel = static::createKernel();
         $application = new Application($kernel);
 
-        $command = $application->find('piedweb:user:create');
+        $command = $application->find('piedweb:media:cache');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([
-            'email' => 'user@example.tld',
-            'password' => 'mySecr3tpAssword',
-            'role' => 'ROLE_USER',
-        ]);
+        $commandTester->execute([]);
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $this->assertTrue(strpos($output, 'success') !== false);
+        $this->assertTrue(strpos($output, '100%') !== false);
+
+        $commandTester->execute(['media'=>'piedweb-logo.png']);
+
+        // the output of the command in the console
+        $output = $commandTester->getDisplay();
+        $this->assertTrue(strpos($output, '100%') !== false);
     }
 }

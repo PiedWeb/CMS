@@ -21,7 +21,7 @@ class AppFixtures extends Fixture
 
 
         $media = (new Media())
-            ->setRelativeDir('/media')
+            ->setRelativeDir('media')
             ->setMimeType('image/png')
             ->setSize(2)
             ->setSlug('piedweb-logo.png')
