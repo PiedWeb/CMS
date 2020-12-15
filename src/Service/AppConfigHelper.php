@@ -31,11 +31,17 @@ class AppConfigHelper
         $this->host = $host;
         $this->apps = $apps;
 
-        $this->loadCurrentApp();
+        $this->switchCurrentApp();
     }
 
-    protected function loadCurrentApp()
+    public function switchCurrentApp($host = null)
     {
+        if (null === $host) {
+            $host = $this->host;
+        } else {
+            $this->host = $host;
+        }
+
         foreach ($this->apps as $app) {
             if (\in_array($this->host, $app['hosts']) || null === $this->host) {
                 $this->app = $app;

@@ -7,6 +7,7 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\Media;
 use App\Entity\User;
 use App\Entity\Page;
+use DateTime;
 
 class AppFixtures extends Fixture
 {
@@ -32,6 +33,8 @@ class AppFixtures extends Fixture
         $page = (new Page())
             ->setH1('Welcome : this is your first page')
             ->setSlug('homepage')
+            ->setLocale('en')
+            ->setCreatedAt(new DateTime('2 days ago'))
             ->setMainContent(file_get_contents(__DIR__.'/WelcomePageMainContent.md'))
             ->setMainContentIsMarkdown(true);
 

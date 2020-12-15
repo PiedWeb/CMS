@@ -15,4 +15,7 @@ piedweb_cms:
   #email_sender:         me@tld.com
   #email_sender_name:    'Pied Web CMS'
   apps:
-    - { hosts: ['localhost.dev'], base_url: 'https://localhost.dev' }
+    - {
+        hosts: ['localhost.dev', 'localhost'],
+        base_url: 'https://localhost.dev',
+      }
