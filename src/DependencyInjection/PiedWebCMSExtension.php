@@ -84,10 +84,7 @@ class PiedWebCMSExtension extends Extension implements PrependExtensionInterface
                 // check if extension is loaded
             }
             foreach ($configs as $name => $config) {
-                if (
-                    'piedweb_cms' == $name
-                    //|| 'security' == $name
-                ) { // this file is just for doc purpose
+                if ('piedweb_cms' == $name) { // this file is just for doc purpose //|| 'security' == $name
                     continue;
                 }
                 $container->prependExtensionConfig($name, $config);
