@@ -114,6 +114,10 @@ class AppConfigHelper
 
     public function getTemplate(string $path = '/page/page.html.twig', ?Twig $twig = null)
     {
+        if ($this->isFullPath($path)) { // compatibilité avant v1
+            return $path;
+        }
+
         $name = $this->app['template'].$path;
 
         if (null === $twig || '@PiedWebCMS' == $this->app['template']) {
@@ -128,5 +132,10 @@ class AppConfigHelper
         }
 
         return $name;
+    }
+
+    public function isFullPath($path)
+    {
+        return 0 === strpos($path, '@') && false !== strpos($path, '/');
     }
 }

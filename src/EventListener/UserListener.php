@@ -15,6 +15,9 @@ class UserListener
         $this->passwordEncoder = $passwordEncoder;
     }
 
+    /**
+     * Set Password on database update if PlainPassword is set.
+     */
     public function preUpdate(UserInterface $user, PreUpdateEventArgs $event)
     {
         if (\strlen($user->getPlainPassword()) > 0) {

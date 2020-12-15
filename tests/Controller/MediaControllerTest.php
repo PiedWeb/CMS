@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\HttpFoundation\Request;
 
 class MediaControllerTest extends KernelTestCase
 {

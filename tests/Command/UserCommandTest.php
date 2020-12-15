@@ -6,9 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class UserCommandTest  extends KernelTestCase
+class UserCommandTest extends KernelTestCase
 {
-
     public function testExecute()
     {
         $kernel = static::createKernel();
@@ -24,6 +23,6 @@ class UserCommandTest  extends KernelTestCase
 
         // the output of the command in the console
         $output = $commandTester->getDisplay();
-        $this->assertTrue(strpos($output, 'success') !== false);
+        $this->assertTrue(false !== strpos($output, 'success'));
     }
 }
