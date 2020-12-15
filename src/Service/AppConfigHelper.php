@@ -36,9 +36,7 @@ class AppConfigHelper
 
     public function switchCurrentApp($host = null)
     {
-        if (null === $host) {
-            $host = $this->host;
-        } else {
+        if (null !== $host) {
             $this->host = $host;
         }
 

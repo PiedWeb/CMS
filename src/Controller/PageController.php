@@ -66,7 +66,7 @@ class PageController extends AbstractController
 
     public function showFeed(?string $slug, ?string $host, Request $request)
     {
-        $page = $this->getPage($slug, $host);
+        $page = $this->getPage($slug, $host, $request);
 
         if ('homepage' == $slug) {
             return $this->redirect($this->generateUrl('piedweb_cms_page_feed', ['slug' => 'index']), 301);
