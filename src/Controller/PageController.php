@@ -155,13 +155,13 @@ class PageController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $this->params = [
+        $params = [
             'pages' => $this->getPages(5, $request),
             'page' => $page,
             'feedUri' => ($this->params->get('locale') == $locale ? '' : $locale.'/').'feed.xml',
         ];
 
-        return $this->render('@PiedWebCMS/page/rss.xml.twig', array_merge($this->params, $app->getParamsForRendering()));
+        return $this->render('@PiedWebCMS/page/rss.xml.twig', array_merge($params, $app->getParamsForRendering()));
     }
 
     public function showSitemap(

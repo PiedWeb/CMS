@@ -77,6 +77,11 @@ List of Bundles wich extend this one:
 - [ ] Gérer un système d'extension viable pour l'admin : à l'install, créer les fichiers Admin qui étendent l'admin de base
       L'ajout d'un plugin modifie automatiquement ce nouveau fichier en ajoutant le code nécessaire (ajout d'une trait + édition d'une fonction)
 
+- [ ] Template devient Theme avec une gestion du @
+      Un theme est une extension
+
+- [ ] Settings Manager (simple textarea permitting to edit piedweb_cms config and parameters ? and rebooting cache)
+
 ### To plan
 
 - [ ] Add https://github.com/nan-guo/Sonata-Menu-Bundle
