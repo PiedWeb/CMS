@@ -28,7 +28,7 @@ class PageRenderingValidator extends ConstraintValidator
             return;
         }
 
-        $template = AppConfigHelper::load($value->getHost(), $this->apps)->getDefaultTemplate();
+        $template = AppConfigHelper::load($value->getHost(), $this->apps)->getTemplate();
 
         try {
             $this->twig->render($template, ['page' => $value]);

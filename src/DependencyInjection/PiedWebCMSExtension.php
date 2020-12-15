@@ -5,6 +5,7 @@
 
 namespace PiedWeb\CMSBundle\DependencyInjection;
 
+use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -37,9 +38,15 @@ class PiedWebCMSExtension extends Extension implements PrependExtensionInterface
     {
         $container->setParameter('pwc', $config);
 
+        $pwcTemplate = Configuration::DEFAULT_TEMPLATE;
+
         foreach ($config as $key => $value) {
+            if ('template' === $key) {
+                $pwcTemplate = $value;
+            }
+
             if ('apps' === $key) {
-                $container->setParameter('pwc.apps', self::parsAppsConfig($value));
+                $container->setParameter('pwc.apps', self::parsAppsConfig($value, $pwcTemplate));
             } elseif (\is_array($value)) {
                 self::loadConfigToParameters($container, $value, $prefix.$key.'.');
             } else {
@@ -49,10 +56,13 @@ class PiedWebCMSExtension extends Extension implements PrependExtensionInterface
         }
     }
 
-    protected static function parsAppsConfig($apps)
+    protected static function parsAppsConfig($apps, $pwcTemplate)
     {
         $result = [];
         foreach ($apps as $app) {
+            if (!$app['template']) {
+                $app['template'] = $pwcTemplate;
+            }
             $result[$app['hosts'][0]] = $app;
         }
 

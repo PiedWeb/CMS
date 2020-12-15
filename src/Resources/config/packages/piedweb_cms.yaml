@@ -13,4 +13,4 @@ piedweb_cms:
   #email_sender:         me@tld.com
   #email_sender_name:    'Pied Web CMS'
   #apps:
-  #- {hosts:[...], base_url:..., default_page_template: '@PiedWebCMS/page/page.html.twig'}
+  #- {hosts:[...], base_url:..., template: '@PiedWebCMS/page/page.html.twig'}

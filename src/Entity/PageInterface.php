@@ -27,6 +27,7 @@ interface PageInterface
     public function getCreatedAt();
 
     public function getHost();
+    public function getTemplate();
 
     public function setMainContent(?string $mainContent);
 }

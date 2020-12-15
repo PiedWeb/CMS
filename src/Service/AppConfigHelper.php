@@ -5,6 +5,7 @@ namespace PiedWeb\CMSBundle\Service;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Twig\Environment as Twig;
 
 class AppConfigHelper
 {
@@ -111,8 +112,21 @@ class AppConfigHelper
         ];
     }
 
-    public function getDefaultTemplate()
+    public function getTemplate(string $path = '/page/page.html.twig', ?Twig $twig = null)
     {
-        return $this->app['default_page_template'];
+        $name = $this->app['template'].$path;
+
+        if (null === $twig || $this->app['template'] == '@PiedWebCMS') {
+            return $name;
+        }
+
+        // check if twig template exist
+        try {
+            return $twig->loadTemplate($name);
+        } finally {
+            return '@PiedWebCMS'.$path;
+        }
+
+        return $name;
     }
 }

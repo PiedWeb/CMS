@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment as Twig;
 
 class PageController extends AbstractController
 {
@@ -22,11 +23,14 @@ class PageController extends AbstractController
      * @var App
      */
     protected $app;
+    protected $twig;
 
     public function __construct(
-        ParameterBagInterface $params
+        ParameterBagInterface $params,
+        Twig $twig
     ) {
         $this->params = $params;
+        $this->twig = $twig;
         $this->app = App::load(null, $this->params);
     }
 
@@ -45,9 +49,10 @@ class PageController extends AbstractController
             return $this->redirect($page->getRedirection(), $page->getRedirectionCode());
         }
 
-        $template = $this->app->getDefaultTemplate();
-
-        return $this->render($template, array_merge(['page' => $page], $this->app->getParamsForRendering()));
+        return $this->render(
+            $this->getTemplate($page->getTemplate() ? $page->getTemplate() : '/page/page.html.twig'),
+            array_merge(['page' => $page], $this->app->getParamsForRendering())
+        );
     }
 
     public function preview(?string $slug, ?string $host, Request $request): Response
@@ -59,9 +64,14 @@ class PageController extends AbstractController
         // And not getPage but create a new Page !!! (else, error on unexisting Page)
 
         return $this->render(
-            '@PiedWebCMS/page/preview.html.twig',
+            $this->getTemplate('/page/preview.html.twig'),
             array_merge(['page' => $page], $this->app->getParamsForRendering())
         );
+    }
+
+    protected function getTemplate($path)
+    {
+        return $this->app->getTemplate($path, $this->twig);
     }
 
     public function showFeed(?string $slug, ?string $host, Request $request)
@@ -76,7 +86,7 @@ class PageController extends AbstractController
         $response->headers->set('Content-Type', 'text/xml');
 
         return $this->render(
-            '@PiedWebCMS/page/rss.xml.twig',
+            $this->getTemplate('/page/rss.xml.twig'),
             array_merge(['page' => $page], $this->app->getParamsForRendering()),
             $response
         );
@@ -91,7 +101,7 @@ class PageController extends AbstractController
         $locale = $request->getLocale() ? rtrim($request->getLocale(), '/') : $this->params->get('locale');
         $LocaleHomepage = $this->getPage($locale, $host, $request, false);
         $slug = 'homepage';
-        $page = $LocaleHomepage ? $LocaleHomepage : $this->getPage($slug, $host, $request);
+        $page = $LocaleHomepage ?: $this->getPage($slug, $host, $request);
 
         $params = [
             'pages' => $this->getPages(5, $request),
@@ -99,7 +109,10 @@ class PageController extends AbstractController
             'feedUri' => ($this->params->get('locale') == $locale ? '' : $locale.'/').'feed.xml',
         ];
 
-        return $this->render('@PiedWebCMS/page/rss.xml.twig', array_merge($params, $this->app->getParamsForRendering()));
+        return $this->render(
+            $this->getTemplate('/page/rss.xml.twig'),
+            array_merge($params, $this->app->getParamsForRendering())
+        );
     }
 
     public function showSitemap($_format, ?string $host, Request $request)
@@ -111,10 +124,13 @@ class PageController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render('@PiedWebCMS/page/sitemap.'.$_format.'.twig', [
-            'pages' => $pages,
-            'app_base_url' => $this->app->getBaseUrl(),
-        ]);
+        return $this->render(
+            $this->getTemplate('/page/sitemap.'.$_format.'.twig'),
+            [
+                'pages' => $pages,
+                'app_base_url' => $this->app->getBaseUrl(),
+            ]
+        );
     }
 
     protected function getPages(?int $limit = null, Request $request)
@@ -123,12 +139,12 @@ class PageController extends AbstractController
         //var_dump($requestedLocale);exit;
 
         $pages = $this->getPageRepository()->getIndexablePages(
-                $this->app->getHost(),
-                $this->app->isFirstApp(),
-                $requestedLocale,
-                $this->params->get('locale'),
-                $limit
-            )->getQuery()->getResult();
+            $this->app->getHost(),
+            $this->app->isFirstApp(),
+            $requestedLocale,
+            $this->params->get('locale'),
+            $limit
+        )->getQuery()->getResult();
 
         //foreach ($pages as $page) echo $page->getMetaRobots().' '.$page->getTitle().'<br>';
         //exit('feed updated');

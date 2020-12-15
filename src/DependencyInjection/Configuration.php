@@ -7,6 +7,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
+    const DEFAULT_TEMPLATE = '@PiedWebCMSBundle';
     /**
      * php bin/console config:dump-reference PiedWebCMSBundle.
      */
@@ -28,6 +29,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->scalarNode('name')->defaultValue('PiedWeb.com')->end()
                     ->booleanNode('default_locale_without_prefix')->defaultTrue()->end()
+                    ->scalarNode('template')->defaultValue(self::DEFAULT_TEMPLATE)->end()
                     ->scalarNode('entity_page')->defaultValue('App\Entity\Page')->cannotBeEmpty()->end()
                     ->scalarNode('entity_media')->defaultValue('App\Entity\Media')->cannotBeEmpty()->end()
                     ->scalarNode('entity_user')->defaultValue('App\Entity\User')->cannotBeEmpty()->end()
@@ -56,9 +58,7 @@ class Configuration implements ConfigurationInterface
                                 ->booleanNode('static_generateForApache')->defaultTrue()->end()
                                 ->booleanNode('static_generateForGithubPages')->defaultFalse()->end()
                                 ->booleanNode('static_symlinkMedia')->defaultTrue()->end()
-                                ->scalarNode('default_page_template')
-                                    ->defaultValue('@PiedWebCMS/page/page.html.twig')
-                                ->end()
+                                ->scalarNode('template')->defaultNull()->end()
                                 ->scalarNode('name')->defaultValue('PiedWeb.com')->end()
                                 ->scalarNode('color')->defaultValue('#1fa67a')->end()
                                 //->arrayNode('hosts')->requiresAtLeastOneElement()->scalarPrototype()->beforeNormalization()->castToArray()->end()
