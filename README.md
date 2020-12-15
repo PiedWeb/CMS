@@ -37,11 +37,11 @@ And if your team is only you, this CMS will be perfect to marry with you as **We
 
 ### **SEO** : feel like **wikipedia**
 
-_ Title / H1 / Description / Url Rewriting
-_ i18n (`link alternate hreflang`) easy way
-_ Links Watcher (dead links, redirection, etc.)
-_ Links Improver (links suggestion on writing, or automatic adding)
-_ Blazing Fast (static website with dynamic possibilities_)
+- Title / H1 / Description / Url Rewriting
+- i18n (`link alternate hreflang`) easy way
+- Links Watcher (dead links, redirection, etc.)
+- Links Improver (links suggestion on writing, or automatic adding)
+- Blazing Fast (**static website generator** with dynamic possibilities)
 
 ... and more to discover, just install it in a few seconds !
 
