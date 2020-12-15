@@ -8,9 +8,10 @@
 
 [![Latest Version](https://img.shields.io/github/tag/piedweb/cms.svg?style=flat&label=release)](https://github.com/PiedWeb/CMS/tags)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
-[![Build Status](https://img.shields.io/travis/PiedWeb/CMS/master.svg?style=flat)](https://travis-ci.org/PiedWeb/CMS)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/PiedWeb/CMS/Tests?label=tests)](https://github.com/PiedWeb/CMS/actions)
 [![Quality Score](https://img.shields.io/scrutinizer/g/piedweb/cms.svg?style=flat)](https://scrutinizer-ci.com/g/piedweb/cms)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/PiedWeb/CMS.svg?style=flat)](https://scrutinizer-ci.com/g/PiedWeb/CMS/code-structure)
+[![Type Coverage](https://shepherd.dev/github/piedweb/cms/coverage.svg)](https://shepherd.dev/github/piedweb/cms)
 [![Total Downloads](https://img.shields.io/packagist/dt/piedweb/cms-bundle.svg?style=flat)](https://packagist.org/packages/piedweb/cms-bundle)
 
 And if your team is only you, this CMS will be perfect to marry with you as **Webmaster**.
