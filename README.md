@@ -11,19 +11,25 @@
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/PiedWeb/CMS.svg?style=flat)](https://scrutinizer-ci.com/g/PiedWeb/CMS/code-structure)
 [![Total Downloads](https://img.shields.io/packagist/dt/piedweb/cms-bundle.svg?style=flat)](https://packagist.org/packages/piedweb/cms-bundle)
 
+And if your team is only you, this CMS will be perfect to marry with you as **Webmaster**.
+
 **Main Features** :
 
-- **Editor**
+- **Editor** : feel "like" in wordpress
+  - Multi-site, Multi-language (i18n), Multi-domain or just one simple website
   - Old School, simple, functionnable default Admin
   - Write as you prefer in **a rich Text editor**, in **Markdown** or directly in **html** (with **Twig** possibilities !!)
   - Easily extendable ([extensions repository](#extension)) or ask a developper what you wish
-- **Developer**
-  - Build on top on Symfony/Twig and other [fantastic well maintained packages](./composer.json)
+- **Developer** : feel **at home** if you ever used Symfony
+  - Build on top on Symfony and other [fantastic well maintained packages](./composer.json)
   - Build as a symfony bundle, **extendable** with symfony bundle
   - **Tested** / **Traits** / **Command**
-- **SEO**
-  _ Title/H1/Description
-  _ Url Rewriting
+- **Designer**
+  - Create new theme extending other
+  - Stack : **Twig** / **Webpack**
+- **SEO** : feel like **wikipedia**
+  _ Title / H1 / Description / Url Rewriting
+  _ i18n (`link alternate hreflang`) easy way
   _ Links Watcher (dead links, redirection, etc.)
   _ Links Improver (links suggestion on writing, or automatic adding)
   _ Blazing Fast (static website with dynamic possibilities_)
@@ -95,6 +101,7 @@ List of existing extension wich are not in the **core** :
 - [ ] ...
 - [ ] Default bootstrap 5, default Tailwind in core
 - [ ] Intégrer LinksImprover (+ UX), après précédent
+- [ ] name suggester : parse content, find words or multiple words used only in this doc, suggest it as potential name
 - [ ] Test the code, search for all "todo" in the code,
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
 - [ ] Release V1
