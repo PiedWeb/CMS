@@ -2,6 +2,8 @@
 <img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="PHP Packages Open Source" />
 </a></p>
 
+# NOT READY - WAIT V1
+
 # CMS Extendable to make peace between User, Editor, Developer, Designer and SEO
 
 [![Latest Version](https://img.shields.io/github/tag/piedweb/cms.svg?style=flat&label=release)](https://github.com/PiedWeb/CMS/tags)
@@ -13,27 +15,27 @@
 
 And if your team is only you, this CMS will be perfect to marry with you as **Webmaster**.
 
-### Main Features\*\*
+## Main Features
 
-#### **Editor** : feel "like" in wordpress
+### **Editor** : feel "like" in wordpress
 
 - Multi-site, Multi-language (i18n), Multi-domain or just one simple website
 - Old School, simple, functionnable default Admin
 - Write as you prefer in **a rich Text editor**, in **Markdown** or directly in **html** (with **Twig** possibilities !!)
 - Easily extendable ([extensions repository](#extension)) or ask a developper what you wish
 
-#### **Developer** : feel **at home** if you ever used Symfony
+### **Developer** : feel **at home** if you ever used Symfony
 
 - Build on top on Symfony and other [fantastic well maintained packages](./composer.json)
 - Build as a symfony bundle, **extendable** with symfony bundle
 - **Tested** / **Traits** / **Command**
 
-#### **Designer**
+### **Designer**
 
 - Create new theme extending other
 - Stack : **Twig** / **Webpack**
 
-#### **SEO** : feel like **wikipedia**
+### **SEO** : feel like **wikipedia**
 
 _ Title / H1 / Description / Url Rewriting
 _ i18n (`link alternate hreflang`) easy way
