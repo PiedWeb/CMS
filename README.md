@@ -13,26 +13,33 @@
 
 And if your team is only you, this CMS will be perfect to marry with you as **Webmaster**.
 
-**Main Features** :
+### Main Features\*\*
 
-- **Editor** : feel "like" in wordpress
-  - Multi-site, Multi-language (i18n), Multi-domain or just one simple website
-  - Old School, simple, functionnable default Admin
-  - Write as you prefer in **a rich Text editor**, in **Markdown** or directly in **html** (with **Twig** possibilities !!)
-  - Easily extendable ([extensions repository](#extension)) or ask a developper what you wish
-- **Developer** : feel **at home** if you ever used Symfony
-  - Build on top on Symfony and other [fantastic well maintained packages](./composer.json)
-  - Build as a symfony bundle, **extendable** with symfony bundle
-  - **Tested** / **Traits** / **Command**
-- **Designer**
-  - Create new theme extending other
-  - Stack : **Twig** / **Webpack**
-- **SEO** : feel like **wikipedia**
-  _ Title / H1 / Description / Url Rewriting
-  _ i18n (`link alternate hreflang`) easy way
-  _ Links Watcher (dead links, redirection, etc.)
-  _ Links Improver (links suggestion on writing, or automatic adding)
-  _ Blazing Fast (static website with dynamic possibilities_)
+#### **Editor** : feel "like" in wordpress
+
+- Multi-site, Multi-language (i18n), Multi-domain or just one simple website
+- Old School, simple, functionnable default Admin
+- Write as you prefer in **a rich Text editor**, in **Markdown** or directly in **html** (with **Twig** possibilities !!)
+- Easily extendable ([extensions repository](#extension)) or ask a developper what you wish
+
+#### **Developer** : feel **at home** if you ever used Symfony
+
+- Build on top on Symfony and other [fantastic well maintained packages](./composer.json)
+- Build as a symfony bundle, **extendable** with symfony bundle
+- **Tested** / **Traits** / **Command**
+
+#### **Designer**
+
+- Create new theme extending other
+- Stack : **Twig** / **Webpack**
+
+#### **SEO** : feel like **wikipedia**
+
+_ Title / H1 / Description / Url Rewriting
+_ i18n (`link alternate hreflang`) easy way
+_ Links Watcher (dead links, redirection, etc.)
+_ Links Improver (links suggestion on writing, or automatic adding)
+_ Blazing Fast (static website with dynamic possibilities_)
 
 ... and more to discover, just install it in a few seconds !
 
