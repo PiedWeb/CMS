@@ -116,7 +116,7 @@ class AppConfigHelper
     {
         $name = $this->app['template'].$path;
 
-        if (null === $twig || $this->app['template'] == '@PiedWebCMS') {
+        if (null === $twig || '@PiedWebCMS' == $this->app['template']) {
             return $name;
         }
 

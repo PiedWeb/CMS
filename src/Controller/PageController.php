@@ -50,7 +50,7 @@ class PageController extends AbstractController
         }
 
         return $this->render(
-            $this->getTemplate($page->getTemplate() ? $page->getTemplate() : '/page/page.html.twig'),
+            $this->getTemplate($page->getTemplate() ?: '/page/page.html.twig'),
             array_merge(['page' => $page], $this->app->getParamsForRendering())
         );
     }
@@ -136,7 +136,6 @@ class PageController extends AbstractController
     protected function getPages(?int $limit = null, Request $request)
     {
         $requestedLocale = rtrim($request->getLocale(), '/');
-        //var_dump($requestedLocale);exit;
 
         $pages = $this->getPageRepository()->getIndexablePages(
             $this->app->getHost(),
@@ -145,9 +144,6 @@ class PageController extends AbstractController
             $this->params->get('locale'),
             $limit
         )->getQuery()->getResult();
-
-        //foreach ($pages as $page) echo $page->getMetaRobots().' '.$page->getTitle().'<br>';
-        //exit('feed updated');
 
         return $pages;
     }

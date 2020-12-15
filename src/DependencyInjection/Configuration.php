@@ -8,6 +8,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     const DEFAULT_TEMPLATE = '@PiedWebCMSBundle';
+
     /**
      * php bin/console config:dump-reference PiedWebCMSBundle.
      */
