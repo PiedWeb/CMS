@@ -10,10 +10,10 @@
     "caseyamcl/toc": "^3.0",
     "cocur/slugify": "^3.0|^4.0",
     "doctrine/annotations": "^1.11",
-    "doctrine/doctrine-bundle": "^2.2",
+    "doctrine/doctrine-bundle": "^2.2.2",
     "doctrine/doctrine-fixtures-bundle": "^3.4",
     "doctrine/doctrine-migrations-bundle": "^3.0",
-    "doctrine/orm": "^2.8",
+    "doctrine/orm": "^2.8.1",
     "dpolac/twig-lambda": "^1.0",
     "knplabs/knp-markdown-bundle": "^1.8",
     "league/color-extractor": "^0.3.2",
@@ -88,6 +88,7 @@
   "scripts": {
     "psalm": "vendor/bin/psalm --no-suggestions",
     "test": "vendor/bin/phpunit",
+    "tests": "composer update --prefer-lowest && composer test && composer update && composer test",
     "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
     "format": "vendor/bin/php-cs-fixer fix"
   }
