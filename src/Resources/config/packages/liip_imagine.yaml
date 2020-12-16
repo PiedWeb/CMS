@@ -1,5 +1,5 @@
 liip_imagine:
-  cache: piedweb_relativeimgcache
+  cache: piedweb_media_webpath_resolver
 
   loaders:
     default:

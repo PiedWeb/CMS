@@ -6,7 +6,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\RequestContext;
 
 //implements ResolverInterface
-class ImagineWebCacheResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPathResolver
+class MediaWebPathResolver extends \Liip\ImagineBundle\Imagine\Cache\Resolver\WebPathResolver
 {
     public function __construct(
         Filesystem $filesystem,

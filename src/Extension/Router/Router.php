@@ -75,6 +75,7 @@ class Router implements RouterInterface
         return $this->useCustomHostPath
             && $this->currentHost // we have a request
             && $this->app->getCurrentPage() // a page is loaded
+            && $this->app->getCurrentPage()->getHost()
             && ! $this->app->isMainHost($this->currentHost);
     }
 

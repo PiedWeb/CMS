@@ -2,7 +2,7 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use PiedWeb\CMSBundle\Service\PageMainContentManager\MainContentManagerInterface;
+use PiedWeb\CMSBundle\Extension\PageMainContentManager\MainContentManagerInterface;
 
 interface PageInterface
 {

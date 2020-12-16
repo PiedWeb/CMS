@@ -163,8 +163,8 @@ services:
   # Liip
   # --------
 
-  imagine.cache.resolver.piedweb:
-    class: PiedWeb\CMSBundle\Service\ImagineWebCacheResolver
+  piedweb.media.web_path_resolver:
+    class: PiedWeb\CMSBundle\Service\MediaWebPathResolver
     arguments:
       - '@filesystem'
       - '@router.request_context'
@@ -172,7 +172,7 @@ services:
     tags:
       - {
           name: 'liip_imagine.cache.resolver',
-          resolver: piedweb_relativeimgcache,
+          resolver: piedweb_media_webpath_resolver,
         }
 
   # Vich

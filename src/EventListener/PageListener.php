@@ -3,8 +3,8 @@
 namespace PiedWeb\CMSBundle\EventListener;
 
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
+use PiedWeb\CMSBundle\Extension\PageMainContentManager\PageMainContentManager;
 use PiedWeb\CMSBundle\Service\App;
-use PiedWeb\CMSBundle\Service\PageMainContentManager\PageMainContentManager;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PageListener

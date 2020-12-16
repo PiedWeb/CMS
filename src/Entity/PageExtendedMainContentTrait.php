@@ -3,7 +3,7 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Exception;
-use PiedWeb\CMSBundle\Service\PageMainContentManager\MainContentManagerInterface;
+use PiedWeb\CMSBundle\Extension\PageMainContentManager\MainContentManagerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Yaml\Exception\ParseException;

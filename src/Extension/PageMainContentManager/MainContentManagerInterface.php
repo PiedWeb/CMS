@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Service\PageMainContentManager;
+namespace PiedWeb\CMSBundle\Extension\PageMainContentManager;
 
 /**
  * The name is not amazing... but what else ?!
