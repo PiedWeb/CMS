@@ -2,6 +2,8 @@
 
 ## Update to ...
 
+- Delete symlink in `config/packages`
+
 - Update database
 
   ```

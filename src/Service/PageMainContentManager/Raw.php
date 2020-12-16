@@ -40,8 +40,6 @@ class Raw implements MainContentManagerInterface
         $this->page = $page;
         $this->app = $app->switchCurrentApp($page->getHost());
         $this->twig = $twig;
-
-        $this->parse();
     }
 
     protected function parse()
