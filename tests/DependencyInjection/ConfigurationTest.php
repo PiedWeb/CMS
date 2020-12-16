@@ -6,17 +6,12 @@ namespace PiedWeb\CMSBundle\Tests\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;
 use PiedWeb\CMSBundle\DependencyInjection\Configuration;
-use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
-use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends TestCase
 {
-
     public function testConf(
-
-    ): void
-    {
+    ): void {
         $config = $this->process([]);
 
         $this->assertSame($config['locale'], '%locale%');
