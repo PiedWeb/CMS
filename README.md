@@ -1,12 +1,10 @@
-<p align="center"><a href="https://dev.piedweb.com" rel="dofollow">
-<img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="PHP Packages Open Source" />
-</a></p>
-
 # STILL IN EXPERIMENTATION
 
 # CMS _Content First_ and _Extendable_
 
-_To make peace between User, Editor, Developer, Designer and SEO_. And if your team is only you, this CMS will be perfect to marry with you as **Webmaster**.
+_To make peace between User, Editor, Developer, Designer and SEO_.
+
+And if your team is only you, this CMS will be perfect to marry with you as **Webmaster**.
 
 [![Latest Version](https://img.shields.io/github/tag/piedweb/cms.svg?style=flat&label=release)](https://github.com/PiedWeb/CMS/tags)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
@@ -145,9 +143,6 @@ List of existing extension wich are not in the **core** :
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
-[![Latest Version](https://img.shields.io/github/tag/piedweb/cms.svg?style=flat&label=release)](https://github.com/PiedWeb/CMS/tags)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
-[![Build Status](https://img.shields.io/travis/PiedWeb/CMS/master.svg?style=flat)](https://travis-ci.org/PiedWeb/CMS)
-[![Quality Score](https://img.shields.io/scrutinizer/g/piedweb/cms.svg?style=flat)](https://scrutinizer-ci.com/g/piedweb/cms)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/PiedWeb/CMS.svg?style=flat)](https://scrutinizer-ci.com/g/PiedWeb/CMS/code-structure)
-[![Total Downloads](https://img.shields.io/packagist/dt/piedweb/cms-bundle.svg?style=flat)](https://packagist.org/packages/piedweb/cms-bundle)
+<p align="center"><a href="https://dev.piedweb.com" rel="dofollow">
+<img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="PHP Packages Open Source" />
+</a></p>
