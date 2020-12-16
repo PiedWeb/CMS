@@ -2,10 +2,9 @@
 
 namespace PiedWeb\CMSBundle\Extension\StaticGenerator;
 
-use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Extension\Router\RouterInterface;
-use PiedWeb\CMSBundle\Repository\PageRepository;
+use PiedWeb\CMSBundle\Repository\PageRepositoryInterface;
 use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
 use PiedWeb\CMSBundle\Utils\KernelTrait;
@@ -40,9 +39,9 @@ class StaticAppGenerator
     protected $dontCopy = ['index.php', '.htaccess'];
 
     /**
-     * @var EntityManagerInterface
+     * @var PageRepositoryInterface
      */
-    protected $em;
+    protected $pageRepository;
 
     /**
      * @var Filesystem
@@ -103,16 +102,17 @@ class StaticAppGenerator
     protected $redirections = '';
 
     public function __construct(
-        EntityManagerInterface $em,
+        PageRepositoryInterface $pageRepository,
         Twig $twig,
         ParameterBagInterface $params,
         RequestStack $requesStack,
         TranslatorInterface $translator,
         RouterInterface $router,
         string $webDir,
-        KernelInterface $kernel
+        KernelInterface $kernel,
+        App $app
     ) {
-        $this->em = $em;
+        $this->pageRepository = $pageRepository;
         $this->filesystem = new Filesystem();
         $this->twig = $twig;
         $this->params = $params;
@@ -121,7 +121,7 @@ class StaticAppGenerator
         $this->translator = $translator;
         $this->router = $router;
         $this->router->setUseCustomHostPath(false);
-        $this->apps = $this->params->get('pwc.apps');
+        $this->apps = $app->getApps();
         $this->parser = HtmlCompressor::construct();
 
         if (! method_exists($this->filesystem, 'dumpFile')) {
@@ -135,7 +135,7 @@ class StaticAppGenerator
     public function generateAll($filter = null)
     {
         foreach ($this->apps as $app) {
-            if ($filter && ! \in_array($filter, $app->getMainHost())) {
+            if ($filter && ! \in_array($filter, $app['hosts'])) {
                 continue;
             }
             $this->generate($app, $this->mustGetPagesWithoutHost);
@@ -356,9 +356,9 @@ class StaticAppGenerator
 
     protected function generatePages(): void
     {
-        $qb = $this->getPageRepository()->getQueryToFindPublished('p');
-        $qb = $this->getPageRepository()->andHost($qb, $this->app->getMainHost(), $this->mustGetPagesWithoutHost);
-        $pages = $qb->getQuery()->getResult();
+        $pages = $this->getPageRepository()
+            ->setHostCanBeNull($this->mustGetPagesWithoutHost)
+            ->getPublishedPages($this->app->getMainHost());
 
         foreach ($pages as $page) {
             $this->generatePage($page);
@@ -453,8 +453,8 @@ class StaticAppGenerator
         $this->filesystem->dumpFile($this->app->getStaticDir().(null !== $locale ? '/'.$locale : '').'/'.$uri, $dump);
     }
 
-    protected function getPageRepository(): PageRepository
+    protected function getPageRepository(): PageRepositoryInterface
     {
-        return $this->em->getRepository($this->params->get('pwc.entity_page'));
+        return $this->pageRepository;
     }
 }

@@ -8,7 +8,7 @@ namespace PiedWeb\CMSBundle\Repository;
  */
 class Repository
 {
-    public static function getPageRepository($doctrine, string $pageEntity): PageRepository
+    public static function getPageRepository($doctrine, string $pageEntity): PageRepositoryInterface
     {
         return $doctrine->getRepository($pageEntity);
     }

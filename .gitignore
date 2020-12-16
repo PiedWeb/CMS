@@ -18,6 +18,7 @@ composer.lock
 yarn.lock
 .phpunit.result*
 /Skeleton/public/media/*
+/Skeleton/static/*
 /Skeleton/media/*.webp
 Draft.md
 coverage

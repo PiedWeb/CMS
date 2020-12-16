@@ -12,9 +12,34 @@ use PiedWeb\CMSBundle\Entity\PageInterface as Page;
  * @method list<T>   findAll()
  * @method list<T>   findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PageRepository extends ServiceEntityRepository
+class PageRepository extends ServiceEntityRepository implements PageRepositoryInterface
 {
-    public function getQueryToFindPublished($p): QueryBuilder
+    protected $hostCanBeNull = false;
+
+    public function getPublishedPages(string $host = '', array $where = [], array $orderBy = [], int $limit = 0)
+    {
+        $qb = $this->getQueryToFindPublished('p');
+
+        if ($host) {
+            $this->andHost($qb, $host, $this->hostCanBeNull);
+        }
+
+        foreach ($where as $k => $w) {
+            $qb->andWhere('p.'.$w['key'].' '.$w['operator'].' :m'.$k)->setParameter('m'.$k, $w['value']);
+        }
+
+        if ($orderBy) {
+            $qb->orderBy('p.'.$orderBy['key'], $orderBy['direction']);
+        }
+
+        if ($limit) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    protected function getQueryToFindPublished($p): QueryBuilder
     {
         return $this->createQueryBuilder($p)
             ->andWhere($p.'.createdAt <=  :nwo')
@@ -103,5 +128,17 @@ class PageRepository extends ServiceEntityRepository
         ;
 
         return $q->getResult();
+    }
+
+    /**
+     * Set the value of hostCanBeNull.
+     *
+     * @return self
+     */
+    public function setHostCanBeNull($hostCanBeNull)
+    {
+        $this->hostCanBeNull = $hostCanBeNull;
+
+        return $this;
     }
 }

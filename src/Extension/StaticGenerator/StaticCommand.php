@@ -20,7 +20,7 @@ class StaticCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('static:generate')
+            ->setName('piedweb:static:generate')
             ->setDescription('Generate static version  for your website')
             ->addArgument('host', InputArgument::OPTIONAL);
     }

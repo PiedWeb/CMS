@@ -79,7 +79,14 @@ services:
           event: preRemove,
         }
 
-  PiedWeb\CMSBundle\Repository\PageRepository:
+  PiedWeb\CMSBundle\Repository\PageRepositoryInterface:
+    class: PiedWeb\CMSBundle\Repository\PageRepository
+    arguments: ['@doctrine', '%pwc.entity_page%']
+    tags:
+      - { name: doctrine.repository_service }
+
+  piedweb.page_repository:
+    class: PiedWeb\CMSBundle\Repository\PageRepository
     arguments: ['@doctrine', '%pwc.entity_page%']
     tags:
       - { name: doctrine.repository_service }

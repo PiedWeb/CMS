@@ -9,6 +9,7 @@ use PiedWeb\CMSBundle\Entity\MediaExternal;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Extension\Router\RouterInterface;
 use PiedWeb\CMSBundle\Repository\Repository;
+use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Utils\HtmlBeautifer;
 use PiedWeb\RenderAttributes\AttributesTrait;
 use Twig\Environment as Twig;
@@ -29,11 +30,15 @@ class AppExtension extends AbstractExtension
     /** @var string */
     private $pageClass;
 
-    public function __construct(EntityManagerInterface $em, string $pageClass, RouterInterface $router)
+    /** @var App */
+    private $app;
+
+    public function __construct(EntityManagerInterface $em, string $pageClass, RouterInterface $router, App $app)
     {
         $this->em = $em;
         $this->router = $router;
         $this->pageClass = $pageClass;
+        $this->app = $app;
     }
 
     public function getFilters()
@@ -64,6 +69,7 @@ class AppExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
+            new TwigFunction('template_from_string', 'addslashes'),
             new TwigFunction('jslink', [self::class, 'renderJavascriptLink'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
@@ -172,12 +178,14 @@ class AppExtension extends AbstractExtension
         string $orderBy = 'createdAt',
         string $template = '@PiedWebCMS/page/_pages_list.html.twig'
     ) {
-        $qb = Repository::getPageRepository($this->em, $this->pageClass)->getQueryToFindPublished('p');
-        $qb->andWhere('p.mainContent LIKE :containing')->setParameter('containing', '%'.$containing.'%');
-        $qb->orderBy('p.'.$orderBy, 'DESC');
-        $qb->setMaxResults($number);
-
-        $pages = $qb->getQuery()->getResult();
+        $pages = Repository::getPageRepository($this->em, $this->pageClass)
+            ->setHostCanBeNull($this->app->isFirstApp())
+            ->getPublishedPages(
+                $this->app->getMainHost(),
+                [['key' => 'mainContent', 'operator' => 'LIKE', 'value' => '%'.$containing.'%']],
+                ['key' => $orderBy, 'direction' => 'DESC'],
+                $number
+            );
 
         return $env->render($template, ['pages' => $pages]);
     }

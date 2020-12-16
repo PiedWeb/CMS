@@ -53,7 +53,7 @@ class App
             if (\in_array($this->host, $app['hosts']) || null === $this->host) {
                 $this->app = $app;
 
-                return;
+                return $this;
             }
         }
 
@@ -161,5 +161,13 @@ class App
     public function getCurrentPage()
     {
         return $this->currentPage;
+    }
+
+    /**
+     * Get the value of apps.
+     */
+    public function getApps()
+    {
+        return $this->apps;
     }
 }

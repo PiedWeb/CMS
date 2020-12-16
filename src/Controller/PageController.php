@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle\Controller;
 
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
-use PiedWeb\CMSBundle\Repository\PageRepository;
 use PiedWeb\CMSBundle\Repository\Repository;
 use PiedWeb\CMSBundle\Service\App;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
