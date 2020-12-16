@@ -11,7 +11,7 @@ use PiedWeb\CMSBundle\Entity\MediaInterface;
 use Spatie\Async\Pool;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class MediaCacheGeneratorService
+class MediaCacheGenerator
 {
     protected $projectDir;
     protected $pool;

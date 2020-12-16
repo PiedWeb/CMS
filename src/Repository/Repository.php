@@ -1,11 +1,11 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Service;
+namespace PiedWeb\CMSBundle\Repository;
 
-use PiedWeb\CMSBundle\Repository\MediaRepository;
-use PiedWeb\CMSBundle\Repository\PageRepository;
-
-// todo implement interface when needed
+/**
+ * todo implement interface when needed
+ * Useful for avoiding intelephense error.
+ */
 class Repository
 {
     public static function getPageRepository($doctrine, string $pageEntity): PageRepository

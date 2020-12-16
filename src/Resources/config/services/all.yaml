@@ -88,11 +88,11 @@ services:
   # Media
   # --------
 
-  PiedWeb\CMSBundle\Service\MediaCacheGeneratorService:
+  PiedWeb\CMSBundle\Service\MediaCacheGenerator:
     alias: piedweb.media.cache_generator
 
   piedweb.media.cache_generator:
-    class: PiedWeb\CMSBundle\Service\MediaCacheGeneratorService
+    class: PiedWeb\CMSBundle\Service\MediaCacheGenerator
     autowire: true
     arguments:
       $projectDir: '%kernel.project_dir%'

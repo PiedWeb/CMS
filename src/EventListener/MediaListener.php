@@ -9,7 +9,7 @@ use League\ColorExtractor\ColorExtractor;
 use League\ColorExtractor\Palette;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use PiedWeb\CMSBundle\Entity\MediaInterface;
-use PiedWeb\CMSBundle\Service\MediaCacheGeneratorService;
+use PiedWeb\CMSBundle\Service\MediaCacheGenerator;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -33,7 +33,7 @@ class MediaListener
         CacheManager $cacheManager,
         EventDispatcherInterface $eventDispatcher,
         FileSystem $filesystem,
-        MediaCacheGeneratorService $cacheGenerator
+        MediaCacheGenerator $cacheGenerator
     ) {
         $this->projectDir = $projectDir;
         $this->em = $em;

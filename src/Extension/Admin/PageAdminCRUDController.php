@@ -2,7 +2,7 @@
 
 namespace PiedWeb\CMSBundle\Extension\Admin;
 
-use PiedWeb\CMSBundle\Service\Repository;
+use PiedWeb\CMSBundle\Repository\Repository;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 

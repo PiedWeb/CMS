@@ -8,7 +8,7 @@ use PiedWeb\CMSBundle\Entity\Media;
 use PiedWeb\CMSBundle\Entity\MediaExternal;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Extension\Router\RouterInterface;
-use PiedWeb\CMSBundle\Service\Repository;
+use PiedWeb\CMSBundle\Repository\Repository;
 use PiedWeb\CMSBundle\Utils\HtmlBeautifer;
 use PiedWeb\RenderAttributes\AttributesTrait;
 use Twig\Environment as Twig;

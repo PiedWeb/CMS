@@ -3,7 +3,7 @@
 namespace PiedWeb\CMSBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use PiedWeb\CMSBundle\Service\MediaCacheGeneratorService;
+use PiedWeb\CMSBundle\Service\MediaCacheGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -23,13 +23,13 @@ class MediaCacheGeneratorCommand extends Command
     private $mediaClass;
 
     /**
-     * @var MediaCacheGeneratorService
+     * @var MediaCacheGenerator
      */
     private $mediaCacheGenerator;
 
     public function __construct(
         EntityManagerInterface $em,
-        MediaCacheGeneratorService $mediaCacheGenerator,
+        MediaCacheGenerator $mediaCacheGenerator,
         string $mediaClass
     ) {
         $this->em = $em;
