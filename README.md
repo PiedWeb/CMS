@@ -11,6 +11,7 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/PiedWeb/CMS/Tests?label=tests)](https://github.com/PiedWeb/CMS/actions)
 [![Quality Score](https://img.shields.io/scrutinizer/g/piedweb/cms.svg?style=flat)](https://scrutinizer-ci.com/g/piedweb/cms)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/PiedWeb/CMS.svg?style=flat)](https://scrutinizer-ci.com/g/PiedWeb/CMS/code-structure)
+[![Code Coverage](https://codecov.io/gh/PiedWeb/CMS/branch/master/graph/badge.svg)](https://codecov.io/gh/PiedWeb/CMS/branch/master)
 [![Type Coverage](https://shepherd.dev/github/piedweb/cms/coverage.svg)](https://shepherd.dev/github/piedweb/cms)
 [![Total Downloads](https://img.shields.io/packagist/dt/piedweb/cms-bundle.svg?style=flat)](https://packagist.org/packages/piedweb/cms-bundle)
 
