@@ -10,9 +10,7 @@ use Symfony\Component\Config\Definition\Processor;
 
 class ConfigurationTest extends TestCase
 {
-    public function testConf(
-
-    ): void {
+    public function testConf(): void {
         $config = $this->process([]);
 
         $this->assertSame($config['locale'], '%locale%');
