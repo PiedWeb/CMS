@@ -37,7 +37,7 @@
     "symfony/lock": "^5.2",
     "symfony/mailer": "^5.2",
     "symfony/process": "^5.2",
-    "symfony/security-bundle": "^4.4",
+    "symfony/security-bundle": "^4.4.17",
     "symfony/security-csrf": "^5.2",
     "symfony/translation": "^4.4",
     "symfony/twig-bundle": "^4.4",
