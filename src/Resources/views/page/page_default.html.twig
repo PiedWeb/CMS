@@ -71,7 +71,7 @@
 			{% endblock %}
 
 			{% block description %}
-                {{ extract('chapeau', page) }}
+                {{ page.content.chapeau|raw }}
 			{% endblock %}
 
 			{% block main_image %}
@@ -88,7 +88,7 @@
 
 
 			{% block main_content %}
-                {{ extract('mainContent', page) }}
+                {{ page.content.body|raw  }}
 			{% endblock %}
 
 

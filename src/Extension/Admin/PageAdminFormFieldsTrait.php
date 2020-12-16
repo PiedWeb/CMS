@@ -86,9 +86,14 @@ trait PageAdminFormFieldsTrait
 
     protected function configureFormFieldMainContentIsMarkdown(FormMapper $formMapper): FormMapper
     {
-        return $formMapper->add('mainContentIsMarkdown', null, [
+        return $formMapper->add('mainContentType', ChoiceType::class, [
+            'choices' => [
+                'admin.page.mainContentType.choice.raw' => '0',
+                'admin.page.mainContentType.choice.markdown' => '1',
+                'admin.page.mainContentType.choice.editorjs' => '2',
+            ],
+            'label' => 'admin.page.mainContentType.label',
             'required' => false,
-            'label' => 'admin.page.markdown.label',
             'help_html' => true,
             'help' => 'admin.page.markdown.help',
         ]);

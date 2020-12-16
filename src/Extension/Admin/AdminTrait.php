@@ -13,6 +13,7 @@ trait AdminTrait
     protected $twig;
     protected $em;
     protected $securityTokenStorage;
+    protected $defaultMainContentType;
 
     protected static $thumb = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMnB4IiB2ZXJzaW
                 9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMycHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIg
@@ -110,5 +111,10 @@ trait AdminTrait
     public function setPageCanonicalService($pageCanonicalService)
     {
         $this->pageCanonicalService = $pageCanonicalService;
+    }
+
+    public function setDefaultMainContentType($defaultMainContentType)
+    {
+        $this->defaultMainContentType = $defaultMainContentType;
     }
 }

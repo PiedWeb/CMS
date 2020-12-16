@@ -92,6 +92,7 @@ class PageAdmin extends AbstractAdmin
     {
         $instance = parent::getNewInstance();
         $instance->setLocale($this->defaultLocale);
+        $instance->setMainContentType($this->defaultMainContentType);
 
         return $instance;
     }

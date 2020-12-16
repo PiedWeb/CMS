@@ -5,13 +5,12 @@ namespace PiedWeb\CMSBundle\Twig;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use PiedWeb\CMSBundle\Entity\Media;
 use PiedWeb\CMSBundle\Entity\MediaExternal;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
-use PiedWeb\CMSBundle\Service\MainContentManager;
 use PiedWeb\CMSBundle\Service\PageCanonicalService;
 use PiedWeb\CMSBundle\Service\Repository;
+use PiedWeb\CMSBundle\Utils\HtmlBeautifer;
 use PiedWeb\RenderAttributes\AttributesTrait;
 use Twig\Environment as Twig;
 use Twig\Extension\AbstractExtension;
@@ -47,7 +46,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('slugify', [self::class, 'slugify']),
             new TwigFilter(
                 'punctuation_beautifer',
-                [MainContentManager::class, 'punctuationBeautifer'],
+                [HtmlBeautifer::class, 'punctuationBeautifer'],
                 ['is_safe' => ['html']]
             ),
         ];
@@ -122,21 +121,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('isInternalImage', [self::class, 'isInternalImage']),
             new TwigFunction('getImageFrom', [self::class, 'transformInlineImageToMedia']),
             new TwigFunction('getEmbedCode', [self::class, 'getEmbedCode']),
-            new TwigFunction('extract', [$this, 'extract'], ['is_safe' => ['html'], 'needs_environment' => true]),
         ];
-    }
-
-    public function extract(Twig $env, string $name, Page $page)
-    {
-        $mainContentManager = new MainContentManager($env, $page); // todo cache it ?!
-
-        $extractorFunction = 'get'.ucfirst($name);
-
-        if (!method_exists($mainContentManager, $extractorFunction)) {
-            throw new Exception('`'.$name.'` does not exist');
-        }
-
-        return $mainContentManager->$extractorFunction();
     }
 
     public static function getEmbedCode(

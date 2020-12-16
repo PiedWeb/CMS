@@ -5,7 +5,7 @@ namespace PiedWeb\CMSBundle\Extension\StaticGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Repository\PageRepository;
-use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
+use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Service\PageCanonicalService as PageCanonical;
 use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
 use PiedWeb\CMSBundle\Utils\KernelTrait;

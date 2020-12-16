@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Exception;
+use PiedWeb\CMSBundle\Service\PageMainContentManager\MainContentManagerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -11,9 +12,9 @@ use Symfony\Component\Yaml\Yaml;
 trait PageExtendedMainContentTrait
 {
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $mainContentIsMarkdown;
+    protected $mainContentType;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -22,28 +23,34 @@ trait PageExtendedMainContentTrait
 
     protected $otherPropertiesParsed;
 
+    protected $twig;
+    protected $mainContentManager;
+
     abstract public function getMainContent(): ?string;
 
     public function getReadableContent()
     {
-        throw new Exception('You should use MainContentManager or twig function extract("mainContent", page)');
+        throw new Exception('You should use getContent.content');
     }
 
     public function getChapeau()
     {
-        throw new Exception('You should use MainContentManager or twig function extract("chapeau", page)');
+        throw new Exception('You should use getContent');
     }
 
-    public function mainContentIsMarkdown(): bool
+    public function setTwig($twig)
     {
-        return null === $this->mainContentIsMarkdown ? false : $this->mainContentIsMarkdown;
+        $this->twig = $twig;
     }
 
-    public function setMainContentIsMarkdown(bool $mainContentIsMarkdown): self
+    public function mustParseTwig(): bool
     {
-        $this->mainContentIsMarkdown = $mainContentIsMarkdown;
+        return (bool) (null !== $this->twig ? $this->twig : $this->getOtherProperty('twig'));
+    }
 
-        return $this;
+    public function mainContentIsMarkdown(): ?bool
+    {
+        return PageMainContentType::MARKDOWN === $this->mainContentType;
     }
 
     public function getTemplate(): ?string
@@ -81,7 +88,7 @@ trait PageExtendedMainContentTrait
         }
     }
 
-    protected function getOtherProperty($name)
+    public function getOtherProperty($name)
     {
         if (null === $this->otherPropertiesParsed) {
             $this->otherPropertiesParsed = $this->otherProperties ? Yaml::parse($this->otherProperties) : [];
@@ -135,5 +142,45 @@ trait PageExtendedMainContentTrait
         if (preg_match('/<!--"'.$name.'"--(.*)--\/-->/sU', $this->getMainContent(), $match)) {
             return $match[1];
         }
+    }
+
+    /**
+     * Get the value of mainContentType.
+     */
+    public function getMainContentType()
+    {
+        return $this->mainContentType;
+    }
+
+    /**
+     * Set the value of mainContentType.
+     *
+     * @return self
+     */
+    public function setMainContentType($mainContentType)
+    {
+        $this->mainContentType = (int) $mainContentType;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of mainContentManager.
+     */
+    public function getContent()
+    {
+        return $this->mainContentManager;
+    }
+
+    /**
+     * Set the value of mainContentManager.
+     *
+     * @return self
+     */
+    public function setContent(MainContentManagerInterface $mainContentManager)
+    {
+        $this->mainContentManager = $mainContentManager;
+
+        return $this;
     }
 }

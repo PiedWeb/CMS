@@ -2,6 +2,7 @@
 
 namespace PiedWeb\CMSBundle\DependencyInjection;
 
+use PiedWeb\CMSBundle\Entity\PageMainContentType;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -30,6 +31,8 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->scalarNode('name')->defaultValue('PiedWeb.com')->end()
                     ->booleanNode('default_locale_without_prefix')->defaultTrue()->end()
+                    ->booleanNode('main_content_twig')->defaultTrue()->end()
+                    ->integerNode('main_content_type_default')->defaultValue(PageMainContentType::MARKDOWN)->end()
                     ->scalarNode('template')->defaultValue(self::DEFAULT_TEMPLATE)->end()
                     ->scalarNode('entity_page')->defaultValue('App\Entity\Page')->cannotBeEmpty()->end()
                     ->scalarNode('entity_media')->defaultValue('App\Entity\Media')->cannotBeEmpty()->end()

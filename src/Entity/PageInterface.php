@@ -2,6 +2,8 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
+use PiedWeb\CMSBundle\Service\PageMainContentManager\MainContentManagerInterface;
+
 interface PageInterface
 {
     public function getId();
@@ -31,4 +33,16 @@ interface PageInterface
     public function getTemplate();
 
     public function setMainContent(?string $mainContent);
+
+    public function getOtherProperty($name);
+
+    public function mustParseTwig(): bool;
+
+    public function setTwig($twig);
+
+    public function getMainContentType();
+
+    public function setMainContentType($mainContentType);
+
+    public function setContent(MainContentManagerInterface $mainContentManager);
 }

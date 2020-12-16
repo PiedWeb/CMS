@@ -8,6 +8,7 @@ use App\Entity\Media;
 use App\Entity\User;
 use App\Entity\Page;
 use DateTime;
+use PiedWeb\CMSBundle\Entity\PageMainContentType;
 
 class AppFixtures extends Fixture
 {
@@ -36,7 +37,7 @@ class AppFixtures extends Fixture
             ->setLocale('en')
             ->setCreatedAt(new DateTime('2 days ago'))
             ->setMainContent(file_get_contents(__DIR__.'/WelcomePageMainContent.md'))
-            ->setMainContentIsMarkdown(true);
+            ->setMainContentType(PageMainContentType::MARKDOWN);
 
         $manager->persist($page);
 

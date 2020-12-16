@@ -4,7 +4,7 @@
 {{ block("css", "@PiedWebCMS/base.html.twig") }}
 
 <div style="padding:10px" class="container container-txt">
-    {{ extract('full', page) }}
+    {{ page.content.getBody(true)|raw  }}
 </div>
 {{ block("script", "@PiedWebCMS/base.html.twig") }}
 

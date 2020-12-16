@@ -21,6 +21,7 @@ services:
       - [setPageClass, ['%pwc.entity_page%']]
       - [setDefaultLocale, ['%pwc.locale%']]
       - [setPageCanonicalService, ['@piedweb.page_canonical']]
+      - [setDefaultMainContentType, ['%pwc.main_content_type_default%l']]
     public: true
 
   PiedWeb\CMSBundle\Extension\Admin\PageAdminCRUDController:

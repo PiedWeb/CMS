@@ -4,7 +4,7 @@ namespace PiedWeb\CMSBundle\Extension\PageScanner;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface;
-use PiedWeb\CMSBundle\Service\AppConfigHelper;
+use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
 use PiedWeb\CMSBundle\Utils\KernelTrait;
 use PiedWeb\UrlHarvester\Harvest;
@@ -22,7 +22,7 @@ class PageScannerService
     use KernelTrait;
 
     /**
-     * @var AppConfigHelper
+     * @var App
      */
     protected $app;
 
@@ -62,7 +62,7 @@ class PageScannerService
 
     public function scan(PageInterface $page)
     {
-        $this->app = new AppConfigHelper($page->getHost(), $this->apps);
+        $this->app = new App($page->getHost(), $this->apps);
         $this->currentPage = $page;
         $this->resetErrors();
         $this->pageHtml = '';

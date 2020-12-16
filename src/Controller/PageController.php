@@ -4,7 +4,7 @@ namespace PiedWeb\CMSBundle\Controller;
 
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Repository\PageRepository;
-use PiedWeb\CMSBundle\Service\AppConfigHelper as App;
+use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Service\Repository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;

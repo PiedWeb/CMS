@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment as Twig;
 
-class AppConfigHelper
+class App
 {
     protected $host;
     protected $apps;
@@ -112,6 +112,9 @@ class AppConfigHelper
         ];
     }
 
+    /**
+     * @psalm-suppress InternalMethod
+     */
     public function getTemplate(string $path = '/page/page.html.twig', ?Twig $twig = null)
     {
         if ($this->isFullPath($path)) { // compatibilité avant v1
@@ -126,12 +129,12 @@ class AppConfigHelper
 
         // check if twig template exist
         try {
-            return $twig->loadTemplate($name);
+            $twig->loadTemplate($name);
+
+            return $name;
         } finally {
             return '@PiedWebCMS'.$path;
         }
-
-        return $name;
     }
 
     public function isFullPath($path)

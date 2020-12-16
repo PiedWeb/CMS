@@ -2,7 +2,7 @@
 
 namespace PiedWeb\CMSBundle\Validator\Constraints;
 
-use PiedWeb\CMSBundle\Service\AppConfigHelper;
+use PiedWeb\CMSBundle\Service\App;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -28,10 +28,10 @@ class PageRenderingValidator extends ConstraintValidator
             return;
         }
 
-        $template = AppConfigHelper::load($value->getHost(), $this->apps)->getTemplate();
+        //$template = App::load($value->getHost(), $this->apps)->getTemplate();
 
         try {
-            $this->twig->render($template, ['page' => $value]);
+            $value->getContent()->getBody();
         } catch (\Exception $exception) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();

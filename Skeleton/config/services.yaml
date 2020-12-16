@@ -1,3 +1,4 @@
+# Used for test...
 parameters:
   locale: 'fr'
   database: 'sqlite:///%kernel.cache_dir%/test_database.sqlite'
