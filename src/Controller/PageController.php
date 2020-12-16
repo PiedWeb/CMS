@@ -23,15 +23,17 @@ class PageController extends AbstractController
      * @var App
      */
     protected $app;
+
     protected $twig;
 
     public function __construct(
         ParameterBagInterface $params,
-        Twig $twig
+        Twig $twig,
+        App $app
     ) {
         $this->params = $params;
         $this->twig = $twig;
-        $this->app = App::load(null, $this->params);
+        $this->app = $app;
     }
 
     public function show(?string $slug, ?string $host, Request $request): Response
@@ -199,9 +201,7 @@ class PageController extends AbstractController
     {
         $real = $request->getRequestUri();
 
-        $expected = 'homepage' == $page->getSlug() ?
-            $this->get('piedweb.page_canonical')->generatePathForHomepage() :
-            $this->get('piedweb.page_canonical')->generatePathForPage($page->getRealSlug());
+        $expected = $this->generateUrl('piedweb_cms_page', ['slug' => $page->getRealSlug()]);
 
         if ($real != $expected) {
             return [$request->getBasePath().$expected, 301];

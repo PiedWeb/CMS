@@ -2,6 +2,7 @@
 
 namespace PiedWeb\CMSBundle\Extension\Admin;
 
+use PiedWeb\CMSBundle\Entity\PageInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\Form\Type\CollectionType;
@@ -185,19 +186,27 @@ trait PageAdminFormFieldsTrait
 
     protected function getSlugHelp()
     {
-        $url = ! $this->getSubject() ? null
-            : $this->pageCanonicalService->generatePathForPage($this->getSubject()->getSlug());
+        if (! $this->hasSubject() || ! $this->getSubject()->getSlug()) {
+            return 'admin.page.slug.help';
+        }
 
-        return $this->getSubject() && $this->getSubject()->getSlug()
-                ? '<span class="btn btn-link" onclick="toggleDisabled()" id="disabledLinkSlug">
+        $page = $this->getSubject();
+
+        $url = $this->router->generate('piedweb_cms_page', ['slug' => $page->getRealSlug()]);
+        $liveUrl = $page->getHost() ?
+            $this->router->generate(
+                'custom_host_piedweb_cms_page',
+                ['host' => $page->getHost(), 'slug' => $page->getSlug()]
+            ) : $url;
+
+        return '<span class="btn btn-link" onclick="toggleDisabled()" id="disabledLinkSlug">
                     <i class="fa fa-unlock"></i></span>
                     <script>function toggleDisabled() {
                         $(".slug_disabled").first().removeAttr("disabled");
                         $(".slug_disabled").first().focus();
                         $("#disabledLinkSlug").first().remove();
                     }</script><small>Changer le slug change l\'URL et peut créer des erreurs.</small>'
-                    .'<br><small>URL actuelle&nbsp: <a href="'.$url.'">'.$url.'</a></small>'
-                : 'admin.page.slug.help';
+                    .'<br><small>URL actuelle&nbsp: <a href="'.$liveUrl.'" target=_blank>'.$url.'</a></small>';
     }
 
     protected function configureFormFieldSlug(FormMapper $formMapper): FormMapper
@@ -252,5 +261,8 @@ trait PageAdminFormFieldsTrait
 
     abstract protected function exists(string $name): bool;
 
+    /**
+     * @return PageInterface
+     */
     abstract protected function getSubject();
 }

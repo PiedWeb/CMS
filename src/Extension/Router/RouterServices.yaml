@@ -1,0 +1,14 @@
+services:
+  PiedWeb\CMSBundle\Extension\Router\RouterInterface:
+    alias: piedweb.router
+
+  piedweb.router:
+    class: PiedWeb\CMSBundle\Extension\Router\Router
+    autowire: true
+    arguments:
+      $defaultLocale: '%pwc.locale%'
+
+  PiedWeb\CMSBundle\Extension\Router\RouterTwigExtension:
+    tags:
+      - 'twig.extension'
+    autowire: true

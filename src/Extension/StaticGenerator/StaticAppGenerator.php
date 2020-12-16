@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Repository\PageRepository;
 use PiedWeb\CMSBundle\Service\App;
-use PiedWeb\CMSBundle\Service\PageCanonicalService as PageCanonical;
 use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
 use PiedWeb\CMSBundle\Utils\KernelTrait;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -77,11 +76,6 @@ class StaticAppGenerator
     protected $requesStack;
 
     /**
-     * @var \PiedWeb\CMSBundle\Service\PageCanonicalService
-     */
-    protected $pageCanonical;
-
-    /**
      * @var TranslatorInterface
      */
     protected $translator;
@@ -113,7 +107,6 @@ class StaticAppGenerator
         Twig $twig,
         ParameterBagInterface $params,
         RequestStack $requesStack,
-        PageCanonical $pageCanonical,
         TranslatorInterface $translator,
         RouterInterface $router,
         string $webDir,
@@ -125,7 +118,6 @@ class StaticAppGenerator
         $this->params = $params;
         $this->requesStack = $requesStack;
         $this->webDir = $webDir;
-        $this->pageCanonical = $pageCanonical;
         $this->translator = $translator;
         $this->router = $router;
         $this->apps = $this->params->get('pwc.apps');
@@ -356,7 +348,7 @@ class StaticAppGenerator
     {
         $this->redirections .= 'Redirect ';
         $this->redirections .= $page->getRedirectionCode().' ';
-        $this->redirections .= $this->pageCanonical->generatePathForPage($page->getRealSlug());
+        $this->redirections .= $this->router->generate('piedweb_cms_page', ['slug' => $page->getRealSlug()]);
         $this->redirections .= ' '.$page->getRedirection();
         $this->redirections .= PHP_EOL;
     }
@@ -416,7 +408,7 @@ class StaticAppGenerator
     protected function generateFilePath(Page $page)
     {
         $slug = '' == $page->getRealSlug() ? 'index' : $page->getRealSlug();
-        $route = $this->pageCanonical->generatePathForPage($slug);
+        $route = $this->router->generate('piedweb_cms_page', ['slug' => $page->getRealSlug()]);
 
         return $this->app->getStaticDir().$route.'.html';
     }

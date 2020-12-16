@@ -3,6 +3,7 @@ imports:
   - { resource: '../../../src/Extension/Admin/AdminServices.yaml' }
   - { resource: '../../../src/Extension/StaticGenerator/StaticServices.yaml' }
   - { resource: '../../../src/Extension/PageScanner/PageScannerServices.yaml' }
+  - { resource: '../../../src/Extension/Router/RouterServices.yaml' }
   - {
       resource: '../../../src/Extension/UpdateNotification/UpdateNotificationServices.yaml',
     }

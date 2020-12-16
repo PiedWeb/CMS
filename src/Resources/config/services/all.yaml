@@ -40,21 +40,9 @@ services:
     tags:
       - 'twig.extension'
       #- { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+    autowire: true
     arguments:
-      [
-        '@doctrine.orm.entity_manager',
-        '%pwc.entity_page%',
-        '@piedweb.page_canonical',
-      ]
-
-  piedweb.page_canonical:
-    class: PiedWeb\CMSBundle\Service\PageCanonicalService
-    arguments: ['@router', '%pwc.default_locale_without_prefix%', '%locale%']
-    public: true
-
-  PiedWeb\CMSBundle\Service\PageCanonicalService:
-    alias: piedweb.page_canonical
-    public: true
+      $pageClass: '%pwc.entity_page%'
 
   piedweb.user_create_command:
     autowire: true
@@ -71,6 +59,7 @@ services:
     arguments:
       $host: null
       $apps: '%pwc.apps%'
+    public: true
 
   # --------
   # Page

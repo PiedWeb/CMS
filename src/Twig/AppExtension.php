@@ -3,12 +3,11 @@
 namespace PiedWeb\CMSBundle\Twig;
 
 use Cocur\Slugify\Slugify;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\Media;
 use PiedWeb\CMSBundle\Entity\MediaExternal;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
-use PiedWeb\CMSBundle\Service\PageCanonicalService;
+use PiedWeb\CMSBundle\Extension\Router\RouterInterface;
 use PiedWeb\CMSBundle\Service\Repository;
 use PiedWeb\CMSBundle\Utils\HtmlBeautifer;
 use PiedWeb\RenderAttributes\AttributesTrait;
@@ -21,20 +20,20 @@ class AppExtension extends AbstractExtension
 {
     use AttributesTrait;
 
-    /** @var PageCanonicalService */
-    protected $pageCanonical;
+    /** @var RouterInterface */
+    private $router;
 
     /** @var EntityManagerInterface */
     private $em;
 
     /** @var string */
-    private $page_class;
+    private $pageClass;
 
-    public function __construct(EntityManager $em, string $page_class, PageCanonicalService $pageCanonical)
+    public function __construct(EntityManagerInterface $em, string $pageClass, RouterInterface $router)
     {
         $this->em = $em;
-        $this->pageCanonical = $pageCanonical;
-        $this->page_class = $page_class;
+        $this->router = $router;
+        $this->pageClass = $pageClass;
     }
 
     public function getFilters()
@@ -65,8 +64,6 @@ class AppExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('homepage', [$this->pageCanonical, 'generatePathForHomepage']),
-            new TwigFunction('page', [$this->pageCanonical, 'generatePathForPage']),
             new TwigFunction('jslink', [self::class, 'renderJavascriptLink'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
@@ -175,7 +172,7 @@ class AppExtension extends AbstractExtension
         string $orderBy = 'createdAt',
         string $template = '@PiedWebCMS/page/_pages_list.html.twig'
     ) {
-        $qb = Repository::getPageRepository($this->em, $this->page_class)->getQueryToFindPublished('p');
+        $qb = Repository::getPageRepository($this->em, $this->pageClass)->getQueryToFindPublished('p');
         $qb->andWhere('p.mainContent LIKE :containing')->setParameter('containing', '%'.$containing.'%');
         $qb->orderBy('p.'.$orderBy, 'DESC');
         $qb->setMaxResults($number);
@@ -207,7 +204,7 @@ class AppExtension extends AbstractExtension
     public function isCurrentPage(string $uri, ?Page $currentPage)
     {
         return
-            null === $currentPage || $uri != $this->pageCanonical->generatePathForPage($currentPage->getRealSlug())
+            null === $currentPage || $uri != $this->router->generatePathForPage($currentPage->getRealSlug())
             ? false
             : true;
     }

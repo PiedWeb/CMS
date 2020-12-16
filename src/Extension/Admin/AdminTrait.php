@@ -5,13 +5,13 @@ namespace PiedWeb\CMSBundle\Extension\Admin;
 trait AdminTrait
 {
     protected $apps;
-    protected $pageCanonicalService;
     protected $pageClass;
     protected $defaultLocale;
     protected $mediaClass;
     protected $userClass;
     protected $twig;
     protected $em;
+    protected $router;
     protected $securityTokenStorage;
     protected $defaultMainContentType;
 
@@ -108,13 +108,20 @@ trait AdminTrait
         $this->userClass = $userClass;
     }
 
-    public function setPageCanonicalService($pageCanonicalService)
-    {
-        $this->pageCanonicalService = $pageCanonicalService;
-    }
-
     public function setDefaultMainContentType($defaultMainContentType)
     {
         $this->defaultMainContentType = $defaultMainContentType;
+    }
+
+    /**
+     * Set the value of router.
+     *
+     * @return self
+     */
+    public function setRouter($router)
+    {
+        $this->router = $router;
+
+        return $this;
     }
 }

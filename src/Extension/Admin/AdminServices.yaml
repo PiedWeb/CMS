@@ -20,7 +20,7 @@ services:
       - [setUserClass, ['%pwc.entity_user%']]
       - [setPageClass, ['%pwc.entity_page%']]
       - [setDefaultLocale, ['%pwc.locale%']]
-      - [setPageCanonicalService, ['@piedweb.page_canonical']]
+      - [setRouter, ['@router']]
       - [setDefaultMainContentType, ['%pwc.main_content_type_default%l']]
     public: true
 
