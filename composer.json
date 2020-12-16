@@ -39,7 +39,7 @@
     "symfony/process": "^5.2",
     "symfony/security-bundle": "^4.4.17",
     "symfony/security-csrf": "^5.2",
-    "symfony/security-core": "^4.4.17",
+    "symfony/security-guard": "^4.4.17",
     "symfony/translation": "^4.4.17",
     "symfony/twig-bundle": "^4.4.17",
     "symfony/validator": "^5.2",
