@@ -91,8 +91,8 @@ class PageScannerService
         $response = static::$appKernel->handle($request);
 
         if ($response->isRedirect()) {
-            $linkedDocs[] = $response->headers->get('location');
-
+            //. $linkedDocs[] = $response->headers->get('location');
+            // todo check redirection
             return;
         } elseif (200 != $response->getStatusCode()) {
             $this->addError('error on generating the page ('.$response->getStatusCode().')');

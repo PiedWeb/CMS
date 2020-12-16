@@ -30,4 +30,7 @@ jobs:
         run: composer install -n --prefer-dist
 
       - name: Run psalm
-        run: ./vendor/bin/psalm --output-format=github --shepherd
+        run: ./vendor/bin/psalm --output-format=github
+        # uses: docker://vimeo/psalm-github-actions
+        # with:
+        #   args: --shepherd
