@@ -12,5 +12,13 @@
         <ignoreFiles>
             <directory name="vendor"/>
         </ignoreFiles>
+
     </projectFiles>
+    <issueHandlers>
+            <InvalidDocblock>
+                <errorLevel type="suppress">
+                <file name="vendor/doctrine/orm/lib/Doctrine/ORM/EntityRepository.php" />
+                </errorLevel>
+            </InvalidDocblock>
+        </issueHandlers>
 </psalm>

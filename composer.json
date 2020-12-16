@@ -10,8 +10,8 @@
     "cocur/slugify": "^3.0|^4.0",
     "dpolac/twig-lambda": "^1.0",
     "liip/imagine-bundle": "^2.3",
-    "sonata-project/admin-bundle": "^3",
-    "sonata-project/doctrine-orm-admin-bundle": "^3",
+    "sonata-project/admin-bundle": "^3.83",
+    "sonata-project/doctrine-orm-admin-bundle": "^3.26",
     "doctrine/orm": "^2.7",
     "doctrine/doctrine-bundle": "^2.0",
     "doctrine/doctrine-migrations-bundle": "^3.0",
@@ -86,7 +86,7 @@
     }
   ],
   "scripts": {
-    "psalm": "vendor/bin/psalm --shepherd",
+    "psalm": "vendor/bin/psalm --no-suggestions",
     "test": "vendor/bin/phpunit",
     "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
     "format": "vendor/bin/php-cs-fixer fix"
