@@ -35,9 +35,9 @@ return [
     Sonata\AdminBundle\SonataAdminBundle::class => ['all' => true],
     Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle::class => ['all' => true],
     Sonata\Form\Bridge\Symfony\SonataFormBundle::class => ['all' => true],
-    Sonata\Exporter\Bridge\Symfony\SonataExporterSymfonyBundle::class => ['all' => true],
     Sonata\Twig\Bridge\Symfony\SonataTwigSymfonyBundle::class => ['all' => true],
     Sonata\Doctrine\Bridge\Symfony\SonataDoctrineSymfonyBundle::class => ['all' => true],
+    //Sonata\Exporter\Bridge\Symfony\SonataExporterSymfonyBundle::class => ['all' => true],
 
     // No need for testing purpose, useful else
     //Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
