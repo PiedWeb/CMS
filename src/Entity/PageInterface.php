@@ -41,8 +41,11 @@ interface PageInterface
     public function setTwig($twig);
 
     public function getMainContentType();
+
     public function getH1();
+
     public function getTitle();
+
     public function getName();
 
     public function setMainContentType($mainContentType);

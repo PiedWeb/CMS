@@ -4,7 +4,6 @@ namespace PiedWeb\CMSBundle\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
-use PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCodeConverter;
 
 trait PageTrait
 {

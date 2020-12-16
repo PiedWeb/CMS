@@ -3,7 +3,6 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCodeConverter;
 
 /**
  * Page extended: // I may cut this in multiple traits
@@ -104,7 +103,6 @@ trait PageExtendedTrait
 
     public function getName(): ?string
     {
-
         return $this->name;
     }
 
