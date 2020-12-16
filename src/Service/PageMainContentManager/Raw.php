@@ -145,7 +145,7 @@ class Raw implements MainContentManagerInterface
     {
         preg_match_all('/(?:!\[(.*?)\]\((.*?)\))/', $body, $matches);
 
-        if (!isset($matches[1])) {
+        if (! isset($matches[1])) {
             return;
         }
 
@@ -167,7 +167,7 @@ class Raw implements MainContentManagerInterface
 
     protected function render($string)
     {
-        if (!$string) {
+        if (! $string) {
             return '';
         }
 

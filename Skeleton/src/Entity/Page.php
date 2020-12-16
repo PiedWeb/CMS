@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use PiedWeb\CMSBundle\Entity\Page as BasePage;
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Entity\Page as BasePage;
 use PiedWeb\CMSBundle\Repository\PageRepository;
 
 /**

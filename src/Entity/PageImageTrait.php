@@ -81,7 +81,7 @@ trait PageImageTrait
 
     public function getImages(): Collection
     {
-        if (!$this->images) {
+        if (! $this->images) {
             $this->images = new ArrayCollection();
             foreach ($this->pageHasMedias as $p) {
                 if (null !== $p->getMedia()) {

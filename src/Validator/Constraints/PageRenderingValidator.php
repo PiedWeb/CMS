@@ -20,7 +20,7 @@ class PageRenderingValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof PageRendering) {
+        if (! $constraint instanceof PageRendering) {
             throw new UnexpectedTypeException($constraint, PageRendering::class);
         }
 

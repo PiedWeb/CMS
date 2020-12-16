@@ -19,7 +19,7 @@ class PageHasMedia extends AbstractAdmin
 
     protected function getMedialHelp($media)
     {
-        if (!($media && $media->getMedia() && false !== strpos($media->getMimeType(), 'image/'))) {
+        if (! ($media && $media->getMedia() && false !== strpos($media->getMimeType(), 'image/'))) {
             return null;
         }
 
@@ -53,8 +53,8 @@ class PageHasMedia extends AbstractAdmin
                 'required' => false,
                 'btn_delete' => false,
                 'btn_edit' => false,
-                'btn_add' => (!$media) ? ' ' : false,
-                'btn_list' => (!$media) ? ' ' : false,
+                'btn_add' => (! $media) ? ' ' : false,
+                'btn_list' => (! $media) ? ' ' : false,
                 'sonata_help' => $this->getMedialHelp($media),
                 ]
             )

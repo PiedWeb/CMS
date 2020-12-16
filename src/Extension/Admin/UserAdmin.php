@@ -44,7 +44,7 @@ class UserAdmin extends AbstractAdmin
                 'label' => 'admin.user.email.label',
             ])
             ->add('plainPassword', TextType::class, [
-                'required' => (!$this->getSubject() || null === $this->getSubject()->getId()),
+                'required' => (! $this->getSubject() || null === $this->getSubject()->getId()),
                 'label' => 'admin.user.password.label',
             ])
             ->end();

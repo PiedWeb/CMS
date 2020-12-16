@@ -39,7 +39,7 @@ class PageListener
     public function preRemove(Page $page)
     {
         // method_exists($page, 'getChildrenPages') &&
-        if (!$page->getChildrenPages()->isEmpty()) {
+        if (! $page->getChildrenPages()->isEmpty()) {
             foreach ($page->getChildrenPages() as $cPage) {
                 $cPage->setParentPage(null);
             }

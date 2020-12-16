@@ -78,6 +78,7 @@ class MediaCacheGeneratorService
             );
         } catch (\RuntimeException $e) {
             $msg = 'Unable to create image for path "%s" and filter "%s". '.'Message was "%s"';
+
             throw new \RuntimeException(sprintf($msg, $path, $filter, $e->getMessage()), 0, $e);
         }
     }
@@ -95,6 +96,7 @@ class MediaCacheGeneratorService
             );
         } catch (\RuntimeException $e) {
             $msg = 'Unable to create image for path "%s" and filter "%s". '.'Message was "%s"';
+
             throw new \RuntimeException(sprintf($msg, $path, $filter, $e->getMessage()), 0, $e);
         }
     }
@@ -111,6 +113,7 @@ class MediaCacheGeneratorService
             $webPConverter->doConvert();
         } catch (\Exception $e) {
             $msg = 'Unable to create image for path "%s" and filter "%s". '.'Message was "%s"';
+
             throw new \RuntimeException(sprintf($msg, $path, $filter, $e->getMessage()), 0, $e);
         }
     }
@@ -151,6 +154,7 @@ class MediaCacheGeneratorService
             $webPConverter->doConvert();
         } catch (\Exception $e) {
             $msg = 'Unable to create image for path "%s" and filter "%s". '.'Message was "%s"';
+
             throw new \RuntimeException(sprintf($msg, $source, 'importing from img', $e->getMessage()), 0, $e);
         }
     }

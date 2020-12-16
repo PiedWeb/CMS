@@ -44,7 +44,7 @@ trait PageI18nTrait
 
     public function addTranslation(self $translation, $recursive = true): self
     {
-        if (!$this->translations->contains($translation) && $this != $translation) {
+        if (! $this->translations->contains($translation) && $this != $translation) {
             $this->translations[] = $translation;
         }
 

@@ -59,7 +59,7 @@ class PiedWebCMSExtension extends Extension implements PrependExtensionInterface
     {
         $result = [];
         foreach ($apps as $app) {
-            if (!$app['template']) {
+            if (! $app['template']) {
                 $app['template'] = $pwcTemplate;
             }
             $result[$app['hosts'][0]] = $app;

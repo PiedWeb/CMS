@@ -65,7 +65,7 @@ trait PageTrait
 
     public function getSlug(): ?string
     {
-        if (!$this->slug) {
+        if (! $this->slug) {
             return $this->id;
         }
 

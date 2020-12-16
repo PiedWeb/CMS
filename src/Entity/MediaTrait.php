@@ -131,7 +131,7 @@ trait MediaTrait
      */
     public function setSlugForce($slug)
     {
-        if (!$slug) {
+        if (! $slug) {
             return $this;
         }
 
@@ -164,7 +164,7 @@ trait MediaTrait
      */
     public function setSlug($slug)
     {
-        if (!$slug) {
+        if (! $slug) {
             return $this;
         }
 
@@ -237,7 +237,7 @@ trait MediaTrait
 
     public function setMedia($media): self
     {
-        if (!$media) {
+        if (! $media) {
             return $this;
         }
 

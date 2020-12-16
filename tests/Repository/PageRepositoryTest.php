@@ -16,6 +16,7 @@ class PageRepositoryTest extends KernelTestCase
 
         foreach ($pages as $page) {
             $this->assertSame($page->getSlug(), 'homepage');
+
             break;
         }
     }

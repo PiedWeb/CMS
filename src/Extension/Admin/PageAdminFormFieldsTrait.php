@@ -101,7 +101,7 @@ trait PageAdminFormFieldsTrait
 
     protected function configureFormFieldOtherProperties(FormMapper $formMapper): FormMapper
     {
-        return !$this->exists('otherProperties') ? $formMapper : $formMapper->add('otherProperties', null, [
+        return ! $this->exists('otherProperties') ? $formMapper : $formMapper->add('otherProperties', null, [
             'required' => false,
             'attr' => [
                 'style' => 'min-height:15vh',
@@ -185,7 +185,7 @@ trait PageAdminFormFieldsTrait
 
     protected function getSlugHelp()
     {
-        $url = !$this->getSubject() ? null
+        $url = ! $this->getSubject() ? null
             : $this->pageCanonicalService->generatePathForPage($this->getSubject()->getSlug());
 
         return $this->getSubject() && $this->getSubject()->getSlug()

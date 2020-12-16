@@ -30,7 +30,7 @@ class ElementAdmin extends AbstractController
     {
         if (null !== $encodedPath) {
             $element = $this->getElements()->getOneByEncodedPath($encodedPath);
-            if (!$element) {
+            if (! $element) {
                 throw $this->createNotFoundException('This element does not exist...');
             }
         }
@@ -45,7 +45,7 @@ class ElementAdmin extends AbstractController
         $process = new Process(['rm', '-rf', $twigCacheFolder]);
         $process->run();
 
-        if (!$process->isSuccessful()) {
+        if (! $process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
     }

@@ -2,12 +2,12 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Media;
+use App\Entity\Page;
+use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Media;
-use App\Entity\User;
-use App\Entity\Page;
-use DateTime;
 use PiedWeb\CMSBundle\Entity\PageMainContentType;
 
 class AppFixtures extends Fixture
@@ -19,7 +19,6 @@ class AppFixtures extends Fixture
             ->setRoles([User::ROLE_DEFAULT]);
 
         $manager->persist($user);
-
 
         $media = (new Media())
             ->setRelativeDir('media')

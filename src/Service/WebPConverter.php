@@ -46,6 +46,7 @@ class WebPConverter extends Stack
                     if ($converterId == $prioritizedConverter) {
                         unset($converters[$i]);
                         array_unshift($converters, $converter);
+
                         break;
                     }
                 }
@@ -64,7 +65,7 @@ class WebPConverter extends Stack
         $defaultConverterOptions = [];
 
         foreach ($this->options2->getOptionsMap() as $id => $option) {
-            if ($option->isValueExplicitlySet() && !($option instanceof GhostOption)) {
+            if ($option->isValueExplicitlySet() && ! ($option instanceof GhostOption)) {
                 //$this->logLn('hi' . $id);
                 $defaultConverterOptions[$id] = $option->getValue();
             }

@@ -120,7 +120,7 @@ class PageController extends AbstractController
         $this->app->switchCurrentApp($host);
         $pages = $this->getPages(null, $request);
 
-        if (!$pages) {
+        if (! $pages) {
             throw $this->createNotFoundException();
         }
 
@@ -171,7 +171,7 @@ class PageController extends AbstractController
             }
         }
 
-        if (!$page->getLocale()) { // avoid bc break
+        if (! $page->getLocale()) { // avoid bc break
             $page->setLocale($this->params->get('pwc.locale'));
         }
 
@@ -179,7 +179,7 @@ class PageController extends AbstractController
         $this->get('translator')->setLocale($page->getLocale());
 
         // Check if page is public
-        if ($page->getCreatedAt() > new \DateTimeImmutable() && !$this->isGranted('ROLE_EDITOR')) {
+        if ($page->getCreatedAt() > new \DateTimeImmutable() && ! $this->isGranted('ROLE_EDITOR')) {
             if ($throwException) {
                 throw $this->createNotFoundException();
             } else {

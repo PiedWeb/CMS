@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Used for test
+ * Used for test.
  */
 
 return [

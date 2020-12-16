@@ -67,7 +67,7 @@ class PageUpdateMailNotifier
 
     public function send()
     {
-        if (!$this->emailTo) {
+        if (! $this->emailTo) {
             return;
         }
 

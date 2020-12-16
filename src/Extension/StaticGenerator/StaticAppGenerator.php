@@ -131,7 +131,7 @@ class StaticAppGenerator
         $this->apps = $this->params->get('pwc.apps');
         $this->parser = HtmlCompressor::construct();
 
-        if (!method_exists($this->filesystem, 'dumpFile')) {
+        if (! method_exists($this->filesystem, 'dumpFile')) {
             throw new \RuntimeException('Method dumpFile() is not available. Upgrade your Filesystem.');
         }
 
@@ -142,7 +142,7 @@ class StaticAppGenerator
     public function generateAll($filter = null)
     {
         foreach ($this->apps as $app) {
-            if ($filter && !\in_array($filter, $app->getHost())) {
+            if ($filter && ! \in_array($filter, $app->getHost())) {
                 continue;
             }
             $this->generate($app, $this->mustGetPagesWithoutHost);
@@ -249,7 +249,7 @@ class StaticAppGenerator
             if ('.' == $entry || '..' == $entry) {
                 continue;
             }
-            if (!\in_array($entry, $this->robotsFiles) && !\in_array($entry, $this->dontCopy)) {
+            if (! \in_array($entry, $this->robotsFiles) && ! \in_array($entry, $this->dontCopy)) {
                 //$this->symlink(
                 if (true === $symlink) {
                     $this->filesystem->symlink(
@@ -274,7 +274,7 @@ class StaticAppGenerator
     {
         $symlink = $this->mustSymlink();
 
-        if (!file_exists($this->app->getStaticDir().'/download')) {
+        if (! file_exists($this->app->getStaticDir().'/download')) {
             $this->filesystem->mkdir($this->app->getStaticDir().'/download/');
             $this->filesystem->mkdir($this->app->getStaticDir().'/download/media');
         }
@@ -285,7 +285,7 @@ class StaticAppGenerator
                 continue;
             }
             // if the file is an image, it's ever exist (maybe it's slow to check every files)
-            if (!file_exists($this->webDir.'/media/default/'.$entry)) {
+            if (! file_exists($this->webDir.'/media/default/'.$entry)) {
                 if (true === $symlink) {
                     $this->filesystem->symlink(
                         '../../../media/'.$entry,

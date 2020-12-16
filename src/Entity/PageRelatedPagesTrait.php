@@ -28,7 +28,7 @@ trait PageRelatedPagesTrait
 
     public function addRelatedPage(PageInterface $relatedPage): self
     {
-        if (!$this->relatedPages->contains($relatedPage)) {
+        if (! $this->relatedPages->contains($relatedPage)) {
             $this->relatedPages[] = $relatedPage;
         }
 

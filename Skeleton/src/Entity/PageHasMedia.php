@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use PiedWeb\CMSBundle\Entity\PageHasMedia as BasePageHasMedia;
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Entity\PageHasMedia as BasePageHasMedia;
 
 /**
  * @ORM\Entity

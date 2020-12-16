@@ -167,11 +167,11 @@ class PageScannerService
     {
         foreach ($linkedDocs as $uri) {
             ++$this->linksCheckedCounter;
-            if (!\is_string($uri)) {
+            if (! \is_string($uri)) {
                 continue;
             }
-            if (('/' == $uri[0] && !$this->uriExist($uri))
-                || (0 === strpos($uri, 'http') && !$this->urlExist($uri))) {
+            if (('/' == $uri[0] && ! $this->uriExist($uri))
+                || (0 === strpos($uri, 'http') && ! $this->urlExist($uri))) {
                 $this->addError('<code>'.$uri.'</code> introuvable');
             }
         }
@@ -216,7 +216,7 @@ class PageScannerService
 
         $this->everChecked[$slug] = (
             null === $page
-                && !file_exists($this->webDir.'/'.$slug)
+                && ! file_exists($this->webDir.'/'.$slug)
                 && 'feed.xml' !== $slug
         ) ? false : true;
 

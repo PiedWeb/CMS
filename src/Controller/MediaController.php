@@ -15,7 +15,7 @@ class MediaController extends AbstractController
         $projectDir = $this->get('kernel')->getProjectDir();
         $pathToFile = $projectDir.'/media/'.substr(str_replace('..', '', $path), \strlen('media/'));
 
-        if (!file_exists($pathToFile)) {
+        if (! file_exists($pathToFile)) {
             throw $this->createNotFoundException('The media does not exist...');
         }
 

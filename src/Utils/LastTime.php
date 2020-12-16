@@ -35,7 +35,7 @@ class LastTime
      */
     public function get($default = false)
     {
-        if (!file_exists($this->filePath)) {
+        if (! file_exists($this->filePath)) {
             return false === $default ? false : new DateTime($default);
         }
 
@@ -44,7 +44,7 @@ class LastTime
 
     public function setWasRun($datetime = 'now', $setIfNotExist = true): void
     {
-        if (!file_exists($this->filePath)) {
+        if (! file_exists($this->filePath)) {
             if (false === $setIfNotExist) {
                 return;
             }

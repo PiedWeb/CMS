@@ -76,7 +76,7 @@ trait PageExtendedMainContentTrait
      */
     public function validateOtherProperties(ExecutionContextInterface $context)
     {
-        if (!empty($this->otherProperties)) {
+        if (! empty($this->otherProperties)) {
             // ou utiliser yaml_parse
             try {
                 Yaml::parse($this->otherProperties);
@@ -120,7 +120,7 @@ trait PageExtendedMainContentTrait
 
         if (preg_match('/^get/', $method)) {
             $property = lcfirst(preg_replace('/^get/', '', $method));
-            if (!property_exists(static::class, $property)) {
+            if (! property_exists(static::class, $property)) {
                 return $this->getOtherProperty($property) ?? $this->getEmc($property);
                 // todo remove the else next release
             }
