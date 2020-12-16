@@ -2,7 +2,7 @@
 <img src="https://raw.githubusercontent.com/PiedWeb/piedweb-devoluix-theme/master/src/img/logo_title.png" width="200" height="200" alt="PHP Packages Open Source" />
 </a></p>
 
-# NOT READY - WAIT V1
+# STILL IN EXPERIMENTATION
 
 # CMS Extendable to make peace between User, Editor, Developer, Designer and SEO
 

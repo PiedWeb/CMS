@@ -24,7 +24,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
           coverage: none
-          
+
       - name: Setup problem matchers
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
@@ -35,3 +35,8 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/phpunit
+
+      - name: Send coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: build/logs/clover.xml

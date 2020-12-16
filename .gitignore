@@ -20,3 +20,4 @@ yarn.lock
 /Skeleton/public/media/*
 /Skeleton/media/*.webp
 Draft.md
+coverage
