@@ -21,3 +21,4 @@ yarn.lock
 /Skeleton/media/*.webp
 Draft.md
 coverage
+coverage.xml
