@@ -11,6 +11,7 @@ use Symfony\Component\Config\Definition\Processor;
 class ConfigurationTest extends TestCase
 {
     public function testConf(
+
     ): void {
         $config = $this->process([]);
 
