@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Service;
 
 use Exception;
+use PiedWeb\CMSBundle\Entity\PageInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment as Twig;
@@ -12,6 +13,9 @@ class App
     protected $host;
     protected $apps;
     protected $app;
+
+    /** @var PageInterface */
+    protected $currentPage;
 
     /**
      * static loader.
@@ -38,6 +42,10 @@ class App
     public function switchCurrentApp($host = null)
     {
         if (null !== $host) {
+            if ($host instanceof PageInterface) {
+                $this->currentPage = $host;
+                $host = $host->getHost();
+            }
             $this->host = $host;
         }
 
@@ -54,7 +62,7 @@ class App
 
     public function isFirstApp(): bool
     {
-        return $this->getFirstHost() === $this->getHost();
+        return $this->getFirstHost() === $this->getMainHost();
     }
 
     public function getFirstHost()
@@ -64,18 +72,23 @@ class App
 
     public function getHost(): string
     {
-        foreach ($this->apps as $app) {
-            if (\in_array($this->host, $app['hosts']) || null === $this->host) {
-                return $app['hosts'][0];
-            }
-        }
-
-        throw new Exception('Unconfigured host `'.$this->host.'`. See piedweb_cms.yaml');
+        return $this->host;
     }
 
     public function getMainHost(): string
     {
         return $this->app['hosts'][0];
+    }
+
+    /**
+     * Used in Router Extension.
+     *
+     * @return bool
+     */
+    public function isMainHost($host)
+    {
+        return $this->getMainHost() === $host;
+        //|| ($this->isFirstApp() && $this->getHost() === null);
     }
 
     public function getHosts()
@@ -140,5 +153,13 @@ class App
     public function isFullPath($path)
     {
         return 0 === strpos($path, '@') && false !== strpos($path, '/');
+    }
+
+    /**
+     * Get the value of currentPage.
+     */
+    public function getCurrentPage()
+    {
+        return $this->currentPage;
     }
 }

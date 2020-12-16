@@ -11,19 +11,25 @@ class PageListener
 {
     protected $params;
     protected $mainContentManager;
+    protected $app;
+    protected $firstPageEverLoaded = false;
 
-    public function __construct(ParameterBagInterface $params, PageMainContentManager $mainContentManager)
-    {
+    public function __construct(
+        ParameterBagInterface $params,
+        PageMainContentManager $mainContentManager,
+        App $app
+    ) {
         $this->params = $params;
-        //$this->app = new App(null, $this->params);
+        $this->app = $app;
         $this->mainContentManager = $mainContentManager;
     }
 
     public function postLoad(Page $page)
     {
-        // todo
-        //$this->switchCurrentApp($page->getHost());
-        //$page->setApp(clone $this->app);
+        if (! $this->firstPageEverLoaded) {
+            $this->app->switchCurrentApp($page);
+            $this->firstPageEverLoaded = true;
+        }
 
         if (false === $this->params->get('pwc.main_content_twig') || null === $page->getOtherProperty('twig')) {
             $page->setTwig($this->params->get('pwc.main_content_twig'));

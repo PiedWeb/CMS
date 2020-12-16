@@ -4,6 +4,7 @@ namespace PiedWeb\CMSBundle\Extension\StaticGenerator;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
+use PiedWeb\CMSBundle\Extension\Router\RouterInterface;
 use PiedWeb\CMSBundle\Repository\PageRepository;
 use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
@@ -13,7 +14,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as Twig;
 use WyriHaximus\HtmlCompress\Factory as HtmlCompressor;
@@ -120,6 +120,7 @@ class StaticAppGenerator
         $this->webDir = $webDir;
         $this->translator = $translator;
         $this->router = $router;
+        $this->router->setUseCustomHostPath(false);
         $this->apps = $this->params->get('pwc.apps');
         $this->parser = HtmlCompressor::construct();
 
@@ -134,7 +135,7 @@ class StaticAppGenerator
     public function generateAll($filter = null)
     {
         foreach ($this->apps as $app) {
-            if ($filter && ! \in_array($filter, $app->getHost())) {
+            if ($filter && ! \in_array($filter, $app->getMainHost())) {
                 continue;
             }
             $this->generate($app, $this->mustGetPagesWithoutHost);
@@ -341,15 +342,15 @@ class StaticAppGenerator
     /**
      * The function cache redirection found during generatePages and
      * format in self::$redirection the content for the .htaccess.
-     *
-     * @return void
      */
-    protected function addRedirection(Page $page)
+    protected function addRedirection($from, string $to = '', $code = 0)
     {
         $this->redirections .= 'Redirect ';
-        $this->redirections .= $page->getRedirectionCode().' ';
-        $this->redirections .= $this->router->generate('piedweb_cms_page', ['slug' => $page->getRealSlug()]);
-        $this->redirections .= ' '.$page->getRedirection();
+        $this->redirections .= $code ?: $from->getRedirectionCode();
+        $this->redirections .= ' ';
+        $this->redirections .= $from instanceof Page ? $this->router->generate($from->getRealSlug()) : $from;
+        $this->redirections .= ' ';
+        $this->redirections .= $to ?: $from->getRedirection();
         $this->redirections .= PHP_EOL;
     }
 
@@ -384,8 +385,10 @@ class StaticAppGenerator
         $response = static::$appKernel->handle($request);
 
         if ($response->isRedirect()) {
-            // todo
-            //$this->addRedirection($liveUri, getRedirectUri)
+            if (isset($response->headers['location'])) {
+                $this->addRedirection($liveUri, $response->headers['location'], $response->getStatusCode());
+            }
+
             return;
         } elseif (200 != $response->getStatusCode()) {
             //$this->kernel = static::$appKernel;
@@ -408,9 +411,8 @@ class StaticAppGenerator
     protected function generateFilePath(Page $page)
     {
         $slug = '' == $page->getRealSlug() ? 'index' : $page->getRealSlug();
-        $route = $this->router->generate('piedweb_cms_page', ['slug' => $page->getRealSlug()]);
 
-        return $this->app->getStaticDir().$route.'.html';
+        return $this->app->getStaticDir().$slug.'.html';
     }
 
     /**

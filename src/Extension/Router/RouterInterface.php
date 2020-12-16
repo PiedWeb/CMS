@@ -2,6 +2,8 @@
 
 namespace PiedWeb\CMSBundle\Extension\Router;
 
+use Symfony\Component\Routing\RouterInterface as SfRouterInterface;
+
 interface RouterInterface
 {
     const PATH = 'piedweb_cms_page';
@@ -10,5 +12,9 @@ interface RouterInterface
 
     public function generatePathForHomePage($page = null): string;
 
-    public function generatePathForPage($slug = 'homepage'): string;
+    public function generate($slug = 'homepage'): string;
+
+    public function setUseCustomHostPath($useCustomHostPath);
+
+    public function getRouter(): SfRouterInterface;
 }

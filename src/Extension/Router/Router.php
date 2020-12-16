@@ -4,6 +4,8 @@ namespace PiedWeb\CMSBundle\Extension\Router;
 
 use PiedWeb\CMSBundle\Entity\PageInterface;
 use PiedWeb\CMSBundle\Service\App;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface as SfRouterInterface;
 
 class Router implements RouterInterface
@@ -14,19 +16,24 @@ class Router implements RouterInterface
     /** @var SfRouterInterface */
     protected $router;
 
-    protected $customHost = false; // TODO make it true on special request, same with absolute
+    protected $useCustomHostPath = true; // TODO make it true on special request, same with absolute
 
     /** @var App */
     protected $app;
 
+    /** @var string */
+    protected $currentHost;
+
     public function __construct(
         SfRouterInterface $router,
         App $app,
+        RequestStack $requestStack,
         $defaultLocale
     ) {
         $this->defaultLocale = $defaultLocale;
         $this->router = $router;
         $this->app = $app;
+        $this->currentHost = $requestStack->getCurrentRequest() ? $requestStack->getCurrentRequest()->getHost() : '';
     }
 
     /**
@@ -42,10 +49,10 @@ class Router implements RouterInterface
             $slug = $page->getLocale();
         }
 
-        return $this->generatePathForPage($slug);
+        return $this->generate($slug);
     }
 
-    public function generatePathForPage($slug = 'homepage'): string
+    public function generate($slug = 'homepage'): string
     {
         if ($slug instanceof PageInterface) {
             $slug = $slug->getRealSlug();
@@ -53,11 +60,22 @@ class Router implements RouterInterface
             $slug = '';
         }
 
-        if ($this->customHost && ! $this->app->isFirstApp()) {
-            return $this->router->generate(self::CUSTOM_HOST_PATH, ['slug' => $slug]);
+        if ($this->mayUseCustomPath()) {
+            return $this->router->generate(self::CUSTOM_HOST_PATH, [
+                    'host' => $this->app->getCurrentPage()->getHost(),
+                'slug' => $slug,
+            ]);
         }
 
         return $this->router->generate(self::PATH, ['slug' => $slug]);
+    }
+
+    protected function mayUseCustomPath()
+    {
+        return $this->useCustomHostPath
+            && $this->currentHost // we have a request
+            && $this->app->getCurrentPage() // a page is loaded
+            && ! $this->app->isMainHost($this->currentHost);
     }
 
     /**
@@ -67,10 +85,18 @@ class Router implements RouterInterface
      *
      * @return self
      */
-    public function setCustomHost(bool $customHost)
+    public function setUseCustomHostPath($useCustomHostPath)
     {
-        $this->customHost = $customHost;
+        $this->useCustomHostPath = $useCustomHostPath;
 
         return $this;
+    }
+
+    /**
+     * Get the value of router.
+     */
+    public function getRouter(): SfRouterInterface
+    {
+        return $this->router;
     }
 }

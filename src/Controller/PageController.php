@@ -140,7 +140,7 @@ class PageController extends AbstractController
         $requestedLocale = rtrim($request->getLocale(), '/');
 
         $pages = $this->getPageRepository()->getIndexablePages(
-            $this->app->getHost(),
+            $this->app->getMainHost(),
             $this->app->isFirstApp(),
             $requestedLocale,
             $this->params->get('locale'),
@@ -162,7 +162,7 @@ class PageController extends AbstractController
     {
         $this->app->switchCurrentApp($host);
         $slug = $this->noramlizeSlug($slug);
-        $page = $this->getPageRepository()->getPage($slug, $this->app->getHost(), $this->app->isFirstApp());
+        $page = $this->getPageRepository()->getPage($slug, $this->app->getMainHost(), $this->app->isFirstApp());
 
         // Check if page exist
         if (null === $page) {

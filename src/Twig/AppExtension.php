@@ -204,7 +204,7 @@ class AppExtension extends AbstractExtension
     public function isCurrentPage(string $uri, ?Page $currentPage)
     {
         return
-            null === $currentPage || $uri != $this->router->generatePathForPage($currentPage->getRealSlug())
+            null === $currentPage || $uri != $this->router->generate($currentPage->getRealSlug())
             ? false
             : true;
     }

@@ -122,7 +122,7 @@ trait PageAdminFormFieldsTrait
     protected function configureFormFieldHost(FormMapper $formMapper): FormMapper
     {
         if (null === $this->getSubject()->getHost()) {
-            $this->getSubject()->setHost($this->getHosts()[0]);
+            $this->getSubject()->setHost($this->apps->getMainHost());
         }
 
         return $formMapper->add('host', ChoiceType::class, [

@@ -3,7 +3,7 @@
 namespace PiedWeb\CMSBundle\Utils;
 
 use PiedWeb\CMSBundle\Entity\PageInterface;
-use Symfony\Component\Routing\RouterInterface;
+use PiedWeb\CMSBundle\Extension\Router\RouterInterface;
 
 trait GenerateLivePathForTrait
 {
@@ -33,6 +33,6 @@ trait GenerateLivePathForTrait
             $route = 'custom_host_'.$route;
         }
 
-        return $this->router->generate($route, $params);
+        return $this->router->getRouter()->generate($route, $params);
     }
 }

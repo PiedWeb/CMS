@@ -4,13 +4,13 @@ namespace PiedWeb\CMSBundle\Extension\PageScanner;
 
 use Doctrine\ORM\EntityManagerInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface;
+use PiedWeb\CMSBundle\Extension\Router\RouterInterface as PwRouter;
 use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Utils\GenerateLivePathForTrait;
 use PiedWeb\CMSBundle\Utils\KernelTrait;
 use PiedWeb\UrlHarvester\Harvest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment as Twig_Environment;
 
 /**
@@ -43,11 +43,12 @@ class PageScannerService
         EntityManagerInterface $em,
         string $webDir,
         array $apps,
-        RouterInterface $router,
+        PwRouter $router,
         KernelInterface $kernel
     ) {
         $this->twig = $twig;
         $this->router = $router;
+        $this->router->setUseCustomHostPath(false);
         $this->em = $em;
         $this->webDir = $webDir;
         $this->apps = $apps;

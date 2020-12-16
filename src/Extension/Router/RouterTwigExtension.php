@@ -19,7 +19,7 @@ class RouterTwigExtension extends AbstractExtension
     {
         return [
             new TwigFunction('homepage', [$this->router, 'generatePathForHomePage']),
-            new TwigFunction('page', [$this->router, 'generatePathForPage']),
+            new TwigFunction('page', [$this->router, 'generate']),
         ];
     }
 }

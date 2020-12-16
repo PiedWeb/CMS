@@ -45,4 +45,6 @@ interface PageInterface
     public function setMainContentType($mainContentType);
 
     public function setContent(MainContentManagerInterface $mainContentManager);
+
+    public function setHost($host);
 }
