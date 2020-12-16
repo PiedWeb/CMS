@@ -136,7 +136,7 @@ trait PageExtendedMainContentTrait
         }
     }
 
-    // To remove next release
+    // NEXT MAJOR: remove it
     public function getEmc($name)
     {
         if (preg_match('/<!--"'.$name.'"--(.*)--\/-->/sU', $this->getMainContent(), $match)) {

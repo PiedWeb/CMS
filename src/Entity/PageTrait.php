@@ -4,7 +4,7 @@ namespace PiedWeb\CMSBundle\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
-use PiedWeb\CMSBundle\Service\ShortCodeConverter;
+use PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCodeConverter;
 
 trait PageTrait
 {
@@ -18,12 +18,8 @@ trait PageTrait
      */
     protected $h1;
 
-    public function getH1($elseTitle = false): ?string
+    public function getH1(): ?string
     {
-        if ($elseTitle) {
-            return ShortCodeConverter::do($this->h1 ?? $this->title ?? '', $this->getLocale());
-        }
-
         return $this->h1;
     }
 

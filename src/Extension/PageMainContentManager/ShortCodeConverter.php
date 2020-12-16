@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Service;
+namespace PiedWeb\CMSBundle\Extension\PageMainContentManager;
 
 class ShortCodeConverter
 {

@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCodeConverter;
 
 /**
  * Page extended: // I may cut this in multiple traits
@@ -44,9 +45,9 @@ trait PageExtendedTrait
      */
     protected $title;
 
-    public function getTitle($elseReturnH1 = false): ?string
+    public function getTitle(): ?string
     {
-        return $this->title ?? (true === $elseReturnH1 ? $this->h1 : null);
+        return $this->title;
     }
 
     public function setTitle(?string $title): self
@@ -101,13 +102,8 @@ trait PageExtendedTrait
         return $this->childrenPages;
     }
 
-    public function getName($firstOnly = false): ?string
+    public function getName(): ?string
     {
-        if ($firstOnly) {
-            $names = explode(',', $this->name);
-
-            return $names[0] ? trim($names[0]) : ($this->name ?: ($this->h1 ?: $this->title));
-        }
 
         return $this->name;
     }

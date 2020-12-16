@@ -176,4 +176,51 @@ class Raw implements MainContentManagerInterface
 
         return $string;
     }
+
+    /**
+     * Magic getter for Page properties.
+     *
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        if (!preg_match('/^get/', $method))
+            $method = 'get'.ucfirst($method);
+
+            return $this->pageCall($method, $arguments);
+    }
+
+    protected function pageCall($method, $arguments)
+    {
+        if ($arguments)
+            return call_user_func_array([$this->page, $method], $arguments);
+
+        return $this->page->$method();
+    }
+
+    // TODO : move Short Code Converter to somewhere else (like apply renderingFilters on each fields from Page ?!)
+    public function h1()
+    {
+        return ShortCodeConverter::do($this->page->getH1() ? $this->page->getH1() : $this->page->getTitle());
+    }
+
+    public function title($firstH1 = false)
+    {
+        if ($firstH1)
+            return $this->h1();
+
+        return ShortCodeConverter::do($this->page->getTitle() ? $this->page->getTitle() : $this->page->getH1());
+    }
+
+    public function name(): ?string
+    {
+        $name = $this->page->getName();
+            $names = explode(',', $name);
+
+            return ShortCodeConverter::do($names[0] ? trim($names[0]) : ($name !== null ? $name: $this->getH1() ));
+
+    }
 }
