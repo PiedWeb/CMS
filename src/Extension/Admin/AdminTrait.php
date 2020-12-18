@@ -6,14 +6,12 @@ trait AdminTrait
 {
     protected $apps;
     protected $pageClass;
-    protected $defaultLocale;
     protected $mediaClass;
     protected $userClass;
     protected $twig;
     protected $em;
     protected $router;
     protected $securityTokenStorage;
-    protected $defaultMainContentType;
 
     protected static $thumb = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIzMnB4IiB2ZXJzaW
                 9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMycHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIg
@@ -78,11 +76,6 @@ trait AdminTrait
         $this->em = $em;
     }
 
-    public function setDefaultLocale($locale)
-    {
-        $this->defaultLocale = $locale;
-    }
-
     public function setTwig($twig)
     {
         $this->twig = $twig;
@@ -106,11 +99,6 @@ trait AdminTrait
     public function setUserClass($userClass)
     {
         $this->userClass = $userClass;
-    }
-
-    public function setDefaultMainContentType($defaultMainContentType)
-    {
-        $this->defaultMainContentType = $defaultMainContentType;
     }
 
     /**

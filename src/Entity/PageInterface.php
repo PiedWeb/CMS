@@ -24,8 +24,6 @@ interface PageInterface
 
     public function getMainContent();
 
-    public function mainContentIsMarkdown();
-
     public function getCreatedAt();
 
     public function getHost();
@@ -35,10 +33,6 @@ interface PageInterface
     public function setMainContent(?string $mainContent);
 
     public function getOtherProperty($name);
-
-    public function mustParseTwig(): bool;
-
-    public function setTwig($twig);
 
     public function getMainContentType();
 

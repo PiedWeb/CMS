@@ -29,10 +29,6 @@ class PageMainContentManager
     {
         $this->page = $page;
 
-        if (PageMainContentType::MARKDOWN === $page->getMainContentType()) {
-            return new Markdown($this->app, $this->twig, $page, $this->markdownParser);
-        }
-
-        return new Raw($this->app, $this->twig, $page);
+        return new Raw($this->app, $this->twig, $this->markdownParser, $page);
     }
 }

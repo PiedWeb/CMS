@@ -27,19 +27,12 @@ class PageAdmin extends AbstractAdmin
 
     protected $liipImage;
 
-    protected $defaultLocale;
-
     public function __construct($code, $class, $baseControllerName)
     {
         parent::__construct($code, $class, $baseControllerName);
         $this->listModes['tree'] = [
             'class' => 'fa fa-sitemap',
         ];
-    }
-
-    public function setDefaultLocale($defaultLocale)
-    {
-        $this->defaultLocale = $defaultLocale;
     }
 
     public function setLiipImage($liipImage)
@@ -58,7 +51,7 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         // Next : load this from configuration
-        $mainFields = ['h1', 'mainContent', 'mainContentIsMarkdown'];
+        $mainFields = ['h1', 'mainContent', 'mainContentType'];
         $columnFields = [
             'admin.page.state.label' => ['createdAt', 'metaRobots'],
             'admin.page.permanlien.label' => ['host', 'slug', 'parentPage'],
@@ -91,8 +84,8 @@ class PageAdmin extends AbstractAdmin
     public function getNewInstance()
     {
         $instance = parent::getNewInstance();
-        $instance->setLocale($this->defaultLocale);
-        $instance->setMainContentType($this->defaultMainContentType);
+        $instance->setLocale($this->apps->get()->getDefaultLocale()); // todo : always use first app params
+        //$instance->setMainContentType($this->apps->get()->getDefaultMainContentType());
 
         return $instance;
     }

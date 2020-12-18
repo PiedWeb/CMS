@@ -1,14 +1,10 @@
 services:
-  piedweb.update_notification.email_notifier:
+  piedweb.update_notification.mail_notifier:
     class: PiedWeb\CMSBundle\Extension\UpdateNotification\PageUpdateMailNotifier
     autowire: true
     arguments:
       $pageClass: '%pwc.entity_page%'
-      $emailFrom: '%pwc.email_sender%'
-      $emailTo: '%pwc.page_update_notification_email%'
-      $appName: '%pwc.name%'
       $rootDir: '%kernel.root_dir%'
-      $interval: '%pwc.page_update_notification_interval%'
     tags:
       [
         {

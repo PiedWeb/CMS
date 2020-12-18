@@ -12,18 +12,12 @@ use Symfony\Component\Yaml\Yaml;
 trait PageExtendedMainContentTrait
 {
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $mainContentType;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $otherProperties;
 
     protected $otherPropertiesParsed;
 
-    protected $twig;
     protected $mainContentManager;
 
     abstract public function getMainContent(): ?string;
@@ -36,21 +30,6 @@ trait PageExtendedMainContentTrait
     public function getChapeau()
     {
         throw new Exception('You should use getContent');
-    }
-
-    public function setTwig($twig)
-    {
-        $this->twig = $twig;
-    }
-
-    public function mustParseTwig(): bool
-    {
-        return (bool) (null !== $this->twig ? $this->twig : $this->getOtherProperty('twig'));
-    }
-
-    public function mainContentIsMarkdown(): ?bool
-    {
-        return PageMainContentType::MARKDOWN === $this->mainContentType;
     }
 
     public function getTemplate(): ?string
@@ -106,6 +85,7 @@ trait PageExtendedMainContentTrait
 
     /**
      * Magic getter for otherProperties.
+     * TODO/IDEA magic setter for otherProperties
      *
      * @param string $method
      * @param array  $arguments
@@ -142,26 +122,6 @@ trait PageExtendedMainContentTrait
         if (preg_match('/<!--"'.$name.'"--(.*)--\/-->/sU', $this->getMainContent(), $match)) {
             return $match[1];
         }
-    }
-
-    /**
-     * Get the value of mainContentType.
-     */
-    public function getMainContentType()
-    {
-        return $this->mainContentType;
-    }
-
-    /**
-     * Set the value of mainContentType.
-     *
-     * @return self
-     */
-    public function setMainContentType($mainContentType)
-    {
-        $this->mainContentType = (int) $mainContentType;
-
-        return $this;
     }
 
     /**

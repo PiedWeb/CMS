@@ -85,12 +85,13 @@ trait PageAdminFormFieldsTrait
         ]);
     }
 
-    protected function configureFormFieldMainContentIsMarkdown(FormMapper $formMapper): FormMapper
+    /* TODO : keep it to integrate editorJs
+    protected function configureFormFieldMainContentContentType(FormMapper $formMapper): FormMapper
     {
         return $formMapper->add('mainContentType', ChoiceType::class, [
             'choices' => [
-                'admin.page.mainContentType.choice.raw' => '0',
-                'admin.page.mainContentType.choice.markdown' => '1',
+                'admin.page.mainContentType.choice.defaultAppValue' => '0',
+                'admin.page.mainContentType.choice.raw' => '1',
                 'admin.page.mainContentType.choice.editorjs' => '2',
             ],
             'label' => 'admin.page.mainContentType.label',
@@ -98,7 +99,7 @@ trait PageAdminFormFieldsTrait
             'help_html' => true,
             'help' => 'admin.page.markdown.help',
         ]);
-    }
+    }*/
 
     protected function configureFormFieldOtherProperties(FormMapper $formMapper): FormMapper
     {

@@ -67,7 +67,7 @@
 		<div class="{{ container|default('container') }}">
 
 			{% block h1 %}
-				<h1>{{ page.getH1(true)|raw|punctuation_beautifer }}</h1>
+				<h1>{{ page.content.title(true)|raw }}</h1>
 			{% endblock %}
 
 			{% block description %}

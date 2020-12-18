@@ -1,21 +1,35 @@
 #used for tests
 
 piedweb_cms:
-  #media_dir_absolute:   '%kernel.project_dir%/media'
   locale: '%locale%'
-  #locales:              fr|en
-  #dir:                  '%kernel.project_dir%/public'
-  #name:                 'Pied Web CMS'
-  #color:                '#1fa67a'
-  #default_locale_without_prefix: false # Permit to have default locale accessed by /slug moreover than /locale/slug
   entity_page: App\Entity\Page
   entity_pagehasmedia: App\Entity\PageHasMedia
   entity_media: App\Entity\Media
   entity_user: App\Entity\User
-  #email_sender:         me@tld.com
-  #email_sender_name:    'Pied Web CMS'
   apps:
     - {
         hosts: ['localhost.dev', 'localhost'],
         base_url: 'https://localhost.dev',
       }
+# locale
+# locales
+# hosts:
+# base_url:                 // defaut https://%host%
+# name                      // used in UpdateNotificationService and in Conversation
+# main_content_type
+# template                  // default template
+
+# customProperties (json) variableNode
+#   main_content_shortcode    video,image,mail,phone,date // wich shortcode can be used ?
+#   field_shortcode           date
+#   main_content_twig         // can use twig ?
+
+#   static_dir
+#   static_generateFor      // Apache/GithubPages
+
+#   page_update_notification_mail
+#   page_update_notification_interval
+
+#   notifier_email
+#   notifier_email_name
+#   color

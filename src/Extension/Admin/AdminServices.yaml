@@ -12,16 +12,13 @@ services:
       - [setTemplate, [list, '@@pwcAdmin/media_mosaic.html.twig']]
       - [setTemplate, [show, '@@pwcAdmin/page_show.html.twig']]
       - [setTemplate, [edit, '@@pwcAdmin/page_edit.html.twig']]
-      - [setDefaultLocale, ['%locale%']]
       - [setSecurityTokenStorage, ['@security.token_storage']]
       - [setTwig, ['@twig']]
       - [setApps, ['%pwc.apps%']]
       - [setMediaClass, ['%pwc.entity_media%']]
       - [setUserClass, ['%pwc.entity_user%']]
       - [setPageClass, ['%pwc.entity_page%']]
-      - [setDefaultLocale, ['%pwc.locale%']]
       - [setRouter, ['@router']]
-      - [setDefaultMainContentType, ['%pwc.main_content_type_default%l']]
     public: true
 
   PiedWeb\CMSBundle\Extension\Admin\PageAdminCRUDController:

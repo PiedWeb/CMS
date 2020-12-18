@@ -59,7 +59,7 @@ class StaticAppGenerator
     protected $webDir;
 
     /**
-     * @var array
+     * @var App
      */
     protected $apps;
     protected $app;
@@ -110,7 +110,7 @@ class StaticAppGenerator
         RouterInterface $router,
         string $webDir,
         KernelInterface $kernel,
-        App $app
+        App $apps
     ) {
         $this->pageRepository = $pageRepository;
         $this->filesystem = new Filesystem();
@@ -121,7 +121,7 @@ class StaticAppGenerator
         $this->translator = $translator;
         $this->router = $router;
         $this->router->setUseCustomHostPath(false);
-        $this->apps = $app->getApps();
+        $this->apps = $apps;
         $this->parser = HtmlCompressor::construct();
 
         if (! method_exists($this->filesystem, 'dumpFile')) {
@@ -134,7 +134,7 @@ class StaticAppGenerator
 
     public function generateAll($filter = null)
     {
-        foreach ($this->apps as $app) {
+        foreach ($this->apps->getHosts() as $app) {
             if ($filter && ! \in_array($filter, $app['hosts'])) {
                 continue;
             }
@@ -158,12 +158,12 @@ class StaticAppGenerator
      * @throws \RuntimeException
      * @throws \LogicException
      */
-    public function generate($app, $mustGetPagesWithoutHost = false)
+    protected function generate($host, $mustGetPagesWithoutHost = false)
     {
-        $this->app = new App($app['hosts'][0], [$app]);
+        $this->app = $this->apps->switchCurrentApp($host)->get();
         $this->mustGetPagesWithoutHost = $mustGetPagesWithoutHost;
 
-        $this->filesystem->remove($this->app->getStaticDir());
+        $this->filesystem->remove($this->getStaticDir()());
         $this->generatePages();
         $this->generateSitemaps();
         $this->generateErrorPages();
@@ -207,7 +207,15 @@ class StaticAppGenerator
     // https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site
     protected function generateCname()
     {
-        $this->filesystem->dumpFile($this->app->getStaticDir().'/CNAME', $this->app->getMainHost());
+        $this->filesystem->dumpFile($this->getStaticDir()().'/CNAME', $this->app->getMainHost());
+    }
+
+    protected function getStaticDir()
+    {
+        // todo see config todo for default static dir
+        $staticDir = $this->app->getCustomProperty('static_dir');
+
+        return $staticDir ? $staticDir : realpath($this->webDir.'/../'.$this->app->getMainHost());
     }
 
     protected function generateHtaccess()
@@ -216,7 +224,7 @@ class StaticAppGenerator
             'domain' => $this->app->getMainHost(),
             'redirections' => $this->redirections,
         ]);
-        $this->filesystem->dumpFile($this->app->getStaticDir().'/.htaccess', $htaccess);
+        $this->filesystem->dumpFile($this->getStaticDir()().'/.htaccess', $htaccess);
     }
 
     protected function copy(string $file): void
@@ -224,7 +232,7 @@ class StaticAppGenerator
         if (file_exists($file)) {
             copy(
                 str_replace($this->params->get('kernel.project_dir').'/', '../', $this->webDir.'/'.$file),
-                $this->app->getStaticDir().'/'.$file
+                $this->getStaticDir()().'/'.$file
             );
         }
     }
@@ -247,11 +255,11 @@ class StaticAppGenerator
                 if (true === $symlink) {
                     $this->filesystem->symlink(
                         str_replace($this->params->get('kernel.project_dir').'/', '../', $this->webDir.'/'.$entry),
-                        $this->app->getStaticDir().'/'.$entry
+                        $this->getStaticDir()().'/'.$entry
                     );
                 } else {
                     $action = is_file($this->webDir.'/'.$entry) ? 'copy' : 'mirror';
-                    $this->filesystem->$action($this->webDir.'/'.$entry, $this->app->getStaticDir().'/'.$entry);
+                    $this->filesystem->$action($this->webDir.'/'.$entry, $this->getStaticDir()().'/'.$entry);
                 }
             }
         }
@@ -267,9 +275,9 @@ class StaticAppGenerator
     {
         $symlink = $this->mustSymlink();
 
-        if (! file_exists($this->app->getStaticDir().'/download')) {
-            $this->filesystem->mkdir($this->app->getStaticDir().'/download/');
-            $this->filesystem->mkdir($this->app->getStaticDir().'/download/media');
+        if (! file_exists($this->getStaticDir()().'/download')) {
+            $this->filesystem->mkdir($this->getStaticDir()().'/download/');
+            $this->filesystem->mkdir($this->getStaticDir()().'/download/media');
         }
 
         $dir = dir($this->webDir.'/../media');
@@ -282,23 +290,23 @@ class StaticAppGenerator
                 if (true === $symlink) {
                     $this->filesystem->symlink(
                         '../../../media/'.$entry,
-                        $this->app->getStaticDir().'/download/media/'.$entry
+                        $this->getStaticDir()().'/download/media/'.$entry
                     );
                 } else {
                     $this->filesystem->copy(
                         $this->webDir.'/../media/'.$entry,
-                        $this->app->getStaticDir().'/download/media/'.$entry
+                        $this->getStaticDir()().'/download/media/'.$entry
                     );
                 }
             }
         }
 
-        //$this->filesystem->$action($this->webDir.'/../media', $this->app->getStaticDir().'/download/media');
+        //$this->filesystem->$action($this->webDir.'/../media', $this->getStaticDir()().'/download/media');
     }
 
     protected function generateSitemaps(): void
     {
-        foreach (explode('|', $this->params->get('pwc.locales')) as $locale) {
+        foreach (explode('|', $this->params->get('pwc.locales')) as $locale) { // todo, find locale by my self via repo
             foreach (['txt', 'xml'] as $format) {
                 $this->generateSitemap($locale, $format);
             }
@@ -314,11 +322,11 @@ class StaticAppGenerator
             'piedweb_cms_page_sitemap',
             ['locale' => $locale, '_format' => $format]
         );
-        $staticFile = $this->app->getStaticDir().'/sitemap'.$locale.'.'.$format; // todo get it from URI removing host
+        $staticFile = $this->getStaticDir()().'/sitemap'.$locale.'.'.$format; // todo get it from URI removing host
         $this->saveAsStatic($liveUri, $staticFile);
 
         if ($this->params->get('locale') == $locale ? '' : '.'.$locale) {
-            $staticFile = $this->app->getStaticDir().'/sitemap.'.$format;
+            $staticFile = $this->getStaticDir()().'/sitemap.'.$format;
             $this->saveAsStatic($liveUri, $staticFile);
         }
     }
@@ -330,11 +338,11 @@ class StaticAppGenerator
             'piedweb_cms_page_main_feed',
             ['locale' => $locale]
         );
-        $staticFile = $this->app->getStaticDir().'/feed'.$locale.'.xml';
+        $staticFile = $this->getStaticDir()().'/feed'.$locale.'.xml';
         $this->saveAsStatic($liveUri, $staticFile);
 
         if ($this->params->get('locale') == $locale ? '' : '.'.$locale) {
-            $staticFile = $this->app->getStaticDir().'/feed.xml';
+            $staticFile = $this->getStaticDir()().'/feed.xml';
             $this->saveAsStatic($liveUri, $staticFile);
         }
     }
@@ -412,7 +420,7 @@ class StaticAppGenerator
     {
         $slug = '' == $page->getRealSlug() ? 'index' : $page->getRealSlug();
 
-        return $this->app->getStaticDir().$slug.'.html';
+        return $this->getStaticDir()().$slug.'.html';
     }
 
     /**
@@ -436,7 +444,7 @@ class StaticAppGenerator
         $locales = explode('|', $this->params->get('pwc.locales'));
 
         foreach ($locales as $locale) {
-            $this->filesystem->mkdir($this->app->getStaticDir().'/'.$locale);
+            $this->filesystem->mkdir($this->getStaticDir()().'/'.$locale);
             $this->generateErrorPage($locale);
         }
     }
@@ -450,7 +458,7 @@ class StaticAppGenerator
         }
 
         $dump = $this->parser->compress($this->twig->render('@Twig/Exception/error.html.twig'));
-        $this->filesystem->dumpFile($this->app->getStaticDir().(null !== $locale ? '/'.$locale : '').'/'.$uri, $dump);
+        $this->filesystem->dumpFile($this->getStaticDir()().(null !== $locale ? '/'.$locale : '').'/'.$uri, $dump);
     }
 
     protected function getPageRepository(): PageRepositoryInterface

@@ -1,10 +1,17 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\PageMainContentManager;
+namespace PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCode;
 
-class ShortCodeConverter
+class Date extends ShortCode
 {
-    public static function do($string, $locale = null)
+    public function apply($string)
+    {
+        $string = $this->convertDateShortCode($string, $this->app->getDefaultLocale());
+
+        return $string;
+    }
+
+    public function convertDateShortCode($string, $locale = null)
     {
         //var_dump($string); exit;
         if ($locale) {

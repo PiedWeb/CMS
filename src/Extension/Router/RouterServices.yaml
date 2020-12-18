@@ -5,8 +5,6 @@ services:
   piedweb.router:
     class: PiedWeb\CMSBundle\Extension\Router\Router
     autowire: true
-    arguments:
-      $defaultLocale: '%pwc.locale%'
     public: true
 
   PiedWeb\CMSBundle\Extension\Router\RouterTwigExtension:

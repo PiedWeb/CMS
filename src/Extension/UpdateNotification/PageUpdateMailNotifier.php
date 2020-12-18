@@ -4,14 +4,12 @@ namespace PiedWeb\CMSBundle\Extension\UpdateNotification;
 
 use DateInterval;
 use Doctrine\ORM\EntityManagerInterface;
+use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Utils\LastTime;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Move it to a plugin (todo).
- */
 class PageUpdateMailNotifier
 {
     private $mailer;
@@ -23,23 +21,20 @@ class PageUpdateMailNotifier
     private $em;
     private $translator;
     private $pageClass;
+    private $app;
+    /** @var App */
+    private $apps;
 
     public function __construct(
         string $pageClass,
         MailerInterface $mailer,
-        string $emailFrom,
-        ?string $emailTo,
-        string $appName,
+        App $apps,
         string $rootDir,
-        string $interval, //minIntervalBetweenTwoNotification
         EntityManagerInterface $entityManager,
         TranslatorInterface $translator
     ) {
         $this->mailer = $mailer;
-        $this->emailTo = $emailTo;
-        $this->emailFrom = $emailFrom;
-        $this->interval = $interval;
-        $this->appName = $appName;
+        $this->apps = $apps;
         $this->rootDir = $rootDir;
         $this->em = $entityManager;
         $this->translator = $translator;
@@ -57,12 +52,23 @@ class PageUpdateMailNotifier
 
     public function postUpdate($page)
     {
+        $this->instantiateApp($page);
         $this->send();
     }
 
     public function postPersist($page)
     {
+        $this->instantiateApp($page);
         $this->send();
+    }
+
+    protected function instantiateApp($page)
+    {
+        $this->app = $this->apps->switchCurrentApp($page->getHost())->get();
+        $this->emailFrom = $this->app->get('notifier_email');
+        $this->emailTo = $this->app->get('page_update_notification_mail');
+        $this->interval = $this->app->get('page_update_notification_interval');
+        $this->appName = $this->app->get('name');
     }
 
     public function send()
@@ -71,7 +77,7 @@ class PageUpdateMailNotifier
             return;
         }
 
-        $lastTime = new LastTime($this->rootDir.'/../var/lastPageUpdateNotification');
+        $lastTime = new LastTime($this->rootDir.'/../var/lastPageUpdateNotification'.md5($this->app->getHost()));
         if (false === $lastTime->wasRunSince(new DateInterval($this->interval))) {
             return;
         }

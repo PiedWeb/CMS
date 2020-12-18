@@ -1,0 +1,18 @@
+services:
+  piedweb.pmcm_listener:
+    class: PiedWeb\CMSBundle\Extension\PageMainContentManager\PageManagerListener
+    autowire: true
+    tags:
+      - {
+          name: doctrine.orm.entity_listener,
+          entity: '%pwc.entity_page%',
+          event: postLoad,
+        }
+
+  PiedWeb\CMSBundle\Extension\PageMainContentManager\PageMainContentManager:
+    autowire: true
+
+
+  PiedWeb\CMSBundle\Extension\PageMainContentManager\PageMainContentManagerInterface:
+    class: PiedWeb\CMSBundle\Extension\PageMainContentManager\PageMainContentManager
+    autowire: true

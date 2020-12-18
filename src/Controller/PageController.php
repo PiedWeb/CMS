@@ -5,6 +5,7 @@ namespace PiedWeb\CMSBundle\Controller;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Repository\Repository;
 use PiedWeb\CMSBundle\Service\App;
+use PiedWeb\CMSBundle\Service\AppConfig;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,9 +19,10 @@ class PageController extends AbstractController
      */
     protected $params;
 
-    /**
-     * @var App
-     */
+    /**     * @var App     */
+    protected $apps;
+
+    /** @var AppConfig */
     protected $app;
 
     protected $twig;
@@ -32,7 +34,7 @@ class PageController extends AbstractController
     ) {
         $this->params = $params;
         $this->twig = $twig;
-        $this->app = $app;
+        $this->apps = $app;
     }
 
     public function show(?string $slug, ?string $host, Request $request): Response
@@ -98,8 +100,8 @@ class PageController extends AbstractController
      */
     public function showMainFeed(?string $host, Request $request)
     {
-        $this->app->switchCurrentApp($host);
-        $locale = $request->getLocale() ? rtrim($request->getLocale(), '/') : $this->params->get('locale');
+        $this->setApp($host);
+        $locale = $request->getLocale() ? rtrim($request->getLocale(), '/') : $this->app->getDefaultLocale();
         $LocaleHomepage = $this->getPage($locale, $host, $request, false);
         $slug = 'homepage';
         $page = $LocaleHomepage ?: $this->getPage($slug, $host, $request);
@@ -118,7 +120,7 @@ class PageController extends AbstractController
 
     public function showSitemap($_format, ?string $host, Request $request)
     {
-        $this->app->switchCurrentApp($host);
+        $this->setApp($host);
         $pages = $this->getPages(null, $request);
 
         if (! $pages) {
@@ -139,8 +141,8 @@ class PageController extends AbstractController
         $requestedLocale = rtrim($request->getLocale(), '/');
 
         $pages = $this->getPageRepository()->getIndexablePages(
-            $this->app->getMainHost(),
-            $this->app->isFirstApp(),
+            $this->apps->getMainHost(),
+            $this->apps->isFirstApp(),
             $requestedLocale,
             $this->params->get('locale'),
             $limit
@@ -150,16 +152,22 @@ class PageController extends AbstractController
     }
 
     /**
-     * @return PageRepository
+     * @return \PiedWeb\CMSBundle\Repository\PageRepository
      */
     protected function getPageRepository()
     {
         return Repository::getPageRepository($this->getDoctrine(), $this->params->get('pwc.entity_page'));
     }
 
+    protected function setApp($host): void
+    {
+        $this->app = $this->apps->switchCurrentApp($host)->get();
+    }
+
     protected function getPage(?string &$slug, ?string $host = null, ?Request $request, $throwException = true): ?Page
     {
-        $this->app->switchCurrentApp($host);
+        $this->setApp($host); // TODO Move it on request listener (could be real host or parameter host)
+
         $slug = $this->noramlizeSlug($slug);
         $page = $this->getPageRepository()->getPage($slug, $this->app->getMainHost(), $this->app->isFirstApp());
 
@@ -173,7 +181,7 @@ class PageController extends AbstractController
         }
 
         if (! $page->getLocale()) { // avoid bc break
-            $page->setLocale($this->params->get('pwc.locale'));
+            $page->setLocale($this->app->getDefaultLocale());
         }
 
         //if (null !== $request) { $request->setLocale($page->getLocale()); }

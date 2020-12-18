@@ -4,7 +4,8 @@ namespace PiedWeb\CMSBundle\Extension\PageMainContentManager;
 
 use PiedWeb\CMSBundle\Entity\PageInterface;
 use PiedWeb\CMSBundle\Service\App;
-use PiedWeb\CMSBundle\Utils\HtmlBeautifer;
+use PiedWeb\CMSBundle\Service\AppConfig;
+use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use TOC\MarkupFixer;
 use TOC\TocGenerator;
 use Twig\Environment as Twig;
@@ -20,9 +21,7 @@ class Raw implements MainContentManagerInterface
     protected $twig;
 
     /**
-     * @var App
-     *          Required only for markdown image render...
-     *          remove it and set template in page
+     * @var AppConfig
      */
     protected $app;
 
@@ -35,11 +34,12 @@ class Raw implements MainContentManagerInterface
 
     protected $parsed = false;
 
-    public function __construct(App $app, Twig $twig, PageInterface $page)
+    public function __construct(App $app, Twig $twig, MarkdownParserInterface $markdownParser, PageInterface $page)
     {
         $this->page = $page;
-        $this->app = $app->switchCurrentApp($page->getHost());
+        $this->app = $app->switchCurrentApp($page->getHost())->get();
         $this->twig = $twig;
+        $this->markdownParser = $markdownParser;
     }
 
     protected function parse()
@@ -48,34 +48,29 @@ class Raw implements MainContentManagerInterface
             return;
         }
 
-        $this->parseContentBeforeRendering();
-        $this->applyRendering();
-        $this->parseContentAfterRendering();
+        $this->content = (string) $this->page->getMainContent();
+        $this->parseContentBeforeSplitting();
+        $this->splitting();
+        $this->parseContentAfterSplitting();
     }
 
-    protected function applyRendering()
+    protected function splitting()
     {
-        foreach ($this->parts as $part) {
-            if ($this->page->mustParseTwig()) {
-                $this->$part = $this->render($this->$part);
-            }
-            $this->$part = HtmlBeautifer::punctuationBeautifer($this->$part);
-        }
-    }
-
-    protected function parseContentBeforeRendering()
-    {
-        $originalContent = (string) $this->page->getMainContent();
-
-        $parsedContent = explode('<!--break-->', $originalContent, 3);
+        $parsedContent = explode('<!--break-->', $this->content, 3);
 
         $this->chapeau = isset($parsedContent[1]) ? $parsedContent[0] : '';
         $this->postContent = $parsedContent[2] ?? '';
         $this->content = $parsedContent[1] ?? $parsedContent[0];
     }
 
-    protected function parseContentAfterRendering()
+    protected function parseContentBeforeSplitting()
     {
+        $this->content = $this->applyShortCodeOn($this->content, 'main_content_shortcode');
+    }
+
+    protected function parseContentAfterSplitting()
+    {
+        if ($this->page->getOtherProperty('toc') !== null)
         $this->parseToc();
     }
 
@@ -141,42 +136,6 @@ class Raw implements MainContentManagerInterface
         return $this->toc;
     }
 
-    public function convertMarkdownImage(string $body)
-    {
-        preg_match_all('/(?:!\[(.*?)\]\((.*?)\))/', $body, $matches);
-
-        if (! isset($matches[1])) {
-            return;
-        }
-
-        $nbrMatch = \count($matches[0]);
-        for ($k = 0; $k < $nbrMatch; ++$k) {
-            $renderImg = $this->twig->render(
-                $this->app->getTemplate('/component/_inline_image.html.twig', $this->twig),
-                [
-                    //"image_wrapper_class" : "mimg",'
-                    'image_src' => $matches[2][$k],
-                    'image_alt' => htmlspecialchars($matches[1][$k]),
-            ]
-            );
-            $body = str_replace($matches[0][$k], $renderImg, $body);
-        }
-
-        return $body;
-    }
-
-    protected function render($string)
-    {
-        if (! $string) {
-            return '';
-        }
-
-        $tmpl = $this->twig->createTemplate(HtmlBeautifer::removeHtmlComments($string));
-        $string = $tmpl->render(['page' => $this->page]);
-
-        return $string;
-    }
-
     /**
      * Magic getter for Page properties.
      *
@@ -206,7 +165,7 @@ class Raw implements MainContentManagerInterface
     // TODO : move Short Code Converter to somewhere else (like apply renderingFilters on each fields from Page ?!)
     public function h1()
     {
-        return ShortCodeConverter::do($this->page->getH1() ?: $this->page->getTitle());
+        return $this->filterField($this->page->getH1() ?: $this->page->getTitle());
     }
 
     public function title($firstH1 = false)
@@ -215,7 +174,7 @@ class Raw implements MainContentManagerInterface
             return $this->h1();
         }
 
-        return ShortCodeConverter::do($this->page->getTitle() ?: $this->page->getH1());
+        return $this->filterField($this->page->getTitle() ?: $this->page->getH1());
     }
 
     public function name(): ?string
@@ -223,6 +182,37 @@ class Raw implements MainContentManagerInterface
         $name = $this->page->getName();
         $names = explode(',', $name);
 
-        return ShortCodeConverter::do($names[0] ? trim($names[0]) : (null !== $name ? $name : $this->getH1()));
+        return $this->filterField($names[0] ? trim($names[0]) : (null !== $name ? $name : $this->getH1()));
+    }
+
+    protected function filterField($field)
+    {
+        $field = $this->applyShortCodeOn($field, 'fields_shortcode');
+
+        return $field;
+    }
+
+    protected function applyShortCodeOn($field, string $shortcodesLabel)
+    {
+        $shortcodes = $this->app->getCustomProperty($shortcodesLabel);
+        if (! $shortcodes) {
+            return $field;
+        }
+
+        $shortcodes = \is_string($shortcodes) ? explode(',', $shortcodes) : $shortcodes;
+        foreach ($shortcodes as $shortcode) {
+            if (false === strpos($shortcode, '/')) {
+                $shortcode = 'PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCode\\'.ucfirst($shortcode);
+            }
+
+
+            $filter = new $shortcode($this->twig, $this->app, $this->page);
+            if ($shortcode == 'PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCode\Markdown') {
+                $filter->setMarkdownParser($this->markdownParser);
+            }
+            $field = $filter->apply($field);
+        }
+
+        return $field;
     }
 }

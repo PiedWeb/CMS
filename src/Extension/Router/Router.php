@@ -10,9 +10,6 @@ use Symfony\Component\Routing\RouterInterface as SfRouterInterface;
 
 class Router implements RouterInterface
 {
-    /** @var string */
-    protected $defaultLocale;
-
     /** @var SfRouterInterface */
     protected $router;
 
@@ -27,10 +24,8 @@ class Router implements RouterInterface
     public function __construct(
         SfRouterInterface $router,
         App $app,
-        RequestStack $requestStack,
-        $defaultLocale
+        RequestStack $requestStack
     ) {
-        $this->defaultLocale = $defaultLocale;
         $this->router = $router;
         $this->app = $app;
         $this->currentHost = $requestStack->getCurrentRequest() ? $requestStack->getCurrentRequest()->getHost() : '';
@@ -45,7 +40,7 @@ class Router implements RouterInterface
     {
         $slug = '';
 
-        if (null !== $page && $page->getLocale() != $this->defaultLocale) {
+        if (null !== $page && $page->getLocale() != $this->app->get()->getDefaultLocale()) {
             $slug = $page->getLocale();
         }
 
@@ -76,7 +71,7 @@ class Router implements RouterInterface
             && $this->currentHost // we have a request
             && $this->app->getCurrentPage() // a page is loaded
             && $this->app->getCurrentPage()->getHost()
-            && ! $this->app->isMainHost($this->currentHost);
+            && ! $this->app->get()->isMainHost($this->currentHost);
     }
 
     /**

@@ -37,35 +37,63 @@ class PiedWebCMSExtension extends Extension implements PrependExtensionInterface
     {
         $container->setParameter('pwc', $config);
 
-        $pwcTemplate = Configuration::DEFAULT_TEMPLATE;
-
         foreach ($config as $key => $value) {
-            if ('template' === $key) {
-                $pwcTemplate = $value;
+            if ('apps' === $key) {
+                $apps = $value;
+
+                continue;
             }
 
-            if ('apps' === $key) {
-                $container->setParameter('pwc.apps', self::parsAppsConfig($value, $pwcTemplate));
-            } elseif (\is_array($value)) {
+            if (\is_array($value) && self::isAssoc($value) && 'custom_properties' !== $key) {
+            //&& !in_array($key, ['custom_properties', 'app_fallback_properties'])) {
                 self::loadConfigToParameters($container, $value, $prefix.$key.'.');
-            } else {
-                $container->setParameter('app.'.$prefix.$key, $value); // to deprecate in next release
-                $container->setParameter('pwc.'.$prefix.$key, $value);
+
+                continue;
             }
+
+            $container->setParameter('app.'.$prefix.$key, $value); // to deprecate in next release
+            $container->setParameter('pwc.'.$prefix.$key, $value);
+        }
+
+        if (isset($apps)) {
+            $container->setParameter('pwc.apps', self::parseAppsConfig($apps, $container));
         }
     }
 
-    protected static function parsAppsConfig($apps, $pwcTemplate)
+    protected static function isAssoc(array $arr)
+    {
+        if ([] === $arr) return false;
+        return array_keys($arr) !== range(0, count($arr) - 1);
+    }
+
+    protected static function parseAppsConfig($apps, ContainerBuilder $container)
     {
         $result = [];
         foreach ($apps as $app) {
-            if (! $app['template']) {
-                $app['template'] = $pwcTemplate;
-            }
+            $app = self::parseAppConfig($app, $container);
+            //var_dump($app); exit;
             $result[$app['hosts'][0]] = $app;
         }
 
         return $result;
+    }
+
+    protected static function parseAppConfig($app, ContainerBuilder $container)
+    {
+        $properties = $container->getParameter('pwc.app_fallback_properties');
+        if (\is_string($properties)) {
+            $properties = explode(',', $properties);
+        }
+        foreach ($properties as $p) {
+            if (! isset($app[$p])) {
+                $app[$p] = $container->getParameter('pwc.'.$p); //'%'.'pwc.'.$p.'%';
+            } elseif ('custom_properties' == $p) {
+                $app[$p] = array_merge($container->getParameter('pwc.'.$p), $app[$p]);
+                //var_dump($app[$p]); exit;
+            }
+        }
+
+        return $app;
     }
 
     public function getAlias()
