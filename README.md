@@ -1,4 +1,4 @@
-# ! STILL IN EXPERIMENTATION
+# STILL IN EXPERIMENTATION
 
 # CMS _Content First_ and _Extendable_
 
@@ -120,6 +120,7 @@ List of existing extension wich are not in the **core** :
 - [ ] Move facultative extensin in an other bundle (PageUpdateNotification)
 - [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io)
 - [ ] Refactor Entity
+- [ ] Revoir install-cms
 
 ## TODO Extension
 

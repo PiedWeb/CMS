@@ -68,7 +68,7 @@ class Raw implements FilterInterface
 
     protected function parseContentAfterSplitting()
     {
-        if (null !== $this->page->getOtherProperty('toc')) {
+        if (null !== $this->page->getCustomProperty('toc')) {
             $this->parseToc();
         }
     }
@@ -88,7 +88,7 @@ class Raw implements FilterInterface
             $this->content = $content[0];
         }
 
-        if ($this->page->getOtherProperty('toc')) {
+        if ($this->page->getCustomProperty('toc')) {
             $this->toc = (new TocGenerator())->getHtmlMenu($this->content);
         }
     }

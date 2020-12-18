@@ -74,7 +74,7 @@ admin:
     translations:
       label: 'Traductions'
       help: "Utiliser l'url pour trouver la page (ex : en/my-other)."
-    excrept:
+    searchexcrept:
       label: Courte Description
       help: Visible depuis les pages de résultats des moteurs de recherches (meta description)
     h1:
@@ -111,7 +111,7 @@ admin:
     markdown:
       label: Formatage markdown
       help: Applique l'enrichissement du texte via la syntaxe Markdown à l'intégralité du contenu.<br>Sinon utiliser directement <code>{% filter markdown %}mon texte{% endfilter %}</code>. <br><a href="/admin/markdown-cheatsheet" target=_blank>En savoir plus</a>.
-    otherProperties:
+    customProperties:
       label: Autres paramètres
       help: Au format <em>YAML</em>.
 

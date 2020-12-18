@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Entity;
+namespace PiedWeb\CMSBundle\Entity\SharedTrait;
 
 use Doctrine\ORM\Mapping as ORM;
 

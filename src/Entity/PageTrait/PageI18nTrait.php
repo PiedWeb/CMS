@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Entity;
+namespace PiedWeb\CMSBundle\Entity\PageTrait;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

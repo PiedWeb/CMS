@@ -49,12 +49,12 @@ class FilterPageListener
     protected function checkTwigShortcodeAuth(AppConfig $app, Page $page)
     {
         if (false === $app->canUseTwigShortcode()) {
-            $main_content_shortcode = $page->getOtherProperty('main_content_shortcode');
+            $main_content_shortcode = $page->getCustomProperty('main_content_shortcode');
             if (self::containTwigShortcode($main_content_shortcode)) {
                 throw new \Exception('Can\'t use twig shortcode, disabled in app config !');
                 //. or preg_replace('/(^twig,|,twig,|,twig$)/i', '', $main_content_shortcode);
             }
-            $fields_shortcode = $page->getOtherProperty('fields_shortcode');
+            $fields_shortcode = $page->getCustomProperty('fields_shortcode');
             if (self::containTwigShortcode($fields_shortcode)) {
                 throw new \Exception('Can\'t use twig shortcode, disabled in app config !');
             }

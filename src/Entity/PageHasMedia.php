@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Entity\SharedTrait\IdTrait;
 
 /**
  * @ORM\MappedSuperclass

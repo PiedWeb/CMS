@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Entity;
+namespace PiedWeb\CMSBundle\Entity\PageTrait;
 
 trait PageRedirectionTrait
 {

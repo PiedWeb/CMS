@@ -55,9 +55,9 @@ class PageAdmin extends AbstractAdmin
         $columnFields = [
             'admin.page.state.label' => ['createdAt', 'metaRobots'],
             'admin.page.permanlien.label' => ['host', 'slug', 'parentPage'],
-            'admin.page.extended.label' => ['expand' => true, 'fields' => ['mainImage', 'name', 'title',  'excrept']],
+            'admin.page.extended.label' => ['expand' => true, 'fields' => ['mainImage', 'name', 'title',  'searchexcrept']],
             'admin.page.translations.label' => ['locale', 'translations'],
-            'admin.page.otherProperties.label' => ['expand' => true, 'fields' => ['otherProperties']],
+            'admin.page.customProperties.label' => ['expand' => true, 'fields' => ['customProperties']],
             'admin.page.images.label' => ['images'],
         ];
 

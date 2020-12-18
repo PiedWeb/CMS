@@ -3,6 +3,8 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Entity\SharedTrait\CustomPropertiesTrait;
+use PiedWeb\CMSBundle\Entity\SharedTrait\IdTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -16,6 +18,7 @@ class Media implements MediaInterface
 {
     use IdTrait;
     use MediaTrait;
+    use CustomPropertiesTrait;
 
     public function __construct()
     {

@@ -62,11 +62,11 @@ trait PageAdminFormFieldsTrait
 
     protected function configureFormFieldExcrept(FormMapper $formMapper): FormMapper
     {
-        return $formMapper->add('excrept', TextareaType::class, [
+        return $formMapper->add('searchexcrept', TextareaType::class, [
                 'required' => false,
-                'label' => 'admin.page.excrept.label',
+                'label' => 'admin.page.searchexcrept.label',
                 'help_html' => true,
-                'help' => 'admin.page.excrept.help',
+                'help' => 'admin.page.searchexcrept.help',
             ]);
     }
 
@@ -101,17 +101,17 @@ trait PageAdminFormFieldsTrait
         ]);
     }*/
 
-    protected function configureFormFieldOtherProperties(FormMapper $formMapper): FormMapper
+    protected function configureFormFieldCustomProperties(FormMapper $formMapper): FormMapper
     {
-        return ! $this->exists('otherProperties') ? $formMapper : $formMapper->add('otherProperties', null, [
+        return ! $this->exists('customProperties') ? $formMapper : $formMapper->add('customProperties', null, [
             'required' => false,
             'attr' => [
                 'style' => 'min-height:15vh',
                 'data-editor' => 'yaml',
             ],
-            'label' => 'admin.page.otherProperties.label',
+            'label' => 'admin.page.customProperties.label',
             'help_html' => true,
-            'help' => 'admin.page.otherProperties.help',
+            'help' => 'admin.page.customProperties.help',
         ]);
     }
 

@@ -3,6 +3,14 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageExtendedTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageI18nTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageImageTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageMultiHostTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageRedirectionTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageTrait;
+use PiedWeb\CMSBundle\Entity\SharedTrait\CustomPropertiesTrait;
+use PiedWeb\CMSBundle\Entity\SharedTrait\IdTrait;
 use PiedWeb\CMSBundle\Validator\Constraints\PageRendering;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -19,13 +27,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Page implements PageInterface
 {
     use IdTrait;
-    use PageExtendedMainContentTrait;
     use PageExtendedTrait;
     use PageI18nTrait;
     use PageImageTrait;
     use PageMultiHostTrait;
     use PageRedirectionTrait;
     use PageTrait;
+    use CustomPropertiesTrait;
 
     public function __construct()
     {

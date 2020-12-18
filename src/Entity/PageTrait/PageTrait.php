@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Entity;
+namespace PiedWeb\CMSBundle\Entity\PageTrait;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,22 +17,12 @@ trait PageTrait
      */
     protected $h1;
 
-    public function getH1(): ?string
-    {
-        return $this->h1;
-    }
-
-    public function setH1(?string $h1): self
-    {
-        $this->h1 = $h1;
-
-        return $this;
-    }
-
     /**
+     * RawContent would have been a more appropriate name
      * @ORM\Column(type="text", nullable=true)
      */
     protected $mainContent;
+
 
     /**
      * In fact, createdAt is more a publishedAt.
@@ -45,6 +35,20 @@ trait PageTrait
      * @ORM\Column(type="datetime")
      */
     protected $updatedAt;
+
+    public function getH1(): ?string
+    {
+        return $this->h1;
+    }
+
+    public function setH1(?string $h1): self
+    {
+        $this->h1 = $h1;
+
+        return $this;
+    }
+
+
 
     public function __toString()
     {

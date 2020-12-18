@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Entity;
+namespace PiedWeb\CMSBundle\Entity\PageTrait;
 
 use Doctrine\ORM\Mapping as ORM;
 

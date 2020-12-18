@@ -32,7 +32,7 @@ interface PageInterface
 
     public function setMainContent(?string $mainContent);
 
-    public function getOtherProperty($name);
+    public function getCustomProperty($name);
 
     public function getH1();
 
