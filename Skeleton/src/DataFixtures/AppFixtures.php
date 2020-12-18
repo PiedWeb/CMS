@@ -8,7 +8,6 @@ use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use PiedWeb\CMSBundle\Entity\PageMainContentType;
 
 class AppFixtures extends Fixture
 {
@@ -35,8 +34,7 @@ class AppFixtures extends Fixture
             ->setSlug('homepage')
             ->setLocale('en')
             ->setCreatedAt(new DateTime('2 days ago'))
-            ->setMainContent(file_get_contents(__DIR__.'/WelcomePageMainContent.md'))
-            ->setMainContentType(PageMainContentType::MARKDOWN);
+            ->setMainContent(file_get_contents(__DIR__.'/WelcomePageMainContent.md'));
 
         $manager->persist($page);
 

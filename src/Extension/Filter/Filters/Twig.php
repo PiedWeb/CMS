@@ -1,12 +1,9 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCode;
-
-use PiedWeb\CMSBundle\Twig\PhoneNumberTwigTrait;
+namespace PiedWeb\CMSBundle\Extension\Filter\Filters;
 
 class Twig extends ShortCode
 {
-
     public function apply($string)
     {
         $string = $this->render($string);
@@ -16,7 +13,7 @@ class Twig extends ShortCode
 
     protected function render($string)
     {
-        if (! $string || strpos($string, '{') === false) {
+        if (! $string || false === strpos($string, '{')) {
             return $string;
         }
 

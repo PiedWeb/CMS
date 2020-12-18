@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCode;
+namespace PiedWeb\CMSBundle\Extension\Filter\Filters;
 
 use PiedWeb\CMSBundle\Twig\EncryptedLinkTwigTrait;
 
@@ -45,11 +45,9 @@ class EncryptedLink extends ShortCode
     // NEXT MAJOR : Move it in a dedicated shortcode TwigEncryptedLink
     public function convertTwigEncryptedLink($body)
     {
-
         $rgx = '/{{\s*j?s?link\(((?<![\\\])[\'"])((?:.(?!(?<![\\\])\1))*.?)\1\s*,'
                 .'\s*((?<![\\\])[\'"])((?:.(?!(?<![\\\])\3))*.?)\3,?.*\)\s*}}/iU';
         preg_match_all($rgx, $body, $matches);
-
 
         if (! isset($matches[2])) {
             return $body;

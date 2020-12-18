@@ -1,16 +1,14 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\PageMainContentManager;
+namespace PiedWeb\CMSBundle\Extension\Filter;
 
+use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Service\AppConfig;
-use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
-use PiedWeb\CMSBundle\Entity\PageInterface;
-use PiedWeb\CMSBundle\Entity\PageMainContentType;
 use Twig\Environment as Twig;
 
-class PageManagerListener
+class FilterPageListener
 {
     protected $apps;
     protected $firstPageEverLoaded = false;
@@ -46,7 +44,7 @@ class PageManagerListener
     }
 
     /**
-     * if twig shortcode is disabled for app, we avoid the page add it (some kind of hack attempt ?!)
+     * if twig shortcode is disabled for app, we avoid the page add it (some kind of hack attempt ?!).
      */
     protected function checkTwigShortcodeAuth(AppConfig $app, Page $page)
     {
@@ -65,8 +63,10 @@ class PageManagerListener
 
     protected static function containTwigShortcode($shortcode)
     {
-        if (is_string($shortcode)) $shortcode = explode(',', $shortcode);
+        if (\is_string($shortcode)) {
+            $shortcode = explode(',', $shortcode);
+        }
 
-        return in_array('twig', $shortcode);
+        return \in_array('twig', $shortcode);
     }
 }

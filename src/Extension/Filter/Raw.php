@@ -1,28 +1,26 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\PageMainContentManager;
+namespace PiedWeb\CMSBundle\Extension\Filter;
 
+use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use PiedWeb\CMSBundle\Entity\PageInterface;
 use PiedWeb\CMSBundle\Service\App;
 use PiedWeb\CMSBundle\Service\AppConfig;
-use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use TOC\MarkupFixer;
 use TOC\TocGenerator;
 use Twig\Environment as Twig;
 
-// TODO remove APP and remove PAGE to use it on what i want string (like in a twig extension)
-class Raw implements MainContentManagerInterface
+class Raw implements FilterInterface
 {
     protected $parts = ['chapeau', 'intro', 'toc', 'content', 'postContent'];
 
-    /**
-     * @var Twig
-     */
+    /** @var Twig */
     protected $twig;
 
-    /**
-     * @var AppConfig
-     */
+    /** @var MarkdownParserInterface */
+    protected $markdownParser;
+
+    /** @var AppConfig */
     protected $app;
 
     protected $page;
@@ -70,8 +68,9 @@ class Raw implements MainContentManagerInterface
 
     protected function parseContentAfterSplitting()
     {
-        if ($this->page->getOtherProperty('toc') !== null)
-        $this->parseToc();
+        if (null !== $this->page->getOtherProperty('toc')) {
+            $this->parseToc();
+        }
     }
 
     protected function parseToc()
@@ -202,12 +201,11 @@ class Raw implements MainContentManagerInterface
         $shortcodes = \is_string($shortcodes) ? explode(',', $shortcodes) : $shortcodes;
         foreach ($shortcodes as $shortcode) {
             if (false === strpos($shortcode, '/')) {
-                $shortcode = 'PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCode\\'.ucfirst($shortcode);
+                $shortcode = 'PiedWeb\CMSBundle\Extension\Filter\Filters\\'.ucfirst($shortcode);
             }
 
-
             $filter = new $shortcode($this->twig, $this->app, $this->page);
-            if ($shortcode == 'PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCode\Markdown') {
+            if ('PiedWeb\CMSBundle\Extension\Filter\Filters\Markdown' == $shortcode) {
                 $filter->setMarkdownParser($this->markdownParser);
             }
             $field = $filter->apply($field);

@@ -2,7 +2,7 @@
 
 namespace PiedWeb\CMSBundle\Entity;
 
-use PiedWeb\CMSBundle\Extension\PageMainContentManager\MainContentManagerInterface;
+use PiedWeb\CMSBundle\Extension\Filter\FilterInterface;
 
 interface PageInterface
 {
@@ -34,17 +34,13 @@ interface PageInterface
 
     public function getOtherProperty($name);
 
-    public function getMainContentType();
-
     public function getH1();
 
     public function getTitle();
 
     public function getName();
 
-    public function setMainContentType($mainContentType);
-
-    public function setContent(MainContentManagerInterface $mainContentManager);
+    public function setContent(FilterInterface $mainContentManager);
 
     public function setHost($host);
 }

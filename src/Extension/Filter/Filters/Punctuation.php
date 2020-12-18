@@ -1,8 +1,7 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCode;
+namespace PiedWeb\CMSBundle\Extension\Filter\Filters;
 
-use PiedWeb\CMSBundle\Twig\PhoneNumberTwigTrait;
 use PiedWeb\CMSBundle\Utils\HtmlBeautifer;
 
 class Punctuation extends ShortCode

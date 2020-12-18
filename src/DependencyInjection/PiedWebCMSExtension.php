@@ -45,7 +45,7 @@ class PiedWebCMSExtension extends Extension implements PrependExtensionInterface
             }
 
             if (\is_array($value) && self::isAssoc($value) && 'custom_properties' !== $key) {
-            //&& !in_array($key, ['custom_properties', 'app_fallback_properties'])) {
+                //&& !in_array($key, ['custom_properties', 'app_fallback_properties'])) {
                 self::loadConfigToParameters($container, $value, $prefix.$key.'.');
 
                 continue;
@@ -62,8 +62,11 @@ class PiedWebCMSExtension extends Extension implements PrependExtensionInterface
 
     protected static function isAssoc(array $arr)
     {
-        if ([] === $arr) return false;
-        return array_keys($arr) !== range(0, count($arr) - 1);
+        if ([] === $arr) {
+            return false;
+        }
+
+        return array_keys($arr) !== range(0, \count($arr) - 1);
     }
 
     protected static function parseAppsConfig($apps, ContainerBuilder $container)

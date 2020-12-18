@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\PageMainContentManager\ShortCode;
+namespace PiedWeb\CMSBundle\Extension\Filter\Filters;
 
 class Date extends ShortCode
 {

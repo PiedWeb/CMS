@@ -4,7 +4,6 @@ namespace PiedWeb\CMSBundle\Tests\Extension;
 
 use App\Kernel;
 use PiedWeb\CMSBundle\Entity\Page;
-use PiedWeb\CMSBundle\Entity\PageMainContentType;
 use PiedWeb\CMSBundle\Extension\Router\Router;
 use PiedWeb\CMSBundle\Extension\StaticGenerator\StaticAppGenerator;
 use PiedWeb\CMSBundle\Repository\PageRepositoryInterface;
@@ -82,8 +81,7 @@ class StaticGeneratorTest extends KernelTestCase
             ->setSlug('homepage')
             ->setLocale('en')
             ->setCreatedAt(new \DateTime('2 days ago'))
-            ->setMainContent('...')
-            ->setMainContentType(PageMainContentType::MARKDOWN);
+            ->setMainContent('...');
 
         $pageRepo = $this->createMock(PageRepositoryInterface::class);
         $pageRepo->method('setHostCanBeNull')

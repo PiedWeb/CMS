@@ -1,12 +1,12 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\PageMainContentManager;
+namespace PiedWeb\CMSBundle\Extension\Filter;
 
 /**
  * The name is not amazing... but what else ?!
  * Default is protected kw.
  */
-interface MainContentManagerInterface
+interface FilterInterface
 {
     /**
      * Return text separate by <!-- -->.

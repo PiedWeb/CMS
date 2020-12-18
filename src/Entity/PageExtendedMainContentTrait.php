@@ -3,7 +3,7 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Exception;
-use PiedWeb\CMSBundle\Extension\PageMainContentManager\MainContentManagerInterface;
+use PiedWeb\CMSBundle\Extension\Filter\FilterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -85,7 +85,7 @@ trait PageExtendedMainContentTrait
 
     /**
      * Magic getter for otherProperties.
-     * TODO/IDEA magic setter for otherProperties
+     * TODO/IDEA magic setter for otherProperties.
      *
      * @param string $method
      * @param array  $arguments
@@ -137,7 +137,7 @@ trait PageExtendedMainContentTrait
      *
      * @return self
      */
-    public function setContent(MainContentManagerInterface $mainContentManager)
+    public function setContent(FilterInterface $mainContentManager)
     {
         $this->mainContentManager = $mainContentManager;
 
