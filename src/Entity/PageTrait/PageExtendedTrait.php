@@ -3,8 +3,8 @@
 namespace PiedWeb\CMSBundle\Entity\PageTrait;
 
 use Doctrine\ORM\Mapping as ORM;
-use PiedWeb\CMSBundle\Extension\Filter\FilterInterface;
 use Exception;
+use PiedWeb\CMSBundle\Extension\Filter\FilterInterface;
 
 trait PageExtendedTrait
 {
@@ -20,20 +20,22 @@ trait PageExtendedTrait
     protected $childrenPages;
 
     /**
-     * Meta Description #SEO
+     * Meta Description -SEO.
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $searchExcrept;
 
     /**
-     * #SEO
+     * - SEO.
+     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $metaRobots;
 
-
     /**
-     * #SEO (links) / Breadcrumb
+     * - SEO (links) / Breadcrumb.
+     *
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     protected $name;
@@ -42,7 +44,6 @@ trait PageExtendedTrait
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     protected $title;
-
 
     /** @var FilterInterface */
     protected $content;
@@ -90,12 +91,12 @@ trait PageExtendedTrait
     {
     }
 
-    public function getExcrept(): ?string
+    public function getSearchExcrept(): ?string
     {
         return $this->searchExcrept;
     }
 
-    public function setExcrept(?string $searchExcrept): self
+    public function setSearchExcrept(?string $searchExcrept): self
     {
         $this->searchExcrept = $searchExcrept;
 

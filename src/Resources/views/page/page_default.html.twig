@@ -11,8 +11,8 @@
 {% endblock %}
 
 {% block robots %}
-	{% if page.searchexcrept is defined and page.searchexcrept is not null %}
-		<meta name="description" content="{{ page.searchexcrept|escape }}">
+	{% if page.searchExcrept is defined and page.searchExcrept is not null %}
+		<meta name="description" content="{{ page.searchExcrept|escape }}">
 	{% endif %}
 
 	{% if page.metaRobots is defined and page.metaRobots is not null %}
@@ -38,8 +38,8 @@
 {% block open_graph %}
 	<meta name="og:title" content="{{ page.getTitle(true)|striptags }}">
 	<meta name="og:url" content="{{ app_base_url|default('') }}{{ page(page.realSlug) }}">
-	{% if page.searchexcrept %}
-		<meta name="og:description" content="{{ page.searchexcrept|striptags }}">
+	{% if page.searchExcrept %}
+		<meta name="og:description" content="{{ page.searchExcrept|striptags }}">
 	{% endif %}
 	{% if page.mainImage is defined and page.mainImage is not null %}
 		<meta name="og:image" content="{{ app_base_url|default('') }}{{ (page.mainImage.fullPath)|imagine_filter('default') }}">
@@ -76,19 +76,17 @@
 
 			{% block main_image %}
 				{% if page.mainImage is not null %}
-					{%
-						include '@PiedWebCMS/component/_inline_image.html.twig' with {
+					{% include '@PiedWebCMS/component/_inline_image.html.twig' with {
 							'image_src': page.mainImage.fullPath|imagine_filter('default'),
 							'image_alt': page.mainImage.name(page.locale, true)|default(page.getTitle(true)|striptags),
 							'image_wrapper_class': ' ',
-						}
-					%}
+						} %}
 				{% endif %}
 			{% endblock %}
 
 
 			{% block main_content %}
-                {{ page.content.body|raw  }}
+                {{ page.content.body|raw }}
 			{% endblock %}
 
 

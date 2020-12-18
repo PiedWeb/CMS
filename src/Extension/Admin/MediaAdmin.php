@@ -99,8 +99,8 @@ class MediaAdmin extends AbstractAdmin
         $media = $this->getSubject();
 
         $template = false !== strpos($media->getMimeType(), 'image/') ?
-            '@pwcAdmin/media_show.preview_image.html.twig'
-            : '@pwcAdmin/media_show.preview.html.twig';
+            '@pwcAdmin/media/media_show.preview_image.html.twig'
+            : '@pwcAdmin/media/media_show.preview.html.twig';
 
         return $this->twig->render(
             $template,
@@ -148,7 +148,7 @@ class MediaAdmin extends AbstractAdmin
     protected function showRelatedPages(): string
     {
         return $this->twig->render(
-            '@pwcAdmin/media_show.relatedPages.html.twig',
+            '@pwcAdmin/media/media_show.relatedPages.html.twig',
             $this->getRelatedPages()
         );
     }

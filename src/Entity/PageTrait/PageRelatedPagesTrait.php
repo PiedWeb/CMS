@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use PiedWeb\CMSBundle\Entity\PageInterface;
-use PiedWeb\CMSBundle\Entity\PageHasMediaInterface as PageHasMedia;
 
 trait PageRelatedPagesTrait
 {

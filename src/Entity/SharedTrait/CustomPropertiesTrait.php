@@ -2,8 +2,6 @@
 
 namespace PiedWeb\CMSBundle\Entity\SharedTrait;
 
-use Exception;
-use PiedWeb\CMSBundle\Extension\Filter\FilterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -12,7 +10,8 @@ use Symfony\Component\Yaml\Yaml;
 trait CustomPropertiesTrait
 {
     /**
-     * YAML Format
+     * YAML Format.
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $customProperties;
@@ -90,5 +89,4 @@ trait CustomPropertiesTrait
             return $this->getCustomProperty(lcfirst($method)) ?? null;
         }
     }
-
 }

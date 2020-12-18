@@ -1,17 +1,17 @@
-{% set base = app_base_url is defined ? app_base_url : (url('piedweb_cms_page', {slug:''})|trim('/', 'right')) %}<?xml version="1.0"?>
+{% set base = app_base_url is defined ? app_base_url : (url('piedweb_cms_page', {slug: ''})|trim('/', 'right')) %}<?xml version="1.0"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         {% block header %}
         <title>{{ page.content.title|default(app_name) }}</title>
         <link>{{ base ~ page(page.realSlug|default('')) }}</link>
-        <description><![CDATA[{% block description %}{{ page.searchexcrept|default('') }}{% endblock %}]]></description>
+        <description><![CDATA[{% block description %}{{ page.searchExcrept|default('') }}{% endblock %}]]></description>
         <atom:link
             href="{{ base }}/{{ feedUri|default((page.slug == 'homepage' ? 'index' : page.realSlug) ~ '.xml') }}"
             rel="self"
             type="application/rss+xml"
         />
         {% endblock %}
-        {% set pages = pages is defined ? pages : (page.childrenPages|reverse )|slice(0,5) %}
+        {% set pages = pages is defined ? pages : (page.childrenPages|reverse)|slice(0, 5) %}
         {% for page in pages %}
         {% block item %}
             {% if page.metaRobots != 'noindex' %}

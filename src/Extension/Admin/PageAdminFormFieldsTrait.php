@@ -60,13 +60,13 @@ trait PageAdminFormFieldsTrait
             ]);
     }
 
-    protected function configureFormFieldExcrept(FormMapper $formMapper): FormMapper
+    protected function configureFormFieldSearchExcrept(FormMapper $formMapper): FormMapper
     {
-        return $formMapper->add('searchexcrept', TextareaType::class, [
+        return $formMapper->add('searchExcrept', TextareaType::class, [
                 'required' => false,
-                'label' => 'admin.page.searchexcrept.label',
+                'label' => 'admin.page.searchExcrept.label',
                 'help_html' => true,
-                'help' => 'admin.page.searchexcrept.help',
+                'help' => 'admin.page.searchExcrept.help',
             ]);
     }
 
@@ -117,7 +117,7 @@ trait PageAdminFormFieldsTrait
 
     protected function getHosts()
     {
-        return array_keys($this->apps);
+        return $this->apps->getHosts();
     }
 
     protected function configureFormFieldHost(FormMapper $formMapper): FormMapper

@@ -16,9 +16,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Media implements MediaInterface
 {
+    use CustomPropertiesTrait;
     use IdTrait;
     use MediaTrait;
-    use CustomPropertiesTrait;
 
     public function __construct()
     {

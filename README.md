@@ -114,12 +114,10 @@ List of existing extension wich are not in the **core** :
 - [ ] Gérer un système d'extension viable pour l'admin : à l'install, créer les fichiers Admin qui étendent l'admin de base
       L'ajout d'un plugin modifie automatiquement ce nouveau fichier en ajoutant le code nécessaire (ajout d'une trait + édition d'une fonction)
       Retro-compatibilité : créer le fichier admin + le services (autowire) si il n'existe pas
-- [ ] Better management assets
 - [ ] Refactor default theme (and add Default bootstrap 5, default Tailwind in core ?!)
   - [ ] Better management for social network from backend (plugin ?!) (for now, just use customProperty)
 - [ ] Move facultative extensin in an other bundle (PageUpdateNotification)
 - [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io)
-- [ ] Refactor Entity
 - [ ] Revoir install-cms
 
 ## TODO Extension

@@ -39,13 +39,14 @@ sonata_admin:
   options:
     lock_protection: true
   templates:
-    knp_menu_template: '@pwcAdmin/menu.html.twig'
+    layout: '@pwcAdmin/layout.html.twig'
+    knp_menu_template: '@pwcAdmin/Menu/menu.html.twig'
     user_block: '@pwcAdmin/user_block.html.twig'
 
 sonata_doctrine_orm_admin:
   templates:
     form:
-      - '@pwcAdmin/override/Form/sd_form_admin_fields.html.twig'
+      - '@pwcAdmin/Form/sd_form_admin_fields.html.twig'
 
 sonata_block:
   blocks:

@@ -18,11 +18,11 @@ trait PageTrait
     protected $h1;
 
     /**
-     * RawContent would have been a more appropriate name
+     * RawContent would have been a more appropriate name.
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $mainContent;
-
 
     /**
      * In fact, createdAt is more a publishedAt.
@@ -47,8 +47,6 @@ trait PageTrait
 
         return $this;
     }
-
-
 
     public function __toString()
     {

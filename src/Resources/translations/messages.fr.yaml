@@ -1,4 +1,4 @@
---- #---
+#---
 #---
 # Views Component
 video:
@@ -74,7 +74,7 @@ admin:
     translations:
       label: 'Traductions'
       help: "Utiliser l'url pour trouver la page (ex : en/my-other)."
-    searchexcrept:
+    searchExcrept:
       label: Courte Description
       help: Visible depuis les pages de résultats des moteurs de recherches (meta description)
     h1:

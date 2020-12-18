@@ -51,11 +51,11 @@ class PageAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         // Next : load this from configuration
-        $mainFields = ['h1', 'mainContent', 'mainContentType'];
+        $mainFields = ['h1', 'mainContent']; //'mainContentType'];
         $columnFields = [
             'admin.page.state.label' => ['createdAt', 'metaRobots'],
             'admin.page.permanlien.label' => ['host', 'slug', 'parentPage'],
-            'admin.page.extended.label' => ['expand' => true, 'fields' => ['mainImage', 'name', 'title',  'searchexcrept']],
+            'admin.page.extended.label' => ['expand' => true, 'fields' => ['mainImage', 'name', 'title',  'searchExcrept']],
             'admin.page.translations.label' => ['locale', 'translations'],
             'admin.page.customProperties.label' => ['expand' => true, 'fields' => ['customProperties']],
             'admin.page.images.label' => ['images'],
@@ -133,7 +133,7 @@ class PageAdmin extends AbstractAdmin
     {
         $listMapper->addIdentifier('h1', 'html', [
             'label' => 'admin.page.title.label',
-            'template' => '@pwcAdmin/page_list_titleField.html.twig',
+            'template' => '@pwcAdmin/page/page_list_titleField.html.twig',
         ]);
         $listMapper->add('updatedAt', null, [
             'format' => 'd/m à H:m',

@@ -9,12 +9,12 @@ services:
       - { name: sonata.admin, manager_type: orm, label: admin.label.page }
     calls:
       - [setLiipImage, ['@liip_imagine.cache.manager']]
-      - [setTemplate, [list, '@@pwcAdmin/media_mosaic.html.twig']]
-      - [setTemplate, [show, '@@pwcAdmin/page_show.html.twig']]
-      - [setTemplate, [edit, '@@pwcAdmin/page_edit.html.twig']]
+      - [setTemplate, [list, '@@pwcAdmin/CRUD/mosaic.html.twig']]
+      - [setTemplate, [show, '@@pwcAdmin/page/page_show.html.twig']]
+      - [setTemplate, [edit, '@@pwcAdmin/page/page_edit.html.twig']]
       - [setSecurityTokenStorage, ['@security.token_storage']]
       - [setTwig, ['@twig']]
-      - [setApps, ['%pwc.apps%']]
+      - [setApps, ['@piedweb.app']]
       - [setMediaClass, ['%pwc.entity_media%']]
       - [setUserClass, ['%pwc.entity_user%']]
       - [setPageClass, ['%pwc.entity_page%']]
@@ -30,7 +30,7 @@ services:
     arguments: [~, '%pwc.entity_media%', ~]
     calls:
       - [setLiipImage, ['@liip_imagine.cache.manager']]
-      - [setTemplate, [list, '@@pwcAdmin/media_mosaic.html.twig']]
+      - [setTemplate, [list, '@@pwcAdmin/CRUD/mosaic.html.twig']]
       - [setEntityManager, ['@doctrine.orm.default_entity_manager']]
       - [setTwig, ['@twig']]
       - [setPageClass, ['%pwc.entity_page%']]

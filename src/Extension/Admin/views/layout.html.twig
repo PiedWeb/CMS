@@ -1,0 +1,11 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/piedwebcms/admin.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/piedwebcms/admin.js') }}"></script>
+{% endblock %}

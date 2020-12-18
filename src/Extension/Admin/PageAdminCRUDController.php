@@ -35,7 +35,7 @@ class PageAdminCRUDController extends CRUDController
         $pages = Repository::getPageRepository($this->getDoctrine(), $this->params->get('pwc.entity_page'))
             ->getPagesWithoutParent();
 
-        return $this->renderWithExtraParams('@pwcAdmin/page_treeView.html.twig', [
+        return $this->renderWithExtraParams('@pwcAdmin/page/page_treeView.html.twig', [
             'pages' => $pages,
             'list' => $this->admin->getList(),
             'admin' => $this->admin,
