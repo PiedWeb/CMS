@@ -2,7 +2,7 @@
 
 # CMS _Content First_ and _Extendable_
 
-_To make peace between User, Editor, Developer, Designer and SEO_.
+_To maintain peace and love between Editor (feel like in Wp), Developer (composer friendly), Designer (do you like twig ?!) and SEO (SEO at hearth)_.
 
 And if your team is only you, this CMS will be perfect to marry with you as **Webmaster**.
 
@@ -17,7 +17,7 @@ And if your team is only you, this CMS will be perfect to marry with you as **We
 
 ## Main Features
 
-### **Editor** : feel "like" in wordpress
+### **Editor** : feel "like" in Wordpress
 
 - Multi-site, Multi-language (i18n), Multi-domain or just one simple website
 - Old School, simple, functionnable default Admin

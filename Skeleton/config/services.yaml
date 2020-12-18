@@ -1,8 +1,8 @@
 # Used for test...
 parameters:
   locale: 'fr'
-  #database: 'sqlite:///%kernel.cache_dir%/test_database.sqlite'
-  database: 'sqlite:////media/robin/area2/localhost/CurrentDev/symfony/PiedWeb/CMS/Skeleton/var/test_database.sqlite'
+  database: 'sqlite:///%kernel.cache_dir%/test_database.sqlite'
+  #database: 'sqlite:////media/robin/area2/localhost/CurrentDev/symfony/PiedWeb/CMS/Skeleton/var/test_database.sqlite'
   secret: 'myS3cretKey' #'%env(APP_SECRET)%'
   pwc.root: '%kernel.project_dir%/../src' #'%kernel.root_dir%/../vendor/piedweb/cms-bundle/src'
   vendor_dir: '%kernel.project_dir%/../vendor' #'%kernel.root_dir%/../vendor'
