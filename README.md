@@ -100,36 +100,46 @@ List of existing extension wich are not in the **core** :
 
 - [Conversation](https://packagist.org/packages/piedweb/conversation)
 
-## TODO
+## ~~ROADMAP~~ Just TODO and IDEA
+
+### Documentation
+
+- [ ] extend your cms (short: it's like writing a symfony app, open vs code, navigate in the code)
+- [ ] create a extension (short: create a symfony bundle)
+- [ ] create a template (short: create a new extension, prepenting twig with pat..to..view..folder: @TemplateName)
+- [ ] Do something with the [cookbook](https://github.com/PiedWeb/CMS/blob/master/docs/Cookbook.md)
+
+## TODO before v1
 
 - [ ] Gérer un système d'extension viable pour l'admin : à l'install, créer les fichiers Admin qui étendent l'admin de base
       L'ajout d'un plugin modifie automatiquement ce nouveau fichier en ajoutant le code nécessaire (ajout d'une trait + édition d'une fonction)
       Retro-compatibilité : créer le fichier admin + le services (autowire) si il n'existe pas
 - [ ] Better management assets
-- [ ] Installation without composer (download composer if not installed)
-- [ ] ...
-- [ ] Default bootstrap 5, default Tailwind in core
+- [ ] Refactor default theme (and add Default bootstrap 5, default Tailwind in core ?!)
+  - [ ] Better management for social network from backend (plugin ?!) (for now, just use customProperty)
+- [ ] Move facultative extensin in an other bundle (PageUpdateNotification)
+- [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io)
+- [ ] Refactor Entity
+
+## TODO Extension
+
 - [ ] Intégrer LinksImprover (+ UX), après précédent
 - [ ] name suggester : parse content, find words or multiple words used only in this doc, suggest it as potential name
-- [ ] Test the code, search for all "todo" in the code,
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
-- [ ] Release V1
-- [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io)
 - [ ] Create a page from a Media (media edit) => button to create a new page with title = name and mainImage = Media
-- [ ] Multi upload
+      (useful for photographer website)... or create a dynamic page /media/[slug]/ showing data from Media
 - [ ] Intégrer Schema.org dans le backend d'une page
-- [ ] Better management for social network from backend (plugin ?!)
-- [ ] Scan : scanner une page en direct + scanner plus de choses (liens externes, texte alternative manquant, etc.)
-
-- [ ] Documenter : extend your cms (short: it's like writing a symfony app, open vs code, navigate in the code)
-- [ ] Documenter : create a extension (short: create a symfony bundle)
-- [ ] Documenter : create a template (short: create a new extension, prepenting twig with pat..to..view..folder: @TemplateName)
-- [ ] Do something with the [cookbook](https://github.com/PiedWeb/CMS/blob/master/docs/Cookbook.md)
 
 - [ ] Settings Manager (simple textarea permitting to edit piedweb_cms config and parameters ? and rebooting cache)
 
 ### To plan
 
+- [ ] Scan : scanner une page en direct + scanner plus de choses (liens externes, texte alternative manquant, etc.)
+- [ ] Multi upload
+- [ ] Test the code, search for all "todo" in the code,
+- [ ] Installation without composer (download composer if not installed)
+- [ ] Pagination children/list (molto idea : PageController capture les pages /slug/[0-0]\*/ et renvoie si existe)
+- [ ] Page with dynamic slug ?!
 - [ ] Add https://github.com/nan-guo/Sonata-Menu-Bundle
 - [ ] Move route to annotation (less extendable but more pratical with priority)
 - [ ] Move media to var (and create a link ?!)
