@@ -26,6 +26,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Page implements PageInterface
 {
+    use CustomPropertiesTrait;
     use IdTrait;
     use PageExtendedTrait;
     use PageI18nTrait;
@@ -33,7 +34,6 @@ class Page implements PageInterface
     use PageMultiHostTrait;
     use PageRedirectionTrait;
     use PageTrait;
-    use CustomPropertiesTrait;
 
     public function __construct()
     {

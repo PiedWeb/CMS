@@ -111,9 +111,6 @@ List of existing extension wich are not in the **core** :
 
 ## TODO before v1
 
-- [ ] Gérer un système d'extension viable pour l'admin : à l'install, créer les fichiers Admin qui étendent l'admin de base
-      L'ajout d'un plugin modifie automatiquement ce nouveau fichier en ajoutant le code nécessaire (ajout d'une trait + édition d'une fonction)
-      Retro-compatibilité : créer le fichier admin + le services (autowire) si il n'existe pas
 - [ ] Refactor default theme (and add Default bootstrap 5, default Tailwind in core ?!)
   - [ ] Better management for social network from backend (plugin ?!) (for now, just use customProperty)
 - [ ] Move facultative extensin in an other bundle (PageUpdateNotification)
@@ -133,6 +130,9 @@ List of existing extension wich are not in the **core** :
 
 ### To plan
 
+- [ ] Gérer un système d'extension viable pour l'admin : à l'install, créer les fichiers Admin qui étendent l'admin de base
+      L'ajout d'un plugin modifie automatiquement ce nouveau fichier en ajoutant le code nécessaire (ajout d'une trait + édition d'une fonction)
+      Retro-compatibilité : créer le fichier admin + le services (autowire) si il n'existe pas
 - [ ] Scan : scanner une page en direct + scanner plus de choses (liens externes, texte alternative manquant, etc.)
 - [ ] Multi upload
 - [ ] Test the code, search for all "todo" in the code,
