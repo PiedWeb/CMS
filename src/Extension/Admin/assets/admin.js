@@ -91,36 +91,39 @@ function copyElementText(element) {
 }
 
 function aceEditor() {
-  $('textarea[data-editor="twig"]').each(function () {
-    var textarea = $(this);
-    var mode = textarea.data('editor');
-    var editDiv = $('<div>', {
-      position: 'absolute',
-      width: textarea.width(),
-      height: textarea.height(),
-      class: textarea.attr('class'),
-    }).insertBefore(textarea);
-    textarea.css('display', 'none');
-    var editor = ace.edit(editDiv[0]);
-    editor.renderer.setShowGutter(textarea.data('gutter'));
-    editor.getSession().setValue(textarea.val());
-    editor.getSession().setMode('ace/mode/' + mode);
-    editor.setFontSize('20px');
-    editor.getSession().setUseWrapMode(true);
-    //editor.setTheme("ace/theme/idle_fingers");
+  $('textarea[data-editor="twig"],textarea[data-editor="yaml"]').each(
+    function () {
+      console.log('editor loaded for ' + $(this).data('editor'));
+      var textarea = $(this);
+      var mode = textarea.data('editor');
+      var editDiv = $('<div>', {
+        position: 'absolute',
+        width: textarea.width(),
+        height: textarea.height(),
+        class: textarea.attr('class'),
+      }).insertBefore(textarea);
+      textarea.css('display', 'none');
+      var editor = ace.edit(editDiv[0]);
+      editor.renderer.setShowGutter(textarea.data('gutter'));
+      editor.getSession().setValue(textarea.val());
+      editor.getSession().setMode('ace/mode/' + mode);
+      editor.setFontSize('20px');
+      editor.getSession().setUseWrapMode(true);
+      //editor.setTheme("ace/theme/idle_fingers");
 
-    // copy back to textarea on form submit...
-    textarea.closest('form').submit(function () {
-      textarea.val(editor.getSession().getValue());
-    });
-  });
+      // copy back to textarea on form submit...
+      textarea.closest('form').submit(function () {
+        textarea.val(editor.getSession().getValue());
+      });
+    }
+  );
 }
 
 function easyMDEditor() {
   var timeoutPreviewRender = null;
   $('textarea[data-editor="markdown"]').each(function () {
     var editorElement = $(this)[0];
-    var editor = new EasyMDE({
+    new EasyMDE({
       element: editorElement,
       toolbar: [
         'bold',
@@ -149,6 +152,7 @@ function easyMDEditor() {
       status: ['autosave', 'lines', 'words', 'cursor'],
       spellChecker: false,
       nativeSpellcheck: true,
+      previewImagesInEditor: true,
       insertTexts: {
         link: ['[', ']()'],
         image: ['![', '](/media/default/...)'],

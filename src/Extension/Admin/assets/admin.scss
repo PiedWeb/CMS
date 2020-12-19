@@ -1,5 +1,6 @@
 @import '~codemirror/lib/codemirror.css';
 @import '~easymde/src/css/easymde.css';
+//@import '~codemirror-spell-checker/src/css/spell-checker.css';
 
 /* Column Expanding */
 .mainFields,
@@ -29,7 +30,12 @@
 .EasyMDEContainer .CodeMirror-fullscreen {
   z-index: 100000000;
 }
-
+.CodeMirror {
+  display: none;
+}
+.EasyMDEContainer .CodeMirror {
+  display: block;
+}
 .persist-preview {
   display: none;
 }
