@@ -23,9 +23,11 @@ trait CustomPropertiesTrait
      *
      * @var array
      */
-    protected $StandAloneCustomPropertiesParsed;
+    protected $standAloneCustomPropertiesParsed;
 
-    protected $StandAloneCustomProperties;
+    protected $standAloneCustomProperties;
+
+    protected $buildValidationAtPath = 'standAloneCustomProperties';
 
     public function getCustomProperties(): ?string
     {
@@ -40,10 +42,21 @@ trait CustomPropertiesTrait
         return $this;
     }
 
+    protected function setCustomPropertiesParsed($customPropertiesParsed = null)
+    {
+        if (null === $customPropertiesParsed) {
+            $customPropertiesParsed = $this->customPropertiesParsed;
+        } else {
+            $this->customPropertiesParsed = null;
+        }
+
+        $this->customProperties = Yaml::dump($customPropertiesParsed);
+    }
+
     /**
      * @Assert\Callback
      */
-    public function validateCustomProperties(ExecutionContextInterface $context, $path = 'customProperties'): void
+    public function validateCustomProperties(ExecutionContextInterface $context): void
     {
         if (empty($this->customProperties)) {
             return;
@@ -51,14 +64,14 @@ trait CustomPropertiesTrait
 
         try {
             $parsed = Yaml::parse($this->customProperties);
-            if (isset($parsed['customProperties']) || $parsed['CustomProperties']) {
+            if (isset($parsed['customProperties']) || isset($parsed['CustomProperties'])) {
                 $context->buildViolation('page.customProperties.cantUseCustomPropertiesInside')
-                        ->atPath($path)
+                        ->atPath($this->buildValidationAtPath)
                         ->addViolation();
             }
         } catch (ParseException $exception) {
             $context->buildViolation('page.customProperties.malformed') //'$exception->getMessage())
-                    ->atPath($path)
+                    ->atPath($this->buildValidationAtPath)
                     ->addViolation();
         }
     }
@@ -77,6 +90,9 @@ trait CustomPropertiesTrait
             [$this, 'isStandAloneCustomProperty'],
             ARRAY_FILTER_USE_KEY
         );
+        if (! $standStandAloneCustomPropertiesParsed) {
+            return '';
+        }
 
         return Yaml::dump($standStandAloneCustomPropertiesParsed);
     }
@@ -89,19 +105,30 @@ trait CustomPropertiesTrait
             $this->mergeStandAloneCustomProperties();
         }
 
-        $this->customProperties = Yaml::dump(Yaml::parse($this->customProperties));
-        // check them :
-        // 1. Can We parse them ?
-        // Yes - Remove duplicate (done )
-        $this->customPropertiesParsed = null;
-
         return $this;
+    }
+
+    public function removeCustomProperty($name)
+    {
+        $this->getCustomPropertiesParsed();
+
+        unset($this->customPropertiesParsed[$name]);
+
+        $this->setCustomPropertiesParsed();
     }
 
     protected function mergeStandAloneCustomProperties()
     {
-        $standStandAloneParsed = Yaml::parse($this->standAloneCustomProperties);
+        $standStandAloneParsed = $this->standAloneCustomProperties ? Yaml::parse($this->standAloneCustomProperties)
+            : [];
         $this->standAloneCustomProperties = null;
+
+        $parsed = $this->getCustomPropertiesParsed();
+        foreach ($parsed as $name => $value) {
+            if ($this->isStandAloneCustomProperty($name) && ! isset($standStandAloneParsed[$name])) {
+                $this->removeCustomProperty($name);
+            }
+        }
 
         if (! $standStandAloneParsed) {
             return;
@@ -119,39 +146,35 @@ trait CustomPropertiesTrait
     /**
      * @Assert\Callback
      */
-    public function validateStandAloneCustomProperties(ExecutionContextInterface $context, $path = 'standAloneCustomProperties'): void
+    public function validateStandAloneCustomProperties(ExecutionContextInterface $context): void
     {
-        if (empty($this->standStandAloneCustomProperties)) {
-            return;
-        }
-
         try {
             $this->mergeStandAloneCustomProperties();
         } catch (ParseException $exception) {
             $context->buildViolation('page.customProperties.malformed') //'$exception->getMessage())
-                    ->atPath($path)
+                    ->atPath($this->buildValidationAtPath)
                     ->addViolation();
         } catch (CustomPropertiesException $exception) {
             $context->buildViolation('page.customProperties.notStandAlone') //'$exception->getMessage())
-                    ->atPath($path)
+                    ->atPath($this->buildValidationAtPath)
                     ->addViolation();
         }
 
-        $this->validateCustomProperties($context, $path); // too much
+        //$this->validateCustomProperties($context); // too much
     }
 
-    protected function isStandAloneCustomProperty($name): bool
+    public function isStandAloneCustomProperty($name): bool
     {
         return ! method_exists($this, 'get'.ucfirst($name)) && ! method_exists($this, 'get'.$name);
     }
 
     public function setCustomProperty($name, $value): self
     {
-        $customPropertiesParsed = $this->getCustomPropertiesParsed();
+        $this->getCustomPropertiesParsed();
 
-        $customPropertiesParsed[$name] = $value;
+        $this->customPropertiesParsed[$name] = $value;
 
-        $this->customProperties = Yaml::dump($customPropertiesParsed);
+        $this->setCustomPropertiesParsed();
 
         return $this;
     }

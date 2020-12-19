@@ -103,7 +103,7 @@ trait PageAdminFormFieldsTrait
 
     protected function configureFormFieldCustomProperties(FormMapper $formMapper): FormMapper
     {
-        return ! $this->exists('customProperties') ? $formMapper : $formMapper->add('customProperties', null, [
+        return $formMapper->add('standAloneCustomProperties', TextareaType::class, [
             'required' => false,
             'attr' => [
                 'style' => 'min-height:15vh',

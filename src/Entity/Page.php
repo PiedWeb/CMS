@@ -3,11 +3,13 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use PiedWeb\CMSBundle\Entity\PageTrait\PageExtendedTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageContentTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageI18nTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageImageTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageMultiHostTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageParentTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageRedirectionTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageSearchTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageTrait;
 use PiedWeb\CMSBundle\Entity\SharedTrait\CustomPropertiesTrait;
 use PiedWeb\CMSBundle\Entity\SharedTrait\IdTrait;
@@ -28,11 +30,13 @@ class Page implements PageInterface
 {
     use CustomPropertiesTrait;
     use IdTrait;
-    use PageExtendedTrait;
+    use PageContentTrait;
     use PageI18nTrait;
     use PageImageTrait;
     use PageMultiHostTrait;
+    use PageParentTrait;
     use PageRedirectionTrait;
+    use PageSearchTrait;
     use PageTrait;
 
     public function __construct()

@@ -37,6 +37,11 @@ class CustomPropertiesTraitTest extends TestCase
 
         $customProperties->setStandAloneCustomProperties(static::standStandAloneCustomProperties('test 1234'), true);
         $this->assertSame(static::customPorperties('test 1234'), $customProperties->getCustomProperties());
+
+        $this->assertFalse($customProperties->isStandAloneCustomProperty('customProperties'));
+
+        $customProperties->removeCustomProperty('newCustomPropertyNotIndexed');
+        $this->assertStringNotContainsString('newCustomPropertyNotIndexed', $customProperties->getCustomProperties());
     }
 
     /**

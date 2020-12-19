@@ -2,7 +2,7 @@
 
 ## Update to ...
 
-- Delete symlink in `config/packages`
+- Delete symlinks in `config/packages`
 
 - Update database
 
@@ -18,9 +18,11 @@
      - {hosts: [mywebsite.com, edit.mywebsite.com], base_url: https://mywebsite.com}
   ```
 
-- Delete `feed*.xml` and `sitemap*` files.
+- Delete `feed*.xml` and `sitemap*` files in `public`
 
-/!\ Maybe twig config file throw an error, read & fix
+- Maybe twig config file throw an error, read & fix
+
+- Search for all `<!--` in `mainContent` and put them in `customProperties`'s textarea
 
 ## Update to 0.0.84
 

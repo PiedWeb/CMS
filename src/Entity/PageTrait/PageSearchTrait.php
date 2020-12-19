@@ -4,61 +4,29 @@ namespace PiedWeb\CMSBundle\Entity\PageTrait;
 
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use PiedWeb\CMSBundle\Extension\Filter\FilterInterface;
 
-trait PageExtendedTrait
+trait PageSearchTrait
 {
     /**
-     * @ORM\ManyToOne(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", inversedBy="childrenPages")
-     */
-    protected $parentPage;
-
-    /**
-     * @ORM\OneToMany(targetEntity="PiedWeb\CMSBundle\Entity\PageInterface", mappedBy="parentPage")
-     * @ORM\OrderBy({"id": "ASC"})
-     */
-    protected $childrenPages;
-
-    /**
-     * Meta Description -SEO.
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $searchExcrept;
-
-    /**
-     * - SEO.
+     * may Index ?
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $metaRobots;
 
     /**
-     * - SEO (links) / Breadcrumb.
+     * (links improver) / Breadcrumb.
      *
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     protected $name;
 
     /**
+     * HTML Title - SEO.
+     *
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     protected $title;
-
-    /** @var FilterInterface */
-    protected $content;
-
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    public function setContent(FilterInterface $content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
 
     public function getTemplate(): ?string
     {
@@ -93,12 +61,12 @@ trait PageExtendedTrait
 
     public function getSearchExcrept(): ?string
     {
-        return $this->searchExcrept;
+        return $this->getCustomProperty('searchExcrept');
     }
 
     public function setSearchExcrept(?string $searchExcrept): self
     {
-        $this->searchExcrept = $searchExcrept;
+        $this->setCustomProperty('searchExcrept', $searchExcrept);
 
         return $this;
     }
@@ -113,23 +81,6 @@ trait PageExtendedTrait
         $this->metaRobots = $metaRobots;
 
         return $this;
-    }
-
-    public function getParentPage(): ?self
-    {
-        return $this->parentPage;
-    }
-
-    public function setParentPage(?self $parentPage): self
-    {
-        $this->parentPage = $parentPage;
-
-        return $this;
-    }
-
-    public function getChildrenPages()
-    {
-        return $this->childrenPages;
     }
 
     public function getName(): ?string
