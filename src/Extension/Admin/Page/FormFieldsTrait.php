@@ -1,6 +1,6 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\Admin;
+namespace PiedWeb\CMSBundle\Extension\Admin\Page;
 
 use PiedWeb\CMSBundle\Entity\PageInterface;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-trait PageAdminFormFieldsTrait
+trait FormFieldsTrait
 {
     protected function configureFormFieldParentPage(FormMapper $formMapper): FormMapper
     {

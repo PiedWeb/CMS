@@ -123,8 +123,8 @@ trait CustomPropertiesTrait
             : [];
         $this->standAloneCustomProperties = null;
 
-        $parsed = $this->getCustomPropertiesParsed();
-        foreach ($parsed as $name => $value) {
+        $existingPropertyNames = array_keys($this->getCustomPropertiesParsed());
+        foreach ($existingPropertyNames as $name) {
             if ($this->isStandAloneCustomProperty($name) && ! isset($standStandAloneParsed[$name])) {
                 $this->removeCustomProperty($name);
             }

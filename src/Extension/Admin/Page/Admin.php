@@ -1,7 +1,8 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\Admin;
+namespace PiedWeb\CMSBundle\Extension\Admin\Page;
 
+use PiedWeb\CMSBundle\Extension\Admin\AdminTrait;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -9,10 +10,13 @@ use Sonata\AdminBundle\Form\FormMapper;
 //use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\AdminBundle\Object\Metadata;
 
-class PageAdmin extends AbstractAdmin
+class Admin extends AbstractAdmin
 {
+    public $supportsPreviewMode = true;
+
     use AdminTrait;
-    use PageAdminFormFieldsTrait;
+    use FormFieldsOpenGraphTrait;
+    use FormFieldsTrait;
 
     protected $datagridValues = [
         '_page' => 1,
@@ -54,11 +58,20 @@ class PageAdmin extends AbstractAdmin
         $mainFields = ['h1', 'mainContent']; //'mainContentType'];
         $columnFields = [
             'admin.page.state.label' => ['createdAt', 'metaRobots'],
-            'admin.page.permanlien.label' => ['host', 'slug', 'parentPage'],
-            'admin.page.extended.label' => ['expand' => true, 'fields' => ['mainImage', 'name', 'title',  'searchExcrept']],
+            'admin.page.permanlien.label' => ['host', 'slug'],
+            'admin.page.mainImage.label' => ['mainImage'],
+            'admin.page.parentPage.label' => ['parentPage'],
+            'admin.page.search.label' => [
+                'expand' => true,
+                'fields' => ['title', 'name', 'searchExcrept'],
+            ],
             'admin.page.translations.label' => ['locale', 'translations'],
             'admin.page.customProperties.label' => ['expand' => true, 'fields' => ['customProperties']],
-            'admin.page.images.label' => ['images'],
+            'admin.page.gallery.label' => ['images'],
+            'admin.page.og.label' => [
+                'expand' => true,
+                'fields' => ['ogTitle', 'ogDescription', 'ogImage', 'TwitterCard', 'twitterSite', 'twitterCreator'],
+            ],
         ];
 
         $formMapper->with('admin.page.mainContent.label', ['class' => 'col-md-9 mainFields']);

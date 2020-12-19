@@ -1,12 +1,12 @@
 <?php
 
-namespace PiedWeb\CMSBundle\Extension\Admin;
+namespace PiedWeb\CMSBundle\Extension\Admin\Page;
 
 use PiedWeb\CMSBundle\Repository\Repository;
-use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\AdminBundle\Controller\CRUDController as SonataCRUDController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class PageAdminCRUDController extends CRUDController
+class CRUDController extends SonataCRUDController
 {
     protected $params;
 

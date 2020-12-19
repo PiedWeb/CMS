@@ -1,0 +1,12 @@
+{% set page = object %}
+<html style="scroll-behavior:auto">
+    <body style="scroll-behavior:auto">
+{{ block("css", "@PiedWebCMS/base.html.twig") }} {# todo use getTemplate from App #}
+
+<div style="padding:10px" class="container container-txt">
+    {{ page.content.getBody(true)|raw  }}
+</div>
+{{ block("script", "@PiedWebCMS/base.html.twig") }}
+
+    </body>
+</html>

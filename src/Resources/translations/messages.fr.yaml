@@ -1,3 +1,4 @@
+---
 #---
 #---
 # Views Component
@@ -48,10 +49,12 @@ admin:
   edition: Edition # not good
 
   page:
+    gallery:
+      label: Galerie d'images
     state:
       label: État
-    extended:
-      label: Contenu +
+    search:
+      label: Search
     permanlien:
       label: Permanlien
     host:
@@ -114,6 +117,26 @@ admin:
     customProperties:
       label: Autres paramètres
       help: Au format <em>YAML</em>.
+    og:
+      label: Open Graph Card
+    ogTitle:
+      label: Titre
+      help: Par défaut, la title de la page sinon le titre.
+    ogDescription:
+      label: Description
+      help: Par défaut, la description <code>search</code> sinon un extrait
+    ogImage:
+      label: Image
+      help: Par défaut, l'image principale de la page
+    twitterSite:
+      label: Twitter Site
+      help: <code>@Username</code>, valeur par défaut si régler dans l'App.
+    twitterCreator:
+      label: Twitter Creator
+      help: <code>@Username</code>, valeur par défaut si régler dans l'App.
+    twitterCard:
+      label: Twitter Card
+      help: <a href="https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started" target=_blanks>En savoir plus</a>
 
   user:
     label:

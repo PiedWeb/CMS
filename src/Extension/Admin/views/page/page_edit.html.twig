@@ -2,6 +2,28 @@
 
 {% block navbar_title %}
     {{ block('title') }}
+    <script>
+/**
+function getUserInput(element) {
+
+   var form = $(element).closest('form');
+   console.log(form.serialize());
+    $.ajax({
+        type: form.attr('method'),
+        url: form.attr('action'),
+        data: form.serialize()+"&btn_preview",
+        success: function (data) {
+            var iframe = document.createElement('iframe');
+            iframe.setAttribute('srcdoc', data);
+            $('.columnFields').html(iframe);
+        }
+    });
+}
+
+window.addEventListener('load', function () {
+getUserInput('textarea[data-editor="markdown"]');
+});**/
+</script>
 {% endblock %}
 
 {% block sonata_page_content_header %}

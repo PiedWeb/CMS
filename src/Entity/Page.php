@@ -7,10 +7,12 @@ use PiedWeb\CMSBundle\Entity\PageTrait\PageContentTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageI18nTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageImageTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageMultiHostTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageOpenGraphTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageParentTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageRedirectionTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageSearchTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageTwitterCardTrait;
 use PiedWeb\CMSBundle\Entity\SharedTrait\CustomPropertiesTrait;
 use PiedWeb\CMSBundle\Entity\SharedTrait\IdTrait;
 use PiedWeb\CMSBundle\Validator\Constraints\PageRendering;
@@ -34,10 +36,12 @@ class Page implements PageInterface
     use PageI18nTrait;
     use PageImageTrait;
     use PageMultiHostTrait;
+    use PageOpenGraphTrait;
     use PageParentTrait;
     use PageRedirectionTrait;
     use PageSearchTrait;
     use PageTrait;
+    use PageTwitterCardTrait;
 
     public function __construct()
     {

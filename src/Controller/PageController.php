@@ -58,20 +58,6 @@ class PageController extends AbstractController
         );
     }
 
-    public function preview(?string $slug, ?string $host, Request $request): Response
-    {
-        $page = $this->getPage($slug, $host, $request);
-        $page->setMainContent($request->request->get('plaintext'));
-        // todo update all fields to avoid errors with autosave
-        // (getting them via json?!)
-        // And not getPage but create a new Page !!! (else, error on unexisting Page)
-
-        return $this->render(
-            $this->getTemplate('/page/preview.html.twig'),
-            array_merge(['page' => $page], $this->app->getParamsForRendering())
-        );
-    }
-
     protected function getTemplate($path)
     {
         return $this->app->getTemplate($path, $this->twig);

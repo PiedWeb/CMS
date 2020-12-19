@@ -14,14 +14,6 @@ class PageControllerTest extends KernelTestCase
         $this->assertTrue(200 === $response->getStatusCode());
     }
 
-    public function testShowPreview()
-    {
-        $slug = 'homepage';
-        $response = $this->getPageController()->preview($slug, 'localhost.dev', Request::create($slug));
-
-        $this->assertTrue(200 === $response->getStatusCode());
-    }
-
     public function testShowMainFeed()
     {
         $response = $this->getPageController()->showMainFeed('localhost.dev', Request::create('/feed.xml'));

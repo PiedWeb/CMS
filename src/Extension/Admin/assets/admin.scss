@@ -25,8 +25,19 @@
 
 /* Editor EasyMDE */
 .editor-toolbar.fullscreen,
-.CodeMirror-fullscreen {
+.CodeMirror-fullscreen,
+.EasyMDEContainer .CodeMirror-fullscreen {
   z-index: 100000000;
+}
+
+.persist-preview {
+  display: none;
+}
+.preview-visible {
+  display: block;
+}
+.load-preview {
+  display: none;
 }
 .editor-preview {
   background: #fff;
@@ -42,12 +53,12 @@
 .navbar-formactions {
   position: fixed;
   padding: 15px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  //box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   border-bottom-left-radius: 5px;
   top: 45px;
   text-align: right;
   right: -5px;
   width: 100%;
   z-index: 809;
-  background: #fff;
+  background: #cad4e3;
 }

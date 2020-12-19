@@ -119,6 +119,7 @@ List of existing extension wich are not in the **core** :
 
 ## TODO Extension
 
+- [ ] Wordpress To PiedWeb/CMS (and vice versa)
 - [ ] Intégrer LinksImprover (+ UX), après précédent
 - [ ] name suggester : parse content, find words or multiple words used only in this doc, suggest it as potential name
 - [ ] export/import FLAT FILES (spatie/yaml-front-matter, vérif à chaque requête pour une sync constante admin <-> flat files)
