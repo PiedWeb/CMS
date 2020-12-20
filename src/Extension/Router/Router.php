@@ -36,7 +36,7 @@ class Router implements RouterInterface
      * and / for YY page home if your default language is YY
      * X/Y may be en/fr/...
      */
-    public function generatePathForHomePage($page = null): string
+    public function generatePathForHomePage($page = null, $canonical = false): string
     {
         $slug = '';
 
@@ -44,25 +44,33 @@ class Router implements RouterInterface
             $slug = $page->getLocale();
         }
 
-        return $this->generate($slug);
+        return $this->generate($slug, $canonical);
     }
 
-    public function generate($slug = 'homepage'): string
+
+    public function generate($slug = 'homepage', $canonical = false): string
     {
         if ($slug instanceof PageInterface) {
+            /** @var $page PageInterface */
+            $page = $slug;
             $slug = $slug->getRealSlug();
         } elseif ('homepage' == $slug) {
             $slug = '';
+            $page = null;
         }
 
-        if ($this->mayUseCustomPath()) {
+        if (!$canonical && $this->mayUseCustomPath()) {
             return $this->router->generate(self::CUSTOM_HOST_PATH, [
                     'host' => $this->app->getCurrentPage()->getHost(),
                 'slug' => $slug,
             ]);
         }
 
-        return $this->router->generate(self::PATH, ['slug' => $slug]);
+        if ($canonical && $page) {
+            $baseUrl = $this->app->switchCurrentApp($page->getHost())->get()->getBaseUrl();
+        }
+
+        return ($baseUrl ?? '').$this->router->generate(self::PATH, ['slug' => $slug]);
     }
 
     protected function mayUseCustomPath()

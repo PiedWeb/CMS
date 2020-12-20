@@ -6,7 +6,7 @@ trait PhoneNumberTwigTrait
 {
     public function renderPhoneNumber($number, $class = '')
     {
-        $template = $this->getApp()->getTemplate('/component/phone_number.html.twig', $this->twig);
+        $template = $this->getApp()->getView('/component/phone_number.html.twig', $this->twig);
 
         return trim($this->twig->render($template, [
             'number' => str_replace([' ', '&nbsp;', '.'], '', $number),

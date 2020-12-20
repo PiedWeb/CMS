@@ -16,6 +16,7 @@ Encore.setOutputPath('./src/Resources/public/')
     // only copy files matching this pattern
     pattern: /\.js$/,
   })
-  .addEntry('admin', './src/Extension/Admin/assets/admin.js'); // {{ asset('bundles/pwc/admin.js') }}
+  .addEntry('admin', './src/Extension/Admin/assets/admin.js') // {{ asset('bundles/piedwebcms/admin.js') }}
+  .addEntry('page', './src/Resources/assets/page.js'); // {{ asset('bundles/piedwebcms/page.js') }}
 
 module.exports = Encore.getWebpackConfig();

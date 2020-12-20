@@ -52,15 +52,14 @@ class PageController extends AbstractController
             return $this->redirect($page->getRedirection(), $page->getRedirectionCode());
         }
 
-        return $this->render(
-            $this->getTemplate($page->getTemplate() ?: '/page/page.html.twig'),
-            array_merge(['page' => $page], $this->app->getParamsForRendering())
-        );
+        $params = array_merge(['page' => $page], $this->app->getParamsForRendering());
+        return $this->render($this->getTemplate($page->getTemplate() ?: '/page/page.html.twig'), $params);
+
     }
 
     protected function getTemplate($path)
     {
-        return $this->app->getTemplate($path, $this->twig);
+        return $this->app->getView($path, $this->twig);
     }
 
     public function showFeed(?string $slug, ?string $host, Request $request)

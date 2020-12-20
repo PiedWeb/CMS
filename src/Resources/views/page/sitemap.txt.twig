@@ -1,3 +1,3 @@
-{% set base = app_base_url is defined ? app_base_url : (url('piedweb_cms_page', {slug:''})|trim('/', 'right')) %}
-{% for page in pages %}{{ base ~ page(page.getRealSlug) }}
+{% for page in pages %}
+    {{ page(page, true) }}
 {% endfor %}

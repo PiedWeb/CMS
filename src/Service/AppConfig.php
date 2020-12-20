@@ -89,18 +89,26 @@ class AppConfig
         return isset($this->customProperties[$key]) ? $this->customProperties[$key] : null;
     }
 
+    public function getTemplate()
+    {
+        return $this->template;
+
+    }
     /**
      * @psalm-suppress InternalMethod
      */
-    public function getTemplate(string $path = '/page/page.html.twig', ?Twig $twig = null)
+    public function getView(?string $path = null, ?Twig $twig = null) // todo : make twig global
     {
-        if ('' == $path) {
-            return $this->template;
+        if (null === $path) {
+            return $this->template.'/page/page.html.twig';
         }
 
-        if ($this->isFullPath($path)) { // compatibilité avant v1
+        if ($this->isFullPath($path)) { // permits to get a component from a dedicated extension eg @pwcEgTheme/page...
             return $path;
         }
+
+        if ($overrided = $this->getOverridedView($path) !== null)
+            return $overrided;
 
         $name = $this->template.$path;
 
@@ -116,6 +124,19 @@ class AppConfig
         } finally {
             return '@PiedWebCMS'.$path;
         }
+    }
+
+    protected function getOverridedView(string $name)
+    {
+        $templateDir = './templates'; // TODO load it from conf or maybe it's in twig ?!
+
+        $templateOverrided = $templateDir.'/'.ltrim($this->getTemplate(), '@').$name;
+        if (file_exists($templateOverrided))
+            return $templateOverrided;
+
+        $globalOverride = $templateDir.$name;
+        if (file_exists($globalOverride))
+            return $globalOverride;
     }
 
     protected function isFullPath($path)

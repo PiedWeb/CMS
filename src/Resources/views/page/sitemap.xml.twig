@@ -3,10 +3,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 {% for page in pages %}{% spaceless %}
   <url>
-    <loc>{{ base ~ page(page.getRealSlug) }}</loc>
+    <loc>{{ page(page, true) }}</loc>
     <lastmod>{{ page.updatedAt|date('Y-m-d') }}</lastmod>
     {% if page.locale and page.translations.count > 0 %}
-        <xhtml:link rel="alternate" hreflang="{{ page.locale }}" href="{{ base ~ page(page.getRealSlug) }}"/>
+        <xhtml:link rel="alternate" hreflang="{{ page.locale }}" href="{{ page(page, true) }}"/>
         {% for translation in page.translations %}
             <xhtml:link rel="alternate" hreflang="{{ translation.locale }}" href="{{ base ~ page(translation.realSlug) }}"/>
         {% endfor %}

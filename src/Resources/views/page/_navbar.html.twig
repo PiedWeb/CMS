@@ -1,15 +1,4 @@
-<header style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: .5rem 2rem;
-            border-bottom: 1px solid var(--bg-dark);
-            position: absolute;
-            top: 0;
-            right: 0;
-            left: 0;
-            z-index: 1030;
-            ">
+<header id="navbar">
     <span style="display:block;font-size: 2.2em; margin-right:0.5em">
         <a href="{{ homepage() }}">{{ app_name }}</a>
     </span>
@@ -40,5 +29,20 @@
         header {
             flex-direction: column;
         }
+    }
+    #navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .5rem 2rem;
+        border-bottom: 1px solid var(--bg-dark);
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+    #navbar a {
+        text-decoration:none;
     }
 </style>

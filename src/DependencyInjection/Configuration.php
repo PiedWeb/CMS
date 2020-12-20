@@ -7,7 +7,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    const DEFAULT_TEMPLATE = '@PiedWebCMSBundle';
+    const DEFAULT_TEMPLATE = '@PiedWebCMS';
     const DEFAULT_APP_FALLBACK = [
         'locale',
         'locales',
@@ -22,6 +22,10 @@ class Configuration implements ConfigurationInterface
         'can_use_twig_shortcode' => true,
         'main_content_shortcode' => 'twig,date,email,encryptedLink,image,phoneNumber,twigVideo,punctuation,markdown',
         'fields_shortcode' => 'twig,date,email,encryptedLink,phoneNumber,markdown',
+        'assets' => [
+            'stylesheets' => ['/bundles/piedwebcms/page.css'],
+            'javascripts' => ['/bundles/piedwebcms/page.js'],
+        ]
     ];
     const DEFAULT_TWIG_SHORTCODE = true;
 

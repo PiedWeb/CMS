@@ -7,6 +7,14 @@
       "js": [
         "./admin.js"
       ]
+    },
+    "page": {
+      "css": [
+        "./page.css"
+      ],
+      "js": [
+        "./page.js"
+      ]
     }
   }
 }

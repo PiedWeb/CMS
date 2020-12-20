@@ -7,7 +7,7 @@ trait EncryptedLinkTwigTrait
     public function renderEncryptedLink($anchor, $path, $attr = [])
     {
         $attr = array_merge($attr, ['data-rot' => self::encrypt($path)]);
-        $template = $this->getApp()->getTemplate('/component/javascript_link.html.twig', $this->twig);
+        $template = $this->getApp()->getView('/component/javascript_link.html.twig', $this->twig);
         $renderedLink = $this->twig->render($template, ['anchor' => $anchor, 'attr' => $attr]);
 
         return $renderedLink;

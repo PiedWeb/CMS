@@ -22,7 +22,7 @@ class Image extends ShortCode
         $nbrMatch = \count($matches[0]);
         for ($k = 0; $k < $nbrMatch; ++$k) {
             $renderImg = $this->twig->render(
-                $this->app->getTemplate('/component/inline_image.html.twig', $this->twig),
+                $this->app->getView('/component/inline_image.html.twig', $this->twig),
                 [
             //"image_wrapper_class" : "mimg",'
             'image_src' => $matches[2][$k],

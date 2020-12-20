@@ -1,4 +1,4 @@
-{% extends "@PiedWebCMS/user/layout.html.twig" %}
+{% extends apps.get().getTemplate('/user/layout.html.twig', twig) %}
 
 {% block title %}{{ 'security.login.title'|trans }}{% endblock %}
 

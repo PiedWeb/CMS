@@ -68,22 +68,29 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('template_from_string', 'addslashes'), // TODO FIX IT
+            new TwigFunction('view', [$this, 'getView'], ['needs_environment' => true]),
             new TwigFunction('isCurrentPage', [$this, 'isCurrentPage']), // used ?
             new TwigFunction('isInternalImage', [self::class, 'isInternalImage']), // used ?
             new TwigFunction('getImageFrom', [self::class, 'transformInlineImageToMedia']), // used ?
             // loaded from trait
             new TwigFunction('jslink', [$this, 'renderEncryptedLink'], self::options()),
             new TwigFunction('link', [$this, 'renderEncryptedLink'], self::options()),
+            new TwigFunction('encrypt', [self::class, 'encrypt'], self::options()),
             new TwigFunction('mail', [$this, 'renderEncodedMail'], self::options(true)),
             new TwigFunction('email', [$this, 'renderEncodedMail'], self::options(true)),
             new TwigFunction('tel', [$this, 'renderPhoneNumber'], self::options()),
             new TwigFunction('bookmark', [$this, 'renderTxtAnchor'], self::options()),
             new TwigFunction('anchor', [$this, 'renderTxtAnchor'], self::options()),
             new TwigFunction('gallery', [$this, 'renderGallery'], self::options()),
-            new TwigFunction('video', [$this, 'renderGallery'], self::options()),
-            new TwigFunction('getEmbedCode', [self::class, 'getEmbedCode']),
+            new TwigFunction('video', [$this, 'renderVideo'], self::options()),
+            new TwigFunction('embedCode', [$this, 'getEmbedCode']),
             new TwigFunction('list', [$this, 'renderPagesList'], self::options()),
         ];
+    }
+
+    public function getView(Twig $twig, $path)
+    {
+        return $this->apps->get()->getView($path, $twig);
     }
 
     public static function options($needsEnv = false, $isSafe = ['html'])

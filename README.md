@@ -114,8 +114,10 @@ List of existing extension wich are not in the **core** :
 - [ ] Refactor default theme (and add Default bootstrap 5, default Tailwind in core ?!)
   - [ ] Better management for social network from backend (plugin ?!) (for now, just use customProperty)
 - [ ] Move facultative extensin in an other bundle (PageUpdateNotification)
-- [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io)
-- [ ] Revoir install-cms
+- [ ] Revoir install-cms bin/console assets:install --symlink --relative
+- [ ] Isoler les medias
+- [ ] Show main image directly on page edit
+- [ ] List component (ui:card/text, target database with a powerful API (multi-Host), ...)
 
 ## TODO Extension
 
@@ -131,6 +133,8 @@ List of existing extension wich are not in the **core** :
 
 ### To plan
 
+- [ ] Multi-user editor Multi-site but not everybody can edit everything
+- [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io) (1/2)
 - [ ] Gérer un système d'extension viable pour l'admin : à l'install, créer les fichiers Admin qui étendent l'admin de base
       L'ajout d'un plugin modifie automatiquement ce nouveau fichier en ajoutant le code nécessaire (ajout d'une trait + édition d'une fonction)
       Retro-compatibilité : créer le fichier admin + le services (autowire) si il n'existe pas

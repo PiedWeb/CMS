@@ -220,7 +220,7 @@ class StaticAppGenerator
 
     protected function generateHtaccess()
     {
-        $htaccess = $this->twig->render('@PiedWebCMS/static/htaccess.twig', [
+        $htaccess = $this->twig->render('@pwcStaticGenerator/htaccess.twig', [
             'domain' => $this->app->getMainHost(),
             'redirections' => $this->redirections,
         ]);

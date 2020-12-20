@@ -8,7 +8,7 @@ trait TxtAnchorTwigTrait
 {
     public function renderTxtAnchor($name)
     {
-        $template = $this->getApp()->getTemplate('/component/txt_anchor.html.twig', $this->twig);
+        $template = $this->getApp()->getView('/component/txt_anchor.html.twig', $this->twig);
 
         $slugify = new Slugify();
         $name = $slugify->slugify($name);

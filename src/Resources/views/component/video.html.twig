@@ -1,0 +1,24 @@
+{% set btn_class = "btn btn-outline-primary rounded-pill btn-play" %}
+{% set btn_title = "Play" %}
+
+{% block video %}
+    {% spaceless %}
+        <div class="relative m-3"
+            {% if embed_code is defined %} replaceBy="{{ embed_code|replace({'"': "'"}) }}"{% endif %}
+        >
+            {% if embed_code is not defined %}<span data-rot="{{ encrypt(url) }}" class="glightbox2">{% endif %}
+                {{ _self.videoThumb(image, alt|default(url), btn_class, btn_title) }}
+            {% if embed_code is not defined %}</a>{% endif %}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% macro videoThumb(image, alt, btn_class, btn_title) %}
+    {% include view('/component/_inline_image.html.twig') with {'image_src': image,'image_alt': alt|striptags,'image_link': false} %}
+    <button class=" {{ btn_class }}" style="transform: translate(-50%,-50%);position:absolute;
+margin-right: -50%;
+top: 50%;
+left: 50%;">
+        {{ btn_title }}
+    </button>
+{% endmacro %}

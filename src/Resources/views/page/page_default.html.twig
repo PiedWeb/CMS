@@ -1,9 +1,9 @@
-{% extends '@PiedWebCMS/base.html.twig' %}
+{% extends view('/base.html.twig', twig) %}
 
 {# ----------- #}
 
 {% block html_opener %}
-	<html lang="{{ page.locale|default(app.request ? app.request.getLocale() : '') }}"{% if page.htmlOpenerAttr is not null %} {{ page.htmlOpenerAttr|raw }}{% endif %}>
+	<html lang="{{ page.locale|default(apps.get().defaultLocale) }}"{% if page.htmlOpenerAttr is not null %} {{ page.htmlOpenerAttr|raw }}{% endif %}>
 {% endblock %}
 
 {% block title %}
@@ -19,7 +19,7 @@
 		<meta name="robots" content="{{ page.metaRobots }}">
 	{% endif %}
 
-	<link rel="canonical" href="{{ app_base_url|default('') }}{{ page(page.realSlug) }}"/>
+	<link rel="canonical" href="{{ page(page, true) }}"/>
 
 	<script>document.head.insertAdjacentHTML('beforeend', '<style>.nojs{display:none}</style>');</script>
 {% endblock %}
@@ -27,33 +27,34 @@
 
 {% block alternate_language %}
 	{% if page.locale is not null %}
-		<link rel="alternate" hreflang="{{ page.locale }}" href="{{ app_base_url|default('') }}{{ page(page.realSlug) }}"/>
+		<link rel="alternate" hreflang="{{ page.locale }}" href="{{ page(page, true) }}"/>
 		{% for translation in page.translations %}
-			<link rel="alternate" hreflang="{{ translation.locale }}" href="{{ app_base_url|default('') }}{{ page(translation.realSlug) }}"/>
+			<link rel="alternate" hreflang="{{ translation.locale }}" href="{{ page(translation, true) }}"/>
 		{% endfor %}
 	{% endif %}
 {% endblock %}
 
 
 {% block open_graph %}
-	<meta name="og:title" content="{{ page.getTitle(true)|striptags }}">
-	<meta name="og:url" content="{{ app_base_url|default('') }}{{ page(page.realSlug) }}">
+	<meta name="og:title" content="{{ page.ogTitle|default(page.getTitle(true))|striptags }}">
+	<meta name="og:url" content="{{ page(page, true) }}">
 	{% if page.searchExcrept %}
-		<meta name="og:description" content="{{ page.searchExcrept|striptags }}">
+		<meta name="og:description" content="{{ page.ogDescription|default(page.searchExcrept)|striptags }}">
 	{% endif %}
 	{% if page.mainImage is defined and page.mainImage is not null %}
-		<meta name="og:image" content="{{ app_base_url|default('') }}{{ (page.mainImage.fullPath)|imagine_filter('default') }}">
+		<meta name="og:image" content="{{ apps.get().baseUrl|default('') }}{{ (page.mainImage.fullPath)|imagine_filter('default') }}">
 	{% endif %}
 {% endblock %}
 
 {% block feed %}
+	{# TODO #}
 	{{ parent() }}
 	{% if page.feeds is defined and page.feeds is not null %}
 		{% for feed in page.feeds %}
 			<link
 				rel="alternate"
 				type="{{ feed.type|default('application/rss+xml') }}"
-				href="{{ app_base_url|default('') }}{{ feed.uri }}"
+				href="{{ apps.get().baseUrl|default('') }}{{ feed.uri }}"
 				title="{{ app_name|default('') }} &raquo; {{ feed.title }}"
 			/>
 		{% endfor %}
@@ -76,7 +77,7 @@
 
 			{% block main_image %}
 				{% if page.mainImage is not null %}
-					{% include '@PiedWebCMS/component/_inline_image.html.twig' with {
+					{% include view('/component/_inline_image.html.twig') with {
 							'image_src': page.mainImage.fullPath|imagine_filter('default'),
 							'image_alt': page.mainImage.name(page.locale, true)|default(page.getTitle(true)|striptags),
 							'image_wrapper_class': ' ',
@@ -102,7 +103,7 @@
 	{% endblock %}
 
 	{% block navbar %}
-		{% include '@PiedWebCMS/page/_menu.html.twig' %}
+		{% include '@PiedWebCMS/page/_navbar.html.twig' %}
 	{% endblock %}
 {% endblock %}
 

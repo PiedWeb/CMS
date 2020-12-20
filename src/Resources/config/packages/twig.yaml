@@ -12,6 +12,9 @@ twig:
     '%pwc.root%/Extension/UpdateNotification/views': pwUpdateNotification
     '%pwc.root%/Resources/views/TwigBundle': Twig
     '%kernel.root_dir%/../templates/bundles/PiedWebCMSBundle/': PiedWebCMS
+  globals:
+    apps: '@piedweb.app'
+    twig: '@twig'
 
   form_themes:
     - 'bootstrap_4_layout.html.twig'
