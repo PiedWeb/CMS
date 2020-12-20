@@ -23,9 +23,11 @@ class Configuration implements ConfigurationInterface
         'main_content_shortcode' => 'twig,date,email,encryptedLink,image,phoneNumber,twigVideo,punctuation,markdown',
         'fields_shortcode' => 'twig,date,email,encryptedLink,phoneNumber,markdown',
         'assets' => [
-            'stylesheets' => ['/bundles/piedwebcms/page.css'],
+            'stylesheets' => [
+                '/bundles/piedwebcms/tailwind.css',
+            ],
             'javascripts' => ['/bundles/piedwebcms/page.js'],
-        ]
+        ],
     ];
     const DEFAULT_TWIG_SHORTCODE = true;
 

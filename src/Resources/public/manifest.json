@@ -1,8 +1,8 @@
 {
   "bundles/piedwebcms/admin.css": "./admin.css",
   "bundles/piedwebcms/admin.js": "./admin.js",
-  "bundles/piedwebcms/page.css": "./page.css",
   "bundles/piedwebcms/page.js": "./page.js",
+  "bundles/piedwebcms/tailwind.css": "./tailwind.css",
   "bundles/piedwebcms/ace/abap.js": "./ace/abap.js",
   "bundles/piedwebcms/ace/abc.js": "./ace/abc.js",
   "bundles/piedwebcms/ace/ace.js": "./ace/ace.js",

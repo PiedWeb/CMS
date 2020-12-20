@@ -53,8 +53,8 @@ class PageController extends AbstractController
         }
 
         $params = array_merge(['page' => $page], $this->app->getParamsForRendering());
-        return $this->render($this->getTemplate($page->getTemplate() ?: '/page/page.html.twig'), $params);
 
+        return $this->render($this->getTemplate($page->getTemplate() ?: '/page/page.html.twig'), $params);
     }
 
     protected function getTemplate($path)

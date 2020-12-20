@@ -21,7 +21,7 @@ class AppExtension extends AbstractExtension
     use EmailTwigTrait;
     use EncryptedLinkTwigTrait;
     use GalleryTwigTrait;
-    use ListTwigTrait;
+    use PagesListTwigTrait;
     use PhoneNumberTwigTrait;
     use TxtAnchorTwigTrait;
     use VideoTwigTrait;

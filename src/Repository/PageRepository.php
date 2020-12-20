@@ -75,8 +75,18 @@ class PageRepository extends ServiceEntityRepository implements PageRepositoryIn
 
     public function andHost(QueryBuilder $qb, $host, $hostCanBeNull = false): QueryBuilder
     {
-        return $qb->andWhere('(p.host = :h '.($hostCanBeNull ? ' OR p.host IS NULL' : '').')')
-            ->setParameter('h', $host);
+        if (\is_string($host)) {
+            $host = [$host];
+        }
+
+        if (! $hostCanBeNull && array_search(null, $host)) {
+            $hostCanBeNull = true;
+        }
+
+        $qb->andWhere('p.host IN (:host)'.($hostCanBeNull ? ' OR p.host IS NULL' : ''))
+            ->setParameter('host', $host);
+
+        return $qb;
     }
 
     protected function andLocale(QueryBuilder $qb, $locale, $defaultLocale): QueryBuilder

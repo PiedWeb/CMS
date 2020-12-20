@@ -8,3 +8,6 @@ services:
           entity: '%pwc.entity_page%',
           event: postLoad,
         }
+
+  piedweb.markdown_parser:
+    class: PiedWeb\CMSBundle\Extension\Filter\MarkdownParser

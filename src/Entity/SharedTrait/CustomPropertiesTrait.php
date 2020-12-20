@@ -130,7 +130,7 @@ trait CustomPropertiesTrait
             }
         }
 
-        if (! $standStandAloneParsed) {
+        if (! $standStandAloneParsed || ! \is_array($standStandAloneParsed)) {
             return;
         }
 

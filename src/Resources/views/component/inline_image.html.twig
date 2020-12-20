@@ -13,7 +13,7 @@
 #}
 
 
-{% block inline_image %}{% spaceless %}
+{% block inline_image %}
     {% if image_src is defined %}
         {% if image_wrapper_class is defined or image_wrapper is defined %}
             <{{ image_wrapper|default('p') }} class="{{ image_wrapper_class|default('') }}">
@@ -40,7 +40,7 @@
             </{{ image_wrapper|default('p') }}>
         {% endif %}
     {% endif %}
-{% spaceless %}{% endblock %}
+{% endblock %}
 
 
 {% macro renderImage(image, image_class = null, image_attr = null, image_alt = null) %}

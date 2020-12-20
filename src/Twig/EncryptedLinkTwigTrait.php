@@ -2,10 +2,20 @@
 
 namespace PiedWeb\CMSBundle\Twig;
 
+use PiedWeb\CMSBundle\Entity\PageInterface;
+use PiedWeb\CMSBundle\Extension\Router\RouterInterface;
+
 trait EncryptedLinkTwigTrait
 {
+    /** @var RouterInterface */
+    private $router;
+
     public function renderEncryptedLink($anchor, $path, $attr = [])
     {
+        if ($path instanceof PageInterface) {
+            $path = $this->router->generate($path);
+        }
+
         $attr = array_merge($attr, ['data-rot' => self::encrypt($path)]);
         $template = $this->getApp()->getView('/component/javascript_link.html.twig', $this->twig);
         $renderedLink = $this->twig->render($template, ['anchor' => $anchor, 'attr' => $attr]);

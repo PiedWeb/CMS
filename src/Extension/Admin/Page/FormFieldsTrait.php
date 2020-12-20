@@ -52,11 +52,12 @@ trait FormFieldsTrait
 
     protected function configureFormFieldName(FormMapper $formMapper): FormMapper
     {
-        return $formMapper->add('name', TextType::class, [
+        return $formMapper->add('name', TextareaType::class, [
                 'label' => 'admin.page.name.label',
                 'required' => false,
                 'help_html' => true,
                 'help' => 'admin.page.name.help',
+                'attr' => ['class' => 'autosize'],
             ]);
     }
 
@@ -67,6 +68,7 @@ trait FormFieldsTrait
                 'label' => 'admin.page.searchExcrept.label',
                 'help_html' => true,
                 'help' => 'admin.page.searchExcrept.help',
+                'attr' => ['class' => 'autosize'],
             ]);
     }
 
@@ -106,8 +108,9 @@ trait FormFieldsTrait
         return $formMapper->add('standAloneCustomProperties', TextareaType::class, [
             'required' => false,
             'attr' => [
-                'style' => 'min-height:15vh',
-                'data-editor' => 'yaml',
+                'style' => 'width:100%; height:100px;min-height:15vh',
+                //'data-editor' => 'yaml',
+                'class' => 'autosize',
             ],
             'label' => 'admin.page.customProperties.label',
             'help_html' => true,
@@ -157,20 +160,23 @@ trait FormFieldsTrait
 
     protected function configureFormFieldTitle(FormMapper $formMapper): FormMapper
     {
-        return $formMapper->add('title', TextType::class, [
+        return $formMapper->add('title', TextareaType::class, [
             'label' => 'admin.page.title.label',
             'required' => false,
             'help_html' => true,
             'help' => 'admin.page.title.help',
-            'attr' => ['class' => 'titleToMeasure'],
+            'attr' => ['class' => 'titleToMeasure autosize textarea-no-newline'],
         ]);
     }
 
     protected function configureFormFieldH1(FormMapper $formMapper): FormMapper
     {
-        return $formMapper->add('h1', TextType::class, [
+        $style = 'border-radius: 5px; font-size: 140%; font-weight: 700;'
+            .'border: 1px solid #ddd;';
+        // Todo move style to view
+        return $formMapper->add('h1', TextareaType::class, [
                 'required' => false,
-                'attr' => ['class' => 'input-lg', 'placeholder' => 'admin.page.title.label'],
+                'attr' => ['class' => 'autosize textarea-no-newline', 'placeholder' => 'admin.page.title.label', 'style' => $style],
                 'label' => ' ',
             ]);
     }

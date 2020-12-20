@@ -1,25 +1,12 @@
-<style>
-#footer {
-    border-top: 2px solid var(--bg-dark);
-    font-size: 0.7em;
-    color: var(--color-light);
-}
-#footer a {
-    text-decoration:none;
-}
-</style>
-<footer id="footer">
-    <div class="container">
+<footer class="mt-10 text-sm border-t-2 border-gray-200">
+    <div class="max-w-screen-md p-3 py-10 mx-auto text-right">
         {% block footer %}
             {% include view('/component/alternate_links.html.twig') %}
         {% endblock %}
 
         {% block extra_footer %}
-            <p>
-                <a href="{{ homepage() }}" style="font-size:2.2em">{{ app_name }}</a>
-            </p>
-            <p>Design
-                <a href="https://piedweb.com">Pied Web</a>.</p>
+            <a href="{{ homepage() }}" class="block mb-3 text-2xl text-primary hover:text-primary-light">{{ app_name }}</a>
+            Design by <a href="https://piedweb.com" class="text-primary hover:text-primary-light">Pied Web</a>.
         {% endblock %}
     </div>
 </footer>

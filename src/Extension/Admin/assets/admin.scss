@@ -1,6 +1,7 @@
-@import '~codemirror/lib/codemirror.css';
-@import '~easymde/src/css/easymde.css';
-//@import '~codemirror-spell-checker/src/css/spell-checker.css';
+//@import '~codemirror/lib/codemirror.css';
+@import 'codemirror/lib/codemirror.css';
+@import 'easymde/src/css/easymde.css';
+@import 'codemirror-spell-checker/src/css/spell-checker.css';
 
 /* Column Expanding */
 .mainFields,
@@ -24,11 +25,22 @@
   }
 }
 
+textarea.autosize {
+  height: 34px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  resize: none;
+  padding-bottom: 0;
+}
 /* Editor EasyMDE */
 .editor-toolbar.fullscreen,
 .CodeMirror-fullscreen,
 .EasyMDEContainer .CodeMirror-fullscreen {
   z-index: 100000000;
+}
+.CodeMirror-lines {
+  max-width: 768px;
+  margin: auto;
 }
 .CodeMirror {
   display: none;

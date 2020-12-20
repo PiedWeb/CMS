@@ -4,15 +4,16 @@ namespace PiedWeb\CMSBundle\Twig;
 
 trait VideoTwigTrait
 {
-    public function renderVideo($url, $image, $alternativeText = '')
+    public function renderVideo($url, $image, $alternativeText = '', $forceUrl = false)
     {
         $template = $this->getApp()->getView('/component/video.html.twig', $this->twig);
-        $youtube = static::getYoutubeVideoUrl($url);
+        $youtube = $forceUrl ? null : static::getYoutubeVideoUrl($url);
+
         return trim($this->twig->render($template, [
             'url' => $youtube ? $youtube : $url,
             'image' => $image,
             'alt' => $alternativeText,
-            'embed_code' => $youtube ? $this->getEmbedCode($url) : null,
+            'embed_code' => $youtube && ! $forceUrl ? $this->getEmbedCode($url) : null,
         ]));
     }
 
@@ -27,6 +28,7 @@ trait VideoTwigTrait
     {
         if ($id = self::getYoutubeVideoUrl($embed_code)) {
             $template = $this->getApp()->getView('/component/video_youtube_embed.html.twig', $this->twig);
+
             return $this->twig->render($template, ['id' => $id]);
         }
     }

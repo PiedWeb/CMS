@@ -43,16 +43,13 @@ class Email extends ShortCode
 
     public function convertRawEncodeMail($body)
     {
-        $rgx = '/\[((?:[a-z0-9!#$%&*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&*+=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f'
-            .'\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)'
-            .'+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}'
-            .'(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21'
-            .'-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))\]/iU';
+        $rgx = '/ ([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}) /i';
+
         preg_match_all($rgx, $body, $matches);
 
         $nbrMatch = \count($matches[0]);
         for ($k = 0; $k < $nbrMatch; ++$k) {
-            $body = str_replace($matches[0][$k], $this->renderEncodedMail($this->twig, $matches[1][$k]), $body);
+            $body = ' '.str_replace($matches[0][$k], $this->renderEncodedMail($this->twig, $matches[1][$k]), $body).' ';
         }
 
         return $body;

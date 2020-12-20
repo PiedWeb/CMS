@@ -14,10 +14,6 @@ class PageRepositoryTest extends KernelTestCase
         $pages = $em->getRepository('App\Entity\Page')->getIndexablePages(null, true, 'en', 'en', 1)
             ->getQuery()->getResult();
 
-        foreach ($pages as $page) {
-            $this->assertSame($page->getSlug(), 'homepage');
-
-            break;
-        }
+        $this->assertSame($pages[0]->getSlug(), 'homepage');
     }
 }

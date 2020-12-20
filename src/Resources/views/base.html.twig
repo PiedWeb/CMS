@@ -24,7 +24,16 @@
             {% for stylesheet in stylesheets %}
                 <link rel="stylesheet" href="{{ stylesheet }}">
             {% endfor %}
+            <style>
+            :root {
+            --bg: #f6f6f6;
+            --primary: #d97706;
+            --primary-light: #F59E0B;
+            }
+            </style>
             {# <link rel="stylesheet" href="{{ asset('assets/app.css') }}"> #}
+
+	        <script>document.head.insertAdjacentHTML('beforeend', '<style>.nojs{display:none}</style>');</script>
         {% endblock %}
 
         {% block feed %}

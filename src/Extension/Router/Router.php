@@ -47,7 +47,6 @@ class Router implements RouterInterface
         return $this->generate($slug, $canonical);
     }
 
-
     public function generate($slug = 'homepage', $canonical = false): string
     {
         if ($slug instanceof PageInterface) {
@@ -59,7 +58,7 @@ class Router implements RouterInterface
             $page = null;
         }
 
-        if (!$canonical && $this->mayUseCustomPath()) {
+        if (! $canonical && $this->mayUseCustomPath()) {
             return $this->router->generate(self::CUSTOM_HOST_PATH, [
                     'host' => $this->app->getCurrentPage()->getHost(),
                 'slug' => $slug,

@@ -1,11 +1,11 @@
-<header id="navbar">
-    <span style="display:block;font-size: 2.2em; margin-right:0.5em">
-        <a href="{{ homepage() }}">{{ app_name }}</a>
+<header class="absolute top-0 left-0 right-0 z-50 flex flex-col items-center justify-between p-4 border-b-2 border-gray-200 sm:flex-row ">
+    <span class="block mr-1 font-mono text-4xl">
+        <a class="font-bold text-primary hover:text-primary-light" href="{{ homepage() }}">{{ app_name }}</a>
     </span>
     <nav class="nav">
-        <ul style="list-style:none; display:flex">
+        <ul class="flex space-y-4">
             <li>
-                <a href="https://github.com/PiedWeb/CMS">Code &amp; docs</a>
+                <a class="text-primary hover:text-primary-light" href="https://github.com/PiedWeb/CMS">Code &amp; docs</a>
             </li>
         </ul>
     </nav>
@@ -13,36 +13,5 @@
 <style>
     body {
         margin-top: 4em;
-    }
-
-    .nav ul {
-        padding: 0;
-        margin: 0
-    }
-
-    .nav li+li::before {
-        content: '•';
-        margin: 0 0.75em;
-    }
-
-    @media(max-width: 576px) {
-        header {
-            flex-direction: column;
-        }
-    }
-    #navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: .5rem 2rem;
-        border-bottom: 1px solid var(--bg-dark);
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-    }
-    #navbar a {
-        text-decoration:none;
     }
 </style>

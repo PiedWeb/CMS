@@ -92,8 +92,8 @@ class AppConfig
     public function getTemplate()
     {
         return $this->template;
-
     }
+
     /**
      * @psalm-suppress InternalMethod
      */
@@ -107,8 +107,9 @@ class AppConfig
             return $path;
         }
 
-        if ($overrided = $this->getOverridedView($path) !== null)
+        if ($overrided = null !== $this->getOverridedView($path)) {
             return $overrided;
+        }
 
         $name = $this->template.$path;
 
@@ -131,12 +132,14 @@ class AppConfig
         $templateDir = './templates'; // TODO load it from conf or maybe it's in twig ?!
 
         $templateOverrided = $templateDir.'/'.ltrim($this->getTemplate(), '@').$name;
-        if (file_exists($templateOverrided))
+        if (file_exists($templateOverrided)) {
             return $templateOverrided;
+        }
 
         $globalOverride = $templateDir.$name;
-        if (file_exists($globalOverride))
+        if (file_exists($globalOverride)) {
             return $globalOverride;
+        }
     }
 
     protected function isFullPath($path)

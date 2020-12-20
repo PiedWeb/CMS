@@ -3,7 +3,11 @@
 {# ----------- #}
 
 {% block html_opener %}
-	<html lang="{{ page.locale|default(apps.get().defaultLocale) }}"{% if page.htmlOpenerAttr is not null %} {{ page.htmlOpenerAttr|raw }}{% endif %}>
+	<html
+		lang="{{ page.locale|default(apps.get().defaultLocale) }}"
+		{% if page.htmlOpenerAttr %}{{ mergeAttr({'class': 'leading-tight text-gray-900'}, page.htmlOpenerAttr|default({})) }}
+		{% else %} class="leading-tight text-gray-900"{% endif %}
+	>
 {% endblock %}
 
 {% block title %}
@@ -21,7 +25,6 @@
 
 	<link rel="canonical" href="{{ page(page, true) }}"/>
 
-	<script>document.head.insertAdjacentHTML('beforeend', '<style>.nojs{display:none}</style>');</script>
 {% endblock %}
 
 
@@ -65,7 +68,7 @@
 {% block body %}
 
 	{% block content %}
-		<div class="{{ container|default('container') }}">
+		<div class="{{ page.container|default('max-w-screen-md mx-auto p-3 prose prose-sm sm:prose lg:prose-lg xl:prose-xl') }}">
 
 			{% block h1 %}
 				<h1>{{ page.content.title(true)|raw }}</h1>

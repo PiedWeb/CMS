@@ -1,29 +1,27 @@
-/**
- * Import CSS
- */
-require('./page.scss');
+//import 'alpinejs';
+
+require('fslightbox');
 
 import {
-  uncloakLinks,
+  decryptLink,
   readableEmail,
   convertImageLinkToWebPLink,
   replaceOn,
-} from 'piedweb-cms-js-helpers/src/helpers';
-
-import GLightbox from 'glightbox';
+} from './helpers';
 
 function onPageLoaded() {
   onDomChanged();
+  new FsLightbox();
 }
 
 function onDomChanged() {
-  GLightbox({ autoplayVideos: true });
   convertImageLinkToWebPLink();
-  uncloakLinks();
+  decryptLink();
   readableEmail('.cea');
   replaceOn();
+  refreshFsLightbox();
 }
 
 document.addEventListener('DOMContentLoaded', onPageLoaded());
 
-document.addEventListener('linksBuilt', onDomChanged);
+document.addEventListener('DOMChanged', onDomChanged);

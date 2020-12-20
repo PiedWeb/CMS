@@ -9,11 +9,13 @@
       ]
     },
     "page": {
-      "css": [
-        "./page.css"
-      ],
       "js": [
         "./page.js"
+      ]
+    },
+    "tailwind": {
+      "css": [
+        "./tailwind.css"
       ]
     }
   }
