@@ -11,7 +11,7 @@ interface RouterInterface
 
     const CUSTOM_HOST_PATH = 'custom_host_piedweb_cms_page';
 
-    public function generatePathForHomePage($page = null): string;
+    public function generatePathForHomePage(?PageInterface $page = null): string;
 
     /**
      * @param string|PageInterface $slug

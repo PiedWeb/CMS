@@ -7,8 +7,11 @@ use PiedWeb\CMSBundle\Entity\PageInterface;
 
 class App
 {
+    /** @var array */
     protected $apps = [];
+    /** @var string */
     protected $currentApp;
+    /** @var string */
     protected $host; // often same as currentApp
 
     /**
@@ -28,6 +31,9 @@ class App
         $this->switchCurrentApp();
     }
 
+    /**
+     * Not good.
+     */
     public function switchCurrentApp($host = null): self
     {
         if ($host instanceof PageInterface) {
@@ -109,11 +115,29 @@ class App
         return $this->currentApp;
     }
 
-    /**
-     * Alias for self::get()->get($key).
-     */
-    public function getApp(string $key)
+    public function sameHost($host): bool
     {
-        return $this->apps[$key]->get($key);
+        if ($this->isFirstApp() && $host === null)
+            return true;
+
+        if ($host === $this->currentApp)
+            return true;
+
+        return false;
+    }
+
+    public function getApp(?string $key = null, ?string $host = null)
+    {
+        if (null === $host) {
+            $host = $this->currentApp;
+        }
+
+        if (null === $host) {
+            throw new Exception('host can\'t be null');
+        }
+
+        $app = $this->apps[$host];
+
+        return $key ? $app->get($key) : $app;
     }
 }

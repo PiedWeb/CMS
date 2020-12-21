@@ -23,3 +23,4 @@ yarn.lock
 Draft.md
 coverage
 coverage.xml
+/Skeleton/var/test_database.sqlite

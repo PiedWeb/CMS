@@ -5,8 +5,7 @@
 {% block html_opener %}
 	<html
 		lang="{{ page.locale|default(apps.get().defaultLocale) }}"
-		{% if page.htmlOpenerAttr %}{{ mergeAttr({'class': 'leading-tight text-gray-900'}, page.htmlOpenerAttr|default({})) }}
-		{% else %} class="leading-tight text-gray-900"{% endif %}
+		{{ mergeAttr({'class': 'leading-tight text-gray-900'}, page.htmlOpenerAttr|default({})) }}
 	>
 {% endblock %}
 

@@ -1,7 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
-var PurgeCssPlugin = require('purgecss-webpack-plugin');
-var glob = require('glob-all');
-var tailwindcss = require('tailwindcss');
+const tailwindcss = require('tailwindcss');
 
 const purgecss = require('@fullhuman/postcss-purgecss')({
   mode: 'all',

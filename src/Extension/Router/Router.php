@@ -2,6 +2,7 @@
 
 namespace PiedWeb\CMSBundle\Extension\Router;
 
+use PiedWeb\CMSBundle\Entity\Page;
 use PiedWeb\CMSBundle\Entity\PageInterface;
 use PiedWeb\CMSBundle\Service\App;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,18 +17,18 @@ class Router implements RouterInterface
     protected $useCustomHostPath = true; // TODO make it true on special request, same with absolute
 
     /** @var App */
-    protected $app;
+    protected $apps;
 
     /** @var string */
     protected $currentHost;
 
     public function __construct(
         SfRouterInterface $router,
-        App $app,
+        App $apps,
         RequestStack $requestStack
     ) {
         $this->router = $router;
-        $this->app = $app;
+        $this->apps = $apps;
         $this->currentHost = $requestStack->getCurrentRequest() ? $requestStack->getCurrentRequest()->getHost() : '';
     }
 
@@ -36,37 +37,45 @@ class Router implements RouterInterface
      * and / for YY page home if your default language is YY
      * X/Y may be en/fr/...
      */
-    public function generatePathForHomePage($page = null, $canonical = false): string
+    public function generatePathForHomePage(?PageInterface $page = null, $canonical = false): string
     {
-        $slug = '';
+        $homepage = (new Page())->setSlug('');;
 
-        if (null !== $page && $page->getLocale() != $this->app->get()->getDefaultLocale()) {
-            $slug = $page->getLocale();
+        if (null !== $page) {
+            if ($page->getLocale() != $this->apps->get()->getDefaultLocale()) {
+                $homepage->setSlug($page->getLocale());
+            }
+            $homepage->setHost($page->getHost());
         }
 
-        return $this->generate($slug, $canonical);
+        return $this->generate($homepage, $canonical);
     }
 
     public function generate($slug = 'homepage', $canonical = false): string
     {
+        $page = null;
+
         if ($slug instanceof PageInterface) {
             /** @var $page PageInterface */
             $page = $slug;
             $slug = $slug->getRealSlug();
         } elseif ('homepage' == $slug) {
             $slug = '';
-            $page = null;
         }
 
-        if (! $canonical && $this->mayUseCustomPath()) {
-            return $this->router->generate(self::CUSTOM_HOST_PATH, [
-                    'host' => $this->app->getCurrentPage()->getHost(),
-                'slug' => $slug,
-            ]);
+        if (! $canonical) {
+            if ($this->mayUseCustomPath()) {
+                return $this->router->generate(self::CUSTOM_HOST_PATH, [
+                        'host' => $this->apps->getCurrentPage()->getHost(),
+                    'slug' => $slug,
+                ]);
+            } elseif ($page &&  !$this->apps->sameHost($page->getHost())) { // maybe we force canonical - useful for views
+                $canonical = true;
+            }
         }
 
         if ($canonical && $page) {
-            $baseUrl = $this->app->switchCurrentApp($page->getHost())->get()->getBaseUrl();
+            $baseUrl = $this->apps->getApp('baseUrl', $page->getHost());
         }
 
         return ($baseUrl ?? '').$this->router->generate(self::PATH, ['slug' => $slug]);
@@ -76,9 +85,9 @@ class Router implements RouterInterface
     {
         return $this->useCustomHostPath
             && $this->currentHost // we have a request
-            && $this->app->getCurrentPage() // a page is loaded
-            && $this->app->getCurrentPage()->getHost()
-            && ! $this->app->get()->isMainHost($this->currentHost);
+            && $this->apps->getCurrentPage() // a page is loaded
+            && $this->apps->getCurrentPage()->getHost()
+            && ! $this->apps->get()->isMainHost($this->currentHost);
     }
 
     /**
