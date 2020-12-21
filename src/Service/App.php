@@ -117,11 +117,13 @@ class App
 
     public function sameHost($host): bool
     {
-        if ($this->isFirstApp() && $host === null)
+        if ($this->isFirstApp() && null === $host) {
             return true;
+        }
 
-        if ($host === $this->currentApp)
+        if ($host === $this->currentApp) {
             return true;
+        }
 
         return false;
     }

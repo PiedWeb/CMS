@@ -1,4 +1,4 @@
-# STILL IN EXPERIMENTATION
+# ¡ Still Exprimentations !
 
 # CMS _Content First_ and _Extendable_
 

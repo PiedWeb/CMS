@@ -25,7 +25,7 @@ trait PageListTwigTrait
         $search = '',
         int $number = 3,
         $order = 'createdAt',
-        string $view = '/page/_list.html.twig',
+        string $view = '/component/pages_list.html.twig',
         $host = null
     ) {
         if (\is_string($search)) {

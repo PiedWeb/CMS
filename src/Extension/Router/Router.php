@@ -39,7 +39,7 @@ class Router implements RouterInterface
      */
     public function generatePathForHomePage(?PageInterface $page = null, $canonical = false): string
     {
-        $homepage = (new Page())->setSlug('');;
+        $homepage = (new Page())->setSlug('');
 
         if (null !== $page) {
             if ($page->getLocale() != $this->apps->get()->getDefaultLocale()) {
@@ -56,7 +56,6 @@ class Router implements RouterInterface
         $page = null;
 
         if ($slug instanceof PageInterface) {
-            /** @var $page PageInterface */
             $page = $slug;
             $slug = $slug->getRealSlug();
         } elseif ('homepage' == $slug) {
@@ -69,7 +68,7 @@ class Router implements RouterInterface
                         'host' => $this->apps->getCurrentPage()->getHost(),
                     'slug' => $slug,
                 ]);
-            } elseif ($page &&  !$this->apps->sameHost($page->getHost())) { // maybe we force canonical - useful for views
+            } elseif ($page && ! $this->apps->sameHost($page->getHost())) { // maybe we force canonical - useful for views
                 $canonical = true;
             }
         }
