@@ -112,6 +112,7 @@ List of existing extension wich are not in the **core** :
 ## TODO before v1
 
 - [ ] Move facultative extensin in an other bundle (PageUpdateNotification)
+- [ ]
 - [ ] Revoir install-cms (bin/console assets:install --symlink --relative)git
 
 ## TODO Extension
