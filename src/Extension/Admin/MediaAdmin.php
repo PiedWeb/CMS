@@ -10,7 +10,7 @@ use Sonata\AdminBundle\Object\Metadata; //use Sonata\BlockBundle\Meta\Metadata;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class MediaAdmin extends AbstractAdmin
+class MediaAdmin extends AbstractAdmin implements MediaAdminInterface
 {
     use AdminTrait;
 

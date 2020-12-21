@@ -6,7 +6,7 @@ use PiedWeb\CMSBundle\Repository\Repository;
 use Sonata\AdminBundle\Controller\CRUDController as SonataCRUDController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class CRUDController extends SonataCRUDController
+class CRUDController extends SonataCRUDController implements CRUDControllerInterface
 {
     protected $params;
 

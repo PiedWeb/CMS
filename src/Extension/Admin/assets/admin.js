@@ -16,7 +16,8 @@ async function onDomChanged() {
   window.domChanging = true;
   //await console.log('domChanged');
   await autoSizeTextarea();
-  //if (aceEditorElements !== null && aceEditorElements.renderer !== 'undefined') {    await aceEditor.renderer.updateFull();} // todo put all editor in aceEditorElements and for
+  //if (aceEditorElements !== null && aceEditorElements.renderer !== 'undefined') {    await aceEditor.renderer.updateFull();}
+  // todo put all editor in aceEditorElements and for
   window.domChanging = false;
 }
 

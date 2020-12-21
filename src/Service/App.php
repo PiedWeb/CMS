@@ -80,14 +80,25 @@ class App
         return $this->currentPage;
     }
 
-    // TODO remove this aliases
-
-    /**
-     * Alias for ->get()->isFirstApp().
-     */
-    public function isFirstApp(): bool
+    public function isFirstApp($host = null): bool
     {
-        return array_key_first($this->apps) === $this->get()->getMainHost();
+        $firstApp = array_key_first($this->apps);
+
+        if (null === $host) {
+            return $firstApp === $this->get()->getMainHost();
+        }
+
+        if (\is_string($host)) {
+            return $firstApp === $host;
+        }
+
+        foreach ($host as $h) {
+            if ($firstApp === $h) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -2,8 +2,12 @@
 
 namespace PiedWeb\CMSBundle\Twig;
 
+use PiedWeb\CMSBundle\Service\AppConfig;
+
 trait PhoneNumberTwigTrait
 {
+    //abstract public function getApp(): AppConfig;
+
     public function renderPhoneNumber($number, $class = '')
     {
         $template = $this->getApp()->getView('/component/phone_number.html.twig', $this->twig);

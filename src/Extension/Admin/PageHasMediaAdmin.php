@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class PageHasMedia extends AbstractAdmin
+class PageHasMediaAdmin extends AbstractAdmin implements PageHasMediaAdminInterface
 {
     private $liipImage;
 

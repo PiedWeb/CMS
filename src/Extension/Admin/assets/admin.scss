@@ -1,3 +1,5 @@
+/* purgecss start ignore */
+
 //@import '~codemirror/lib/codemirror.css';
 @import 'codemirror/lib/codemirror.css';
 @import 'easymde/src/css/easymde.css';
@@ -80,3 +82,5 @@ textarea.autosize {
   z-index: 809;
   background: #cad4e3;
 }
+
+/* purgecss end ignore */

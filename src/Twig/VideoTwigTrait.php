@@ -2,8 +2,12 @@
 
 namespace PiedWeb\CMSBundle\Twig;
 
+use PiedWeb\CMSBundle\Service\AppConfig;
+
 trait VideoTwigTrait
 {
+    abstract public function getApp(): AppConfig;
+
     public function renderVideo($url, $image, $alternativeText = '', $forceUrl = false)
     {
         $template = $this->getApp()->getView('/component/video.html.twig', $this->twig);

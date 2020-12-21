@@ -1,10 +1,17 @@
 services:
+  # ---
+  # Page
+  # ---
+
+  PiedWeb\CMSBundle\Extension\Admin\PageAdminInterface:
+    alias: piedweb.admin.page
+
   piedweb.admin.page:
     class: PiedWeb\CMSBundle\Extension\Admin\Page\Admin
     arguments:
       - ~
       - '%pwc.entity_page%'
-      - PiedWeb\CMSBundle\Extension\Admin\Page\CRUDController
+      - PiedWeb\CMSBundle\Extension\Admin\Page\CRUDControllerInterface
     tags:
       - { name: sonata.admin, manager_type: orm, label: admin.label.page }
     calls:
@@ -22,9 +29,22 @@ services:
       - [setRouter, ['@router']]
     public: true
 
-  PiedWeb\CMSBundle\Extension\Admin\Page\CRUDController:
+  PiedWeb\CMSBundle\Extension\Admin\Page\CRUDControllerInterface:
+    alias: piedweb.admin.pageCRUDController
+    public: true
+
+  piedweb.admin.pageCRUDController:
+    class: PiedWeb\CMSBundle\Extension\Admin\Page\CRUDController
     autowire: true
+    calls:
       - [setParams, ['@parameter_bag']]
+
+  # ---
+  # Others
+  # ---
+
+  PiedWeb\CMSBundle\Extension\Admin\MediaAdminInterface:
+    alias: piedweb.admin.media
 
   piedweb.admin.media:
     class: PiedWeb\CMSBundle\Extension\Admin\MediaAdmin
@@ -38,13 +58,19 @@ services:
     tags:
       - { name: sonata.admin, manager_type: orm, label: admin.label.media }
 
+  PiedWeb\CMSBundle\Extension\Admin\PageHasMediaAdminInterface:
+    alias: piedweb.admin.pagehasmedia
+
   piedweb.admin.pagehasmedia:
-    class: PiedWeb\CMSBundle\Extension\Admin\PageHasMedia
+    class: PiedWeb\CMSBundle\Extension\Admin\PageHasMediaAdmin
     arguments: [~, '%pwc.entity_pagehasmedia%', ~]
     calls:
       - [setLiipImage, ['@liip_imagine.cache.manager']]
     tags:
       - { name: sonata.admin, manager_type: orm }
+
+  PiedWeb\CMSBundle\Extension\Admin\UserAdminInterface:
+    alias: piedweb.admin.user
 
   piedweb.admin.user:
     class: PiedWeb\CMSBundle\Extension\Admin\UserAdmin

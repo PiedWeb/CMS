@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class UserAdmin extends AbstractAdmin
+class UserAdmin extends AbstractAdmin implements UserAdminInterface
 {
     use AdminTrait;
 

@@ -7,10 +7,9 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-//use Sonata\BlockBundle\Meta\Metadata;
 use Sonata\AdminBundle\Object\Metadata;
 
-class Admin extends AbstractAdmin
+class Admin extends AbstractAdmin implements AdminInterface
 {
     public $supportsPreviewMode = true;
 

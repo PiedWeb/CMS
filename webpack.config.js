@@ -1,6 +1,16 @@
 var Encore = require('@symfony/webpack-encore');
 var PurgeCssPlugin = require('purgecss-webpack-plugin');
 var glob = require('glob-all');
+var tailwindcss = require('tailwindcss');
+
+const purgecss = require('@fullhuman/postcss-purgecss')({
+  mode: 'all',
+  content: [
+    './src/Resources/views/**/*.html.twig',
+    './src/Resources/views/*.html.twig',
+  ],
+  defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
+});
 
 Encore.setOutputPath('./src/Resources/public/')
   .setPublicPath('./')
@@ -12,9 +22,15 @@ Encore.setOutputPath('./src/Resources/public/')
   .enableVersioning(false)
   .enablePostCssLoader((options) => {
     options.postcssOptions = {
-      // the directory where the postcss.config.js file is stored
-      path: 'postcss.config.js',
+      plugins: [
+        tailwindcss('./tailwind.config.js'),
+        require('autoprefixer'),
+        require('postcss-import'),
+      ],
     };
+    if (Encore.isProduction() || 1 == 2) {
+      options.postcssOptions.plugins.push(purgecss);
+    }
   })
   .disableSingleRuntimeChunk()
   .copyFiles({
@@ -27,19 +43,5 @@ Encore.setOutputPath('./src/Resources/public/')
   .addEntry('admin', './src/Extension/Admin/assets/admin.js') // {{ asset('bundles/piedwebcms/admin.js') }}
   .addEntry('page', './src/Resources/assets/page.js') // {{ asset('bundles/piedwebcms/page.js') }}
   .addStyleEntry('tailwind', './src/Resources/assets/tailwind.css');
-
-if (Encore.isProduction()) {
-  Encore.addPlugin(
-    new PurgeCssPlugin({
-      paths: glob.sync([
-        'src/Resources/views/**/*.html.twig',
-        'src/Extension/Admin/views/*.html.twig',
-      ]),
-      defaultExtractor: (content) => {
-        return content.match(/[\w-/:]+(?<!:)/g) || [];
-      },
-    })
-  );
-}
 
 module.exports = Encore.getWebpackConfig();

@@ -4,11 +4,14 @@ namespace PiedWeb\CMSBundle\Twig;
 
 use PiedWeb\CMSBundle\Entity\PageInterface;
 use PiedWeb\CMSBundle\Extension\Router\RouterInterface;
+use PiedWeb\CMSBundle\Service\AppConfig;
 
 trait EncryptedLinkTwigTrait
 {
     /** @var RouterInterface */
-    private $router;
+    protected $router;
+
+    //abstract public function getApp(): AppConfig;
 
     public function renderEncryptedLink($anchor, $path, $attr = [])
     {

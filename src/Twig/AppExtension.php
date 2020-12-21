@@ -9,6 +9,7 @@ use PiedWeb\CMSBundle\Entity\MediaExternal;
 use PiedWeb\CMSBundle\Entity\PageInterface as Page;
 use PiedWeb\CMSBundle\Extension\Router\RouterInterface;
 use PiedWeb\CMSBundle\Service\App;
+use PiedWeb\CMSBundle\Service\AppConfig;
 use PiedWeb\RenderAttributes\AttributesTrait;
 use Twig\Environment as Twig;
 use Twig\Extension\AbstractExtension;
@@ -17,29 +18,30 @@ use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension
 {
+    // TODO switch from Trait to service (will be better to test and add/remove twig extension)
     use AttributesTrait;
     use EmailTwigTrait;
     use EncryptedLinkTwigTrait;
     use GalleryTwigTrait;
-    use PagesListTwigTrait;
+    use PageListTwigTrait;
     use PhoneNumberTwigTrait;
     use TxtAnchorTwigTrait;
     use VideoTwigTrait;
 
     /** @var RouterInterface */
-    private $router;
+    protected $router;
 
     /** @var EntityManagerInterface */
-    private $em;
+    protected $em;
 
     /** @var string */
-    private $pageClass;
+    protected $pageClass;
 
     /** @var App */
-    private $apps;
+    protected $apps;
 
     /** @var Twig */
-    private $twig;
+    protected $twig;
 
     public function __construct(EntityManagerInterface $em, string $pageClass, RouterInterface $router, App $apps, Twig $twig)
     {
@@ -50,7 +52,7 @@ class AppExtension extends AbstractExtension
         $this->twig = $twig;
     }
 
-    public function getApp()
+    public function getApp(): AppConfig
     {
         return $this->apps->get();
     }

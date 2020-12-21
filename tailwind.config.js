@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./src/Resources/view/*.html.twig', './src/Resources/assets/*.js'],
+  purge: {}, // directly in webpack
   theme: {
     extend: {
       typography: {

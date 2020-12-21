@@ -2,10 +2,13 @@
 
 namespace PiedWeb\CMSBundle\Twig;
 
+use PiedWeb\CMSBundle\Service\AppConfig;
 use Twig\Environment as Twig;
 
 trait EmailTwigTrait
 {
+    //abstract public function getApp(): AppConfig;
+
     public function renderEncodedMail(Twig $twig, $mail, $class = '')
     {
         $template = $this->getApp()->getView('/component/encoded_mail.html.twig', $twig);

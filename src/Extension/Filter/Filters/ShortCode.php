@@ -25,7 +25,7 @@ abstract class ShortCode implements ShortCodeInterface
 
     abstract public function apply($string);
 
-    protected function getApp(): AppConfig
+    public function getApp(): AppConfig
     {
         return $this->app;
     }
