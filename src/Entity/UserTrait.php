@@ -23,6 +23,11 @@ trait UserTrait
     protected $email;
 
     /**
+     * @ORM\Column(type="string", length=150, nullable=true)
+     */
+    protected $username;
+
+    /**
      * Loaded From BaseUser.
      *
      * @Assert\Length(
@@ -77,16 +82,6 @@ trait UserTrait
     public function getPlainPassword()
     {
         return $this->plainPassword;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
     }
 
     /**
@@ -192,6 +187,26 @@ trait UserTrait
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of username.
+     */
+    public function getUsername()
+    {
+        return null !== $this->username ? $this->username : $this->email;
+    }
+
+    /**
+     * Set the value of username.
+     *
+     * @return self
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
 
         return $this;
     }

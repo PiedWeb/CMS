@@ -26,7 +26,7 @@ Encore.setOutputPath('./src/Resources/public/')
         require('postcss-import'),
       ],
     };
-    if (Encore.isProduction() || 1 == 2) {
+    if (Encore.isProduction()) {
       options.postcssOptions.plugins.push(purgecss);
     }
   })

@@ -39,7 +39,7 @@ admin:
     users: Utilisateurs
     manage: Mettre en ligne
     update: Actualiser
-    params: Thème
+    params: Réglages
     theme: Éditeur de thème
     check_content: Vérifier le contenu
     conversation: Conversation
@@ -155,6 +155,8 @@ admin:
       label: Prénom
     password:
       label: Mot de passe
+    username:
+      label: Nom d'utilisateur
 
     lastname:
       label: Nom
@@ -165,7 +167,7 @@ admin:
     dateOfBirth:
       label: Date de naissance
     createdAt:
-      label: Date d'inscription
+      label: Date d'enregistrement
 
   media:
     preview:

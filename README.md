@@ -118,8 +118,6 @@ List of existing extension wich are not in the **core** :
 - [ ] Isoler les medias
 - [ ] Show main image directly on page edit
 - [ ] List component (ui:card/text, target database with a powerful API (multi-Host), ...)
-- [ ] Author for page (will permit to manage page view right later)
-- [ ] displayName and customProperties for user
 
 ## TODO Extension
 
@@ -135,6 +133,7 @@ List of existing extension wich are not in the **core** :
 
 ### To plan
 
+- [ ] Author for page (will permit to manage page view right later)
 - [ ] Archive edit (page) (extension or core ?)
 - [ ] Multi-user editor Multi-site but not everybody can edit everything (see draft.md) (extension or core ?)
 - [ ] Look for a better writer experience (https://github.com/front/g-editor or https://editorjs.io) (1/2)

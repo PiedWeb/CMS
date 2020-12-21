@@ -4,7 +4,7 @@ namespace PiedWeb\CMSBundle\Entity\PageTrait;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait PageMultiHostTrait
+trait PageHostTrait
 {
     /**
      * @ORM\Column(type="string", length=253, nullable=true)

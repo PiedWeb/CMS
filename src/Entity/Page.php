@@ -4,9 +4,9 @@ namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageContentTrait;
+use PiedWeb\CMSBundle\Entity\PageTrait\PageHostTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageI18nTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageImageTrait;
-use PiedWeb\CMSBundle\Entity\PageTrait\PageMultiHostTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageOpenGraphTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageParentTrait;
 use PiedWeb\CMSBundle\Entity\PageTrait\PageRedirectionTrait;
@@ -33,9 +33,9 @@ class Page implements PageInterface
     use CustomPropertiesTrait;
     use IdTrait;
     use PageContentTrait;
+    use PageHostTrait;
     use PageI18nTrait;
     use PageImageTrait;
-    use PageMultiHostTrait;
     use PageOpenGraphTrait;
     use PageParentTrait;
     use PageRedirectionTrait;

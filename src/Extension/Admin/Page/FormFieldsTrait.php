@@ -6,10 +6,8 @@ use PiedWeb\CMSBundle\Entity\PageInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\Form\Type\CollectionType;
-use Sonata\Form\Type\DateTimePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -22,21 +20,6 @@ trait FormFieldsTrait
                 'label' => 'admin.page.parentPage.label',
                 'required' => false,
             ]);
-    }
-
-    protected function configureFormFieldCreatedAt(FormMapper $formMapper): FormMapper
-    {
-        return $formMapper->add('createdAt', DateTimePickerType::class, [
-            'format' => DateTimeType::HTML5_FORMAT,
-            'dp_side_by_side' => true,
-            'dp_use_current' => true,
-            'dp_use_seconds' => false,
-            'dp_collapse' => true,
-            'dp_calendar_weeks' => false,
-            'dp_view_mode' => 'days',
-            'dp_min_view_mode' => 'days',
-            'label' => 'admin.page.createdAt.label',
-        ]);
     }
 
     protected function configureFormFieldMetaRobots(FormMapper $formMapper): FormMapper
@@ -102,21 +85,6 @@ trait FormFieldsTrait
             'help' => 'admin.page.markdown.help',
         ]);
     }*/
-
-    protected function configureFormFieldCustomProperties(FormMapper $formMapper): FormMapper
-    {
-        return $formMapper->add('standAloneCustomProperties', TextareaType::class, [
-            'required' => false,
-            'attr' => [
-                'style' => 'width:100%; height:100px;min-height:15vh',
-                //'data-editor' => 'yaml',
-                'class' => 'autosize',
-            ],
-            'label' => 'admin.page.customProperties.label',
-            'help_html' => true,
-            'help' => 'admin.page.customProperties.help',
-        ]);
-    }
 
     protected function getHosts()
     {

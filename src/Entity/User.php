@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use PiedWeb\CMSBundle\Entity\SharedTrait\CustomPropertiesTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface as sfUserInterface;
 
@@ -15,6 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface as sfUserInterface;
  */
 class User implements UserInterface, sfUserInterface
 {
+    use CustomPropertiesTrait;
     use UserTrait;
 
     /**

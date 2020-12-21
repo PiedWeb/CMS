@@ -3,6 +3,7 @@
 namespace PiedWeb\CMSBundle\Extension\Admin\Page;
 
 use PiedWeb\CMSBundle\Extension\Admin\AdminTrait;
+use PiedWeb\CMSBundle\Extension\Admin\SharedFormFieldsTrait;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -16,6 +17,9 @@ class Admin extends AbstractAdmin implements AdminInterface
     use AdminTrait;
     use FormFieldsOpenGraphTrait;
     use FormFieldsTrait;
+    use SharedFormFieldsTrait;
+
+    protected $messagePrefix = 'admin.page';
 
     protected $datagridValues = [
         '_page' => 1,

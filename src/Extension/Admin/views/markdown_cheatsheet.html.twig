@@ -268,14 +268,15 @@ Pour lister des pages contenant un terme ou un `tag` :
 
 Autres paramètres :
 <pre>{{ "{{" }}  list('keyword X', $number = 3, $orderBy = 'createdAt', $template = '@PiedWebCMS/page/_pages_list.html.twig') {{ "}}" }}</pre>
+<pre>{{ "{{" }}  cardlist('keyword X', $number = 3, $orderBy = 'createdAt') {{ "}}" }}</pre>
 
 
 
 <h2 id=children class="mt-5">Lister les pages enfants (blog/news/...)</h2>
 
-<pre>{{ "
-&lt;div class=row&gt;{% include '@PiedWebCMS/component/_pages_list.html.twig' with {pages: page.childrenPages|reverse} only %}&lt;/div&gt;
-" }}</pre>
+<pre>{{ "{{" }} children(page, $number = 3) {{ "}}" }} </pre>
+
+<pre>{{ "{{" }} cardchildren(page, $number = 3) {{ "}}" }} </pre>
 
 <hr class="mt-5 mb-5">
 

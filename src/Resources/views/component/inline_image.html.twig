@@ -58,10 +58,10 @@
             ~','~ image.fullPath|imagine_filter('xl') ~' 1600w',
         src: image.fullPath|imagine_filter('default'),
         loading: 'lazy',
-        class: image_class ?? 'img-fluid',
+        class: image_class ?? 'w-full h-auto',
         width: 100000,
         height: 100000,
-        alt: image_alt
+        alt: image_alt|default(image.alt)
     }, image_attr ?? {}) }} />
 </picture>
 {% endmacro %}

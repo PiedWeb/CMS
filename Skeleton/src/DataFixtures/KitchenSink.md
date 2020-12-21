@@ -48,8 +48,8 @@ or open an iframe
 
 {{  card_list('welcome', 3) }}
 
-### Children Page
+### Children Page (from parent for the case)
 
-{{  children(page, 3) }}
+{{  children(page.parentPage, 3) }}
 
-{{  card_children(page, 3) }}
+{{  card_children(page.parentPage, 3) }}
