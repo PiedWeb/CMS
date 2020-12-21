@@ -65,7 +65,8 @@ class UserAdmin extends AbstractAdmin implements UserAdminInterface
         $listMapper
             ->add('username', null, [
                 'label' => 'admin.user.username.label',
-            ]);$listMapper
+            ]);
+        $listMapper
             ->add('email', null, [
                 'label' => 'admin.user.email.label',
             ]);
