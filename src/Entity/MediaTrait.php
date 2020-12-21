@@ -105,7 +105,7 @@ trait MediaTrait
     protected $mainImagePages;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json",options={"default" : "{}"})
      */
     protected $hosts = [];
 
