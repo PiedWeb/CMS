@@ -154,7 +154,7 @@ trait FormFieldsTrait
         return $formMapper->add('mainImage', \Sonata\AdminBundle\Form\Type\ModelListType::class, [
                 'required' => false,
                 'class' => $this->mediaClass,
-                'label' => 'admin.page.mainImage.label',
+                //'label' => 'admin.page.mainImage.label',
                 'btn_edit' => false,
             ]);
     }

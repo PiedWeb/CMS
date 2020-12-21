@@ -111,13 +111,8 @@ List of existing extension wich are not in the **core** :
 
 ## TODO before v1
 
-- [ ] Refactor default theme (and add Default bootstrap 5, default Tailwind in core ?!)
-  - [ ] Better management for social network from backend (plugin ?!) (for now, just use customProperty)
 - [ ] Move facultative extensin in an other bundle (PageUpdateNotification)
-- [ ] Revoir install-cms bin/console assets:install --symlink --relative
-- [ ] Isoler les medias
-- [ ] Show main image directly on page edit
-- [ ] List component (ui:card/text, target database with a powerful API (multi-Host), ...)
+- [ ] Revoir install-cms (bin/console assets:install --symlink --relative)git
 
 ## TODO Extension
 

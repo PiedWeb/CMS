@@ -29,14 +29,14 @@ class PageHasMediaAdmin extends AbstractAdmin implements PageHasMediaAdminInterf
         $thumbUrl = $this->liipImage->getBrowserPath($fullPath, 'thumb');
         $defaultUrl = $this->liipImage->getBrowserPath($fullPath, 'default');
 
-        $help = '<a href="'.$editUrl.'" target=_blank>';
+        $help = '<div><a href="'.$editUrl.'" target=_blank style="display:block">';
         $help .= '<img src="'.$thumbUrl.'" style="width:100%; max-width:300px">';
         $help .= '</a>';
         $help .= '<pre onclick="copyElementText(this);" class="btn"';
         $help .= ' style="font-size:80%;text-overflow:ellipsis;margin-top:10px;max-width:160px;white-space:nowrap;';
-        $help .= 'overflow:hidden">';
+        $help .= 'display:block;overflow:hidden">';
         $help .= '!['.str_replace(['[', '"', ']'], ' ', $media->getName()).']('.$defaultUrl.')';
-        $help .= '</pre>';
+        $help .= '</pre></div>'; // TODO move it to twig file
 
         return $help;
     }

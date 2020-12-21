@@ -52,6 +52,13 @@ services:
     calls:
       - [setLiipImage, ['@liip_imagine.cache.manager']]
       - [setTemplate, [list, '@@pwcAdmin/CRUD/mosaic.html.twig']]
+      - [
+          setTemplate,
+          [
+            short_object_description,
+            '@@pwcAdmin/media/short_object_description.html.twig',
+          ],
+        ]
       - [setEntityManager, ['@doctrine.orm.default_entity_manager']]
       - [setTwig, ['@twig']]
       - [setPageClass, ['%pwc.entity_page%']]

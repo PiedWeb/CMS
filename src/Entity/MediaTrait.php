@@ -104,6 +104,11 @@ trait MediaTrait
      */
     protected $mainImagePages;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    protected $hosts = [];
+
     public function __toString()
     {
         return $this->name.' ';
@@ -460,6 +465,44 @@ trait MediaTrait
     public function setMediaBeforeUpdate(string $mediaBeforeUpdate)
     {
         $this->mediaBeforeUpdate = $mediaBeforeUpdate;
+
+        return $this;
+    }
+
+    public function getHosts()
+    {
+        return $this->hosts;
+    }
+
+    public function setHosts(array $hosts): self
+    {
+        $this->hosts = $hosts;
+
+        return $this;
+    }
+
+    public function hasHost($host)
+    {
+        return \in_array($host, $this->getHosts(), true);
+    }
+
+    public function addHost($host)
+    {
+        $host = strtoupper($host);
+
+        if (! \in_array($host, $this->hosts, true)) {
+            $this->hosts[] = $host;
+        }
+
+        return $this;
+    }
+
+    public function removeHost($host)
+    {
+        if (false !== $key = array_search($host, $this->hosts, true)) {
+            unset($this->hosts[$key]);
+            $this->hosts = array_values($this->hosts);
+        }
 
         return $this;
     }
