@@ -42,10 +42,8 @@ class UserAdmin extends AbstractAdmin implements UserAdminInterface
         $formMapper->end();
 
         foreach ($secondColumn as $k => $block) {
-            $fields = $block['fields'] ?? $block;
-            $class = isset($block['expand']) ? 'expand' : '';
-            $formMapper->with($k, ['class' => 'col-md-3 columnFields '.$class]);
-            foreach ($fields as $field) {
+            $formMapper->with($k, ['class' => 'col-md-3 columnFields']);
+            foreach ($block as $field) {
                 $func = 'configureFormField'.ucfirst($field);
                 $this->$func($formMapper);
             }

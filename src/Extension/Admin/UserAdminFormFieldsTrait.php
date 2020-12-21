@@ -33,6 +33,8 @@ trait UserAdminFormFieldsTrait
 
     protected function configureFormFieldDateOfBirth(FormMapper $formMapper): FormMapper
     {
+        $now = new \DateTime();
+
         return $formMapper->add(
             'dateOfBirth',
             DatePickerType::class,
