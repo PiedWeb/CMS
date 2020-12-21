@@ -1,4 +1,4 @@
-{% block list %}
+{% block list %}{% spaceless %}
     {% if pages is not empty %}
         <ul>
             {% for page in pages %}
@@ -9,5 +9,7 @@
                 </li>
             {% endfor %}
         </ul>
+    {% else %}
+        <p>...</p>
     {% endif %}
-{% endblock %}
+{% endspaceless %}{% endblock %}

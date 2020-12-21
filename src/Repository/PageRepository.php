@@ -16,6 +16,9 @@ class PageRepository extends ServiceEntityRepository implements PageRepositoryIn
 {
     protected $hostCanBeNull = false;
 
+    /**
+     * This one is useful, but totaly not instinctive.
+     */
     public function getPublishedPages(string $host = '', array $where = [], array $orderBy = [], int $limit = 0)
     {
         $qb = $this->getQueryToFindPublished('p');
@@ -33,7 +36,7 @@ class PageRepository extends ServiceEntityRepository implements PageRepositoryIn
         }
 
         if ($limit) {
-            $qb->setMaxResults($limit);
+            $qb->setMaxResults($limit + 1);
         }
 
         return $qb->getQuery()->getResult();
@@ -41,10 +44,14 @@ class PageRepository extends ServiceEntityRepository implements PageRepositoryIn
 
     protected function getQueryToFindPublished($p): QueryBuilder
     {
-        return $this->createQueryBuilder($p)
+        $queryBuilder = $this->createQueryBuilder($p)
             ->andWhere($p.'.createdAt <=  :nwo')
             ->setParameter('nwo', new \DateTime())
             ->orderBy($p.'.createdAt', 'DESC');
+
+        $this->andNotRedirection($queryBuilder);
+
+        return $queryBuilder;
     }
 
     public function getPage($slug, $host, $hostCanBeNull): ?Page

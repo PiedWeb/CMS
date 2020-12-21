@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         'main_content_type' => 'Raw',
         'can_use_twig_shortcode' => true,
         'main_content_shortcode' => 'twig,date,email,encryptedLink,image,phoneNumber,twigVideo,punctuation,markdown',
-        'fields_shortcode' => 'twig,date,email,encryptedLink,phoneNumber,markdown',
+        'fields_shortcode' => 'twig,date,email,encryptedLink,phoneNumber',
         'assets' => [
             'stylesheets' => [
                 '/bundles/piedwebcms/tailwind.css',

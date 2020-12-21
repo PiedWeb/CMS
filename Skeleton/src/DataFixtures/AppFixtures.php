@@ -19,24 +19,45 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
 
-        $media = (new Media())
+        $medias = [
+            'Pied Web Logo' => 'piedweb-logo.png',
+            'Demo 1' => '1.jpg',
+            'Demo 2' => '2.jpg',
+        ];
+        foreach ($medias as $name => $file) {
+            $media[$name] = (new Media())
             ->setRelativeDir('media')
-            ->setMimeType('image/png')
+            ->setMimeType('image/'.substr($file, -3))
             ->setSize(2)
-            ->setSlug('piedweb-logo.png')
-            ->setMedia('piedweb-logo.png')
-            ->setName('Pied Web Logo');
+            ->setDimensions([1000, 1000])
+            ->setSlug($file)
+            ->setMedia($file)
+            ->setName($name);
 
-        $manager->persist($media);
+            $manager->persist($media[$name]);
+        }
+        $manager->flush();
 
-        $page = (new Page())
+        $homepage = (new Page())
             ->setH1('Welcome : this is your first page')
             ->setSlug('homepage')
             ->setLocale('en')
             ->setCreatedAt(new DateTime('2 days ago'))
             ->setMainContent(file_get_contents(__DIR__.'/WelcomePageMainContent.md'));
 
-        $manager->persist($page);
+        $manager->persist($homepage);
+        $manager->flush();
+
+        $ksPage = (new Page())
+            ->setH1('Demo Page - Kitchen Sink  Markdown + Twig')
+            ->setSlug('kitchen-sink')
+            ->setMainImage($media['Demo 1'])
+            ->setLocale('en')
+            ->setParentPage($homepage)
+            ->setCreatedAt(new DateTime('1 day ago'))
+            ->setMainContent(file_get_contents(__DIR__.'/KitchenSink.md'));
+
+        $manager->persist($ksPage);
 
         $manager->flush();
     }
