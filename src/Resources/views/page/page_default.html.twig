@@ -67,33 +67,7 @@
 {% block body %}
 
 	{% block content %}
-		<div class="{{ page.container|default('max-w-screen-md mx-auto p-3 prose prose-sm sm:prose lg:prose-lg xl:prose-xl') }}">
-
-			{% block h1 %}
-				<h1>{{ page.content.title(true)|raw }}</h1>
-			{% endblock %}
-
-			{% block description %}
-                {{ page.content.chapeau|raw }}
-			{% endblock %}
-
-			{% block main_image %}
-				{% if page.mainImage is not null %}
-					{% include view('/component/_inline_image.html.twig') with {
-							'image_src': page.mainImage.fullPath|imagine_filter('default'),
-							'image_alt': page.mainImage.name(page.locale, true)|default(page.getTitle(true)|striptags),
-							'image_wrapper_class': ' ',
-						} %}
-				{% endif %}
-			{% endblock %}
-
-
-			{% block main_content %}
-                {{ page.content.body|raw }}
-			{% endblock %}
-
-
-		</div>
+		{% include '@PiedWebCMS/page/_content.html.twig' %}
 	{% endblock %}
 
 	{% block breadcrumb %}
