@@ -20,7 +20,7 @@
     "liip/imagine-bundle": "^2.3",
     "piedweb/linksimprover": "^0.0.7",
     "piedweb/render-html-attributes": "^1.0",
-    "piedweb/url-harvester": "^0.0.24",
+    "piedweb/url-harvester": "^0.0.26",
     "rosell-dk/webp-convert": "^2.4",
     "sensio/framework-extra-bundle": "^5.6",
     "sonata-project/admin-bundle": "^3.83",
