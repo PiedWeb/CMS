@@ -359,7 +359,7 @@ class StaticAppGenerator
         $this->redirections .= $from instanceof Page ? $this->router->generate($from->getRealSlug()) : $from;
         $this->redirections .= ' ';
         $this->redirections .= $to ?: $from->getRedirection();
-        $this->redirections .= PHP_EOL;
+        $this->redirections .= \PHP_EOL;
     }
 
     protected function generatePages(): void
