@@ -22,7 +22,7 @@
     "piedweb/render-html-attributes": "^1.0",
     "piedweb/url-harvester": "^0.0.24",
     "rosell-dk/webp-convert": "^2.4",
-    "sensio/framework-extra-bundle": "^5.6",
+    "sensio/framework-extra-bundle": "^6.0",
     "sonata-project/admin-bundle": "^3.83",
     "sonata-project/doctrine-orm-admin-bundle": "^3.26",
     "spatie/async": "^1.5",

@@ -15,7 +15,7 @@ class VichUploadPropertyNamer extends \Vich\UploaderBundle\Naming\PropertyNamer
     {
         $originalName = $file->getClientOriginalName();
 
-        if ($extension = pathinfo($originalName, PATHINFO_EXTENSION)) {
+        if ($extension = pathinfo($originalName, \PATHINFO_EXTENSION)) {
             return strtolower($extension);
         }
 
