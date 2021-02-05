@@ -12,12 +12,11 @@ use Sonata\AdminBundle\Object\Metadata;
 
 class Admin extends AbstractAdmin implements AdminInterface
 {
-    public $supportsPreviewMode = true;
-
     use AdminTrait;
     use FormFieldsOpenGraphTrait;
     use FormFieldsTrait;
     use SharedFormFieldsTrait;
+    public $supportsPreviewMode = true;
 
     protected $messagePrefix = 'admin.page';
 
