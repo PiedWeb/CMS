@@ -88,7 +88,7 @@ trait CustomPropertiesTrait
         $standStandAloneCustomPropertiesParsed = array_filter(
             $customPropertiesParsed,
             [$this, 'isStandAloneCustomProperty'],
-            ARRAY_FILTER_USE_KEY
+            \ARRAY_FILTER_USE_KEY
         );
         if (! $standStandAloneCustomPropertiesParsed) {
             return '';
