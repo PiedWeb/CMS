@@ -10,7 +10,7 @@
     "core-js": "^3.8.1",
     "easymde": "^2.13.0",
     "fslightbox": "^3.2.2",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "postcss-import": "^14.0.0",
     "postcss-loader": "^4.1",
     "sass-loader": "^10.1.0"
